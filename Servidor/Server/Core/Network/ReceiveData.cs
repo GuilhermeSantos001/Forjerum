@@ -1024,8 +1024,7 @@ namespace FORJERUM
             if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPBanTimer > 0) { PStruct.character[index, PStruct.player[index].SelectedChar].PVPBanTimer += Loops.TickCount.ElapsedMilliseconds; }
             if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer > 0) { PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer += Loops.TickCount.ElapsedMilliseconds; }
             if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty > 0) { PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty += Loops.TickCount.ElapsedMilliseconds; PStruct.tempplayer[index].SORE = true; }
-            PStruct.character[index, PStruct.player[index].SelectedChar].Gold = 2300;
-            
+
             //Send PVP values
             SendData.Send_PlayerPvpChangeTimer(index);
             SendData.Send_PlayerPvpBanTimer(index);
