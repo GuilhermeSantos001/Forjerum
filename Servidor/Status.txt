@@ -1,1 +1,6 @@
-﻿
+Log automático do servidor. Criado na data 12/09/2016 17:27:55
+Existem 0 Jogadores online
+A última atualização de recebimento aconteceu em 300067 ms
+A última atualização de conexão aconteceu em 300067 ms
+O último comando chamado no loop foi NPC SUPER REGEN
+A última packet recebida foi 
