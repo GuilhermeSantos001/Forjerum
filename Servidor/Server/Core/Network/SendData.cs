@@ -490,7 +490,7 @@ namespace FORJERUM
 
             packet = count + ";" + packet;
 
-            SendToMap(map, String.Format("<14>{0}</14>\n", packet));
+            SendToUser(index, String.Format("<14>{0}</14>\n", packet));
         }
         //*********************************************************************************************
         // Send_NpcMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
