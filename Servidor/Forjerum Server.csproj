@@ -58,15 +58,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Server\Core\Globals\Globals.cs" />
+    <Compile Include="Server\Core\Relations\BankRelations.cs" />
+    <Compile Include="Server\Core\Relations\CombatRelations.cs" />
+    <Compile Include="Server\Core\Relations\EquipmentRelations.cs" />
+    <Compile Include="Server\Core\Relations\FriendRelations.cs" />
+    <Compile Include="Server\Core\Relations\InventoryRelations.cs" />
+    <Compile Include="Server\Core\Relations\InviteRelations.cs" />
+    <Compile Include="Server\Core\Relations\LevelRelations.cs" />
+    <Compile Include="Server\Core\Relations\MovementRelations.cs" />
+    <Compile Include="Server\Core\Relations\PartyRelations.cs" />
+    <Compile Include="Server\Core\Relations\PlayerRelations.cs" />
+    <Compile Include="Server\Core\Relations\QuestRelations.cs" />
+    <Compile Include="Server\Core\Relations\TradeRelations.cs" />
     <Compile Include="Server\Core\start.cs" />
     <Compile Include="Server\Extensions\ExtensionApp.cs" />
     <Compile Include="Server\Extensions\terabin\Interpreter\Interpreter.cs" />

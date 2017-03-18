@@ -513,7 +513,7 @@ namespace FORJERUM
             //Definimos o escrivão do arquivo. hue
             BinaryWriter bw = new BinaryWriter(file);
 
-            int friendscount = PStruct.GetPlayerFriendsCount(index);
+            int friendscount = FriendRelations.GetPlayerFriendsCount(index);
 
             bw.Write(friendscount);
 
@@ -1184,7 +1184,7 @@ namespace FORJERUM
                     bool PVP = PStruct.character[index, PStruct.player[index].SelectedChar].PVP;
 
                     //QUEST
-                    int questcount = PStruct.GetPlayerQuestsCount(index);
+                    int questcount = QuestRelations.GetPlayerQuestsCount(index);
 
                     if (isnewchar)
                     {
@@ -2300,7 +2300,7 @@ namespace FORJERUM
                     bool PVP = PStruct.character[index, PStruct.player[index].SelectedChar].PVP;
 
                     //QUEST
-                    int questcount = PStruct.GetPlayerQuestsCount(index);
+                    int questcount = QuestRelations.GetPlayerQuestsCount(index);
                     
                     if (isnewchar)
                     {

@@ -576,7 +576,7 @@ namespace FORJERUM
                             //Desviar do golpe?
                             int parry_test = Globals.Rand(0, 100);
 
-                            if (parry_test <= (PStruct.GetPlayerParry(target) - PStruct.GetPlayerCritical(target)))
+                            if (parry_test <= (PlayerRelations.GetPlayerParry(target) - PlayerRelations.GetPlayerCritical(target)))
                             {
                                 SendData.Send_ActionMsg(target, lang.attack_missed, Globals.ColorWhite, PStruct.character[target, PStruct.player[target].SelectedChar].X, PStruct.character[target, PStruct.player[target].SelectedChar].Y, 1, 0, map);
                                 return;
@@ -615,7 +615,7 @@ namespace FORJERUM
                         }
                     }
                 }
-                damage -= ((damage / 100) * PStruct.GetPlayerMagicDef(target));
+                damage -= ((damage / 100) * PlayerRelations.GetPlayerMagicDef(target));
 
                 if (NStruct.tempnpc[map, id].ReduceDamage > 0)
                 {
@@ -653,7 +653,7 @@ namespace FORJERUM
                 //Desvia do golpe?
                 int parry_test = Globals.Rand(0, 100);
 
-                if (parry_test <= (PStruct.GetPlayerParry(target) - NStruct.GetNpcCritical(map, id)))
+                if (parry_test <= (PlayerRelations.GetPlayerParry(target) - NStruct.GetNpcCritical(map, id)))
                 {
                     SendData.Send_ActionMsg(target, "Errou", Globals.ColorWhite, PlayerX, PlayerY, 1, 0, map);
                     return;
@@ -663,7 +663,7 @@ namespace FORJERUM
                 double Ddamage = Globals.Rand((NStruct.npc[map, id].Attack / 10) * 7, NStruct.npc[map, id].Attack);
                 damage = Convert.ToInt32(Ddamage);
                 damage -= (damage / 100) * NStruct.tempnpc[map, id].ReduceDamage;
-                damage -= ((damage / 100) * PStruct.GetPlayerDefense(target));
+                damage -= ((damage / 100) * PlayerRelations.GetPlayerDefense(target));
 
                 if (NStruct.tempnpc[map, id].ReduceDamage > 0)
                 {

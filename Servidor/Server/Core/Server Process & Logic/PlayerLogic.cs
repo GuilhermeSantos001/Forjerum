@@ -106,8 +106,8 @@ namespace FORJERUM
             double multiplier = Convert.ToDouble(SStruct.skill[isSpell].scope) / 10;
 
             //Elemento mágico multiplicado
-            double min_damage = PStruct.GetPlayerMinMagic(index) * multiplier;
-            double max_damage = PStruct.GetPlayerMaxMagic(index) * multiplier;
+            double min_damage = PlayerRelations.GetPlayerMinMagic(index) * multiplier;
+            double max_damage = PlayerRelations.GetPlayerMaxMagic(index) * multiplier;
 
             //Multiplicador de nível
             double levelmultiplier = (1.0 + multiplier) * PStruct.skill[index, PStruct.hotkey[index, PStruct.tempplayer[index].preparingskillslot].num].level; //Except
@@ -754,19 +754,19 @@ namespace FORJERUM
 
                                 //Preparar posições manualmente
                                 if (PStruct.character[PStruct.tempplayer[index].target, PStruct.player[PStruct.tempplayer[index].target].SelectedChar].Dir == Globals.DirDown) { 
-                                    if (PStruct.CanPlayerMove(PStruct.tempplayer[index].target, Globals.DirDown))
+                                    if (MovementRelations.CanPlayerMove(PStruct.tempplayer[index].target, Globals.DirDown))
                                     {
                                         y += 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirLeft))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirLeft))
                                     {
                                         x -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirUp))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirUp))
                                     {
                                         y -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirRight))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirRight))
                                     {
                                         x += 1;
                                     }
@@ -777,19 +777,19 @@ namespace FORJERUM
 
                                 if (PStruct.character[target, PStruct.player[target].SelectedChar].Dir == Globals.DirUp)
                                 {
-                                    if (PStruct.CanPlayerMove(target, Globals.DirUp))
+                                    if (MovementRelations.CanPlayerMove(target, Globals.DirUp))
                                     {
                                         y -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirDown))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirDown))
                                     {
                                         y += 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirLeft))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirLeft))
                                     {
                                         x -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirRight))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirRight))
                                     {
                                         x += 1;
                                     }
@@ -800,19 +800,19 @@ namespace FORJERUM
 
                                 if (PStruct.character[target, PStruct.player[target].SelectedChar].Dir == Globals.DirLeft)
                                 {
-                                    if (PStruct.CanPlayerMove(target, Globals.DirLeft))
+                                    if (MovementRelations.CanPlayerMove(target, Globals.DirLeft))
                                     {
                                         x -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirUp))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirUp))
                                     {
                                         y -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirDown))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirDown))
                                     {
                                         y += 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirRight))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirRight))
                                     {
                                         x += 1;
                                     }
@@ -823,19 +823,19 @@ namespace FORJERUM
 
                                 if (PStruct.character[target, PStruct.player[target].SelectedChar].Dir == Globals.DirRight)
                                 {
-                                    if (PStruct.CanPlayerMove(target, Globals.DirRight))
+                                    if (MovementRelations.CanPlayerMove(target, Globals.DirRight))
                                     {
                                         x += 1;
                                     }
-                                    if (PStruct.CanPlayerMove(target, Globals.DirLeft))
+                                    if (MovementRelations.CanPlayerMove(target, Globals.DirLeft))
                                     {
                                         x -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirUp))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirUp))
                                     {
                                         y -= 1;
                                     }
-                                    else if (PStruct.CanPlayerMove(target, Globals.DirDown))
+                                    else if (MovementRelations.CanPlayerMove(target, Globals.DirDown))
                                     {
                                         y += 1;
                                     }

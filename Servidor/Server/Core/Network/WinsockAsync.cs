@@ -485,8 +485,8 @@ namespace FORJERUM
             //Sai da troca
             if (PStruct.tempplayer[Clients[clientid].index].InTrade > 0)
             {
-                PStruct.GiveTrade(Clients[clientid].index);
-                PStruct.GiveTrade(PStruct.tempplayer[Clients[clientid].index].InTrade);
+                TradeRelations.GiveTrade(Clients[clientid].index);
+                TradeRelations.GiveTrade(PStruct.tempplayer[Clients[clientid].index].InTrade);
 
                 //Verificar se o jogador não se desconectou no processo
                 if (Clients[(UserConnection.Getindex(PStruct.tempplayer[Clients[clientid].index].InTrade))].IsConnected)
@@ -496,8 +496,8 @@ namespace FORJERUM
                     SendData.Send_InvSlots(PStruct.tempplayer[Clients[clientid].index].InTrade, PStruct.player[PStruct.tempplayer[Clients[clientid].index].InTrade].SelectedChar);
                 }
 
-                PStruct.ClearTempTrade(PStruct.tempplayer[Clients[clientid].index].InTrade);
-                PStruct.ClearTempTrade(Clients[clientid].index);
+                TradeRelations.ClearTempTrade(PStruct.tempplayer[Clients[clientid].index].InTrade);
+                TradeRelations.ClearTempTrade(Clients[clientid].index);
             }
 
             //Sai do Craft
@@ -507,7 +507,7 @@ namespace FORJERUM
                 {
                     if (PStruct.craft[Clients[clientid].index, i].num > 0)
                     {
-                        PStruct.GiveItem(Clients[clientid].index, PStruct.craft[Clients[clientid].index, i].type, PStruct.craft[Clients[clientid].index, i].num, PStruct.craft[Clients[clientid].index, i].value, PStruct.craft[Clients[clientid].index, i].refin, PStruct.craft[Clients[clientid].index, i].exp);
+                        InventoryRelations.GiveItem(Clients[clientid].index, PStruct.craft[Clients[clientid].index, i].type, PStruct.craft[Clients[clientid].index, i].num, PStruct.craft[Clients[clientid].index, i].value, PStruct.craft[Clients[clientid].index, i].refin, PStruct.craft[Clients[clientid].index, i].exp);
                     }
                 }
             }
@@ -523,7 +523,7 @@ namespace FORJERUM
             //Sai do grupo
             if (PStruct.tempplayer[Clients[clientid].index].Party > 0)
             {
-                PStruct.KickParty(Clients[clientid].index, Clients[clientid].index, true);
+                PartyRelations.KickParty(Clients[clientid].index, Clients[clientid].index, true);
             }
 
             //Vamos avisar ao mapa que o jogador saiu

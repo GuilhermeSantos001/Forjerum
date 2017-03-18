@@ -314,277 +314,6 @@ namespace FORJERUM
             SendData.Send_MsgToPlayer(index, lang.success_atributte_reset, Globals.ColorGreen, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
-        // GetFriendOpenSlot
-        //*********************************************************************************************
-        public static int GetFriendOpenSlot(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.Max_Friends; i++)
-            {
-                if (String.IsNullOrEmpty(player[index].friend[i].name))
-                {
-                    return i;
-                }
-            }
-            return 0;
-        }
-        //*********************************************************************************************
-        // FriendNameExist
-        //*********************************************************************************************
-        public static bool FriendNameExist(int index, string name)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, name) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, name));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.Max_Friends; i++)
-            {
-                if (player[index].friend[i].name == name)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        //*********************************************************************************************
-        // FriendIsOnline
-        //*********************************************************************************************
-        public static bool FriendIsOnline(int index, int friendnum)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, friendnum) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, friendnum));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i <= Globals.Player_Highindex; i++)
-            {
-                if (player[index].friend[friendnum].name ==  PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        //*********************************************************************************************
-        // GetPlayerFriendsCount
-        //*********************************************************************************************
-        public static int GetPlayerFriendsCount(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int count = 0;
-            for (int i = 1; i < Globals.Max_Friends; i++)
-            {
-                if (!String.IsNullOrEmpty(player[index].friend[i].name))
-                {
-                    count += 1;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return count;
-        }
-        //*********************************************************************************************
-        // RefreshFriends
-        // Atualiza a lista de amigos de determinado jogador
-        //*********************************************************************************************
-        public static void RefreshFriends(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            int friendscount = GetPlayerFriendsCount(index);
-            for (int i = 1; i <= friendscount; i++)
-            {
-                //Analisar todos os jogadores online
-                for (int y = 0; y <= Globals.Player_Highindex; y++)
-                {
-                    if (PStruct.player[index].friend[i].name == PStruct.character[y, PStruct.player[y].SelectedChar].CharacterName)
-                    {
-                        PStruct.player[index].friend[i].sprite = PStruct.character[y, PStruct.player[y].SelectedChar].Sprite;
-                        PStruct.player[index].friend[i].sprite_index = PStruct.character[y, PStruct.player[y].SelectedChar].Spriteindex;
-                        PStruct.player[index].friend[i].classid = PStruct.character[y, PStruct.player[y].SelectedChar].ClassId;
-                        PStruct.player[index].friend[i].level = PStruct.character[y, PStruct.player[y].SelectedChar].Level;
-                        PStruct.player[index].friend[i].guildname = GStruct.guild[PStruct.character[y, PStruct.player[y].SelectedChar].Guild].name;
-                    }
-                }
-            }
-            SendData.Send_PlayerFriends(index);
-        }
-        //*********************************************************************************************
-        // AddFriend
-        // Adiciona um jogador na lista de amigos de outro
-        //*********************************************************************************************
-        public static bool AddFriend(int index, int friendnum)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, friendnum) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, friendnum));
-            }
-
-            //CÓDIGO
-            //Valor principal
-            int friendslot = GetFriendOpenSlot(index);
-            if (friendslot <= 0) { return false; }
-
-            //Verificar se já não está na lista
-            if (FriendNameExist(index, PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].CharacterName))
-            {
-                return false;
-            }
-
-            //Tentar adicionar
-            try
-            {
-                PStruct.player[index].friend[friendslot].name = PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].CharacterName;
-                PStruct.player[index].friend[friendslot].sprite = PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].Sprite;
-                PStruct.player[index].friend[friendslot].sprite_index = PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].Spriteindex;
-                PStruct.player[index].friend[friendslot].classid = PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].ClassId;
-                PStruct.player[index].friend[friendslot].level = PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].Level;
-                PStruct.player[index].friend[friendslot].guildname = GStruct.guild[PStruct.character[friendnum, PStruct.player[friendnum].SelectedChar].Guild].name;
-                if (String.IsNullOrEmpty(PStruct.player[index].friend[friendslot].guildname)) { PStruct.player[index].friend[friendslot].guildname = ""; }
-                SendData.Send_PlayerFriends(index);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        //*********************************************************************************************
-        // DeleteFriend
-        // Retira determinado jogador da lista de amigos de outro
-        //*********************************************************************************************
-        public static bool DeleteFriend(int index, int friendnum)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, friendnum) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, friendnum));
-            }
-
-            //CÓDIGO
-            if (friendnum == 0) { return false; }
-            try
-            {
-                int friendscount = GetPlayerFriendsCount(index) + 1;
-                PStruct.player[index].friend[friendnum].name = "";
-                PStruct.player[index].friend[friendnum].sprite = "";
-                PStruct.player[index].friend[friendnum].sprite_index = 0;
-                PStruct.player[index].friend[friendnum].classid = 0;
-                PStruct.player[index].friend[friendnum].level = 0;
-                PStruct.player[index].friend[friendnum].guildname = "";
-                if (friendnum < friendscount)
-                {
-                    for (int i = friendnum + 1; i <= friendscount; i++)
-                    {
-                        PStruct.player[index].friend[i - 1].name = PStruct.player[index].friend[i].name;
-                        PStruct.player[index].friend[i - 1].sprite = PStruct.player[index].friend[i].sprite;
-                        PStruct.player[index].friend[i - 1].sprite_index = PStruct.player[index].friend[i].sprite_index;
-                        PStruct.player[index].friend[i - 1].classid = PStruct.player[index].friend[i].classid;
-                        PStruct.player[index].friend[i - 1].level = PStruct.player[index].friend[i].level;
-                        PStruct.player[index].friend[i - 1].guildname = PStruct.player[index].friend[i].guildname;
-                    }
-                }
-                SendData.Send_PlayerFriends(index);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        //*********************************************************************************************
-        // IsPlayerPremmy
-        // Retorna se determinado jogador é assinante
-        //*********************************************************************************************
-        public static bool IsPlayerPremmy(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            DateTime myDate = DateTime.Parse(player[index].Premmy);
-            int result = DateTime.Compare(myDate, DateTime.Now);
-            
-            if (result <= 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        //*********************************************************************************************
-        // IsPlayerBanned
-        // Retorna se o jogador está banido
-        //*********************************************************************************************
-        public static bool IsPlayerBanned(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            DateTime myDate = DateTime.Parse(player[index].Banned);
-            int result = DateTime.Compare(myDate, DateTime.Now);
-
-            if (result <= 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        //*********************************************************************************************
         // PlayerAddPremmy
         // Adiciona tempo de assinatura
         //*********************************************************************************************
@@ -633,28 +362,6 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // GetNumOfInvFreeSlots
-        //*********************************************************************************************
-        public static int GetNumOfInvFreeSlots(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int count = 0;
-
-            for (int i = 1; i < Globals.MaxInvSlot; i++)
-            {
-                if (PStruct.invslot[index, i].item == Globals.NullItem) { count += 1; }
-            }
-            return count;
-        }
-        //*********************************************************************************************
         // GetPlayerProf
         // Retorna profissão do jogador
         //*********************************************************************************************
@@ -682,152 +389,7 @@ namespace FORJERUM
 
             return prof;
         }
-        //*********************************************************************************************
-        // GetActualPlayerQuestPerGiver
-        // Retorna o número de quests que o jogador tem por npc
-        //*********************************************************************************************
-        public static int GetActualPlayerQuestPerGiver(int index, int questgiver)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, questgiver) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, questgiver));
-            }
 
-            //CÓDIGO
-            int quest = 1;
-
-            for (int q = 1; q < Globals.MaxQuestPerGiver; q++)
-            {
-                if (PStruct.queststatus[index, questgiver, q].status == 2)
-                {
-                    quest += 1;
-                }
-            }
-
-            return quest;
-        }
-        //*********************************************************************************************
-        // GetPlayerQuestGiversCount
-        // Número de npc's que deram quest ao jogador
-        //*********************************************************************************************
-        public static int GetPlayerQuestGiversCount(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int count = 0;
-
-            for (int g = 1; g <= Globals.MaxQuestGivers; g++)
-            {
-               if (PStruct.queststatus[index, g, 1].status != 0) 
-               {        
-                   count += 1; 
-               }
-            }
-
-            return count;
-        }
-        //*********************************************************************************************
-        // GetPlayerQuestsCount
-        // Número total de quests
-        //*********************************************************************************************
-        public static int GetPlayerQuestsCount(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int count = 0;
-                             
-            for (int g = 1; g < Globals.MaxQuestGivers; g++)     
-            {   
-                for (int q = 1; q < Globals.MaxQuestPerGiver; q++)      
-                {    
-                    if (PStruct.queststatus[index, g, q].status != 0)       
-                    {
-                        count += 1;          
-                    }      
-                }
-            }
-
-            return count;
-        }
-        //*********************************************************************************************
-        // GetPlayerTradeOffersCount
-        // Retorna o número de ofertas na troca
-        //*********************************************************************************************
-        public static int GetPlayerTradeOffersCount(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int finalindex = 0;
-
-            //Checa o slot que não possúi item
-            for (int i = 1; i < Globals.MaxTradeOffers; i++)
-            {
-                if ((PStruct.tradeslot[index, i].item == Globals.NullItem) || (String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
-                {
-                    finalindex = i;
-                    break;
-                }
-            }
-
-            if (finalindex == 0) { finalindex = 9; }
-
-            int totalcount = finalindex - 1;
-
-            return totalcount;
-        }
-        //*********************************************************************************************
-        // GetFreeTradeOffer
-        // Retorna um slot na oferta que esteja livre
-        //*********************************************************************************************
-        public static int GetFreeTradeOffer(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int finalindex = 0;
-
-            //Checa o slot que possúi o jogador
-            for (int i = 1; i < Globals.MaxTradeOffers; i++)
-            {
-                if ((PStruct.tradeslot[index, i].item == Globals.NullItem) || (String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
-                {
-                    finalindex = i;
-                    break;
-                }
-            }
-
-            return finalindex;
-        }
         //*********************************************************************************************
         // GetFreeCraft
         // Retorna um slot no craft que esteja livre
@@ -858,88 +420,6 @@ namespace FORJERUM
             return finalindex;
         }
         //*********************************************************************************************
-        // GetPartyPlayerIndex
-        // Retorna o index do jogador com base no index do grupo
-        //*********************************************************************************************
-        public static int GetPartyPlayerindex(int partynum, int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index));
-            }
-
-            //CÓDIGO
-            int finalindex = 0;
-
-            //Checa o slot que possúi o jogador
-            for (int i = 1; i < Globals.MaxPartyMembers; i++)
-            {
-                if (PStruct.partymembers[partynum, i].index == index)
-                {
-                    finalindex = i;
-                    break;
-                }
-            }
-
-            return finalindex;
-        }
-        //*********************************************************************************************
-        // GetPartyFree
-        // Retorna um slot de grupo livre
-        //*********************************************************************************************
-        public static int GetPartyFree()
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name));
-            }
-
-            //CÓDIGO
-            int partynum = 0;
-
-            //Checa um grupo livre
-            for (int i = 1; i < Globals.MaxParty; i++)
-            {
-                if (PStruct.party[i].active == false)
-                {
-                    partynum = i;
-                    break;
-                }
-            }
-
-            return partynum;
-        }
-        //*********************************************************************************************
-        // GetPartyMembersCount
-        // Retorna o número de membros em um grupo
-        //*********************************************************************************************
-        public static int GetPartyMembersCount(int partynum)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum));
-            }
-
-            //CÓDIGO
-            int count = 0;
-            
-            for (int i = 1; i < Globals.MaxPartyMembers; i++)
-            {
-                if (partymembers[partynum, i].index > 0) { count += 1; }
-            }
-            
-            return count;
-        }
-        //*********************************************************************************************
         // isBusy
         // Jogador ocupado
         //*********************************************************************************************
@@ -963,297 +443,6 @@ namespace FORJERUM
             if (tempplayer[index].InTrade > 0) { return false; }
             if (tempplayer[index].isDead) { return false; }
             return true;
-        }
-        //*********************************************************************************************
-        // GetPlayerHelmet
-        // Retorna o equipamento superior do jogador
-        //*********************************************************************************************
-        public static int GetPlayerHelmet(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-
-            int Helmet = Convert.ToInt32(splited[0].Split(';')[0]);
-            return Helmet;
-        }
-        //*********************************************************************************************
-        // GetPlayerArmor
-        // Retorna a armadura do jogador
-        //*********************************************************************************************
-        public static int GetPlayerArmor(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-            int Armor = Convert.ToInt32(splited[1].Split(';')[0]);
-            return Armor;
-        }
-        //*********************************************************************************************
-        // GetPlayerWeapon
-        // Retorna a arma do jogador
-        //*********************************************************************************************
-        public static int GetPlayerWeapon(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-          string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-
-          int Weapon = Convert.ToInt32(splited[2].Split(';')[0]);
-          return Weapon;
-        }
-        //*********************************************************************************************
-        // GetPlayerShield
-        // Retorna o escudo do jogador
-        //*********************************************************************************************
-        public static int GetPlayerShield(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-
-            int Shield = Convert.ToInt32(splited[3].Split(';')[0]);
-            return Shield;
-        }
-        //*********************************************************************************************
-        // GetPlayerHelmetRefin
-        //*********************************************************************************************
-        public static int GetPlayerHelmetRefin(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-
-            int Helmet = Convert.ToInt32(splited[0].Split(';')[1]);
-            return Helmet;
-        }
-        //*********************************************************************************************
-        // GetPlayerArmorRefin
-        //*********************************************************************************************
-        public static int GetPlayerArmorRefin(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-            int Armor = Convert.ToInt32(splited[1].Split(';')[1]);
-            return Armor;
-        }
-        //*********************************************************************************************
-        // GetPlayerWeaponRefin
-        //*********************************************************************************************
-        public static int GetPlayerWeaponRefin(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-
-            int Weapon = Convert.ToInt32(splited[2].Split(';')[1]);
-            return Weapon;
-        }
-        //*********************************************************************************************
-        // GetPlayerShieldRefin
-        //*********************************************************************************************
-        public static int GetPlayerShieldRefin(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
-
-            int Shield = Convert.ToInt32(splited[3].Split(';')[1]);
-            return Shield;
-        }
-        //*********************************************************************************************
-        // GetPetExpToNextLevel
-        // Cálculo da exp necessária para subir de nível para o mascote
-        //*********************************************************************************************
-        public static int GetPetExpToNextLevel(int index, int level)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, level) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, level));
-            }
-
-            //CÓDIGO
-            int exp = 0;
-            if (level < 10)
-            {
-                double exptonextlevel = (level * 100) * 1.2;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 10) && (level < 20))
-            {
-                double exptonextlevel = (level * 300) * 1.2;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 20) && (level < 30))
-            {
-                double exptonextlevel = (level * 600) * 1.4;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 30) && (level < 40))
-            {
-                double exptonextlevel = (level * 900) * 1.5;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 40) && (level < 60))
-            {
-                double exptonextlevel = (level * 1700) * 1.6;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 60) && (level < 70))
-            {
-                double exptonextlevel = (level * 2800) * 1.7;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 70) && (level < 80))
-            {
-                double exptonextlevel = (level * 4000) * 1.8;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 80) && (level < 90))
-            {
-                double exptonextlevel = (level * 7000) * 1.9;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 90) && (level < 100))
-            {
-                double exptonextlevel = (level * 13000) * 1.9;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 100))
-            {
-                double exptonextlevel = (level * 29000) * 1.9;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            return exp;
-        }
-        //*********************************************************************************************
-        // GetExpToNextLevel
-        // Cálculo da exp necessária para o jogador subir de nível
-        //*********************************************************************************************
-        public static int GetExpToNextLevel(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            int level = PStruct.character[index, PStruct.player[index].SelectedChar].Level;
-            int exp = 0;
-            if (level < 10)
-            {
-                double exptonextlevel = (level * 100) * 1.2;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 10) && (level < 20))
-            {
-                double exptonextlevel = (level * 300) * 1.2;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 20) && (level < 30))
-            {
-                double exptonextlevel = (level * 600) * 1.4;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 30) && (level < 40))
-            {
-                double exptonextlevel = (level * 900) * 1.5;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 40) && (level < 60))
-            {
-                double exptonextlevel = (level * 1700) * 1.6;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 60) && (level < 70))
-            {
-                double exptonextlevel = (level * 2800) * 1.7;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 70) && (level < 80))
-            {
-                double exptonextlevel = (level * 4000) * 1.8;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 80) && (level < 90))
-            {
-                double exptonextlevel = (level * 7000) * 1.9;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 90) && (level < 100))
-            {
-                double exptonextlevel = (level * 13000) * 1.9;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            if ((level >= 100))
-            {
-                double exptonextlevel = (level * 29000) * 1.9;
-                exp = Convert.ToInt32(exptonextlevel);
-            }
-            return exp;
         }
         //*********************************************************************************************
         // GetProfExpToNextLevel
@@ -1300,30 +489,6 @@ namespace FORJERUM
             }
 
             return 0;
-        }
-        //*********************************************************************************************
-        // ClearTempTrade
-        // Limpa dados da troca de determinado jogador
-        //*********************************************************************************************
-        public static void ClearTempTrade(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            PStruct.tempplayer[index].InTrade = 0;
-            PStruct.tempplayer[index].TradeG = 0;
-            PStruct.tempplayer[index].TradeStatus = 0;
-            
-            //Limpa slot de troca
-            for (int i = 1; i < Globals.MaxTradeOffers; i++)
-            {
-                PStruct.tradeslot[index, i].item = Globals.NullItem;
-            }
         }
         //*********************************************************************************************
         // ClearTempPlayer
@@ -1389,80 +554,6 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // GiveTradeTo
-        // Entrega itens da troca para determinado jogador
-        //*********************************************************************************************
-        public static void GiveTradeTo(int index, int intrade)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, intrade) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            if (PStruct.tempplayer[index].TradeG > 0)
-            {
-                GivePlayerGold(intrade, PStruct.tempplayer[index].TradeG);
-            }
-
-            for (int i = 1; i < Globals.MaxTradeOffers; i++)
-            {
-                if ((PStruct.tradeslot[index, i].item != Globals.NullItem) && (!String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
-                {
-                    string[] splititem = PStruct.tradeslot[index, i].item.Split(',');
-
-                    int itemNum = Convert.ToInt32(splititem[1]);
-                    int itemType = Convert.ToInt32(splititem[0]);
-                    int itemValue = Convert.ToInt32(splititem[2]);
-                    int itemRefin = Convert.ToInt32(splititem[3]);
-                    int itemExp = Convert.ToInt32(splititem[4]);
-
-                    GiveItem(intrade, itemType, itemNum, itemValue, itemRefin, itemExp);
-
-                    PStruct.tradeslot[index, i].item = Globals.NullItem;
-                }
-            }
-        }
-        //*********************************************************************************************
-        // GiveTrade
-        // Entrega itens da troca
-        //*********************************************************************************************
-        public static void GiveTrade(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            if (PStruct.tempplayer[index].TradeG > 0)
-            {
-                GivePlayerGold(index, PStruct.tempplayer[index].TradeG);
-            }
-            for (int i = 1; i < Globals.MaxTradeOffers; i++)
-            {
-                if ((PStruct.tradeslot[index, i].item != Globals.NullItem) && (!String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
-                {
-                    string[] splititem = PStruct.tradeslot[index, i].item.Split(',');
-                    
-                    int itemNum = Convert.ToInt32(splititem[1]);
-                    int itemType = Convert.ToInt32(splititem[0]);
-                    int itemValue = Convert.ToInt32(splititem[2]);
-                    int itemRefin = Convert.ToInt32(splititem[3]);
-                    int itemExp = Convert.ToInt32(splititem[4]);
-
-                    GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp);
-
-                    PStruct.tradeslot[index, i].item = Globals.NullItem;
-                }
-            }
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-        }
-        //*********************************************************************************************
         // HasItem
         // Retorna se o jogador tem determinado item
         //*********************************************************************************************
@@ -1517,28 +608,6 @@ namespace FORJERUM
             return -1;
         }
         //*********************************************************************************************
-        // GetInvItemSlot
-        // Retorna determinado item baseado no slot do inventário
-        //*********************************************************************************************
-        public static int GetInvItemSlot(int index, string item)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, item) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.MaxInvSlot; i++)
-            {
-                if (PStruct.invslot[index, i].item == item) { return i; }
-            }
-
-            return 0;
-        }
-        //*********************************************************************************************
         // ClearItem
         // Limpar o item (?)
         //*********************************************************************************************
@@ -1559,53 +628,6 @@ namespace FORJERUM
             }
 
             return false;
-        }
-        //*********************************************************************************************
-        // GiveItem
-        // Entrega determinado item para determinado jogador
-        //*********************************************************************************************
-        public static bool GiveItem(int index, int itemt, int itemn, int itemv, int itemr, int itemex)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex));
-            }
-
-            //CÓDIGO
-            //Não entregar itens inválidos.
-            if (itemn <= 0) { return false; }
-
-            //Já temos os item? Se sim, adicionar.
-            for (int i = 1; i < Globals.MaxInvSlot; i++)
-            {
-                string item = PStruct.invslot[index, i].item;
-                string[] splititem = item.Split(',');
-
-                int itemNum = Convert.ToInt32(splititem[1]);
-                int itemType = Convert.ToInt32(splititem[0]);
-                int itemValue = Convert.ToInt32(splititem[2]);
-                int itemRefin = Convert.ToInt32(splititem[3]);
-                int itemExp = Convert.ToInt32(splititem[4]);
-
-                if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemex == itemExp))
-                {
-                    PStruct.invslot[index, i].item = itemType + "," + itemNum + "," + (itemValue + itemv) + "," + itemRefin + "," + itemex;
-                    return true;
-                }
-            }
-            if (GetInvOpenSlot(index) > 0)
-            {
-                PStruct.invslot[index, GetInvOpenSlot(index)].item = itemt + "," + itemn + "," + itemv + "," + itemr + "," + itemex;
-                return true;
-            }
-            else
-            {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_slot, Globals.ColorRed, Globals.Msg_Type_Server);
-                return false;
-            }
         }
         //*********************************************************************************************
         // GiveSpell
@@ -1633,52 +655,6 @@ namespace FORJERUM
             else
             {
                 SendData.Send_MsgToPlayer(index, lang.you_cant_learn_more_skills, Globals.ColorRed, Globals.Msg_Type_Server);
-                return false;
-            }
-        }
-        //*********************************************************************************************
-        // GiveBankItem
-        // Entrega determinado item do banco para determinado jogador
-        //*********************************************************************************************
-        public static bool GiveBankItem(int index, int itemt, int itemn, int itemv, int itemr, int itemex)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex));
-            }
-
-            //CÓDIGO
-            //Já temos os item? Se sim, adicionar.
-            for (int i = 1; i < Globals.Max_BankSlots; i++)
-            {
-
-                int itemNum = PStruct.player[index].bankslot[i].num;
-                int itemType = PStruct.player[index].bankslot[i].type;
-                int itemValue = PStruct.player[index].bankslot[i].value;
-                int itemRefin = PStruct.player[index].bankslot[i].refin;
-                int itemExp = PStruct.player[index].bankslot[i].exp;
-
-                if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemex == itemExp))
-                {
-                    PStruct.player[index].bankslot[i].value += itemv;
-                    return true;
-                }
-            }
-            if (GetBankOpenSlot(index) > 0)
-            {
-                int openslot = GetBankOpenSlot(index);
-                PStruct.player[index].bankslot[openslot].type = itemt;
-                PStruct.player[index].bankslot[openslot].num = itemn;
-                PStruct.player[index].bankslot[openslot].value = itemv;
-                PStruct.player[index].bankslot[openslot].refin = itemr;
-                PStruct.player[index].bankslot[openslot].exp = itemex;
-                return true;
-            }
-            else
-            {
                 return false;
             }
         }
@@ -1963,133 +939,6 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // IsQuestGiverRepeatable
-        // Retorna se a missão pode ser repetida
-        //*********************************************************************************************
-        public static bool IsQuestGiverRepeatable(int questgiver)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, questgiver) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, questgiver));
-            }
-
-            //CÓDIGO
-            if (questgiver == 7)
-            {
-                return true;
-            }
-            return false;
-        }
-        //*********************************************************************************************
-        // PickItem
-        //*********************************************************************************************
-        public static bool PickItem(int index, int itemt, int itemn, int itemv, int itemr, int itemex = 0)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.MaxInvSlot; i++)
-            {
-                string item = PStruct.invslot[index, i].item;
-                string[] splititem = item.Split(',');
-
-                int itemNum = Convert.ToInt32(splititem[1]);
-                int itemType = Convert.ToInt32(splititem[0]);
-                int itemValue = Convert.ToInt32(splititem[2]);
-                int itemRefin = Convert.ToInt32(splititem[3]);
-                int itemExp = Convert.ToInt32(splititem[4]);
-                
-                if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemv == itemValue))
-                {
-                    PStruct.invslot[index, i].item = Globals.NullItem;
-                    return true;
-                }
-
-                if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemv <= itemValue) && (itemex <= itemExp))
-                {
-                    PStruct.invslot[index, i].item = itemType + "," + itemNum + "," + (itemValue - itemv) + "," + itemRefin + "," + itemExp;
-                    return true;
-                }
-            }
-            return false;
-        }
-        //*********************************************************************************************
-        // PickBankItem
-        // Pegar determinado item do banco
-        //*********************************************************************************************
-        public static bool PickBankItem(int index, int itemt, int itemn, int itemv, int itemr)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.Max_BankSlots; i++)
-            {
-                int itemNum = PStruct.player[index].bankslot[i].num;
-                int itemType = PStruct.player[index].bankslot[i].type;
-                int itemValue = PStruct.player[index].bankslot[i].value;
-                int itemRefin = PStruct.player[index].bankslot[i].refin;
-
-                if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemv == itemValue))
-                {
-                    PStruct.player[index].bankslot[i].type = 0;
-                    PStruct.player[index].bankslot[i].num = 0;
-                    PStruct.player[index].bankslot[i].value = 0;
-                    PStruct.player[index].bankslot[i].refin = 0; 
-                    PStruct.player[index].bankslot[i].exp = 0;
-
-                    return true;
-                }
-
-                if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemv <= itemValue))
-                {
-                    PStruct.player[index].bankslot[i].type = 0;
-                    PStruct.player[index].bankslot[i].num = 0;
-                    PStruct.player[index].bankslot[i].value -= itemv;
-                    PStruct.player[index].bankslot[i].refin = 0;
-                    PStruct.player[index].bankslot[i].exp = 0;
-                    return true;
-                }
-            }
-            return false;
-        }
-        //*********************************************************************************************
-        // GetInvOpenSlot
-        // Retorna slot livre no inventário de determinado jogador
-        //*********************************************************************************************
-        public static int GetInvOpenSlot(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.MaxInvSlot; i++)
-            {
-                if (PStruct.invslot[index, i].item == Globals.NullItem) { return i; }
-            }
-
-            return 0;
-        }
-        //*********************************************************************************************
         // GetSkillOpenSlot
         // Retorna slot de skill livre para determinado jogador
         //*********************************************************************************************
@@ -2107,28 +956,6 @@ namespace FORJERUM
             for (int i = 9; i < Globals.MaxPlayer_Skills; i++)
             {
                 if (PStruct.skill[index, i].num == 0) { return i; }
-            }
-
-            return 0;
-        }
-        //*********************************************************************************************
-        // GetBankOpenSlot
-        // Retorna slot livre no banco de determinado jogador
-        //*********************************************************************************************
-        public static int GetBankOpenSlot(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.Max_BankSlots; i++)
-            {
-                if (PStruct.player[index].bankslot[i].num == 0) { return i; }
             }
 
             return 0;
@@ -2328,811 +1155,6 @@ namespace FORJERUM
             double DarkRegen = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 0.3;
             int vital = 1 + Convert.ToInt32(DarkRegen); //per second
             return vital;
-        }
-        //*********************************************************************************************
-        // GetPlayerCritical
-        //*********************************************************************************************
-        public static int GetPlayerCritical(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armorcrit = 0.0;
-            double weaponcrit = 0.0;
-            double shieldcrit = 0.0;
-            double helmetcrit = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armorcrit = AStruct.armorparams[GetPlayerArmor(index), 7].value + ((AStruct.armorparams[GetPlayerArmor(index), 7].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponcrit = WStruct.weaponparams[GetPlayerWeapon(index), 7].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 7].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldcrit = AStruct.armorparams[GetPlayerShield(index), 7].value + ((AStruct.armorparams[GetPlayerShield(index), 7].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetcrit = AStruct.armorparams[GetPlayerHelmet(index), 7].value + ((AStruct.armorparams[GetPlayerHelmet(index), 7].value / 100) * (level * 7));
-            }
-
-            double totalitemcrit = armorcrit + weaponcrit + shieldcrit + helmetcrit;
-
-            double watercrit = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Water) * 0.2;
-            double dtotalcrit = totalitemcrit + watercrit;
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 4)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 48) && (PStruct.skill[index, i].level > 0))
-                    {
-                        dtotalcrit += (PStruct.skill[index, i].level * 1.5);
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.tempplayer[index].SORE) { dtotalcrit = dtotalcrit / 2; }
-
-            int totalcrit = Convert.ToInt32(dtotalcrit);
-
-            return totalcrit;
-        }
-        //*********************************************************************************************
-        // GetPlayerParry
-        // Chance de bloqueio
-        //*********************************************************************************************
-        public static int GetPlayerParry(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armorparry = 0.0;
-            double weaponparry = 0.0;
-            double shieldparry = 0.0;
-            double helmetparry = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armorparry = AStruct.armorparams[GetPlayerArmor(index), 6].value + ((AStruct.armorparams[GetPlayerArmor(index), 6].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponparry = WStruct.weaponparams[GetPlayerWeapon(index), 6].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 6].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldparry = AStruct.armorparams[GetPlayerShield(index), 6].value + ((AStruct.armorparams[GetPlayerShield(index), 6].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetparry = AStruct.armorparams[GetPlayerHelmet(index), 6].value + ((AStruct.armorparams[GetPlayerHelmet(index), 6].value / 100) * (level * 7));
-            }
-
-            double totalitemparry = armorparry + weaponparry + shieldparry + helmetparry;
-
-            double windparry = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 0.3;
-            double dtotalparry = totalitemparry + windparry;
-            if (PStruct.tempplayer[index].SORE) { dtotalparry = dtotalparry / 2; }
-            int totalparry = Convert.ToInt32(dtotalparry);
-
-            return totalparry;
-        }
-        //*********************************************************************************************
-        // GetPlayerDefense
-        //*********************************************************************************************
-        public static int GetPlayerDefense(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armordef = 0.0;
-            double weapondef = 0.0;
-            double shielddef = 0.0;
-            double helmetdef = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armordef = AStruct.armorparams[GetPlayerArmor(index), 3].value + ((AStruct.armorparams[GetPlayerArmor(index), 3].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weapondef = WStruct.weaponparams[GetPlayerWeapon(index), 3].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 3].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shielddef = AStruct.armorparams[GetPlayerShield(index), 3].value + ((AStruct.armorparams[GetPlayerShield(index), 3].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetdef = AStruct.armorparams[GetPlayerHelmet(index), 3].value + ((AStruct.armorparams[GetPlayerHelmet(index), 3].value / 100) * (level * 7));
-            }
-
-            double totalitemdef = armordef + weapondef + shielddef + helmetdef;
-
-            double earthdefense = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.05;
-            double dtotaldefense = totalitemdef + earthdefense;
-            if (PStruct.tempplayer[index].SORE) { dtotaldefense = dtotaldefense / 2; }
-            int totaldefense = Convert.ToInt32(dtotaldefense);
-
-            return totaldefense;
-        }
-        //*********************************************************************************************
-        // GetPlayerMinAttack
-        //*********************************************************************************************
-        public static int GetPlayerMinAttack(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armoratk = 0.0;
-            double weaponatk = 0.0;
-            double shieldatk = 0.0;
-            double helmetatk = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[GetPlayerArmor(index), 0].value + ((AStruct.armorparams[GetPlayerArmor(index), 0].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[GetPlayerWeapon(index), 0].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 0].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[GetPlayerShield(index), 0].value + ((AStruct.armorparams[GetPlayerShield(index), 0].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[GetPlayerHelmet(index), 0].value + ((AStruct.armorparams[GetPlayerHelmet(index), 0].value / 100) * (level * 7));
-            }
-
-            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
-
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.7;
-            
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 0.7;
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.7;
-                        break;
-                    }
-                }
-            }
-            
-            double dtotalatk = totalitematk + earthatk;
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
-
-            return totalatk;
-        }
-        //*********************************************************************************************
-        // GetPlayerMinMagic
-        //*********************************************************************************************
-        public static int GetPlayerMinMagic(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armoratk = 0.0;
-            double weaponatk = 0.0;
-            double shieldatk = 0.0;
-            double helmetatk = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[GetPlayerArmor(index), 1].value + ((AStruct.armorparams[GetPlayerArmor(index), 1].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[GetPlayerWeapon(index), 1].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 1].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[GetPlayerShield(index), 1].value + ((AStruct.armorparams[GetPlayerShield(index), 1].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[GetPlayerHelmet(index), 1].value + ((AStruct.armorparams[GetPlayerHelmet(index), 1].value / 100) * (level * 7));
-            }
-
-            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
-
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 0.6;
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 0.6;
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.6;
-                        break;
-                    }
-                }
-            }
-
-            double dtotalatk = totalitematk + earthatk;
-
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 46) && (PStruct.skill[index, i].level > 0))
-                    {
-                        dtotalatk += ((dtotalatk / 100) * (5 * PStruct.skill[index, i].level));
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
-
-            return totalatk;
-        }
-        //*********************************************************************************************
-        // GetPlayerMaxMagic
-        //*********************************************************************************************
-        public static int GetPlayerMaxMagic(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armoratk = 0.0;
-            double weaponatk = 0.0;
-            double shieldatk = 0.0;
-            double helmetatk = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[GetPlayerArmor(index), 4].value + ((AStruct.armorparams[GetPlayerArmor(index), 4].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[GetPlayerWeapon(index), 4].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 4].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[GetPlayerShield(index), 4].value + ((AStruct.armorparams[GetPlayerShield(index), 4].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[GetPlayerHelmet(index), 4].value + ((AStruct.armorparams[GetPlayerHelmet(index), 4].value / 100) * (level * 7));
-            }
-
-            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
-
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 1.5;
-            
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 1.5;
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 1.5;
-                        break;
-                    }
-                }
-            }
-
-            double dtotalatk = totalitematk + earthatk;
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 46) && (PStruct.skill[index, i].level > 0))
-                    {
-                        dtotalatk += ((dtotalatk / 100) * (5 * PStruct.skill[index, i].level));
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
-            return totalatk;
-        }
-        //*********************************************************************************************
-        // GetPlayerMagicDef / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        //*********************************************************************************************
-        public static int GetPlayerMagicDef(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armoratk = 0.0;
-            double weaponatk = 0.0;
-            double shieldatk = 0.0;
-            double helmetatk = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[GetPlayerArmor(index), 5].value + ((AStruct.armorparams[GetPlayerArmor(index), 5].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[GetPlayerWeapon(index), 5].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 5].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[GetPlayerShield(index), 5].value + ((AStruct.armorparams[GetPlayerShield(index), 5].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[GetPlayerHelmet(index), 5].value + ((AStruct.armorparams[GetPlayerHelmet(index), 5].value / 100) * (level * 7));
-            }
-
-            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
-
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Light) * 0.05;
-            double dtotalatk = totalitematk + earthatk;
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
-
-            return totalatk;
-        }
-        //*********************************************************************************************
-        // GetPlayerMaxAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        //*********************************************************************************************
-        public static int GetPlayerMaxAttack(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armoratk = 0.0;
-            double weaponatk = 0.0;
-            double shieldatk = 0.0;
-            double helmetatk = 0.0;
-            int level = 0;
-
-            if (GetPlayerArmor(index) != 0)
-            {
-                level = GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[GetPlayerArmor(index), 2].value + ((AStruct.armorparams[GetPlayerArmor(index), 2].value / 100) * (level * 7));
-            }
-            if (GetPlayerWeapon(index) != 0)
-            {
-                level = GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[GetPlayerWeapon(index), 2].value + ((WStruct.weaponparams[GetPlayerWeapon(index), 2].value / 100) * (level * 7));
-            }
-            if (GetPlayerShield(index) != 0)
-            {
-                level = GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[GetPlayerShield(index), 2].value + ((AStruct.armorparams[GetPlayerShield(index), 2].value / 100) * (level * 7));
-            }
-            if (GetPlayerHelmet(index) != 0)
-            {
-                level = GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[GetPlayerHelmet(index), 2].value + ((AStruct.armorparams[GetPlayerHelmet(index), 2].value / 100) * (level * 7));
-            }
-
-            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
-
-            double fireatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Fire) * 1.8;
-            
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
-                    {
-                        fireatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 1.8;
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
-                    {
-                        fireatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 1.8;
-                        break;
-                    }
-                }
-            }
-
-            double dtotalatk = totalitematk + fireatk;
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
-
-            return totalatk;
-        }
-        //*********************************************************************************************
-        // CanPlayerMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Verifica se determinado jogador pode se mover no contexto em que está atualmente
-        //*********************************************************************************************
-        public static bool CanPlayerMove(int index, byte Dir, int x = 0, int y = 0)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, Dir, x, y) != null)
-            {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, Dir, x, y));
-            }
-
-            //CÓDIGO
-            int map = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-            if (x <= 0 || y <= 0)
-            {
-                x = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X);
-                y = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y);
-            }
-                
-            //Tentamos nos mover
-            switch (Dir)
-            {
-                case 8:
-                    if (y - 1 < 0)
-                    {
-                        return false;
-                    }
-                    if (Convert.ToBoolean(MStruct.tile[map, x, y].UpBlock) == false) { return false; }
-                    if (Convert.ToBoolean(MStruct.tile[map, x, y - 1].DownBlock) == false) { return false; }
-                    if ((MStruct.tile[map, x, y - 1].Data1 == "3") || (MStruct.tile[map, x, y - 1].Data1 == "10")) { return false; }
-                    if (MStruct.tile[map, x, y - 1].Data1 == "21"){
-                        if (!IsPlayerPremmy(index))
-                        {
-                            PlayerMove(index, Convert.ToByte(Convert.ToInt32(MStruct.tile[map, x, y - 1].Data2)));
-                            return false;
-                        }
-                    }
-                    break;
-                case 2:
-                    if (y + 1 > 14)
-                    {
-                        return false;
-                    }
-                    if (Convert.ToBoolean(MStruct.tile[map, x, y].DownBlock) == false) { return false; }
-                    if (Convert.ToBoolean(MStruct.tile[map, x, y + 1].UpBlock) == false) { return false; }
-                    if ((MStruct.tile[map, x, y + 1].Data1 == "3") || (MStruct.tile[map, x, y + 1].Data1 == "10")) { return false; }
-                    if (MStruct.tile[map, x, y + 1].Data1 == "21")
-                    {
-                        if (!IsPlayerPremmy(index))
-                        {
-                            PlayerMove(index, Convert.ToByte(Convert.ToInt32(MStruct.tile[map, x, y + 1].Data2)));
-                            return false;
-                        }
-                    }
-                    break;
-                case 4:
-                    if (x - 1 < 0)
-                    {
-                        return false;
-                    }
-                    if (Convert.ToBoolean(MStruct.tile[map, x, y].LeftBlock) == false) { return false; }
-                    if (Convert.ToBoolean(MStruct.tile[map, x - 1, y].RightBlock) == false) { return false; }
-                    if ((MStruct.tile[map, x - 1, y].Data1 == "3") || (MStruct.tile[map, x - 1, y].Data1 == "10")) { return false; }
-                    if (MStruct.tile[map, x - 1, y].Data1 == "21")
-                    {
-                        if (!IsPlayerPremmy(index))
-                        {
-                            PlayerMove(index, Convert.ToByte(Convert.ToInt32(MStruct.tile[map, x - 1, y].Data2)));
-                            return false;
-                        }
-                    }
-                    break;
-                case 6:
-                    if (x + 1 > 19)
-                    {
-                        return false;
-                    }
-                    if (Convert.ToBoolean(MStruct.tile[map, x, y].RightBlock) == false) { return false; }
-                    if (Convert.ToBoolean(MStruct.tile[map, x + 1, y].LeftBlock) == false) { return false; }
-                    if ((MStruct.tile[map, x + 1, y].Data1 == "3") || (MStruct.tile[map, x + 1, y].Data1 == "10")) { return false; }
-                    if (MStruct.tile[map, x + 1, y].Data1 == "21")
-                    {
-                        if (!IsPlayerPremmy(index))
-                        {
-                            PlayerMove(index, Convert.ToByte(Convert.ToInt32(MStruct.tile[map, x + 1, y].Data2)));
-                            return false;
-                        }
-                    }
-                    break;
-                default:
-                    WinsockAsync.Log(String.Format("Direção nula"));
-                    break;
-            }
-
-            return true;
-        }
-        //*********************************************************************************************
-        // PlayerMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Move determinado jogador para determinada posição
-        //*********************************************************************************************
-        public static void PlayerMove(int index, byte Dir)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, Dir) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            if (PStruct.tempplayer[index].Warping) { return; }
-            //Tentamos nos mover
-            switch (Dir)
-            {
-                case 8:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Y = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y) - 1);
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirUp;
-                    break;
-                case 2:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Y = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y) + 1);
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirDown;
-                    break;
-                case 4:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].X = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X) - 1);
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirLeft;
-                    break;
-                case 6:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].X = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X) + 1);
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirRight;
-                    break;
-                default:
-                    WinsockAsync.Log(String.Format("Direção nula"));
-                    break;
-            }
-
-            int map = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-            int x = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X);
-            int y = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y);
-            //Verifica os tipos de tiles
-            if (MStruct.tile[map, x, y].Data1 == "2")
-            {
-                PStruct.tempplayer[index].Warping = true;
-                PlayerWarp(index, Convert.ToInt32(MStruct.tile[map, x, y].Data2), Convert.ToByte(MStruct.tile[map, x, y].Data3), Convert.ToByte(MStruct.tile[map, x, y].Data4));
-                return;
-            }
-
-            //Se nenhum tile tem ação, enviar as novas coordenadas do jogador após o movimento 
-            SendData.Send_PlayerXY(index);
-            SendData.Send_PlayerDir(index, 1);
-        }
-        //*********************************************************************************************
-        // PlayerWarp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Move o jogador para outro mapa, importante perceber que tudo deve ser atualizado para ele e
-        // para quem está no outro mapa.
-        //*********************************************************************************************
-        public static void PlayerWarp(int index, int Map, byte X, byte Y)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, Map, X, Y) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            //Salvamos o mapa antigo
-            int oldmap = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-
-            if (Map == oldmap)
-            {
-                PStruct.character[index, PStruct.player[index].SelectedChar].X = X;
-                PStruct.character[index, PStruct.player[index].SelectedChar].Y = Y;
-                SendData.Send_PlayerWarp(index);
-                SendData.Send_PlayerXY(index);
-                SendData.Send_PlayerDeathToMap(index);
-                PStruct.tempplayer[index].Warping = false;
-                return;
-            }
-
-            //Definimos as novas coordenadas do jogador
-            PStruct.character[index, PStruct.player[index].SelectedChar].Map = Map;
-            PStruct.character[index, PStruct.player[index].SelectedChar].X = X;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Y = Y;
-
-            //Valores sobre magias
-            if (PStruct.tempplayer[index].preparingskill > 0)
-            {
-                PStruct.tempplayer[index].preparingskill = 0;
-                PStruct.tempplayer[index].skilltimer = 0;
-                PStruct.tempplayer[index].preparingskillslot = 0;
-                PStruct.tempplayer[index].movespeed = Globals.NormalMoveSpeed;
-                SendData.Send_BrokeSkill(index);
-                SendData.Send_MoveSpeed(1, index);
-            }
-            
-            //Enviamos o jogador ao novo mapa
-            SendData.Send_PlayerWarp(index);
-            SendData.Send_PlayerDataToMapBut(index, PStruct.player[index].Username, PStruct.player[index].SelectedChar);
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
-            {
-                if (PStruct.character[i, PStruct.player[i].SelectedChar].Map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
-                    if (i != index)
-                    {
-                        {
-                            SendData.Send_PlayerDataTo(index, i, PStruct.player[i].Username, PStruct.player[i].SelectedChar);
-                            SendData.Send_GuildTo(index, i);
-                            SendData.Send_PlayerSoreTo(index, i);
-                            SendData.Send_PlayerPvpTo(index, i);
-                            SendData.Send_PlayerShoppingTo(index, i);
-                            if (tempplayer[i].Stunned) { SendData.Send_Stun(PStruct.character[index, PStruct.player[index].SelectedChar].Map, 1, i, 1); }
-                            if (tempplayer[i].Sleeping) { SendData.Send_Sleep(PStruct.character[index, PStruct.player[index].SelectedChar].Map, 1, i, 1); }
-                            if (tempplayer[i].isDead) { SendData.Send_PlayerDeathTo(index, i); }
-                            //SendData.Send_PlayerMoveSpeedTo(index, i);
-                        }
-                    }
-            }
-
-            for (int i = 0; i <= Globals.Max_WorkPoints - 1; i++)
-            {
-                if (MStruct.workpoint[i].map == Map)
-                {
-                    if ((MStruct.tempworkpoint[i].vitality <= 0))
-                    {
-                        SendData.Send_EventGraphicToMap(MStruct.workpoint[i].map, MStruct.tile[MStruct.workpoint[i].map, MStruct.workpoint[i].x, MStruct.workpoint[i].y].Event_Id, "", 0, Convert.ToByte(MStruct.workpoint[i].inactive_sprite));
-                    }
-                }
-            }
-
-            for (int i = 0; i <= Globals.Max_Chests - 1; i++)
-            {
-                if (MStruct.chestpoint[i].map == Map)
-                {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i])
-                    {
-                        SendData.Send_EventGraphic(index, MStruct.tile[MStruct.chestpoint[i].map, MStruct.chestpoint[i].x, MStruct.chestpoint[i].y].Event_Id, MStruct.chestpoint[i].inactive_sprite, MStruct.chestpoint[i].inactive_sprite_index, 0, 8);
-                    }
-                }
-            }
-
-            //????
-            SendData.Send_MapGuildTo(index);
-            SendData.Send_PlayerSkills(index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_PlayerVitalityToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index, PStruct.tempplayer[index].Vitality);
-            SendData.Send_GuildToMapBut(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index);
-            SendData.Send_CompleteGuild(index);
-            SendData.Send_PlayerPvpToMap(index);
-            SendData.Send_PlayerSoreToMap(index);
-            SendData.Send_PlayerExtraVitalityToMap(index);
-            SendData.Send_PlayerExtraSpiritToMap(index);
-            //SendData.Send_PlayerMoveSpeedToMapBut(index, PStruct.character[index, PStruct.player[index].SelectedChar].Map, index);
-
-            //Enviamos os npcs do novo mapa
-            SendData.Send_MapNpcsTo(index);
-            SendData.Send_MapItems(index);
-
-            //Avisamos aos jogadores do antigo mapa que ele saiu
-            SendData.Send_PlayerLeft(oldmap, index);
-
-            PStruct.tempplayer[index].Warping = false;
         }
         //*********************************************************************************************
         // CanPlayerAttackNpc / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -3684,8 +1706,8 @@ namespace FORJERUM
                 double multiplier = Convert.ToDouble(SStruct.skill[isSpell].scope) / 7.2;
 
                 //Elemento mágico multiplicado
-                double min_damage = GetPlayerMinMagic(Attacker);
-                double max_damage = GetPlayerMaxMagic(Attacker);
+                double min_damage = PlayerRelations.GetPlayerMinMagic(Attacker);
+                double max_damage = PlayerRelations.GetPlayerMaxMagic(Attacker);
 
                 if (PStruct.hotkey[Attacker, skill_slot].num > Globals.MaxPlayer_Skills)
                 {
@@ -3722,7 +1744,7 @@ namespace FORJERUM
 
                 if (isSpell == 36)
                 {
-                    Damage += ((Damage / 100) * GetPlayerDefense(Attacker));
+                    Damage += ((Damage / 100) * PlayerRelations.GetPlayerDefense(Attacker));
                 }
 
                 if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 6)
@@ -3734,7 +1756,7 @@ namespace FORJERUM
                             //Dano crítico?
                             int critical_t = Globals.Rand(0, 100);
 
-                            if (critical_t <= GetPlayerCritical(Attacker))
+                            if (critical_t <= PlayerRelations.GetPlayerCritical(Attacker))
                             {
                                 Damage = Convert.ToInt32((Convert.ToDouble(Damage) * 1.5));
                                 SendData.Send_Animation(Map, Globals.Target_Npc, Victim, 152);
@@ -3798,15 +1820,15 @@ namespace FORJERUM
                 //Desviar do golpe?
                 int parry_test = Globals.Rand(0, 100);
 
-                if (parry_test <= (NStruct.GetNpcParry(Map, Victim) - PStruct.GetPlayerCritical(Attacker)))
+                if (parry_test <= (NStruct.GetNpcParry(Map, Victim) - PlayerRelations.GetPlayerCritical(Attacker)))
                 {
                     SendData.Send_ActionMsg(Attacker, lang.attack_missed, Globals.ColorWhite, NpcX, NpcY, 1, 0, Map);
                     return;
                 }
 
                 //Dano comum
-                int MinDamage = GetPlayerMinAttack(Attacker);
-                int MaxDamage = GetPlayerMaxAttack(Attacker);
+                int MinDamage = PlayerRelations.GetPlayerMinAttack(Attacker);
+                int MaxDamage = PlayerRelations.GetPlayerMaxAttack(Attacker);
 
                 if (is_pet)
                 {
@@ -3876,7 +1898,7 @@ namespace FORJERUM
                 //Dano crítico?
                 int critical_test = Globals.Rand(0, 100);
 
-                if (critical_test <= GetPlayerCritical(Attacker))
+                if (critical_test <= PlayerRelations.GetPlayerCritical(Attacker))
                 {
                     Damage = Convert.ToInt32((Convert.ToDouble(Damage) * 1.5));
                     is_critical = true;
@@ -3956,7 +1978,7 @@ namespace FORJERUM
                     SendData.Send_MsgToAll(lang.the_area + " " + MStruct.map[Map].name + " " + lang.is_free_now, Globals.ColorYellow, Globals.Msg_Type_Server);
                     SendData.Send_MsgToGuild(NStruct.tempnpc[Map, Victim].guildnum, lang.the_colector_of + " " + MStruct.map[Map].name + " " + lang.has_been_defeated, Globals.ColorYellow, Globals.Msg_Type_Server);
                     SendData.Send_MsgToPlayer(Attacker, lang.colector_defeated_success, Globals.ColorYellow, Globals.Msg_Type_Server);
-                    GivePlayerGold(Attacker, MStruct.map[Map].guildgold);
+                    PlayerRelations.GivePlayerGold(Attacker, MStruct.map[Map].guildgold);
                     MStruct.map[Map].guildnum = 0;
                     MStruct.map[Map].guildgold = 0;
                     NStruct.ClearTempNpc(Map, Victim);
@@ -3980,7 +2002,7 @@ namespace FORJERUM
                 }
 
                 //Entrega a exp para o grupo
-                PartyShareExp(Attacker, Victim, Map);
+                PartyRelations.PartyShareExp(Attacker, Victim, Map);
 
                 //Avisamos que o npc tem que sumir
                 SendData.Send_NpcLeft(Map, Victim);
@@ -4003,7 +2025,7 @@ namespace FORJERUM
                     else
                     {
                         //Tentar de novo
-                        if (IsPlayerPremmy(Attacker))
+                        if (PlayerRelations.IsPlayerPremmy(Attacker))
                         {
                             chance = Globals.Rand(1, NStruct.npcdrop[Map, Victim, i].Chance * 2);
                             if (chance == NStruct.npcdrop[Map, Victim, i].Chance * 2)
@@ -4020,7 +2042,7 @@ namespace FORJERUM
 
 
                 //GOLD
-                GivePlayerGold(Attacker, NStruct.npc[Map, Victim].Gold);
+                PlayerRelations.GivePlayerGold(Attacker, NStruct.npc[Map, Victim].Gold);
 
                 //Limpar dados de estudo de movimento
                 NpcIA.ClearPrevMove(Map, Victim);
@@ -4050,104 +2072,6 @@ namespace FORJERUM
             return level;
         }
         //*********************************************************************************************
-        // PartyShareExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Divide a Exp para determinado grupo baseado no atacante
-        //*********************************************************************************************
-        public static void PartyShareExp(int Attacker, int Victim, int Map)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, Attacker, Victim, Map) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            int NpcX = NStruct.tempnpc[Map, Victim].X;
-            int NpcY = NStruct.tempnpc[Map, Victim].Y;
-            int PlayerX = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].X);
-            int PlayerY = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Y);
-
-            //PARTY EXP
-            int partynum = PStruct.tempplayer[Attacker].Party;
-
-            //Damos xp ao jogador e mostramos a xp ganha
-            if (partynum > 0)
-            {
-                int memberscount = GetPartyMembersCount(partynum);
-                for (int i = 1; i <= memberscount; i++)
-                {
-                    int memberindex = PStruct.partymembers[partynum, i].index;
-                    if (PStruct.character[memberindex, PStruct.player[memberindex].SelectedChar].Map == PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Map)
-                    {
-                        //Tem grupo para dividir a exp
-                        //Adiciona uma kill se houver uma quest para esse npc
-                        for (int g = 1; g < Globals.MaxQuestGivers; g++)
-                        {
-                            for (int q = 1; q < Globals.MaxQuestPerGiver; q++)
-                            {
-                                //Prevent
-                                if ((String.IsNullOrEmpty(MStruct.quest[g, q].type)) && (PStruct.queststatus[memberindex, g, q].status > 0)) { PStruct.queststatus[memberindex, g, q].status = 0; return; }
-                                
-                                //Execute
-                                if ((PStruct.queststatus[memberindex, g, q].status == 1) && (Convert.ToInt32(MStruct.quest[g, q].type.Split('|')[0]) > 0))
-                                {
-                                    for (int k = 1; k < Globals.MaxQuestKills; k++)
-                                    {
-                                        if (MStruct.questkills[g, q, k].monstername == NStruct.npc[Map, Victim].Name)
-                                        {
-                                            if (PStruct.questkills[memberindex, g, q, k].kills < MStruct.questkills[g, q, k].value)
-                                            {
-                                                PStruct.questkills[memberindex, g, q, k].kills += 1;
-                                                SendData.Send_ActionMsg(memberindex, lang.quest_defeat + " " + MStruct.questkills[g, q, k].monstername + " " + PStruct.questkills[memberindex, g, q, k].kills + "/" + MStruct.questkills[g, q, k].value, Globals.ColorGreen, NpcX, NpcY, 0, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir);
-                                                SendData.Send_QuestKill(memberindex, g, q, k);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        int exp = NStruct.npc[Map, Victim].Exp;
-                        if (IsPlayerPremmy(memberindex)) { exp = Convert.ToInt32(exp * 1.5); }
-                        GivePlayerExp(memberindex, exp);
-                    }
-                }
-            }
-            //Não tem grupo para dividir a exp
-            else
-            {
-                //Adiciona uma kill se houver uma quest para esse npc
-                for (int g = 1; g < Globals.MaxQuestGivers; g++)
-                {
-                    for (int q = 1; q < Globals.MaxQuestPerGiver; q++)
-                    {
-                        //Prevent
-                        if ((String.IsNullOrEmpty(MStruct.quest[g, q].type)) && (PStruct.queststatus[Attacker, g, q].status > 0)) { PStruct.queststatus[Attacker, g, q].status = 0; return; }
-                        
-                        //Execute
-                        if ((PStruct.queststatus[Attacker, g, q].status == 1) && (Convert.ToInt32(MStruct.quest[g, q].type.Split('|')[0]) > 0))
-                        {
-                            for (int k = 1; k < Globals.MaxQuestKills; k++)
-                            {
-                                if (MStruct.questkills[g, q, k].monstername == NStruct.npc[Map, Victim].Name)
-                                {
-                                    if (PStruct.questkills[Attacker, g, q, k].kills < MStruct.questkills[g, q, k].value)
-                                    {
-                                        PStruct.questkills[Attacker, g, q, k].kills += 1;
-                                        SendData.Send_ActionMsg(Attacker, lang.quest_defeat + " " + MStruct.questkills[g, q, k].monstername + " " + PStruct.questkills[Attacker, g, q, k].kills + "/" + MStruct.questkills[g, q, k].value, Globals.ColorGreen, NpcX, NpcY, 0, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir);
-                                        SendData.Send_QuestKill(Attacker, g, q, k);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                int exp = NStruct.npc[Map, Victim].Exp;
-                if (IsPlayerPremmy(Attacker)) { exp = Convert.ToInt32(exp * 1.5); }
-                GivePlayerExp(Attacker, exp);
-            }
-        }
-        //*********************************************************************************************
         // HaveToolToWork / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Verifica se determinado jogador tem a ferramenta para interagir com determinado tipo de 
         // objeto
@@ -4165,7 +2089,7 @@ namespace FORJERUM
             //CÓDIGO
             if (type == Globals.Job_Miner)
             {
-                if (GetPlayerWeapon(index) == 28)
+                if (EquipmentRelations.GetPlayerWeapon(index) == 28)
                 {
                     return true;
                 }
@@ -4220,7 +2144,7 @@ namespace FORJERUM
 
             if (MStruct.tempworkpoint[workpoint].vitality <= 0)
             {
-                GiveItem(index, 1, MStruct.workpoint[workpoint].reward, 1, 0, 0);
+                InventoryRelations.GiveItem(index, 1, MStruct.workpoint[workpoint].reward, 1, 0, 0);
                 MStruct.tempworkpoint[workpoint].respawn = Loops.TickCount.ElapsedMilliseconds + (MStruct.workpoint[workpoint].respawn_timer * 10000);
                 character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum] += MStruct.workpoint[workpoint].exp;
                 //Verificamos se ele subiu de nível
@@ -4282,7 +2206,7 @@ namespace FORJERUM
             {
                 SendData.Send_Animation(Map, Globals.Target_Player, Victim, 155);
                 SendData.Send_Animation(Map, Globals.Target_Player, Attacker, 156);
-                PlayerAttackPlayer(Victim, Attacker, 0, 0 , false, 0, GetPlayerDefense(Victim) * 2);
+                PlayerAttackPlayer(Victim, Attacker, 0, 0 , false, 0, PlayerRelations.GetPlayerDefense(Victim) * 2);
                 tempplayer[Victim].Reflect = false;
                 tempplayer[Victim].ReflectTimer = 0;
                 return;
@@ -4302,7 +2226,7 @@ namespace FORJERUM
                             //Desviar do golpe?
                             int parry_test = Globals.Rand(0, 100);
 
-                            if (parry_test <= (PStruct.GetPlayerParry(Victim) - PStruct.GetPlayerCritical(Attacker)))
+                            if (parry_test <= (PlayerRelations.GetPlayerParry(Victim) - PlayerRelations.GetPlayerCritical(Attacker)))
                             {
                                 SendData.Send_ActionMsg(Victim, lang.attack_missed, Globals.ColorWhite, PStruct.character[Victim, PStruct.player[Victim].SelectedChar].X, PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Y, 1, 0, Map);
                                 return;
@@ -4340,8 +2264,8 @@ namespace FORJERUM
                 double multiplier = Convert.ToDouble(SStruct.skill[isSpell].scope) / 7.2;
 
                 //Elemento mágico multiplicado
-                double min_damage = GetPlayerMinMagic(Attacker);
-                double max_damage = GetPlayerMaxMagic(Attacker);
+                double min_damage = PlayerRelations.GetPlayerMinMagic(Attacker);
+                double max_damage = PlayerRelations.GetPlayerMaxMagic(Attacker);
 
 
                 if (PStruct.hotkey[Attacker, skill_slot].num > Globals.MaxPlayer_Skills)
@@ -4379,7 +2303,7 @@ namespace FORJERUM
                         }
                     }
                 }
-                Damage -= ((Damage / 100) * GetPlayerMagicDef(Victim));
+                Damage -= ((Damage / 100) * PlayerRelations.GetPlayerMagicDef(Victim));
 
                 if (PStruct.tempplayer[Attacker].ReduceDamage > 0)
                 {
@@ -4389,7 +2313,7 @@ namespace FORJERUM
 
                 if (isSpell == 36)
                 {
-                    Damage += ((Damage / 100) * GetPlayerDefense(Attacker));
+                    Damage += ((Damage / 100) * PlayerRelations.GetPlayerDefense(Attacker));
                 }
 
                 if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 6)
@@ -4402,7 +2326,7 @@ namespace FORJERUM
                             //Dano crítico?
                             int critical_t = Globals.Rand(0, 100);
 
-                            if (critical_t <= GetPlayerCritical(Attacker))
+                            if (critical_t <= PlayerRelations.GetPlayerCritical(Attacker))
                             {
                                 Damage = Convert.ToInt32((Convert.ToDouble(Damage) * 1.5));
                                 SendData.Send_Animation(Map, Globals.Target_Player, Victim, 152);
@@ -4427,7 +2351,7 @@ namespace FORJERUM
                             //Dano crítico?
                             int critical_t = Globals.Rand(0, 100);
 
-                            if (critical_t <= GetPlayerCritical(Attacker))
+                            if (critical_t <= PlayerRelations.GetPlayerCritical(Attacker))
                             {
                                 Damage = Convert.ToInt32((Convert.ToDouble(Damage) * 1.5));
                                 SendData.Send_Animation(Map, Globals.Target_Player, Victim, 152);
@@ -4472,15 +2396,15 @@ namespace FORJERUM
                 //Desviar do golpe?
                 int parry_test = Globals.Rand(0, 100);
 
-                if (parry_test <= (GetPlayerParry(Victim) - GetPlayerCritical(Attacker)))
+                if (parry_test <= (PlayerRelations.GetPlayerParry(Victim) - PlayerRelations.GetPlayerCritical(Attacker)))
                 {
                     SendData.Send_ActionMsg(Victim, lang.attack_missed, Globals.ColorWhite, VictimX, VictimY, 1, 0, Map);
                     return;
                 }
 
                 //Dano comum
-                int MinDamage = GetPlayerMinAttack(Attacker);
-                int MaxDamage = GetPlayerMaxAttack(Attacker);
+                int MinDamage = PlayerRelations.GetPlayerMinAttack(Attacker);
+                int MaxDamage = PlayerRelations.GetPlayerMaxAttack(Attacker);
 
                 if (is_pet)
                 {
@@ -4498,13 +2422,13 @@ namespace FORJERUM
                     {
                         Damage = MinDamage + super_damage;
                         Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
-                        Damage -= ((Damage / 100) * GetPlayerDefense(Victim));
+                        Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                     }
                     else
                     {
                         Damage = (Globals.Rand(MinDamage, MaxDamage)) + super_damage;
                         Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
-                        Damage -= ((Damage / 100) * GetPlayerDefense(Victim));
+                        Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                     }//
 
                     SendData.Send_Animation(Map, Globals.Target_Player, Victim, IStruct.item[petnum].animation_id);
@@ -4516,13 +2440,13 @@ namespace FORJERUM
                 {
                     Damage = MinDamage + super_damage;
                     Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
-                    Damage -= ((Damage / 100) * GetPlayerDefense(Victim));
+                    Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                 }
                 else 
                 { 
                     Damage = (Globals.Rand(MinDamage, MaxDamage)) + super_damage;
                     Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
-                    Damage -= ((Damage / 100) * GetPlayerDefense(Victim));
+                    Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                 }//
 
                 if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 2)
@@ -4545,7 +2469,7 @@ namespace FORJERUM
                 //Dano crítico?
                 int critical_test = Globals.Rand(0, 100);
 
-                if (critical_test <= GetPlayerCritical(Attacker))
+                if (critical_test <= PlayerRelations.GetPlayerCritical(Attacker))
                 {
                     Damage = Convert.ToInt32((Convert.ToDouble(Damage) * 1.5));
                     is_critical = true;
@@ -4667,7 +2591,7 @@ namespace FORJERUM
                 else
                 {
                     int exp = PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Exp / 2;
-                    GivePlayerExp(Attacker, exp);
+                    PlayerRelations.GivePlayerExp(Attacker, exp);
                     PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Exp -= exp;
                     SendData.Send_PlayerExp(Victim);
                     SendData.Send_ActionMsg(Victim, "-" + exp + lang.exp, 0, PlayerX, PlayerY, 1, 0, Map);
@@ -4719,7 +2643,7 @@ namespace FORJERUM
                     if ((MStruct.tile[map, x, y - range].Data1 == "17") || (MStruct.tile[map, x, y - range].Data1 == "18")) { return false; }                   
                     if (MStruct.tile[map, x, y - range].Data1 == "21")
                     {
-                        if (!IsPlayerPremmy(index))
+                        if (!PlayerRelations.IsPlayerPremmy(index))
                         {
                             return false;
                         }
@@ -4737,7 +2661,7 @@ namespace FORJERUM
                     if ((MStruct.tile[map, x, y + range].Data1 == "17") || (MStruct.tile[map, x, y + range].Data1 == "18")) { return false; }
                     if (MStruct.tile[map, x, y + range].Data1 == "21")
                     {
-                        if (!IsPlayerPremmy(index))
+                        if (!PlayerRelations.IsPlayerPremmy(index))
                         {
                             return false;
                         }
@@ -4755,7 +2679,7 @@ namespace FORJERUM
                     if ((MStruct.tile[map, x - range, y].Data1 == "17") || (MStruct.tile[map, x - range, y].Data1 == "18")) { return false; }
                     if (MStruct.tile[map, x - range, y].Data1 == "21")
                     {
-                        if (!IsPlayerPremmy(index))
+                        if (!PlayerRelations.IsPlayerPremmy(index))
                         {
                             return false;
                         }
@@ -4773,7 +2697,7 @@ namespace FORJERUM
                     if ((MStruct.tile[map, x + range, y].Data1 == "17") || (MStruct.tile[map, x + range, y].Data1 == "18")) { return false; }
                     if (MStruct.tile[map, x + range, y].Data1 == "21")
                     {
-                        if (!IsPlayerPremmy(index))
+                        if (!PlayerRelations.IsPlayerPremmy(index))
                         {
                             return false;
                         }
@@ -4953,137 +2877,6 @@ namespace FORJERUM
             }
 
             return 0;
-        }
-        //*********************************************************************************************
-        // KickParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Retira determinado jogador do grupo
-        //*********************************************************************************************
-        public static void KickParty(int index, int kicktarget, bool order = false)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, kicktarget, order) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            //Tentativas possíveis de hacker
-            if ((PStruct.tempplayer[kicktarget].Party == 0) || (PStruct.tempplayer[kicktarget].Party != PStruct.tempplayer[index].Party)) { return; }
-
-            if ((UserConnection.Getindex(kicktarget) < 0) || (UserConnection.Getindex(kicktarget) >= WinsockAsync.Clients.Count()))
-            {
-                SendData.Send_MsgToPlayer(index, lang.player_kick_offline, Globals.ColorRed, Globals.Msg_Type_Server);
-                return;
-            }
-
-            //Verifica se ele não saiu no processo
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(kicktarget))].IsConnected && (!order))
-            {
-                SendData.Send_MsgToPlayer(index, lang.player_kick_offline, Globals.ColorRed, Globals.Msg_Type_Server);
-                return;
-            }
-
-            //Verificar se ele é lider para tirar outro jogador
-            if ((PStruct.party[PStruct.tempplayer[index].Party].leader != index) && (kicktarget != index))
-            {
-                SendData.Send_MsgToPlayer(index, lang.you_is_not_the_party_leader, Globals.ColorRed, Globals.Msg_Type_Server);
-                return;
-            }
-
-            //Vamos trabalhar com isso
-            int partynum = PStruct.tempplayer[index].Party;
-            int memberindex = 0;
-
-            if (kicktarget == index)
-            {
-                //O id do jogador no grupo
-                memberindex = PStruct.GetPartyPlayerindex(partynum, index);
-
-                //Reposicionar todos os membros no grupo se quem saiu for maior que 3
-                if (memberindex <= 3)
-                {
-                    for (int i = (memberindex + 1); i < Globals.MaxPartyMembers; i++)
-                    {
-                        PStruct.partymembers[partynum, i - 1].index = PStruct.partymembers[partynum, i].index;
-                        PStruct.partymembers[partynum, i].index = 0;
-                    }
-                }
-                else
-                {
-                    PStruct.partymembers[partynum, 4].index = 0;
-                }
-
-                if (kicktarget == PStruct.party[partynum].leader)
-                {
-                    PStruct.party[partynum].leader = PStruct.partymembers[partynum, 1].index;
-                }
-
-                //Tiramos o grupo do jogador
-                PStruct.tempplayer[index].Party = 0;
-            }
-            else
-            {
-                //O id do jogador no grupo
-                memberindex = PStruct.GetPartyPlayerindex(partynum, kicktarget);
-
-                //Reposicionar todos os membros no grupo se quem saiu for maior que 3
-                if (memberindex <= 3)
-                {
-                    for (int i = (memberindex + 1); i < Globals.MaxPartyMembers; i++)
-                    {
-                        PStruct.partymembers[partynum, i - 1].index = PStruct.partymembers[partynum, i].index;
-                        PStruct.partymembers[partynum, i].index = 0;
-                    }
-                }
-                else
-                {
-                    PStruct.partymembers[partynum, 4].index = 0;
-                }
-
-                //Tiramos o grupo do jogador
-                PStruct.tempplayer[kicktarget].Party = 0;
-            }
-
-
-            //Algum jogador ficou sozinho?
-            if (PStruct.GetPartyMembersCount(partynum) == 1)
-            {
-                //Jogador que ficou sozinho será sempre o 1
-                int alone = PStruct.partymembers[partynum, 1].index;
-
-                //Limpamos o grupo do jogador que ficou sozinho
-                PStruct.tempplayer[alone].Party = 0;
-
-                //Limpamos o grupo
-                PStruct.party[partynum].leader = 0;
-                PStruct.party[partynum].active = false;
-
-                //Avisa ao jogador que ele não tem mais um grupo
-                SendData.Send_PartyKick(alone);
-                
-                //Verifica se não é um kick por ordem do servidor
-                if (!order)
-                {
-                    SendData.Send_PartyKick(kicktarget);
-                }
-
-                //Limpamos todos os membros do grupo
-                for (int i = (memberindex + 1); i < Globals.MaxPartyMembers; i++)
-                {
-                    PStruct.partymembers[partynum, i].index = 0;
-                }
-                return;
-            }
-
-            //Verifica se não é um kick por ordem do servidor
-            if (!order)
-            {
-                SendData.Send_PartyKick(kicktarget);
-            }
-
-            //Envia o grupo atualizado
-            SendData.Send_PartyDataToParty(partynum);
         }
         //*********************************************************************************************
         // ExecutePTempSpell / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -5360,115 +3153,6 @@ namespace FORJERUM
 
             PStruct.ptempspell[index, PStempSpell].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[PStruct.ptempspell[index, PStempSpell].spellnum].interval;
 
-        }
-        //*********************************************************************************************
-        // GivePlayerGold / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Entrega determinada quantidade de ouro para determinado jogador
-        //*********************************************************************************************
-        public static void GivePlayerGold(int index, int gold)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, gold) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            PStruct.character[index, PStruct.player[index].SelectedChar].Gold += gold;
-            SendData.Send_PlayerG(index);
-        }
-        public static int GetPlayerOriunklatex(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            for (int i = 1; i < Globals.MaxInvSlot; i++)
-            {
-                string item = PStruct.invslot[index, i].item;
-                string[] splititem = item.Split(',');
-
-                int itemNum = Convert.ToInt32(splititem[1]);
-                int itemValue = Convert.ToInt32(splititem[2]);
-                if ((itemNum == 68) && (itemValue > 0)) { return i; }
-            }
-
-            return 0;
-        }
-        //*********************************************************************************************
-        // GetPlayerExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Entrega determinada quantidade de exp para determinado jogador
-        //*********************************************************************************************
-        public static void GivePlayerExp(int index, int exp)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, exp) != null)
-            {
-                return;
-            }
-
-            //CÓDIGO
-            int PlayerX = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            int PlayerY = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
-            int Map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Exp += exp;
-
-            string equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
-            string[] equipdata = equipment.Split(',');
-            string[] petdata = equipdata[4].Split(';');
-
-            int petnum = Convert.ToInt32(petdata[0]);
-            int petlvl = Convert.ToInt32(petdata[1]);
-            int petexp = Convert.ToInt32(petdata[2]);
-
-            if (petnum > 0)
-            {
-                petexp += exp;
-
-                if (petexp >= GetPetExpToNextLevel(index, petlvl))
-                {
-                    petexp -= GetPetExpToNextLevel(index, petlvl);
-                    petlvl += 1;
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + petnum + ";" + petlvl + ";" + petexp;
-                    SendData.Send_ActionMsg(index, lang.pet_evolve, 3, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, Map);
-                    SendData.Send_PlayerEquipmentTo(index, index);
-                }
-                else
-                {
-                    //Enviar nova exp
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + petnum + ";" + petlvl + ";" + petexp;
-                    SendData.Send_PlayerEquipmentTo(index, index);
-                }
-            }
-
-            //Verificamos se ele subiu de nível
-            if ((PStruct.character[index, PStruct.player[index].SelectedChar].Exp >= GetExpToNextLevel(index)) && (PStruct.character[index, PStruct.player[index].SelectedChar].Level < 99))
-            {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Exp -= GetExpToNextLevel(index);
-                PStruct.character[index, PStruct.player[index].SelectedChar].Level += 1;
-                PStruct.character[index, PStruct.player[index].SelectedChar].Points += 5;
-                PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints += 1;
-                SendData.Send_ActionMsg(index, lang.level_up, 3, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, Map);
-                SendData.Send_Animation(Map, 1, index, 109);
-                SendData.Send_PlayerExp(index);
-                SendData.Send_PlayerLevel(index, index);
-                SendData.Send_PlayerSkillPoints(index);
-                SendData.Send_PlayerAtrTo(index);
-            }
-            else
-            {
-                //GetExpToNextLevel
-                SendData.Send_PlayerExp(index);
-                //Enviamos uma animação bonitinha de exp :D
-                SendData.Send_ActionMsg(index, "+" + exp + lang.exp, 0, PlayerX, PlayerY, 1, 0, Map);
-            }
         }
         //*********************************************************************************************
         // PlayerDeath / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon

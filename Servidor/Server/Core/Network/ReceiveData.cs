@@ -278,7 +278,7 @@ namespace FORJERUM
             }
 
             //Verificar se já não está na lista
-            if (PStruct.FriendNameExist(index, PStruct.character[target, PStruct.player[target].SelectedChar].CharacterName))
+            if (FriendRelations.FriendNameExist(index, PStruct.character[target, PStruct.player[target].SelectedChar].CharacterName))
             {
                 SendData.Send_MsgToPlayer(index, lang.player_already_is_your_friend, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
@@ -334,8 +334,8 @@ namespace FORJERUM
             {
                 SendData.Send_MsgToPlayer(index, lang.you_have_a_new_friend, Globals.ColorGreen, Globals.Msg_Type_Server);
                 SendData.Send_MsgToPlayer(target, PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + " " + lang.accepted_your_friend_request, Globals.ColorGreen, Globals.Msg_Type_Server);
-                PStruct.AddFriend(index, target);
-                PStruct.AddFriend(target, index);
+                FriendRelations.AddFriend(index, target);
+                FriendRelations.AddFriend(target, index);
             }
             else if (response == 1)
             {
@@ -368,7 +368,7 @@ namespace FORJERUM
             if ((Convert.ToInt32(splited[0]) > 200)) { return; }
             int friendnum = Convert.ToInt32(splited[0]);
 
-            PStruct.DeleteFriend(index, friendnum);
+            FriendRelations.DeleteFriend(index, friendnum);
 
         }
         //*********************************************************************************************
@@ -478,7 +478,7 @@ namespace FORJERUM
                     {
                         if (id <= MStruct.tppoint[i].count)
                         {
-                            PStruct.PlayerWarp(index, MStruct.tppoint[i].tp_map[id], MStruct.tppoint[i].tp_x[id], MStruct.tppoint[i].tp_y[id]);
+                            MovementRelations.PlayerWarp(index, MStruct.tppoint[i].tp_map[id], MStruct.tppoint[i].tp_x[id], MStruct.tppoint[i].tp_y[id]);
                             PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= MStruct.tppoint[i].cost;
                             SendData.Send_PlayerG(index);
                         }
@@ -610,7 +610,7 @@ namespace FORJERUM
             PStruct.tempplayer[index].ingame = false;
             if (response == "a")
             {
-                if (PStruct.IsPlayerBanned(index)) { SendData.Send_NStatus(index, "Essa conta está banida até " + PStruct.player[index].Banned.ToString()); return; }
+                if (PlayerRelations.IsPlayerBanned(index)) { SendData.Send_NStatus(index, "Essa conta está banida até " + PStruct.player[index].Banned.ToString()); return; }
                 if (!PStruct.player[index].Confirmed)
                 {
                     SendData.SendToUser(index, String.Format("<4 {0}>{1}</4>\n", "", "x"));
@@ -647,7 +647,7 @@ namespace FORJERUM
             //CÓDIGO
             string[] packet = data.Replace("<70>", "").Split(';');
             if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 3) { return; }
-            PStruct.PlayerWarp(index, Convert.ToInt32(packet[0]), PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y);
+            MovementRelations.PlayerWarp(index, Convert.ToInt32(packet[0]), PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y);
         }
         //*********************************************************************************************
         // ReceivedCharacterSelection / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -667,14 +667,14 @@ namespace FORJERUM
                 //Sai da troca
                 if (PStruct.tempplayer[index].InTrade > 0)
                 {
-                    PStruct.GiveTrade(index);
-                    PStruct.GiveTrade(PStruct.tempplayer[index].InTrade);
+                    TradeRelations.GiveTrade(index);
+                    TradeRelations.GiveTrade(PStruct.tempplayer[index].InTrade);
 
 
                     if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
                     {
-                        PStruct.ClearTempTrade(PStruct.tempplayer[index].InTrade);
-                        PStruct.ClearTempTrade(index);
+                        TradeRelations.ClearTempTrade(PStruct.tempplayer[index].InTrade);
+                        TradeRelations.ClearTempTrade(index);
                         return;
                     }
 
@@ -685,8 +685,8 @@ namespace FORJERUM
                         SendData.Send_InvSlots(PStruct.tempplayer[index].InTrade, PStruct.player[PStruct.tempplayer[index].InTrade].SelectedChar);
                     }
 
-                    PStruct.ClearTempTrade(PStruct.tempplayer[index].InTrade);
-                    PStruct.ClearTempTrade(index);
+                    TradeRelations.ClearTempTrade(PStruct.tempplayer[index].InTrade);
+                    TradeRelations.ClearTempTrade(index);
                 }
 
                 //Sai do Craft
@@ -696,7 +696,7 @@ namespace FORJERUM
                     {
                         if (PStruct.craft[index, i].num > 0)
                         {
-                            PStruct.GiveItem(index, PStruct.craft[index, i].type, PStruct.craft[index, i].num, PStruct.craft[index, i].value, PStruct.craft[index, i].refin, PStruct.craft[index, i].exp);
+                            InventoryRelations.GiveItem(index, PStruct.craft[index, i].type, PStruct.craft[index, i].num, PStruct.craft[index, i].value, PStruct.craft[index, i].refin, PStruct.craft[index, i].exp);
                         }
                     }
                 }
@@ -712,7 +712,7 @@ namespace FORJERUM
                 //Sai do grupo
                 if (PStruct.tempplayer[index].Party > 0)
                 {
-                    PStruct.KickParty(index, index, true);
+                    PartyRelations.KickParty(index, index, true);
                 }
 
                 //Vamos avisar ao mapa que o jogador saiu
@@ -839,7 +839,7 @@ namespace FORJERUM
             int hue = Convert.ToInt32(newChar[9]);
             int gender = Convert.ToInt32(newChar[10]);
 
-            if ((!PStruct.IsPlayerPremmy(index)) && (classid == 6)) { SendData.Send_NStatus(index, "Raça disponível apenas para assinantes."); return; }
+            if ((!PlayerRelations.IsPlayerPremmy(index)) && (classid == 6)) { SendData.Send_NStatus(index, "Raça disponível apenas para assinantes."); return; }
 
             try { if ((Convert.ToInt32(newChar[1]) < 0) || (Convert.ToInt32(newChar[1]) > Globals.MaxChars)) { return; } } catch { return; }
             if (Database.CharExists(newChar[0]))
@@ -1113,9 +1113,9 @@ namespace FORJERUM
 
             byte Dir = Convert.ToByte(splited[0]);
 
-            if ((PStruct.CanPlayerMove(index, Dir) == true) && (PStruct.tempplayer[index].MoveTimer < Loops.TickCount.ElapsedMilliseconds))
+            if ((MovementRelations.CanPlayerMove(index, Dir) == true) && (PStruct.tempplayer[index].MoveTimer < Loops.TickCount.ElapsedMilliseconds))
             {
-                PStruct.PlayerMove(index, Dir);
+                MovementRelations.PlayerMove(index, Dir);
                 PStruct.tempplayer[index].MoveTimer = Loops.TickCount.ElapsedMilliseconds + Convert.ToInt64((((8 + (4 - PStruct.tempplayer[index].movespeed) - PStruct.tempplayer[index].movespeed) * 64) - 25)); //25ms de tolerância
             }
             else
@@ -1221,7 +1221,7 @@ namespace FORJERUM
                         int itemrefin = Convert.ToInt32(itemdata[3]);
                         int itemexp = Convert.ToInt32(itemdata[4]);
 
-                        PStruct.GiveItem(index, itemtype, itemnum, itemvalue, itemrefin, itemexp);
+                        InventoryRelations.GiveItem(index, itemtype, itemnum, itemvalue, itemrefin, itemexp);
                         return;
                     }
                 }
@@ -1235,7 +1235,7 @@ namespace FORJERUM
                         {
                             if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == charMsg))
                             {
-                                PStruct.PlayerWarp(i, PStruct.character[index, PStruct.player[index].SelectedChar].Map, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y);
+                                MovementRelations.PlayerWarp(i, PStruct.character[index, PStruct.player[index].SelectedChar].Map, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y);
                                 break;
                             }
                         }
@@ -1252,7 +1252,7 @@ namespace FORJERUM
                         {
                             if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == charMsg))
                             {
-                                PStruct.PlayerWarp(index, PStruct.character[i, PStruct.player[i].SelectedChar].Map, PStruct.character[i, PStruct.player[i].SelectedChar].X, PStruct.character[i, PStruct.player[i].SelectedChar].Y);
+                                MovementRelations.PlayerWarp(index, PStruct.character[i, PStruct.player[i].SelectedChar].Map, PStruct.character[i, PStruct.player[i].SelectedChar].X, PStruct.character[i, PStruct.player[i].SelectedChar].Y);
                                 break;
                             }
                         }
@@ -1301,7 +1301,7 @@ namespace FORJERUM
                         {
                             if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == playername))
                             {
-                                PStruct.GivePlayerExp(i, exp);
+                                PlayerRelations.GivePlayerExp(i, exp);
                                 break;
                             }
                         }
@@ -1482,7 +1482,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!PStruct.GiveItem(index, itemType, Convert.ToInt32(Pet), 1, Convert.ToInt32(PetRefin), Convert.ToInt32(PetExp)))
+                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Pet), 1, Convert.ToInt32(PetRefin), Convert.ToInt32(PetExp)))
                         {
                             return;
                         }
@@ -1497,7 +1497,7 @@ namespace FORJERUM
                    if (PStruct.GiveSpell(index, 28))
                    {
                        SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                       PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                       InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                        SendData.Send_PlayerSkills(index);
                        return;
@@ -1508,7 +1508,7 @@ namespace FORJERUM
                     if (PStruct.GiveSpell(index, 29))
                     {
                         SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                         SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                         SendData.Send_PlayerSkills(index);
                         return;
@@ -1519,7 +1519,7 @@ namespace FORJERUM
                     if (PStruct.GiveSpell(index, 30))
                     {
                         SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                         SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                         SendData.Send_PlayerSkills(index);
                         return;
@@ -1530,7 +1530,7 @@ namespace FORJERUM
                     if (PStruct.GiveSpell(index, 31))
                     {
                         SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                         SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                         SendData.Send_PlayerSkills(index);
                         return;
@@ -1541,7 +1541,7 @@ namespace FORJERUM
                     if (PStruct.GiveSpell(index, 32))
                     {
                         SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                         SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                         SendData.Send_PlayerSkills(index);
                         return;
@@ -1552,7 +1552,7 @@ namespace FORJERUM
                     if (PStruct.GiveSpell(index, 34))
                     {
                         SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                         SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                         SendData.Send_PlayerSkills(index);
                         return;
@@ -1560,8 +1560,8 @@ namespace FORJERUM
                 }
                 if (itemNum == 69)
                 {
-                    PStruct.PlayerWarp(index, Globals.InitialMap, Globals.InitialX, Globals.InitialY);
-                    PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                    MovementRelations.PlayerWarp(index, Globals.InitialMap, Globals.InitialX, Globals.InitialY);
+                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                     SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                 }
                 if (itemNum == 73)
@@ -1587,7 +1587,7 @@ namespace FORJERUM
                         SendData.Send_PlayerVitalityToMap(map, target, 10);
                         SendData.Send_Animation(map, Globals.Target_Player, target, 38);
                     }
-                    PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                     SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                 }
                 if (itemNum == 74)
@@ -1602,7 +1602,7 @@ namespace FORJERUM
                         SendData.Send_PlayerSoreToMap(index);
                         SendData.Send_PlayerPvpBanTimer(index);
                         SendData.Send_Animation(map, Globals.Target_Player, index, 108);
-                        PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                         SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                     }
                 }
@@ -1611,7 +1611,7 @@ namespace FORJERUM
                     if (PStruct.tempplayer[index].Vitality >= PStruct.GetPlayerMaxVitality(index)) { return; }
                     if (PStruct.tempplayer[index].isDead) { return; }
                     PlayerLogic.HealPlayer(index, (PStruct.GetPlayerMaxVitality(index) / 100) * Convert.ToInt32(IStruct.item[itemNum].damage_formula));
-                    PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                     SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                     return;
                 }
@@ -1620,7 +1620,7 @@ namespace FORJERUM
                     if (PStruct.tempplayer[index].Spirit >= PStruct.GetPlayerMaxSpirit(index)) { return; }
                     if (PStruct.tempplayer[index].isDead) { return; }
                     PlayerLogic.SpiritPlayer(index, (PStruct.GetPlayerMaxSpirit(index) / 100) * Convert.ToInt32(IStruct.item[itemNum].damage_formula));
-                    PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
                     SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                     return;
                 }
@@ -1633,7 +1633,7 @@ namespace FORJERUM
                     {
                         itemValue += 1;
                     }
-                    if (!PStruct.GiveItem(index, itemType, Convert.ToInt32(Weapon), 1, Convert.ToInt32(WeaponRefin), Globals.NullExp))
+                    if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Weapon), 1, Convert.ToInt32(WeaponRefin), Globals.NullExp))
                     {
                         return;
                     }
@@ -1652,7 +1652,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!PStruct.GiveItem(index, itemType, Convert.ToInt32(Shield), 1, Convert.ToInt32(ShieldRefin), Globals.NullExp))
+                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Shield), 1, Convert.ToInt32(ShieldRefin), Globals.NullExp))
                         {
                             return;
                         }
@@ -1669,7 +1669,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!PStruct.GiveItem(index, itemType, Convert.ToInt32(Helmet), 1, Convert.ToInt32(HelmetRefin), Globals.NullExp))
+                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Helmet), 1, Convert.ToInt32(HelmetRefin), Globals.NullExp))
                         {
                             return;
                         }
@@ -1686,7 +1686,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!PStruct.GiveItem(index, itemType, Convert.ToInt32(Armor), 1, Convert.ToInt32(ArmorRefin), Globals.NullExp))
+                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Armor), 1, Convert.ToInt32(ArmorRefin), Globals.NullExp))
                         {
                             return;
                         }
@@ -1745,23 +1745,23 @@ namespace FORJERUM
             switch (itemUse)
             {
                 case 0:
-                    if (!PStruct.GiveItem(index, 3, Convert.ToInt32(equip0[0]), 1, Convert.ToInt32(equip0[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.GiveItem(index, 3, Convert.ToInt32(equip0[0]), 1, Convert.ToInt32(equip0[1]), Globals.NullExp)) { return; }
                     equipdata[0] = "0;0";
                     break;
                 case 1:
-                    if (!PStruct.GiveItem(index, 3, Convert.ToInt32(equip1[0]), 1, Convert.ToInt32(equip1[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.GiveItem(index, 3, Convert.ToInt32(equip1[0]), 1, Convert.ToInt32(equip1[1]), Globals.NullExp)) { return; }
                     equipdata[1] = "0;0";
                     break;
                 case 2:
-                    if (!PStruct.GiveItem(index, 2, Convert.ToInt32(equip2[0]), 1, Convert.ToInt32(equip2[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.GiveItem(index, 2, Convert.ToInt32(equip2[0]), 1, Convert.ToInt32(equip2[1]), Globals.NullExp)) { return; }
                     equipdata[2] = "0;0";
                     break;
                 case 3:
-                    if (!PStruct.GiveItem(index, 3, Convert.ToInt32(equip3[0]), 1, Convert.ToInt32(equip3[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.GiveItem(index, 3, Convert.ToInt32(equip3[0]), 1, Convert.ToInt32(equip3[1]), Globals.NullExp)) { return; }
                     equipdata[3] = "0;0";
                     break;
                 case 4:
-                    if (!PStruct.GiveItem(index, 1, Convert.ToInt32(equip4[0]), 1, Convert.ToInt32(equip4[1]), Convert.ToInt32(equip4[2]))) { return; }
+                    if (!InventoryRelations.GiveItem(index, 1, Convert.ToInt32(equip4[0]), 1, Convert.ToInt32(equip4[1]), Convert.ToInt32(equip4[2]))) { return; }
                     equipdata[4] = "0;0;0";
                     break;
             }
@@ -1901,11 +1901,11 @@ namespace FORJERUM
                                         {
                                             if (MStruct.chestpoint[i].reward_count > 0)
                                             {
-                                                if (PStruct.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                                if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
                                                 for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
                                                 {
                                                     string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                    PStruct.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                    InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                                 }
                                             }
                                         }
@@ -1925,11 +1925,11 @@ namespace FORJERUM
                                     {
                                         if (MStruct.chestpoint[i].reward_count > 0)
                                         {
-                                            if (PStruct.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                            if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
                                             for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
                                             {
                                                 string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                PStruct.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                             }
                                         }
                                         PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
@@ -1948,11 +1948,11 @@ namespace FORJERUM
                                     {
                                         if (MStruct.chestpoint[i].reward_count > 0)
                                         {
-                                            if (PStruct.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                            if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
                                             for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
                                             {
                                                 string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                PStruct.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                             }
                                         }
                                         PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
@@ -1971,11 +1971,11 @@ namespace FORJERUM
                                     {
                                         if (MStruct.chestpoint[i].reward_count > 0)
                                         {
-                                            if (PStruct.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                            if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
                                             for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
                                             {
                                                 string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                PStruct.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                             }
                                         }
                                         PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
@@ -2211,7 +2211,7 @@ namespace FORJERUM
             {
                 if ((MStruct.mapitem[map, i].X == playerx) && (MStruct.mapitem[map, i].Y == playery))
                 {
-                    if (PStruct.GiveItem(index, MStruct.mapitem[map, i].ItemType, MStruct.mapitem[map, i].ItemNum, MStruct.mapitem[map, i].Value, MStruct.mapitem[map, i].Refin, MStruct.mapitem[map, i].Exp) == true)
+                    if (InventoryRelations.GiveItem(index, MStruct.mapitem[map, i].ItemType, MStruct.mapitem[map, i].ItemNum, MStruct.mapitem[map, i].Value, MStruct.mapitem[map, i].Refin, MStruct.mapitem[map, i].Exp) == true)
                     {
                         if (MStruct.mapitem[map, i].ItemType == 1)
                         {
@@ -3003,7 +3003,7 @@ namespace FORJERUM
                 if (PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party == 0)
                 {
                     //Checa um grupo livre
-                    partynum = PStruct.GetPartyFree();
+                    partynum = PartyRelations.GetPartyFree();
 
                     //Definindo posições
                     PStruct.party[partynum].leader = PStruct.tempplayer[index].Invited;
@@ -3040,7 +3040,7 @@ namespace FORJERUM
                             PStruct.partymembers[PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party, i].index = index;
                             PStruct.tempplayer[index].Party = PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party;
                             int p_index;
-                            int partymemberscount = PStruct.GetPartyMembersCount(PStruct.tempplayer[index].Party);
+                            int partymemberscount = PartyRelations.GetPartyMembersCount(PStruct.tempplayer[index].Party);
                             for (int p = 1; p <= partymemberscount; p++)
                             {
                                 p_index = PStruct.partymembers[PStruct.tempplayer[index].Party, p].index;
@@ -3101,7 +3101,7 @@ namespace FORJERUM
             int kicktarget = Convert.ToInt32(splited[0]);
             
             //Será o melhor?
-            PStruct.KickParty(index, kicktarget);
+            PartyRelations.KickParty(index, kicktarget);
         }
         //*********************************************************************************************
         // ReceivedPartChange / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -3296,7 +3296,7 @@ namespace FORJERUM
                 return; 
             }
 
-            int tradeslot = PStruct.GetFreeTradeOffer(index);
+            int tradeslot = TradeRelations.GetFreeTradeOffer(index);
 
             if (tradeslot == 0)
             {
@@ -3646,8 +3646,8 @@ namespace FORJERUM
             }
             else
             {
-                PStruct.ClearTempTrade(index);
-                PStruct.ClearTempTrade(PStruct.tempplayer[index].Invited);
+                TradeRelations.ClearTempTrade(index);
+                TradeRelations.ClearTempTrade(PStruct.tempplayer[index].Invited);
                 SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.player_refused_trade_invite, Globals.ColorRed, Globals.Msg_Type_Server);
             }
         }
@@ -3682,16 +3682,16 @@ namespace FORJERUM
 
             if ((PStruct.tempplayer[index].TradeStatus == 1) && (PStruct.tempplayer[tradetarget].TradeStatus == 1))
             {
-                PStruct.GiveTradeTo(index, tradetarget);
-                PStruct.GiveTradeTo(tradetarget, index);
+                TradeRelations.GiveTradeTo(index, tradetarget);
+                TradeRelations.GiveTradeTo(tradetarget, index);
                 SendData.Send_InvSlots(tradetarget, PStruct.player[tradetarget].SelectedChar);
                 SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                 SendData.Send_PlayerG(index);
                 SendData.Send_PlayerG(tradetarget);
                 SendData.Send_TradeAccept(index, 3);
                 SendData.Send_TradeAccept(tradetarget, 3);
-                PStruct.ClearTempTrade(index);
-                PStruct.ClearTempTrade(tradetarget);
+                TradeRelations.ClearTempTrade(index);
+                TradeRelations.ClearTempTrade(tradetarget);
                 return;
             }
 
@@ -3791,13 +3791,13 @@ namespace FORJERUM
             if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
             {
                 SendData.Send_TradeClose(index);
-                PStruct.GiveTrade(index);
+                TradeRelations.GiveTrade(index);
                 return;
             }
             if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
             {
                 SendData.Send_TradeClose(index);
-                PStruct.GiveTrade(index);
+                TradeRelations.GiveTrade(index);
                 return;
             }
 
@@ -3805,22 +3805,22 @@ namespace FORJERUM
 
             if (PStruct.tempplayer[index].TradeG > 0)
             {
-                PStruct.GivePlayerGold(index, PStruct.tempplayer[index].TradeG); 
+                PlayerRelations.GivePlayerGold(index, PStruct.tempplayer[index].TradeG); 
                 PStruct.tempplayer[index].TradeG = 0;
             }
 
             if (PStruct.tempplayer[tradetarget].TradeG > 0)
             {
-                PStruct.GivePlayerGold(tradetarget, PStruct.tempplayer[tradetarget].TradeG); 
+                PlayerRelations.GivePlayerGold(tradetarget, PStruct.tempplayer[tradetarget].TradeG); 
                 PStruct.tempplayer[tradetarget].TradeG = 0;
             }
 
             SendData.Send_TradeClose(index);
             SendData.Send_TradeClose(tradetarget);
-            PStruct.GiveTrade(index);
-            PStruct.GiveTrade(tradetarget);
-            PStruct.ClearTempTrade(index);
-            PStruct.ClearTempTrade(tradetarget);
+            TradeRelations.GiveTrade(index);
+            TradeRelations.GiveTrade(tradetarget);
+            TradeRelations.ClearTempTrade(index);
+            TradeRelations.ClearTempTrade(tradetarget);
         }
         //*********************************************************************************************
         // ReceiveAddTradeG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -3927,7 +3927,7 @@ namespace FORJERUM
                 }
             }
 
-            int quest = PStruct.GetActualPlayerQuestPerGiver(index, questgiver);
+            int quest = QuestRelations.GetActualPlayerQuestPerGiver(index, questgiver);
 
             if (String.IsNullOrEmpty(MStruct.quest[questgiver, quest].type)) { PStruct.queststatus[index, questgiver, quest].status = 0; return; }
 
@@ -4004,7 +4004,7 @@ namespace FORJERUM
                 }
 
 
-                if (MStruct.quest[questgiver, quest].rewardvalue > PStruct.GetNumOfInvFreeSlots(index))
+                if (MStruct.quest[questgiver, quest].rewardvalue > InventoryRelations.GetNumOfInvFreeSlots(index))
                 {
                     SendData.Send_MsgToPlayer(index, lang.quest_reward_inventory_full, Globals.ColorGreen, Globals.Msg_Type_Server);
                     return;
@@ -4016,13 +4016,13 @@ namespace FORJERUM
                 {
                     for (int i = 1; i <= MStruct.quest[questgiver, quest].itemvalue; i++)
                     {
-                        PStruct.PickItem(index, Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[0]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[1]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[2]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[3])); 
+                        InventoryRelations.PickItem(index, Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[0]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[1]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[2]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[3])); 
                     }
                 }
 
                 //Entrega as recompensas
 
-                if (PStruct.IsQuestGiverRepeatable(questgiver))
+                if (QuestRelations.IsQuestGiverRepeatable(questgiver))
                 {
                     //Reinicia a missão
                     PStruct.queststatus[index, questgiver, quest].status = 0;
@@ -4063,10 +4063,10 @@ namespace FORJERUM
                 for (int i = 1; i <= MStruct.quest[questgiver, quest].rewardvalue; i++)
                 {
                     item = MStruct.questrewards[questgiver, quest, i].item.Split('/');
-                    PStruct.GiveItem(index, Convert.ToInt32(item[0]), Convert.ToInt32(item[1]), Convert.ToInt32(item[2]), Convert.ToInt32(item[3]), Globals.NullExp);
+                    InventoryRelations.GiveItem(index, Convert.ToInt32(item[0]), Convert.ToInt32(item[1]), Convert.ToInt32(item[2]), Convert.ToInt32(item[3]), Globals.NullExp);
                 }
-                PStruct.GivePlayerExp(index, MStruct.quest[questgiver, quest].exp);
-                PStruct.GivePlayerGold(index, MStruct.quest[questgiver, quest].gold);
+                PlayerRelations.GivePlayerExp(index, MStruct.quest[questgiver, quest].exp);
+                PlayerRelations.GivePlayerGold(index, MStruct.quest[questgiver, quest].gold);
                 SendData.Send_MsgToPlayer(index, lang.completed_a_mission, Globals.ColorGreen, Globals.Msg_Type_Server);
                 SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
             }
@@ -4098,7 +4098,7 @@ namespace FORJERUM
 
             if ((shopnum <= 0) || (shopnum > ShopStruct.shop[PStruct.tempplayer[index].InShop].item_count)) { return; }
 
-            if (PStruct.GetNumOfInvFreeSlots(index) <= 0)
+            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0)
             {
                 SendData.Send_MsgToPlayer(index, lang.shop_inventory_full, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
@@ -4107,7 +4107,7 @@ namespace FORJERUM
             if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold >= ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].price)
             {
                 PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].price;
-                PStruct.GiveItem(index, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].type, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].num, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].value, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].refin, Globals.NullExp);
+                InventoryRelations.GiveItem(index, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].type, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].num, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].value, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].refin, Globals.NullExp);
                 SendData.Send_MsgToPlayer(index, lang.you_bought_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
                 SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
                 SendData.Send_PlayerG(index);
@@ -4161,7 +4161,7 @@ namespace FORJERUM
                 return;
             }
 
-            if (PStruct.GetNumOfInvFreeSlots(index) <= 0)
+            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0)
             {
                 SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space_to_buy, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
@@ -4171,7 +4171,7 @@ namespace FORJERUM
             {
                 PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].price;
                 PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].Gold += PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].price;
-                PStruct.GiveItem(index, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].type, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].num, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].value, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].refin, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].exp);
+                InventoryRelations.GiveItem(index, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].type, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].num, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].value, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].refin, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].exp);
                 for (int i = (shopnum + 1); i < Globals.Max_PShops; i++)
                 {
                     PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i - 1].num = PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].num;
@@ -4249,7 +4249,7 @@ namespace FORJERUM
             int itemValue = Convert.ToInt32(splititem[2]);
             int itemRefin = Convert.ToInt32(splititem[3]);
 
-            if (!PStruct.PickItem(index, itemType, itemNum, value, itemRefin)) { return; }
+            if (!InventoryRelations.PickItem(index, itemType, itemNum, value, itemRefin)) { return; }
 
             int gold_value = 0;
 
@@ -4270,7 +4270,7 @@ namespace FORJERUM
                   return;
             }
 
-            PStruct.GivePlayerGold(index, gold_value);
+            PlayerRelations.GivePlayerGold(index, gold_value);
             SendData.Send_PlayerG(index);
             SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
             SendData.Send_MsgToPlayer(index, lang.you_sold_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
@@ -4302,7 +4302,7 @@ namespace FORJERUM
                     }
                     if (MStruct.craftpoint[i].type == Globals.Job_Blacksmith)
                     {
-                        if (PStruct.GetPlayerWeapon(index) == 31)
+                        if (EquipmentRelations.GetPlayerWeapon(index) == 31)
                         {
                             PStruct.tempplayer[index].InCraft = true;
                             PStruct.tempplayer[index].CraftType = MStruct.craftpoint[i].type;
@@ -4467,7 +4467,7 @@ namespace FORJERUM
             {
                 if (PStruct.craft[index, i].num > 0)
                 {
-                    PStruct.GiveItem(index, PStruct.craft[index, i].type, PStruct.craft[index, i].num, PStruct.craft[index, i].value, PStruct.craft[index, i].refin, PStruct.craft[index, i].exp);
+                    InventoryRelations.GiveItem(index, PStruct.craft[index, i].type, PStruct.craft[index, i].num, PStruct.craft[index, i].value, PStruct.craft[index, i].refin, PStruct.craft[index, i].exp);
                     need_invslot = true;
                     PStruct.craft[index, i].num = 0;
                     PStruct.craft[index, i].type = 0;
@@ -4499,7 +4499,7 @@ namespace FORJERUM
             if (PStruct.tempplayer[index].CraftType <= 0) { return; }
             if (PStruct.tempplayer[index].CraftItem <= 0) { return; }
             if (MStruct.craftrecipe[PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, 1].num <= 0) { return; }
-            if (PStruct.GetNumOfInvFreeSlots(index) <= 0) { SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0) { SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             int[] craftslot = new int[Globals.Max_Craft];
 
@@ -4532,7 +4532,7 @@ namespace FORJERUM
             }
 
 
-            PStruct.GiveItem(index, PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, 1, PStruct.GetRefinCraft(index, PStruct.tempplayer[index].CraftType), Globals.NullExp);
+            InventoryRelations.GiveItem(index, PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, 1, PStruct.GetRefinCraft(index, PStruct.tempplayer[index].CraftType), Globals.NullExp);
             SendData.Send_MsgToPlayer(index, lang.you_created_a_new_item, Globals.ColorGreen, Globals.Msg_Type_Server);
             SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
 
@@ -4590,7 +4590,7 @@ namespace FORJERUM
 
             if (PStruct.craft[index, craftslot].num <= 0) { return; }
 
-            if (!PStruct.GiveItem(index, PStruct.craft[index, craftslot].type, PStruct.craft[index, craftslot].num, PStruct.craft[index, craftslot].value, PStruct.craft[index, craftslot].refin, PStruct.craft[index, craftslot].exp)) { return; }
+            if (!InventoryRelations.GiveItem(index, PStruct.craft[index, craftslot].type, PStruct.craft[index, craftslot].num, PStruct.craft[index, craftslot].value, PStruct.craft[index, craftslot].refin, PStruct.craft[index, craftslot].exp)) { return; }
             PStruct.craft[index, craftslot].type = 0;
             PStruct.craft[index, craftslot].num = 0;
             PStruct.craft[index, craftslot].value = 0;
@@ -4620,7 +4620,7 @@ namespace FORJERUM
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) <= 0)) { return; }
 
-            int oriunslot = PStruct.GetPlayerOriunklatex(index);
+            int oriunslot = PlayerRelations.GetPlayerOriunklatex(index);
 
             if (oriunslot == 0) { return; }
 
@@ -4638,14 +4638,14 @@ namespace FORJERUM
             if (itemNum <= 0) { return; }
             if ((itemType == 0) || (itemType == 1)) { return; }
 
-            if (PStruct.GetNumOfInvFreeSlots(index) <= 0) { SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space, Globals.ColorGreen, Globals.Msg_Type_Server); return; }
+            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0) { SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space, Globals.ColorGreen, Globals.Msg_Type_Server); return; }
 
             //Pegar oriun
-            PStruct.PickItem(index, 1, 68, 1, 0);
+            InventoryRelations.PickItem(index, 1, 68, 1, 0);
             //Pegar um equipamento selecionado
-            PStruct.PickItem(index, itemType, itemNum, 1, itemRefin);
+            InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
             //Entregar novo equipamento
-            PStruct.GiveItem(index, itemType, itemNum, 1, itemRefin + 1, itemExp);
+            InventoryRelations.GiveItem(index, itemType, itemNum, 1, itemRefin + 1, itemExp);
 
             SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
             SendData.Send_MsgToPlayer(index, lang.you_evolved_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
@@ -4673,7 +4673,7 @@ namespace FORJERUM
             int slot = Convert.ToInt32(splited[0]);
 
             if (ShopStruct.shopitem[Globals.Shop_W, slot].price > PStruct.player[index].WPoints) { return; }
-            if (!PStruct.GiveBankItem(index, ShopStruct.shopitem[Globals.Shop_W, slot].type, ShopStruct.shopitem[Globals.Shop_W, slot].num, ShopStruct.shopitem[Globals.Shop_W, slot].value, ShopStruct.shopitem[Globals.Shop_W, slot].refin, Globals.NullExp)) { SendData.Send_NStatus(index, "Falha ao entrar o item, verifique o banco."); return; }
+            if (!BankRelations.GiveBankItem(index, ShopStruct.shopitem[Globals.Shop_W, slot].type, ShopStruct.shopitem[Globals.Shop_W, slot].num, ShopStruct.shopitem[Globals.Shop_W, slot].value, ShopStruct.shopitem[Globals.Shop_W, slot].refin, Globals.NullExp)) { SendData.Send_NStatus(index, "Falha ao entrar o item, verifique o banco."); return; }
             PStruct.player[index].WPoints -= ShopStruct.shopitem[Globals.Shop_W, slot].price;
 
             SendData.Send_WPoints(index);
@@ -4709,7 +4709,7 @@ namespace FORJERUM
             int itemExp = PStruct.player[index].bankslot[bankslot].exp;
 
             if (itemNum <= 0) { return; }
-            if (!PStruct.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
+            if (!InventoryRelations.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
 
             PStruct.player[index].bankslot[bankslot].type = 0;
             PStruct.player[index].bankslot[bankslot].num = 0;
@@ -4749,7 +4749,7 @@ namespace FORJERUM
             int itemExp = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[pshopslot].exp;
 
             if (itemNum <= 0) { return; }
-            if (!PStruct.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
+            if (!InventoryRelations.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
 
             for (int i = (pshopslot + 1); i < Globals.Max_PShops; i++)
             {
@@ -4880,8 +4880,8 @@ namespace FORJERUM
                 return;
             }
 
-            if (!PStruct.GiveBankItem(index, itemType, itemNum, value, itemRefin, itemExp)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-            if (!PStruct.PickItem(index, itemType, itemNum, value, itemRefin)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!BankRelations.GiveBankItem(index, itemType, itemNum, value, itemRefin, itemExp)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!InventoryRelations.PickItem(index, itemType, itemNum, value, itemRefin)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             SendData.Send_BankSlots(index);
             SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
@@ -4932,7 +4932,7 @@ namespace FORJERUM
             }
 
             if (!PStruct.GivePShopItem(index, itemType, itemNum, value, itemRefin, price, itemExp)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-            if (!PStruct.PickItem(index, itemType, itemNum, value, itemRefin)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!InventoryRelations.PickItem(index, itemType, itemNum, value, itemRefin)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             SendData.Send_PShopSlots(index, index);
             SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
@@ -4962,7 +4962,7 @@ namespace FORJERUM
             int x = PStruct.character[index, PStruct.player[index].SelectedChar].X;
             int y = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
 
-            int quest = PStruct.GetActualPlayerQuestPerGiver(index, questgiver);
+            int quest = QuestRelations.GetActualPlayerQuestPerGiver(index, questgiver);
 
             int actionmap;
             int actionx;
@@ -5064,7 +5064,7 @@ namespace FORJERUM
                 byte bootx = PStruct.character[index, PStruct.player[index].SelectedChar].BootX;
                 byte booty = PStruct.character[index, PStruct.player[index].SelectedChar].BootY;
 
-                PStruct.PlayerWarp(index, bootmap, bootx, booty);
+                MovementRelations.PlayerWarp(index, bootmap, bootx, booty);
 
                 PStruct.tempplayer[index].Vitality = 1;
                 if (PStruct.tempplayer[index].Party > 0)

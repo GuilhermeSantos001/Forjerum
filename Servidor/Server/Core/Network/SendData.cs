@@ -603,7 +603,7 @@ namespace FORJERUM
             //CÓDIGO
             string packet = "";
 
-            int friendscount = PStruct.GetPlayerFriendsCount(index);
+            int friendscount = FriendRelations.GetPlayerFriendsCount(index);
 
             packet = packet + friendscount + ";";
 
@@ -618,7 +618,7 @@ namespace FORJERUM
                 packet = packet + PStruct.player[index].friend[i].classid + ";";
                 packet = packet + PStruct.player[index].friend[i].level + ";";
                 packet = packet + PStruct.player[index].friend[i].guildname + ";";
-                if (PStruct.FriendIsOnline(index, i)) { packet = packet + "1" + ";"; } else { packet = packet + "0" + ";"; }
+                if (FriendRelations.FriendIsOnline(index, i)) { packet = packet + "1" + ";"; } else { packet = packet + "0" + ";"; }
             }
 
             SendToUser(index, String.Format("<87>{0}</87>\n", packet));
@@ -1307,7 +1307,7 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            int partymemberscount = PStruct.GetPartyMembersCount(partynum);
+            int partymemberscount = PartyRelations.GetPartyMembersCount(partynum);
             packet = packet + (partymemberscount) + ",";
             packet = packet + PStruct.party[partynum].leader + ",";
             for (int i = 1; i <= partymemberscount; i++)
@@ -1330,7 +1330,7 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            int partymemberscount = PStruct.GetPartyMembersCount(partynum);
+            int partymemberscount = PartyRelations.GetPartyMembersCount(partynum);
             packet = packet + (partymemberscount) + ",";
             packet = packet + PStruct.party[partynum].leader + ",";
             for (int i = 1; i <= partymemberscount; i++)
@@ -1369,7 +1369,7 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            int partymemberscount = PStruct.GetPartyMembersCount(partynum);
+            int partymemberscount = PartyRelations.GetPartyMembersCount(partynum);
             for (int i = 1; i <= partymemberscount; i++)
             {
                 packet = packet + PStruct.character[PStruct.partymembers[partynum, i].index, PStruct.player[PStruct.partymembers[partynum, i].index].SelectedChar].Vitality + ",";
@@ -1473,7 +1473,7 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            int tradeofferscount = PStruct.GetPlayerTradeOffersCount(index);
+            int tradeofferscount = TradeRelations.GetPlayerTradeOffersCount(index);
             packet = packet + (index) + ";";
             packet = packet + tradeofferscount + ";";
             packet = packet + PStruct.tempplayer[index].TradeG + ";";
@@ -1591,7 +1591,7 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            int questcount = PStruct.GetPlayerQuestsCount(index);
+            int questcount = QuestRelations.GetPlayerQuestsCount(index);
             packet = packet + questcount + ";";
             for (int g = 1; g < Globals.MaxQuestGivers; g++)
             {
@@ -1980,7 +1980,7 @@ namespace FORJERUM
             //CÓDIGO
             int result = 0;
 
-            if (PStruct.IsPlayerPremmy(index)) { result = 1; }
+            if (PlayerRelations.IsPlayerPremmy(index)) { result = 1; }
 
             SendToUser(index, String.Format("<63>{0};{1}</63>\n", result, PStruct.player[index].Premmy));
         }
