@@ -61,7 +61,7 @@ namespace FORJERUM
         public const int MaxMapsX = 21;
         public const int MaxMapsY = 16;
         public const int MaxNpcs = 1001;
-        public const int MaxMapNpcs = 999;
+        public const int MaxMapNpcs = 41;
         public const int MaxMapItems = 101;
         public const int MaxNpcDrops = 5;
         public const int MaxItems = 101;

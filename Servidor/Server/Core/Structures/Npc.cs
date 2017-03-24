@@ -14,11 +14,11 @@ namespace FORJERUM
         // ESTRUTURA DOS NPCS
         // Estruturas gerais contendo o drop, magias, e informações temporárias
         //*********************************************************************************************
-        public static TempNpc[,] tempnpc = new TempNpc[Globals.MaxMaps, 1001];
-        public static NTempSpell[,,] ntempspell = new NTempSpell[Globals.MaxMaps, 1001, Globals.MaxNTempSpells];
-        public static NSpell[, ,] nspell = new NSpell[Globals.MaxMaps, 1001, Globals.Max_Npc_Spells];
-        public static Npc[,] npc = new Npc[Globals.MaxMaps, 1001];
-        public static NpcDrop[,,] npcdrop = new NpcDrop[Globals.MaxMaps, 1001, 5];
+        public static TempNpc[,] tempnpc = new TempNpc[Globals.MaxMaps, Globals.MaxMapNpcs];
+        public static NTempSpell[,,] ntempspell = new NTempSpell[Globals.MaxMaps, Globals.MaxMapNpcs, Globals.MaxNTempSpells];
+        public static NSpell[, ,] nspell = new NSpell[Globals.MaxMaps, Globals.MaxMapNpcs, Globals.Max_Npc_Spells];
+        public static Npc[,] npc = new Npc[Globals.MaxMaps, Globals.MaxMapNpcs];
+        public static NpcDrop[,,] npcdrop = new NpcDrop[Globals.MaxMaps, Globals.MaxMapNpcs, 5];
 
         public struct Npc
         {
