@@ -57,7 +57,7 @@ namespace FORJERUM
         public const int MaxPlayers = 101;
         public const int MaxInvSlot = 21;
         public const int MaxChars = 3;
-        public const int MaxMaps = 200;
+        public const int MaxMaps = 300;
         public const int MaxMapsX = 21;
         public const int MaxMapsY = 16;
         public const int MaxNpcs = 1001;

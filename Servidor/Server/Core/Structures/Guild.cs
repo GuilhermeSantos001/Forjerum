@@ -12,7 +12,7 @@ namespace FORJERUM
         //*********************************************************************************************
         // ESTRUTURA DAS GUILDAS
         //*********************************************************************************************
-        public static GStruct.Guild[] guild = new GStruct.Guild[Globals.Max_Guilds];
+        public static Guild[] guild = new Guild[Globals.Max_Guilds];
 
         public struct Guild
         {
@@ -42,10 +42,10 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_Guilds; i++)
             {
-                GStruct.guild[i].memberlist = new string[Globals.Max_Guild_Members];
-                GStruct.guild[i].membersprite = new string[Globals.Max_Guild_Members];
-                GStruct.guild[i].memberhue = new int[Globals.Max_Guild_Members];
-                GStruct.guild[i].membersprite_index = new int[Globals.Max_Guild_Members];
+                guild[i].memberlist = new string[Globals.Max_Guild_Members];
+                guild[i].membersprite = new string[Globals.Max_Guild_Members];
+                guild[i].memberhue = new int[Globals.Max_Guild_Members];
+                guild[i].membersprite_index = new int[Globals.Max_Guild_Members];
             }
         }
         //*********************************************************************************************
@@ -65,7 +65,7 @@ namespace FORJERUM
             int count = 0;
             for (int i = 1; i < Globals.Max_Guilds; i++)
             {
-                if (String.IsNullOrEmpty(GStruct.guild[i].name))
+                if (String.IsNullOrEmpty(guild[i].name))
                 {
                     return i;
                 }
@@ -91,7 +91,7 @@ namespace FORJERUM
             int count = 0;
             for (int i = 1; i < Globals.Max_Guild_Members; i++)
             {
-                if (!String.IsNullOrEmpty(GStruct.guild[guildnum].memberlist[i]))
+                if (!String.IsNullOrEmpty(guild[guildnum].memberlist[i]))
                 {
                     count += 1;
                 }
@@ -117,7 +117,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_Guild_Members; i++)
             {
-                if (String.IsNullOrEmpty(GStruct.guild[guildnum].memberlist[i]))
+                if (String.IsNullOrEmpty(guild[guildnum].memberlist[i]))
                 {
                     return i;
                 }

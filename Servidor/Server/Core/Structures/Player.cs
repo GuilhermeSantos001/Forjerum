@@ -14,23 +14,23 @@ namespace FORJERUM
         // ESTRUTURAS DO JOGADOR 
         // Se inclui também pontos de interação como hotkeys, craft, quest e outros.
         //*********************************************************************************************
-        public static PStruct.Player[] player = new PStruct.Player[Globals.MaxPlayers];
-        public static PStruct.ClassData[] classes = new PStruct.ClassData[Globals.MaxClasses + 1];
-        public static PStruct.Character[,] character = new PStruct.Character[Globals.MaxPlayers, 3];
-        public static PStruct.TempPlayer[] tempplayer = new PStruct.TempPlayer[Globals.MaxPlayers];
-        public static PStruct.Skill[,] skill = new PStruct.Skill[Globals.MaxPlayers, 17];
-        public static PStruct.InvSlot[,] invslot = new PStruct.InvSlot[Globals.MaxPlayers, Globals.MaxInvSlot];
-        public static PStruct.Craft[,] craft = new PStruct.Craft[Globals.MaxPlayers, Globals.Max_Craft];
-        public static PStruct.QuestStatus[,,] queststatus = new PStruct.QuestStatus[Globals.MaxPlayers, Globals.MaxQuestGivers, Globals.MaxQuestPerGiver];
-        public static PStruct.QuestKills[,,,] questkills = new PStruct.QuestKills[Globals.MaxPlayers, Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestKills];
-        public static PStruct.QuestActions[,,,] questactions = new PStruct.QuestActions[Globals.MaxPlayers, Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestActions];
-        public static PStruct.TradeSlot[,] tradeslot = new PStruct.TradeSlot[Globals.MaxPlayers, 17];
-        public static PStruct.Hotkey[,] hotkey = new PStruct.Hotkey[Globals.MaxPlayers, 11];
-        public static PStruct.Party[] party = new PStruct.Party[100];
-        public static PStruct.PartyMembers[,] partymembers = new PStruct.PartyMembers[100, 5];
-        public static PStruct.PTempSpell[,] ptempspell = new PStruct.PTempSpell[Globals.MaxPlayers, Globals.MaxPTempSpells];
-        public static PStruct.PPassiveEffect[,] ppassiveffect = new PStruct.PPassiveEffect[Globals.MaxPlayers, Globals.MaxPassiveEffects];
-        public static PStruct.PSpellBuff[,] pspellbuff = new PStruct.PSpellBuff[Globals.MaxPlayers, Globals.MaxSpellBuffs];
+        public static Player[] player = new Player[Globals.MaxPlayers];
+        public static ClassData[] classes = new ClassData[Globals.MaxClasses + 1];
+        public static Character[,] character = new Character[Globals.MaxPlayers, 3];
+        public static TempPlayer[] tempplayer = new TempPlayer[Globals.MaxPlayers];
+        public static Skill[,] skill = new Skill[Globals.MaxPlayers, 17];
+        public static InvSlot[,] invslot = new InvSlot[Globals.MaxPlayers, Globals.MaxInvSlot];
+        public static Craft[,] craft = new Craft[Globals.MaxPlayers, Globals.Max_Craft];
+        public static QuestStatus[,,] queststatus = new QuestStatus[Globals.MaxPlayers, Globals.MaxQuestGivers, Globals.MaxQuestPerGiver];
+        public static QuestKills[,,,] questkills = new QuestKills[Globals.MaxPlayers, Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestKills];
+        public static QuestActions[,,,] questactions = new QuestActions[Globals.MaxPlayers, Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestActions];
+        public static TradeSlot[,] tradeslot = new TradeSlot[Globals.MaxPlayers, 17];
+        public static Hotkey[,] hotkey = new Hotkey[Globals.MaxPlayers, 11];
+        public static Party[] party = new Party[100];
+        public static PartyMembers[,] partymembers = new PartyMembers[100, 5];
+        public static PTempSpell[,] ptempspell = new PTempSpell[Globals.MaxPlayers, Globals.MaxPTempSpells];
+        public static PPassiveEffect[,] ppassiveffect = new PPassiveEffect[Globals.MaxPlayers, Globals.MaxPassiveEffects];
+        public static PSpellBuff[,] pspellbuff = new PSpellBuff[Globals.MaxPlayers, Globals.MaxSpellBuffs];
 
         public struct Player
         {
@@ -295,21 +295,21 @@ namespace FORJERUM
             //CÓDIGO
             int totalpoints = 0;
 
-            totalpoints += PStruct.character[index, PStruct.player[index].SelectedChar].Earth - 1;
-            totalpoints += PStruct.character[index, PStruct.player[index].SelectedChar].Wind - 1;
-            totalpoints += PStruct.character[index, PStruct.player[index].SelectedChar].Dark - 1;
-            totalpoints += PStruct.character[index, PStruct.player[index].SelectedChar].Light - 1;
-            totalpoints += PStruct.character[index, PStruct.player[index].SelectedChar].Water- 1;
-            totalpoints += PStruct.character[index, PStruct.player[index].SelectedChar].Fire - 1;
+            totalpoints += character[index, player[index].SelectedChar].Earth - 1;
+            totalpoints += character[index, player[index].SelectedChar].Wind - 1;
+            totalpoints += character[index, player[index].SelectedChar].Dark - 1;
+            totalpoints += character[index, player[index].SelectedChar].Light - 1;
+            totalpoints += character[index, player[index].SelectedChar].Water- 1;
+            totalpoints += character[index, player[index].SelectedChar].Fire - 1;
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Earth = 1;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Wind = 1;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Dark = 1;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Light = 1;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Water = 1;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Fire = 1;
+            character[index, player[index].SelectedChar].Earth = 1;
+            character[index, player[index].SelectedChar].Wind = 1;
+            character[index, player[index].SelectedChar].Dark = 1;
+            character[index, player[index].SelectedChar].Light = 1;
+            character[index, player[index].SelectedChar].Water = 1;
+            character[index, player[index].SelectedChar].Fire = 1;
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Points += totalpoints;
+            character[index, player[index].SelectedChar].Points += totalpoints;
             SendData.Send_PlayerAtrToMap(index);
             SendData.Send_MsgToPlayer(index, lang.success_atributte_reset, Globals.ColorGreen, Globals.Msg_Type_Server);
         }
@@ -349,15 +349,15 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxPlayers; i++)
             {
-                PStruct.player[i].bankslot = new BankSlot[Globals.Max_BankSlots];
-                PStruct.player[i].friend = new FriendList[Globals.Max_Friends];
+                player[i].bankslot = new BankSlot[Globals.Max_BankSlots];
+                player[i].friend = new FriendList[Globals.Max_Friends];
                 for (int c = 0; c < Globals.MaxChars; c++)
                 {
-                    PStruct.character[i, c].Prof_Type = new int[Globals.Max_Profs_Per_Char];
-                    PStruct.character[i, c].Prof_Level = new int[Globals.Max_Profs_Per_Char];
-                    PStruct.character[i, c].Prof_Exp = new int[Globals.Max_Profs_Per_Char];
-                    PStruct.character[i, c].Chest = new bool[Globals.Max_Chests];
-                    PStruct.character[i, c].pshopslot = new PShopSlot[Globals.Max_PShops];
+                    character[i, c].Prof_Type = new int[Globals.Max_Profs_Per_Char];
+                    character[i, c].Prof_Level = new int[Globals.Max_Profs_Per_Char];
+                    character[i, c].Prof_Exp = new int[Globals.Max_Profs_Per_Char];
+                    character[i, c].Chest = new bool[Globals.Max_Chests];
+                    character[i, c].pshopslot = new PShopSlot[Globals.Max_PShops];
                 }
             }
         }
@@ -380,7 +380,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_Profs_Per_Char; i++)
             {
-                if (PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Type[i] == type)
+                if (character[index, player[index].SelectedChar].Prof_Type[i] == type)
                 {
                     prof = i;
                     break;
@@ -410,7 +410,7 @@ namespace FORJERUM
             //Checa o slot que possúi o jogador
             for (int i = 1; i < Globals.Max_Craft; i++)
             {
-                if ((PStruct.craft[index, i].num == 0))
+                if ((craft[index, i].num == 0))
                 {
                     finalindex = i;
                     break;
@@ -459,7 +459,7 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int level = PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[type];
+            int level = character[index, player[index].SelectedChar].Prof_Level[type];
             double exptonextlevel = (level * 10) * 1.2;
             int exp = Convert.ToInt32(exptonextlevel);
             return exp;
@@ -482,7 +482,7 @@ namespace FORJERUM
             //Limpa slot de troca
             for (int i = 1; i < Globals.Max_Profs_Per_Char; i++)
             {
-                if (PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Type[i] == 0)
+                if (character[index, player[index].SelectedChar].Prof_Type[i] == 0)
                 {
                     return i;
                 }
@@ -504,53 +504,53 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            PStruct.tempplayer[index].ingame = false;
-            PStruct.tempplayer[index].preparingskill = 0;
-            PStruct.tempplayer[index].movespeed = 0;
-            PStruct.tempplayer[index].Inviting = 0;
-            PStruct.tempplayer[index].Invited = 0;
-            PStruct.tempplayer[index].MaxSpirit = 0;
-            PStruct.tempplayer[index].MaxVitality = 0;
-            PStruct.tempplayer[index].Party = 0;
-            PStruct.tempplayer[index].skilltimer = 0;
-            PStruct.tempplayer[index].Spirit = 0;
-            PStruct.tempplayer[index].target = 0;
-            PStruct.tempplayer[index].targettype = 0;
-            PStruct.tempplayer[index].Warping = false;
-            PStruct.tempplayer[index].Vitality = 0;
-            PStruct.tempplayer[index].preparingskillslot = 0;
-            PStruct.tempplayer[index].InTrade = 0;
-            PStruct.tempplayer[index].InCraft = false;
-            PStruct.tempplayer[index].InBank = false;
-            PStruct.tempplayer[index].Stunned = false;
-            PStruct.tempplayer[index].Sleeping = false;
-            PStruct.tempplayer[index].StunTimer = 0;
-            PStruct.tempplayer[index].SleepTimer = 0;
-            PStruct.tempplayer[index].ActivationCode = 0;
-            PStruct.tempplayer[index].AttackTimer = 0;
-            PStruct.tempplayer[index].InShop = 0;
-            PStruct.tempplayer[index].InCraft = false;
-            PStruct.tempplayer[index].InBank = false;
-            PStruct.tempplayer[index].CraftType = 0;
-            PStruct.tempplayer[index].CraftItem = 0;
-            PStruct.tempplayer[index].Blind = false;
-            PStruct.tempplayer[index].BlindTimer = 0;
-            PStruct.tempplayer[index].Logged = false;
-            PStruct.tempplayer[index].DataTimer = 0;
-            PStruct.tempplayer[index].ChatTimer = 0;
-            PStruct.tempplayer[index].ChatExcept = 0;
-            PStruct.tempplayer[index].AllChatTimer = 0;
-            PStruct.tempplayer[index].isDead = false;
-            PStruct.tempplayer[index].ActivationCode = 0;
-            PStruct.tempplayer[index].SORE = false;
-            PStruct.tempplayer[index].Reflect = false;
-            PStruct.tempplayer[index].ReflectTimer = 0;
-            PStruct.tempplayer[index].Shopping = false;
-            PStruct.tempplayer[index].InPShop = 0;
+            tempplayer[index].ingame = false;
+            tempplayer[index].preparingskill = 0;
+            tempplayer[index].movespeed = 0;
+            tempplayer[index].Inviting = 0;
+            tempplayer[index].Invited = 0;
+            tempplayer[index].MaxSpirit = 0;
+            tempplayer[index].MaxVitality = 0;
+            tempplayer[index].Party = 0;
+            tempplayer[index].skilltimer = 0;
+            tempplayer[index].Spirit = 0;
+            tempplayer[index].target = 0;
+            tempplayer[index].targettype = 0;
+            tempplayer[index].Warping = false;
+            tempplayer[index].Vitality = 0;
+            tempplayer[index].preparingskillslot = 0;
+            tempplayer[index].InTrade = 0;
+            tempplayer[index].InCraft = false;
+            tempplayer[index].InBank = false;
+            tempplayer[index].Stunned = false;
+            tempplayer[index].Sleeping = false;
+            tempplayer[index].StunTimer = 0;
+            tempplayer[index].SleepTimer = 0;
+            tempplayer[index].ActivationCode = 0;
+            tempplayer[index].AttackTimer = 0;
+            tempplayer[index].InShop = 0;
+            tempplayer[index].InCraft = false;
+            tempplayer[index].InBank = false;
+            tempplayer[index].CraftType = 0;
+            tempplayer[index].CraftItem = 0;
+            tempplayer[index].Blind = false;
+            tempplayer[index].BlindTimer = 0;
+            tempplayer[index].Logged = false;
+            tempplayer[index].DataTimer = 0;
+            tempplayer[index].ChatTimer = 0;
+            tempplayer[index].ChatExcept = 0;
+            tempplayer[index].AllChatTimer = 0;
+            tempplayer[index].isDead = false;
+            tempplayer[index].ActivationCode = 0;
+            tempplayer[index].SORE = false;
+            tempplayer[index].Reflect = false;
+            tempplayer[index].ReflectTimer = 0;
+            tempplayer[index].Shopping = false;
+            tempplayer[index].InPShop = 0;
             //Limpa slot de troca
             for (int i = 1; i < Globals.MaxTradeOffers; i++)
             {
-                PStruct.tradeslot[index, i].item = Globals.NullItem;
+                tradeslot[index, i].item = Globals.NullItem;
             }
         }
         //*********************************************************************************************
@@ -576,7 +576,7 @@ namespace FORJERUM
             string[] datainv;
             for (int i = 1; i < Globals.MaxInvSlot; i++)
             {
-                datainv = PStruct.invslot[index, i].item.Split(',');
+                datainv = invslot[index, i].item.Split(',');
                 if ((itemtype == datainv[0]) && (itemnum == datainv[1]) && (itemvalue <= Convert.ToInt32(datainv[2]))) { return true; }
             }
 
@@ -599,7 +599,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_Craft; i++)
             {
-                if ((PStruct.craft[index, i].num == num) && (PStruct.craft[index, i].type == type))
+                if ((craft[index, i].num == num) && (craft[index, i].type == type))
                 {
                     return i;
                 }
@@ -624,7 +624,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxInvSlot; i++)
             {
-                if (PStruct.invslot[index, i].item == item) { PStruct.invslot[index, i].item = Globals.NullItem; return true; }
+                if (invslot[index, i].item == item) { invslot[index, i].item = Globals.NullItem; return true; }
             }
 
             return false;
@@ -647,9 +647,9 @@ namespace FORJERUM
             if (GetSkillOpenSlot(index) > 0)
             {
                 int openslot = GetSkillOpenSlot(index);
-                PStruct.skill[index, openslot].level = 0;
-                PStruct.skill[index, openslot].cooldown = 0;
-                PStruct.skill[index, openslot].num = spellnum;
+                skill[index, openslot].level = 0;
+                skill[index, openslot].cooldown = 0;
+                skill[index, openslot].num = spellnum;
                 return true;
             }
             else
@@ -671,8 +671,8 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            PStruct.tempplayer[index].PetTarget = target;
-            PStruct.tempplayer[index].PetTargetType = targettype;
+            tempplayer[index].PetTarget = target;
+            tempplayer[index].PetTargetType = targettype;
             if (targettype == Globals.Target_Npc)
             {
                 PlayerAttackNpc(index, target, 0, 0, false, 0, true);
@@ -682,7 +682,7 @@ namespace FORJERUM
                 PlayerAttackPlayer(index, target, 0, 0, false, 0, 0, true);
             }
             SendData.Send_PetAttack(index, target, targettype);
-            PStruct.tempplayer[index].PetTimer = Loops.TickCount.ElapsedMilliseconds + 2000;
+            tempplayer[index].PetTimer = Loops.TickCount.ElapsedMilliseconds + 2000;
         }
         //*********************************************************************************************
         // PetMove
@@ -697,19 +697,19 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].PetTimer > Loops.TickCount.ElapsedMilliseconds) { return; }
-            if (PStruct.tempplayer[index].isDead) { return; }
+            if (tempplayer[index].PetTimer > Loops.TickCount.ElapsedMilliseconds) { return; }
+            if (tempplayer[index].isDead) { return; }
 
-            string equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
+            string equipment = character[index, player[index].SelectedChar].Equipment;
             string[] equipdata = equipment.Split(',');
             string[] petdata = equipdata[4].Split(';');
 
             int petnum = Convert.ToInt32(petdata[0]);
             int petlvl = Convert.ToInt32(petdata[1]);
             int petexp = Convert.ToInt32(petdata[2]);
-            int Map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int targetx = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            int targety = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
+            int Map = character[index, player[index].SelectedChar].Map;
+            int targetx = character[index, player[index].SelectedChar].X;
+            int targety = character[index, player[index].SelectedChar].Y;
             int lasttarget = tempplayer[index].LastTarget;
             int lasttargettype = tempplayer[index].LastTargetType;
             int target = tempplayer[index].PetTarget;
@@ -773,12 +773,12 @@ namespace FORJERUM
                     return;
                 }
                 //Condições preventivas
-                if ((PStruct.character[target, PStruct.player[target].SelectedChar].Map == Map) && (target != index))
+                if ((character[target, player[target].SelectedChar].Map == Map) && (target != index))
                 {
-                    if ((PStruct.character[target, PStruct.player[target].SelectedChar].PVP) || (PStruct.character[index, PStruct.player[index].SelectedChar].PVP))
+                    if ((character[target, player[target].SelectedChar].PVP) || (character[index, player[index].SelectedChar].PVP))
                     {
-                        DistanceX = PStruct.character[target, PStruct.player[target].SelectedChar].X - targetx;
-                        DistanceY = PStruct.character[target, PStruct.player[target].SelectedChar].Y - targety;
+                        DistanceX = character[target, player[target].SelectedChar].X - targetx;
+                        DistanceY = character[target, player[target].SelectedChar].Y - targety;
 
                         if (DistanceX < 0) { DistanceX = DistanceX * -1; }
                         if (DistanceY < 0) { DistanceY = DistanceY * -1; }
@@ -812,12 +812,12 @@ namespace FORJERUM
             if ((lasttargettype == Globals.Target_Player) && (tempplayer[lasttarget].Vitality > 0))
             {
                 //Condições preventivas
-                if ((PStruct.character[lasttarget, PStruct.player[lasttarget].SelectedChar].Map == Map) && (lasttarget != index))
+                if ((character[lasttarget, player[lasttarget].SelectedChar].Map == Map) && (lasttarget != index))
                 {
-                    if ((PStruct.character[lasttarget, PStruct.player[lasttarget].SelectedChar].PVP) || (PStruct.character[index, PStruct.player[index].SelectedChar].PVP))
+                    if ((character[lasttarget, player[lasttarget].SelectedChar].PVP) || (character[index, player[index].SelectedChar].PVP))
                     {
-                        DistanceX = PStruct.character[lasttarget, PStruct.player[lasttarget].SelectedChar].X - targetx;
-                        DistanceY = PStruct.character[lasttarget, PStruct.player[lasttarget].SelectedChar].Y - targety;
+                        DistanceX = character[lasttarget, player[lasttarget].SelectedChar].X - targetx;
+                        DistanceY = character[lasttarget, player[lasttarget].SelectedChar].Y - targety;
 
                         if (DistanceX < 0) { DistanceX = DistanceX * -1; }
                         if (DistanceY < 0) { DistanceY = DistanceY * -1; }
@@ -862,16 +862,16 @@ namespace FORJERUM
                 if ((!tempplayer[i].isDead) && (tempplayer[i].Vitality > 0))
                 {
                     //Condições preventivas
-                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].Map == Map) && (i != index))
+                    if ((character[i, player[i].SelectedChar].Map == Map) && (i != index))
                     {
-                        if (PStruct.character[i, PStruct.player[i].SelectedChar].Guild != PStruct.character[index, PStruct.player[index].SelectedChar].Guild)
+                        if (character[i, player[i].SelectedChar].Guild != character[index, player[index].SelectedChar].Guild)
                         {
                             if (tempplayer[i].Party != tempplayer[index].Party)
                             {
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].PVP) || (PStruct.character[index, PStruct.player[index].SelectedChar].PVP))
+                                if ((character[i, player[i].SelectedChar].PVP) || (character[index, player[index].SelectedChar].PVP))
                                 {
-                                    DistanceX = PStruct.character[i, PStruct.player[i].SelectedChar].X - targetx;
-                                    DistanceY = PStruct.character[i, PStruct.player[i].SelectedChar].Y - targety;
+                                    DistanceX = character[i, player[i].SelectedChar].X - targetx;
+                                    DistanceY = character[i, player[i].SelectedChar].Y - targety;
 
                                     if (DistanceX < 0) { DistanceX = DistanceX * -1; }
                                     if (DistanceY < 0) { DistanceY = DistanceY * -1; }
@@ -909,28 +909,28 @@ namespace FORJERUM
             for (int i = 1; i < Globals.Max_PShops; i++)
             {
 
-                int itemNum = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].num;
-                int itemType = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].type;
-                int itemValue = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].value;
-                int itemRefin = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].refin;
-                int itemExp = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].exp;
-                int itemPrice = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].price;
+                int itemNum = character[index, player[index].SelectedChar].pshopslot[i].num;
+                int itemType = character[index, player[index].SelectedChar].pshopslot[i].type;
+                int itemValue = character[index, player[index].SelectedChar].pshopslot[i].value;
+                int itemRefin = character[index, player[index].SelectedChar].pshopslot[i].refin;
+                int itemExp = character[index, player[index].SelectedChar].pshopslot[i].exp;
+                int itemPrice = character[index, player[index].SelectedChar].pshopslot[i].price;
 
                 if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemp == itemPrice) && (itemex == itemExp))
                 {
-                    PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].value += itemv;
+                    character[index, player[index].SelectedChar].pshopslot[i].value += itemv;
                     return true;
                 }
             }
             if (GetPShopOpenSlot(index) > 0)
             {
                 int openslot = GetPShopOpenSlot(index);
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[openslot].type = itemt;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[openslot].num = itemn;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[openslot].value = itemv;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[openslot].refin = itemr;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[openslot].exp = itemex;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[openslot].price = itemp;
+                character[index, player[index].SelectedChar].pshopslot[openslot].type = itemt;
+                character[index, player[index].SelectedChar].pshopslot[openslot].num = itemn;
+                character[index, player[index].SelectedChar].pshopslot[openslot].value = itemv;
+                character[index, player[index].SelectedChar].pshopslot[openslot].refin = itemr;
+                character[index, player[index].SelectedChar].pshopslot[openslot].exp = itemex;
+                character[index, player[index].SelectedChar].pshopslot[openslot].price = itemp;
                 return true;
             }
             else
@@ -955,7 +955,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 9; i < Globals.MaxPlayer_Skills; i++)
             {
-                if (PStruct.skill[index, i].num == 0) { return i; }
+                if (skill[index, i].num == 0) { return i; }
             }
 
             return 0;
@@ -977,7 +977,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_PShops; i++)
             {
-                if (PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].num == 0) { return i; }
+                if (character[index, player[index].SelectedChar].pshopslot[i].num == 0) { return i; }
             }
 
             return 0;
@@ -998,22 +998,22 @@ namespace FORJERUM
 
             //CÓDIGO
             int LevelVital = 0;
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 30; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 2) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 22; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 3) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 60; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 4) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 18; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 14; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 40; }
-            double FireVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Fire) * 0.5;
-            double EarthVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.8;
-            double WaterVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Water) * 1.2;
-            double WindVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 1.3;
-            double DarkVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 2;
-            double LightVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Light) * 1.5;
+            if (character[index, player[index].SelectedChar].ClassId == 1) { LevelVital = character[index, player[index].SelectedChar].Level * 30; }
+            else if (character[index, player[index].SelectedChar].ClassId == 2) { LevelVital = character[index, player[index].SelectedChar].Level * 22; }
+            else if (character[index, player[index].SelectedChar].ClassId == 3) { LevelVital = character[index, player[index].SelectedChar].Level * 60; }
+            else if (character[index, player[index].SelectedChar].ClassId == 4) { LevelVital = character[index, player[index].SelectedChar].Level * 18; }
+            else if (character[index, player[index].SelectedChar].ClassId == 5) { LevelVital = character[index, player[index].SelectedChar].Level * 14; }
+            else if (character[index, player[index].SelectedChar].ClassId == 6) { LevelVital = character[index, player[index].SelectedChar].Level * 40; }
+            double FireVital = Convert.ToDouble(character[index, player[index].SelectedChar].Fire) * 0.5;
+            double EarthVital = Convert.ToDouble(character[index, player[index].SelectedChar].Earth) * 0.8;
+            double WaterVital = Convert.ToDouble(character[index, player[index].SelectedChar].Water) * 1.2;
+            double WindVital = Convert.ToDouble(character[index, player[index].SelectedChar].Wind) * 1.3;
+            double DarkVital = Convert.ToDouble(character[index, player[index].SelectedChar].Dark) * 2;
+            double LightVital = Convert.ToDouble(character[index, player[index].SelectedChar].Light) * 1.5;
             double DVital = FireVital + EarthVital + WaterVital + WindVital + DarkVital + LightVital;
             int vital = Convert.ToInt32(DVital) + LevelVital;
             if (GetExtraSpirit(index) > 0) { vital += (vital / 100) * GetExtraSpirit(index); }
-            if (PStruct.tempplayer[index].SORE) { vital = vital / 2; }
+            if (tempplayer[index].SORE) { vital = vital / 2; }
             return vital;
         }
         //*********************************************************************************************
@@ -1032,23 +1032,23 @@ namespace FORJERUM
 
             //CÓDIGO
             int LevelVital = 0;
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 52; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 2) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 63; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 3) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 34; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 4) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 40; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 76; }
-            else if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6) { LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 32; }
-            //int LevelVital = PStruct.character[index, PStruct.player[index].SelectedChar].Level * 75;
-            double FireVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Fire) * 2.5;
-            double EarthVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 4;
-            double WaterVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Water) * 2.3;
-            double WindVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 2.2;
-            double DarkVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 1.8;
-            double LightVital = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Light) * 1.5;
+            if (character[index, player[index].SelectedChar].ClassId == 1) { LevelVital = character[index, player[index].SelectedChar].Level * 52; }
+            else if (character[index, player[index].SelectedChar].ClassId == 2) { LevelVital = character[index, player[index].SelectedChar].Level * 63; }
+            else if (character[index, player[index].SelectedChar].ClassId == 3) { LevelVital = character[index, player[index].SelectedChar].Level * 34; }
+            else if (character[index, player[index].SelectedChar].ClassId == 4) { LevelVital = character[index, player[index].SelectedChar].Level * 40; }
+            else if (character[index, player[index].SelectedChar].ClassId == 5) { LevelVital = character[index, player[index].SelectedChar].Level * 76; }
+            else if (character[index, player[index].SelectedChar].ClassId == 6) { LevelVital = character[index, player[index].SelectedChar].Level * 32; }
+            //int LevelVital = character[index, player[index].SelectedChar].Level * 75;
+            double FireVital = Convert.ToDouble(character[index, player[index].SelectedChar].Fire) * 2.5;
+            double EarthVital = Convert.ToDouble(character[index, player[index].SelectedChar].Earth) * 4;
+            double WaterVital = Convert.ToDouble(character[index, player[index].SelectedChar].Water) * 2.3;
+            double WindVital = Convert.ToDouble(character[index, player[index].SelectedChar].Wind) * 2.2;
+            double DarkVital = Convert.ToDouble(character[index, player[index].SelectedChar].Dark) * 1.8;
+            double LightVital = Convert.ToDouble(character[index, player[index].SelectedChar].Light) * 1.5;
             double DVital = FireVital + EarthVital + WaterVital + WindVital + DarkVital + LightVital;
             int vital = Convert.ToInt32(DVital) + LevelVital;
             if (GetExtraVitality(index) > 0) { vital += (vital / 100) * GetExtraVitality(index); }
-            if (PStruct.tempplayer[index].SORE) { vital = vital / 2; }
+            if (tempplayer[index].SORE) { vital = vital / 2; }
             return vital;
         }
         //*********************************************************************************************
@@ -1067,11 +1067,11 @@ namespace FORJERUM
 
             //CÓDIGO
           int vital = 0;
-          if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
+          if (character[index, player[index].SelectedChar].ClassId == 5)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
+                    if ((skill[index, i].num == 35) && (skill[index, i].level > 0))
                     {
                         vital = 40;
                         break;
@@ -1096,11 +1096,11 @@ namespace FORJERUM
 
             //CÓDIGO
             int vital = 0;
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1)
+            if (character[index, player[index].SelectedChar].ClassId == 1)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 46) && (PStruct.skill[index, i].level > 0))
+                    if ((skill[index, i].num == 46) && (skill[index, i].level > 0))
                     {
                         vital = 10;
                         break;
@@ -1123,15 +1123,15 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            double LightRegen = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Light) * 0.6;
+            double LightRegen = Convert.ToDouble(character[index, player[index].SelectedChar].Light) * 0.6;
             int vital = 1 + Convert.ToInt32(LightRegen); //per second
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 2)
+            if (character[index, player[index].SelectedChar].ClassId == 2)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 52) && (PStruct.skill[index, i].level > 0))
+                    if ((skill[index, i].num == 52) && (skill[index, i].level > 0))
                     {
-                        vital += ((GetPlayerMaxVitality(index) / 100) * PStruct.skill[index, i].level);
+                        vital += ((GetPlayerMaxVitality(index) / 100) * skill[index, i].level);
                         break;
                     }
                 }
@@ -1152,7 +1152,7 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            double DarkRegen = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 0.3;
+            double DarkRegen = Convert.ToDouble(character[index, player[index].SelectedChar].Dark) * 0.3;
             int vital = 1 + Convert.ToInt32(DarkRegen); //per second
             return vital;
         }
@@ -1171,15 +1171,15 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int Map = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Map;
-            int Dir = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir;
+            int Map = character[Attacker, player[Attacker].SelectedChar].Map;
+            int Dir = character[Attacker, player[Attacker].SelectedChar].Dir;
             int NpcX = 0;
             int NpcY = 0;
-            int PlayerX = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].X;
-            int PlayerY = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Y;
+            int PlayerX = character[Attacker, player[Attacker].SelectedChar].X;
+            int PlayerY = character[Attacker, player[Attacker].SelectedChar].Y;
 
             if (NStruct.tempnpc[Map, Victim].Dead == true) { return false; }
-            //if (NStruct.tempnpc[Map, Victim].guildnum == PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Guild) { return false; }
+            //if (NStruct.tempnpc[Map, Victim].guildnum == character[Attacker, player[Attacker].SelectedChar].Guild) { return false; }
 
             switch (Dir)
             {
@@ -1227,18 +1227,18 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int Map = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Map);
-            int Dir = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir;
-            int VictimX = PStruct.character[Victim, PStruct.player[Victim].SelectedChar].X;
-            int VictimY = PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Y;
-            int PlayerX = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].X;
-            int PlayerY = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Y;
+            int Map = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].Map);
+            int Dir = character[Attacker, player[Attacker].SelectedChar].Dir;
+            int VictimX = character[Victim, player[Victim].SelectedChar].X;
+            int VictimY = character[Victim, player[Victim].SelectedChar].Y;
+            int PlayerX = character[Attacker, player[Attacker].SelectedChar].X;
+            int PlayerY = character[Attacker, player[Attacker].SelectedChar].Y;
 
-            if (PStruct.tempplayer[Victim].isDead == true) { return false; }
+            if (tempplayer[Victim].isDead == true) { return false; }
 
             if (!MStruct.tempmap[Map].WarActive)
             {
-                if (PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Level < 10) { SendData.Send_MsgToPlayer(Attacker, lang.pvp_level_restriction, Globals.ColorRed, Globals.Msg_Type_Server); return false; }
+                if (character[Victim, player[Victim].SelectedChar].Level < 10) { SendData.Send_MsgToPlayer(Attacker, lang.pvp_level_restriction, Globals.ColorRed, Globals.Msg_Type_Server); return false; }
                 if (!MStruct.MapIsPVP(Map)) { SendData.Send_MsgToPlayer(Attacker, lang.pvp_safe_zone, Globals.ColorRed, Globals.Msg_Type_Server); return false; }
             }
 
@@ -1286,28 +1286,28 @@ namespace FORJERUM
 
             if (element == 1)
             {
-                return Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Fire);
+                return Convert.ToInt32(character[index, player[index].SelectedChar].Fire);
             }
 
             if (element == 2)
             {
-                return Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Earth);
+                return Convert.ToInt32(character[index, player[index].SelectedChar].Earth);
             }
             if (element == 3)
             {
-                return Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Water);
+                return Convert.ToInt32(character[index, player[index].SelectedChar].Water);
             }
             if (element == 4)
             {
-                return Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Wind);
+                return Convert.ToInt32(character[index, player[index].SelectedChar].Wind);
             }
             if (element == 5)
             {
-                return Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Dark);
+                return Convert.ToInt32(character[index, player[index].SelectedChar].Dark);
             }
             if (element == 6)
             {
-                return Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Light);
+                return Convert.ToInt32(character[index, player[index].SelectedChar].Light);
             }
 
             return quantity;
@@ -1450,7 +1450,7 @@ namespace FORJERUM
             {
                 for (int i = 1; i < Globals.MaxHotkeys; i++)
                 {
-                    if (PStruct.skill[index, PStruct.hotkey[index, i].num].num == SkillNum)
+                    if (skill[index, hotkey[index, i].num].num == SkillNum)
                     {
                         return i;
                     }
@@ -1459,7 +1459,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
             {
-                if (PStruct.skill[index, i].num == SkillNum)
+                if (skill[index, i].num == SkillNum)
                 {
                     return i;
                 }
@@ -1483,7 +1483,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxPassiveEffects; i++)
             {
-                if (!PStruct.ppassiveffect[index, i].active)
+                if (!ppassiveffect[index, i].active)
                 {
                     return i;
                 }
@@ -1507,7 +1507,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxSpellBuffs; i++)
             {
-                if (!PStruct.pspellbuff[index, i].active)
+                if (!pspellbuff[index, i].active)
                 {
                     return i;
                 }
@@ -1531,7 +1531,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxSpellBuffs; i++)
             {
-                if (!PStruct.pspellbuff[index, i].active)
+                if (!pspellbuff[index, i].active)
                 {
                     return i;
                 }
@@ -1552,44 +1552,44 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if (PStruct.ppassiveffect[index, passive].targettype == 1)
+            if (ppassiveffect[index, passive].targettype == 1)
             {
                 //Jogador
-                if (PStruct.ppassiveffect[index, passive].type == 1) //DANO
+                if (ppassiveffect[index, passive].type == 1) //DANO
                 {
-                    SendData.Send_Animation(PStruct.character[index, PStruct.player[index].SelectedChar].Map, PStruct.ppassiveffect[index, passive].targettype, PStruct.ppassiveffect[index, passive].target, SStruct.skill[PStruct.ppassiveffect[index, passive].spellnum].animation_id);
-                    PlayerAttackPlayer(index, PStruct.ppassiveffect[index, passive].target, PStruct.ppassiveffect[index, passive].spellnum, PStruct.character[index, PStruct.player[index].SelectedChar].Map, true);
-                    PStruct.ppassiveffect[index, passive].active = false;
-                    PStruct.ppassiveffect[index, passive].type = 0;
-                    PStruct.ppassiveffect[index, passive].timer = 0;
-                    PStruct.ppassiveffect[index, passive].target = 0;
-                    PStruct.ppassiveffect[index, passive].targettype = 0;
-                    PStruct.ppassiveffect[index, passive].spellnum = 0;
+                    SendData.Send_Animation(character[index, player[index].SelectedChar].Map, ppassiveffect[index, passive].targettype, ppassiveffect[index, passive].target, SStruct.skill[ppassiveffect[index, passive].spellnum].animation_id);
+                    PlayerAttackPlayer(index, ppassiveffect[index, passive].target, ppassiveffect[index, passive].spellnum, character[index, player[index].SelectedChar].Map, true);
+                    ppassiveffect[index, passive].active = false;
+                    ppassiveffect[index, passive].type = 0;
+                    ppassiveffect[index, passive].timer = 0;
+                    ppassiveffect[index, passive].target = 0;
+                    ppassiveffect[index, passive].targettype = 0;
+                    ppassiveffect[index, passive].spellnum = 0;
                     return;
                 }
             }
-            if (PStruct.ppassiveffect[index, passive].targettype == 2)
+            if (ppassiveffect[index, passive].targettype == 2)
             {
                 //NPC
-                if (PStruct.ppassiveffect[index, passive].type == 1) //DANO
+                if (ppassiveffect[index, passive].type == 1) //DANO
                 {
-                    SendData.Send_Animation(PStruct.character[index, PStruct.player[index].SelectedChar].Map, PStruct.ppassiveffect[index, passive].targettype, PStruct.ppassiveffect[index, passive].target, SStruct.skill[PStruct.ppassiveffect[index, passive].spellnum].animation_id);
-                    PlayerAttackNpc(index, PStruct.ppassiveffect[index, passive].target, PStruct.ppassiveffect[index, passive].spellnum, PStruct.character[index, PStruct.player[index].SelectedChar].Map, true);
-                    PStruct.ppassiveffect[index, passive].active = false;
-                    PStruct.ppassiveffect[index, passive].type = 0;
-                    PStruct.ppassiveffect[index, passive].timer = 0;
-                    PStruct.ppassiveffect[index, passive].target = 0;
-                    PStruct.ppassiveffect[index, passive].targettype = 0;
-                    PStruct.ppassiveffect[index, passive].spellnum = 0;
+                    SendData.Send_Animation(character[index, player[index].SelectedChar].Map, ppassiveffect[index, passive].targettype, ppassiveffect[index, passive].target, SStruct.skill[ppassiveffect[index, passive].spellnum].animation_id);
+                    PlayerAttackNpc(index, ppassiveffect[index, passive].target, ppassiveffect[index, passive].spellnum, character[index, player[index].SelectedChar].Map, true);
+                    ppassiveffect[index, passive].active = false;
+                    ppassiveffect[index, passive].type = 0;
+                    ppassiveffect[index, passive].timer = 0;
+                    ppassiveffect[index, passive].target = 0;
+                    ppassiveffect[index, passive].targettype = 0;
+                    ppassiveffect[index, passive].spellnum = 0;
                     return;
                 }
             }
-            PStruct.ppassiveffect[index, passive].active = false;
-            PStruct.ppassiveffect[index, passive].type = 0;
-            PStruct.ppassiveffect[index, passive].timer = 0;
-            PStruct.ppassiveffect[index, passive].target = 0;
-            PStruct.ppassiveffect[index, passive].targettype = 0;
-            PStruct.ppassiveffect[index, passive].spellnum = 0;
+            ppassiveffect[index, passive].active = false;
+            ppassiveffect[index, passive].type = 0;
+            ppassiveffect[index, passive].timer = 0;
+            ppassiveffect[index, passive].target = 0;
+            ppassiveffect[index, passive].targettype = 0;
+            ppassiveffect[index, passive].spellnum = 0;
         }
         //*********************************************************************************************
         // SkillPassive / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -1610,35 +1610,35 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
             {
-                if (SStruct.skill[PStruct.skill[index, i].num].type == 10)
+                if (SStruct.skill[skill[index, i].num].type == 10)
                 {
-                    int levelmultiplier = (SStruct.skill[PStruct.skill[index, i].num].passive_multiplier) * PStruct.skill[index, i].level;
-                    int chance = SStruct.skill[PStruct.skill[index, i].num].passive_chance + levelmultiplier;
+                    int levelmultiplier = (SStruct.skill[skill[index, i].num].passive_multiplier) * skill[index, i].level;
+                    int chance = SStruct.skill[skill[index, i].num].passive_chance + levelmultiplier;
 
 
                     //Motivação Aiprah
-                    if (SStruct.skill[PStruct.skill[index, i].num].passive_type == 1)
+                    if (SStruct.skill[skill[index, i].num].passive_type == 1)
                     {
                         int passive_test = Globals.Rand(1, 100);
                         if (passive_test <= chance)
                         {
                             if (targettype == 2)
                             {
-                                PStruct.ppassiveffect[index, open_passive].spellnum = PStruct.skill[index, i].num;
-                                PStruct.ppassiveffect[index, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[PStruct.skill[index, i].num].passive_interval;
-                                PStruct.ppassiveffect[index, open_passive].target = target;
-                                PStruct.ppassiveffect[index, open_passive].targettype = targettype;
-                                PStruct.ppassiveffect[index, open_passive].type = 1;
-                                PStruct.ppassiveffect[index, open_passive].active = true;
+                                ppassiveffect[index, open_passive].spellnum = skill[index, i].num;
+                                ppassiveffect[index, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[skill[index, i].num].passive_interval;
+                                ppassiveffect[index, open_passive].target = target;
+                                ppassiveffect[index, open_passive].targettype = targettype;
+                                ppassiveffect[index, open_passive].type = 1;
+                                ppassiveffect[index, open_passive].active = true;
                             }
                             if (targettype == 1)
                             {
-                                PStruct.ppassiveffect[index, open_passive].spellnum = PStruct.skill[index, i].num;
-                                PStruct.ppassiveffect[index, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[PStruct.skill[index, i].num].passive_interval;
-                                PStruct.ppassiveffect[index, open_passive].target = target;
-                                PStruct.ppassiveffect[index, open_passive].targettype = targettype;
-                                PStruct.ppassiveffect[index, open_passive].type = 1;
-                                PStruct.ppassiveffect[index, open_passive].active = true;
+                                ppassiveffect[index, open_passive].spellnum = skill[index, i].num;
+                                ppassiveffect[index, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[skill[index, i].num].passive_interval;
+                                ppassiveffect[index, open_passive].target = target;
+                                ppassiveffect[index, open_passive].targettype = targettype;
+                                ppassiveffect[index, open_passive].type = 1;
+                                ppassiveffect[index, open_passive].active = true;
                             }
                         }
                     }
@@ -1660,12 +1660,12 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if (Map == 0) { Map = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Map); }
-            int Dir = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir;
+            if (Map == 0) { Map = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].Map); }
+            int Dir = character[Attacker, player[Attacker].SelectedChar].Dir;
             int NpcX = NStruct.tempnpc[Map, Victim].X;
             int NpcY = NStruct.tempnpc[Map, Victim].Y;
-            int PlayerX = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].X);
-            int PlayerY = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Y);
+            int PlayerX = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].X);
+            int PlayerY = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].Y);
             int Damage = 0;
             int chance = 0;
             bool is_critical = false;
@@ -1689,15 +1689,15 @@ namespace FORJERUM
 
                 for (int i = 1; i < Globals.MaxSpellBuffs; i++)
                 {
-                    if (PStruct.pspellbuff[Attacker, i].active)
+                    if (pspellbuff[Attacker, i].active)
                     {
-                        if (PStruct.pspellbuff[Attacker, i].timer > Loops.TickCount.ElapsedMilliseconds) { extra_spellbuff += PStruct.pspellbuff[Attacker, i].value; }
+                        if (pspellbuff[Attacker, i].timer > Loops.TickCount.ElapsedMilliseconds) { extra_spellbuff += pspellbuff[Attacker, i].value; }
                         else
                         {
-                            PStruct.pspellbuff[Attacker, i].value = 0;
-                            PStruct.pspellbuff[Attacker, i].type = 0;
-                            PStruct.pspellbuff[Attacker, i].timer = 0;
-                            PStruct.pspellbuff[Attacker, i].active = false;
+                            pspellbuff[Attacker, i].value = 0;
+                            pspellbuff[Attacker, i].type = 0;
+                            pspellbuff[Attacker, i].timer = 0;
+                            pspellbuff[Attacker, i].active = false;
                         }
                     }
                 }
@@ -1709,14 +1709,14 @@ namespace FORJERUM
                 double min_damage = PlayerRelations.GetPlayerMinMagic(Attacker);
                 double max_damage = PlayerRelations.GetPlayerMaxMagic(Attacker);
 
-                if (PStruct.hotkey[Attacker, skill_slot].num > Globals.MaxPlayer_Skills)
+                if (hotkey[Attacker, skill_slot].num > Globals.MaxPlayer_Skills)
                 {
-                    PStruct.hotkey[Attacker, skill_slot].num = 0;
+                    hotkey[Attacker, skill_slot].num = 0;
                     return;
                 }
 
                 //Multiplicador de nível
-                double levelmultiplier = (1.0 + multiplier) * PStruct.skill[Attacker, PStruct.hotkey[Attacker, skill_slot].num].level; //Except
+                double levelmultiplier = (1.0 + multiplier) * skill[Attacker, hotkey[Attacker, skill_slot].num].level; //Except
 
                 //Verificando se a skill teve algum problema e corrigindo
                 if (levelmultiplier < 1.0) { levelmultiplier = 1.0; }
@@ -1733,13 +1733,13 @@ namespace FORJERUM
 
                 //Definição geral do dano
                 Damage = Globals.Rand(MinDamage, MaxDamage);
-                Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                 Damage = Damage - ((Damage / 100) * NStruct.npc[Map, Victim].MagicDefense);
 
-                if (PStruct.tempplayer[Attacker].ReduceDamage > 0)
+                if (tempplayer[Attacker].ReduceDamage > 0)
                 {
                     SendData.Send_ActionMsg(Victim, lang.damage_reduced, Globals.ColorWhite, NpcX, NpcY, 1, 0, Map);
-                    PStruct.tempplayer[Attacker].ReduceDamage = 0;
+                    tempplayer[Attacker].ReduceDamage = 0;
                 }
 
                 if (isSpell == 36)
@@ -1747,11 +1747,11 @@ namespace FORJERUM
                     Damage += ((Damage / 100) * PlayerRelations.GetPlayerDefense(Attacker));
                 }
 
-                if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 6)
+                if (character[Attacker, player[Attacker].SelectedChar].ClassId == 6)
                 {
                     for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                     {
-                        if ((PStruct.skill[Attacker, i].num == 42) && (PStruct.skill[Attacker, i].level > 0))
+                        if ((skill[Attacker, i].num == 42) && (skill[Attacker, i].level > 0))
                         {
                             //Dano crítico?
                             int critical_t = Globals.Rand(0, 100);
@@ -1763,7 +1763,7 @@ namespace FORJERUM
                             }
                             //break;
                         }
-                        if ((PStruct.skill[Attacker, i].num == 41) && (PStruct.skill[Attacker, i].level > 0))
+                        if ((skill[Attacker, i].num == 41) && (skill[Attacker, i].level > 0))
                         {
                             if (isSpell == 40)
                             {
@@ -1771,12 +1771,12 @@ namespace FORJERUM
 
                                 if (open_passive == 0) { return; }
 
-                                PStruct.ppassiveffect[Attacker, open_passive].spellnum = PStruct.skill[Attacker, i].num;
-                                PStruct.ppassiveffect[Attacker, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[PStruct.skill[Attacker, i].num].passive_interval;
-                                PStruct.ppassiveffect[Attacker, open_passive].target = Victim;
-                                PStruct.ppassiveffect[Attacker, open_passive].targettype = Globals.Target_Npc;
-                                PStruct.ppassiveffect[Attacker, open_passive].type = 1;
-                                PStruct.ppassiveffect[Attacker, open_passive].active = true;
+                                ppassiveffect[Attacker, open_passive].spellnum = skill[Attacker, i].num;
+                                ppassiveffect[Attacker, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[skill[Attacker, i].num].passive_interval;
+                                ppassiveffect[Attacker, open_passive].target = Victim;
+                                ppassiveffect[Attacker, open_passive].targettype = Globals.Target_Npc;
+                                ppassiveffect[Attacker, open_passive].type = 1;
+                                ppassiveffect[Attacker, open_passive].active = true;
                             }
                             //break;
                         }
@@ -1803,7 +1803,7 @@ namespace FORJERUM
                     double real_drain = (Convert.ToDouble(Damage) / 100) * drain;
                     PlayerLogic.HealPlayer(Attacker, Convert.ToInt32(real_drain));
                     //SendData.Send_ActionMsg(Attacker, Convert.ToInt32(real_drain).ToString(), Globals.ColorGreen, PlayerX, PlayerY, 1, 1);
-                    //SendData.Send_PlayerVitalityToMap(Map, Attacker, PStruct.tempplayer[Attacker].Vitality);
+                    //SendData.Send_PlayerVitalityToMap(Map, Attacker, tempplayer[Attacker].Vitality);
                 }
 
                 NStruct.tempnpc[Map, Victim].Target = Attacker;
@@ -1832,7 +1832,7 @@ namespace FORJERUM
 
                 if (is_pet)
                 {
-                    string equipment = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Equipment;
+                    string equipment = character[Attacker, player[Attacker].SelectedChar].Equipment;
                     string[] equipdata = equipment.Split(',');
                     string[] petdata = equipdata[4].Split(';');
 
@@ -1845,49 +1845,49 @@ namespace FORJERUM
                     if (MinDamage >= MaxDamage)
                     {
                         Damage = MinDamage;
-                        Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                        Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                         Damage = Damage - ((Damage / 100) * NStruct.npc[Map, Victim].Defense);
                     }
                     else
                     {
                         Damage = Globals.Rand(MinDamage, MaxDamage);
-                        Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                        Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                         Damage = Damage - ((Damage / 100) * NStruct.npc[Map, Victim].Defense);
                     }
 
                     SendData.Send_Animation(Map, Globals.Target_Npc, Victim, IStruct.item[petnum].animation_id);
-                    SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), Globals.ColorPurple, NpcX, NpcY, 1, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map);
+                    SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), Globals.ColorPurple, NpcX, NpcY, 1, character[Attacker, player[Attacker].SelectedChar].Dir, Map);
                     goto important;
                 }
 
                 if (MinDamage >= MaxDamage)
                 {
                     Damage = MinDamage;
-                    Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                    Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                     Damage = Damage - ((Damage / 100) * NStruct.npc[Map, Victim].Defense);
                 }
                 else
                 {
                     Damage = Globals.Rand(MinDamage, MaxDamage);
-                    Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                    Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                     Damage = Damage - ((Damage / 100) * NStruct.npc[Map, Victim].Defense);
                 }
 
-                if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 2)
+                if (character[Attacker, player[Attacker].SelectedChar].ClassId == 2)
                 {
                     for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                     {
-                        if ((PStruct.skill[Attacker, i].num == 52) && (PStruct.skill[Attacker, i].level > 0))
+                        if ((skill[Attacker, i].num == 52) && (skill[Attacker, i].level > 0))
                         {
-                            Damage += ((NStruct.npc[Map, Victim].Vitality / 100) * (2 + PStruct.skill[Attacker, i].level));
+                            Damage += ((NStruct.npc[Map, Victim].Vitality / 100) * (2 + skill[Attacker, i].level));
                         }
                     }
                 }
 
-                if (PStruct.tempplayer[Attacker].ReduceDamage > 0)
+                if (tempplayer[Attacker].ReduceDamage > 0)
                 {
                     SendData.Send_ActionMsg(Victim, lang.damage_reduced, Globals.ColorWhite, NpcX, NpcY, 1, 0, Map);
-                    PStruct.tempplayer[Attacker].ReduceDamage = 0;
+                    tempplayer[Attacker].ReduceDamage = 0;
                 }
 
                 if (Damage <= 0)
@@ -1911,11 +1911,11 @@ namespace FORJERUM
 
             if (is_critical)
             {
-                SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), 1, NpcX, NpcY, 1, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map);
+                SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), 1, NpcX, NpcY, 1, character[Attacker, player[Attacker].SelectedChar].Dir, Map);
                 int true_range = 0;
                 for (int i = 1; i <= 2; i++)
                 {
-                    if (PStruct.CanThrowNpc(Map, Victim, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, i))
+                    if (CanThrowNpc(Map, Victim, character[Attacker, player[Attacker].SelectedChar].Dir, i))
                     {
                         true_range += 1;
                     }
@@ -1932,13 +1932,13 @@ namespace FORJERUM
 
                 if (true_range > 0)
                 {
-                    PStruct.ThrowNpc(Map, Victim, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, true_range);
+                    ThrowNpc(Map, Victim, character[Attacker, player[Attacker].SelectedChar].Dir, true_range);
                 }
             }
             else
             {
-                if (isSpell > 0) { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), Globals.ColorPink, NpcX, NpcY, Globals.Action_Msg_Scroll, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map); }
-                else { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), 4, NpcX, NpcY, Globals.Action_Msg_Scroll, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map); }
+                if (isSpell > 0) { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), Globals.ColorPink, NpcX, NpcY, Globals.Action_Msg_Scroll, character[Attacker, player[Attacker].SelectedChar].Dir, Map); }
+                else { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), 4, NpcX, NpcY, Globals.Action_Msg_Scroll, character[Attacker, player[Attacker].SelectedChar].Dir, Map); }
             }
 
         important:
@@ -2065,7 +2065,7 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int exp = 0;//PStruct.character[index, PStruct.player[index].SelectedChar].Miner;
+            int exp = 0;//character[index, player[index].SelectedChar].Miner;
 
             int level = (exp / 100);
 
@@ -2134,8 +2134,8 @@ namespace FORJERUM
                 return;
             }
                 
-                damage = 1 + Convert.ToInt32(Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[profnum] * 0.5));
-                SendData.Send_Animation(PStruct.character[index, PStruct.player[index].SelectedChar].Map, Globals.Target_Player, index, WStruct.weapon[28].animation_id);
+                damage = 1 + Convert.ToInt32(Convert.ToDouble(character[index, player[index].SelectedChar].Prof_Level[profnum] * 0.5));
+                SendData.Send_Animation(character[index, player[index].SelectedChar].Map, Globals.Target_Player, index, WStruct.weapon[28].animation_id);
 
             if (damage == 0) { damage = 1; }
 
@@ -2146,12 +2146,12 @@ namespace FORJERUM
             {
                 InventoryRelations.GiveItem(index, 1, MStruct.workpoint[workpoint].reward, 1, 0, 0);
                 MStruct.tempworkpoint[workpoint].respawn = Loops.TickCount.ElapsedMilliseconds + (MStruct.workpoint[workpoint].respawn_timer * 10000);
-                character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum] += MStruct.workpoint[workpoint].exp;
+                character[index, player[index].SelectedChar].Prof_Exp[profnum] += MStruct.workpoint[workpoint].exp;
                 //Verificamos se ele subiu de nível
-                if ((character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum] >= GetpProfExpToNextLevel(index, profnum)) && (character[index, PStruct.player[index].SelectedChar].Prof_Level[profnum] < 80))
+                if ((character[index, player[index].SelectedChar].Prof_Exp[profnum] >= GetpProfExpToNextLevel(index, profnum)) && (character[index, player[index].SelectedChar].Prof_Level[profnum] < 80))
                 {
-                    character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum] -= GetpProfExpToNextLevel(index, profnum);
-                    character[index, PStruct.player[index].SelectedChar].Prof_Level[profnum] += 1;
+                    character[index, player[index].SelectedChar].Prof_Exp[profnum] -= GetpProfExpToNextLevel(index, profnum);
+                    character[index, player[index].SelectedChar].Prof_Level[profnum] += 1;
                     SendData.Send_ProfLEVEL(index, profnum);
                 }
                 else
@@ -2160,10 +2160,10 @@ namespace FORJERUM
                     SendData.Send_ProfEXP(index, profnum);
                    // SendData.Send_PlayerExp(memberindex);
                     //Enviamos uma animação bonitinha de exp :D
-                    SendData.Send_ActionMsg(index, "+" + MStruct.workpoint[workpoint].exp + lang.pexp, 0, character[index, PStruct.player[index].SelectedChar].X, character[index, PStruct.player[index].SelectedChar].Y, 1, 0, MStruct.workpoint[workpoint].map);
+                    SendData.Send_ActionMsg(index, "+" + MStruct.workpoint[workpoint].exp + lang.pexp, 0, character[index, player[index].SelectedChar].X, character[index, player[index].SelectedChar].Y, 1, 0, MStruct.workpoint[workpoint].map);
                 }
                 SendData.Send_EventGraphicToMap(MStruct.workpoint[workpoint].map, MStruct.tile[MStruct.workpoint[workpoint].map, MStruct.workpoint[workpoint].x, MStruct.workpoint[workpoint].y].Event_Id, "", 0, 49);
-                SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                SendData.Send_InvSlots(index, player[index].SelectedChar);
             }
         }
         //*********************************************************************************************
@@ -2180,27 +2180,27 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if (Map == 0) { Map = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Map); }
-            int Dir = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir;
-            int VictimX = PStruct.character[Victim, PStruct.player[Victim].SelectedChar].X;
-            int VictimY = PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Y;
-            int AttackerX = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].X;
-            int AttackerY = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Y;
-            int PlayerX = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].X);
-            int PlayerY = Convert.ToInt32(PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Y);
+            if (Map == 0) { Map = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].Map); }
+            int Dir = character[Attacker, player[Attacker].SelectedChar].Dir;
+            int VictimX = character[Victim, player[Victim].SelectedChar].X;
+            int VictimY = character[Victim, player[Victim].SelectedChar].Y;
+            int AttackerX = character[Attacker, player[Attacker].SelectedChar].X;
+            int AttackerY = character[Attacker, player[Attacker].SelectedChar].Y;
+            int PlayerX = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].X);
+            int PlayerY = Convert.ToInt32(character[Attacker, player[Attacker].SelectedChar].Y);
             int Damage = 0;
 
             bool is_critical = false;
 
-            if (PStruct.tempplayer[Victim].isDead == true) { return; }
+            if (tempplayer[Victim].isDead == true) { return; }
             if (!MStruct.tempmap[Map].WarActive) {
-            if (PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Level < 10) { return; }
+            if (character[Victim, player[Victim].SelectedChar].Level < 10) { return; }
             if (!MStruct.MapIsPVP(Map)) { return; }
             }
 
             if ((!isPassive) && (isSpell == 0)) { SkillPassive(Attacker, Globals.Target_Player, Victim); }
-            if ((PStruct.tempplayer[Victim].Vitality <= 0) || (PStruct.tempplayer[Victim].isDead)) { return; }
-            if ((!MStruct.tempmap[Map].WarActive) && (!PStruct.character[Attacker, player[Attacker].SelectedChar].PVP)) { return; }
+            if ((tempplayer[Victim].Vitality <= 0) || (tempplayer[Victim].isDead)) { return; }
+            if ((!MStruct.tempmap[Map].WarActive) && (!character[Attacker, player[Attacker].SelectedChar].PVP)) { return; }
 
             if (tempplayer[Victim].Reflect)
             {
@@ -2217,18 +2217,18 @@ namespace FORJERUM
             //Magias
             if (isSpell > 0)
             {
-                if (PStruct.character[Victim, PStruct.player[Victim].SelectedChar].ClassId == 6)
+                if (character[Victim, player[Victim].SelectedChar].ClassId == 6)
                 {
                     for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                     {
-                        if ((PStruct.skill[Victim, i].num == 39) && (PStruct.skill[Victim, i].level > 0))
+                        if ((skill[Victim, i].num == 39) && (skill[Victim, i].level > 0))
                         {
                             //Desviar do golpe?
                             int parry_test = Globals.Rand(0, 100);
 
                             if (parry_test <= (PlayerRelations.GetPlayerParry(Victim) - PlayerRelations.GetPlayerCritical(Attacker)))
                             {
-                                SendData.Send_ActionMsg(Victim, lang.attack_missed, Globals.ColorWhite, PStruct.character[Victim, PStruct.player[Victim].SelectedChar].X, PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Y, 1, 0, Map);
+                                SendData.Send_ActionMsg(Victim, lang.attack_missed, Globals.ColorWhite, character[Victim, player[Victim].SelectedChar].X, character[Victim, player[Victim].SelectedChar].Y, 1, 0, Map);
                                 return;
                             }
                             break;
@@ -2247,15 +2247,15 @@ namespace FORJERUM
 
                 for (int i = 1; i < Globals.MaxSpellBuffs; i++)
                 {
-                    if (PStruct.pspellbuff[Attacker, i].active)
+                    if (pspellbuff[Attacker, i].active)
                     {
-                        if (PStruct.pspellbuff[Attacker, i].timer > Loops.TickCount.ElapsedMilliseconds) { extra_spellbuff += PStruct.pspellbuff[Attacker, i].value; }
+                        if (pspellbuff[Attacker, i].timer > Loops.TickCount.ElapsedMilliseconds) { extra_spellbuff += pspellbuff[Attacker, i].value; }
                         else
                         {
-                            PStruct.pspellbuff[Attacker, i].value = 0;
-                            PStruct.pspellbuff[Attacker, i].type = 0;
-                            PStruct.pspellbuff[Attacker, i].timer = 0;
-                            PStruct.pspellbuff[Attacker, i].active = false;
+                            pspellbuff[Attacker, i].value = 0;
+                            pspellbuff[Attacker, i].type = 0;
+                            pspellbuff[Attacker, i].timer = 0;
+                            pspellbuff[Attacker, i].active = false;
                         }
                     }
                 }
@@ -2268,14 +2268,14 @@ namespace FORJERUM
                 double max_damage = PlayerRelations.GetPlayerMaxMagic(Attacker);
 
 
-                if (PStruct.hotkey[Attacker, skill_slot].num > Globals.MaxPlayer_Skills)
+                if (hotkey[Attacker, skill_slot].num > Globals.MaxPlayer_Skills)
                 {
-                    PStruct.hotkey[Attacker, skill_slot].num = 0;
+                    hotkey[Attacker, skill_slot].num = 0;
                     return;
                 }
 
                 //Multiplicador de nível
-                double levelmultiplier = (1.0 + multiplier) * PStruct.skill[Attacker, PStruct.hotkey[Attacker, skill_slot].num].level; //Except
+                double levelmultiplier = (1.0 + multiplier) * skill[Attacker, hotkey[Attacker, skill_slot].num].level; //Except
 
                 //Verificando se a skill teve algum problema e corrigindo
                 if (levelmultiplier < 1.0) { levelmultiplier = 1.0; }
@@ -2292,23 +2292,23 @@ namespace FORJERUM
 
                 //Definição geral do dano
                 Damage = Globals.Rand(MinDamage, MaxDamage);
-                Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
-                if (PStruct.character[Victim, PStruct.player[Victim].SelectedChar].ClassId == 3)
+                Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
+                if (character[Victim, player[Victim].SelectedChar].ClassId == 3)
                 {
                     for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                     {
-                        if ((PStruct.skill[Victim, i].num == 56) && (PStruct.skill[Victim, i].level > 0))
+                        if ((skill[Victim, i].num == 56) && (skill[Victim, i].level > 0))
                         {
-                            Damage -= ((Damage / 100) * (3 * PStruct.skill[Victim, i].level));
+                            Damage -= ((Damage / 100) * (3 * skill[Victim, i].level));
                         }
                     }
                 }
                 Damage -= ((Damage / 100) * PlayerRelations.GetPlayerMagicDef(Victim));
 
-                if (PStruct.tempplayer[Attacker].ReduceDamage > 0)
+                if (tempplayer[Attacker].ReduceDamage > 0)
                 {
                     SendData.Send_ActionMsg(Victim, lang.damage_reduced + " ", Globals.ColorWhite, VictimX, VictimY, 1, 0, Map);
-                    PStruct.tempplayer[Attacker].ReduceDamage = 0;
+                    tempplayer[Attacker].ReduceDamage = 0;
                 }
 
                 if (isSpell == 36)
@@ -2316,12 +2316,12 @@ namespace FORJERUM
                     Damage += ((Damage / 100) * PlayerRelations.GetPlayerDefense(Attacker));
                 }
 
-                if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 6)
+                if (character[Attacker, player[Attacker].SelectedChar].ClassId == 6)
                 {
 
                     for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                     {
-                        if ((PStruct.skill[Attacker, i].num == 42) && (PStruct.skill[Attacker, i].level > 0))
+                        if ((skill[Attacker, i].num == 42) && (skill[Attacker, i].level > 0))
                         {
                             //Dano crítico?
                             int critical_t = Globals.Rand(0, 100);
@@ -2333,7 +2333,7 @@ namespace FORJERUM
                             }
                             break;
                         }
-                        if ((PStruct.skill[Attacker, i].num == 41) && (PStruct.skill[Attacker, i].level > 0))
+                        if ((skill[Attacker, i].num == 41) && (skill[Attacker, i].level > 0))
                         {
                             if (isSpell == 40)
                             {
@@ -2341,12 +2341,12 @@ namespace FORJERUM
 
                                 if (open_passive == 0) { return; }
 
-                                PStruct.ppassiveffect[Attacker, open_passive].spellnum = PStruct.skill[Attacker, i].num;
-                                PStruct.ppassiveffect[Attacker, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[PStruct.skill[Attacker, i].num].passive_interval;
-                                PStruct.ppassiveffect[Attacker, open_passive].target = Victim;
-                                PStruct.ppassiveffect[Attacker, open_passive].targettype = Globals.Target_Player;
-                                PStruct.ppassiveffect[Attacker, open_passive].type = 1;
-                                PStruct.ppassiveffect[Attacker, open_passive].active = true;
+                                ppassiveffect[Attacker, open_passive].spellnum = skill[Attacker, i].num;
+                                ppassiveffect[Attacker, open_passive].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[skill[Attacker, i].num].passive_interval;
+                                ppassiveffect[Attacker, open_passive].target = Victim;
+                                ppassiveffect[Attacker, open_passive].targettype = Globals.Target_Player;
+                                ppassiveffect[Attacker, open_passive].type = 1;
+                                ppassiveffect[Attacker, open_passive].active = true;
                             }
                             //Dano crítico?
                             int critical_t = Globals.Rand(0, 100);
@@ -2381,7 +2381,7 @@ namespace FORJERUM
                     double real_drain = (Convert.ToDouble(Damage) / 100) * drain;
                     PlayerLogic.HealPlayer(Attacker, Convert.ToInt32(real_drain));
                     //SendData.Send_ActionMsg(Attacker, Convert.ToInt32(real_drain).ToString(), Globals.ColorGreen, PlayerX, PlayerY, 1, 1);
-                    //SendData.Send_PlayerVitalityToMap(Map, Attacker, PStruct.tempplayer[Attacker].Vitality);
+                    //SendData.Send_PlayerVitalityToMap(Map, Attacker, tempplayer[Attacker].Vitality);
                 }
             }
             //Ataques básicos
@@ -2408,7 +2408,7 @@ namespace FORJERUM
 
                 if (is_pet)
                 {
-                    string equipment = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Equipment;
+                    string equipment = character[Attacker, player[Attacker].SelectedChar].Equipment;
                     string[] equipdata = equipment.Split(',');
                     string[] petdata = equipdata[4].Split(';');
 
@@ -2421,49 +2421,49 @@ namespace FORJERUM
                     if (MinDamage >= MaxDamage)
                     {
                         Damage = MinDamage + super_damage;
-                        Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                        Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                         Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                     }
                     else
                     {
                         Damage = (Globals.Rand(MinDamage, MaxDamage)) + super_damage;
-                        Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                        Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                         Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                     }//
 
                     SendData.Send_Animation(Map, Globals.Target_Player, Victim, IStruct.item[petnum].animation_id);
-                    SendData.Send_ActionMsg(Victim, "-" + Damage.ToString(), Globals.ColorPurple, VictimX, VictimY, 1, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map); 
+                    SendData.Send_ActionMsg(Victim, "-" + Damage.ToString(), Globals.ColorPurple, VictimX, VictimY, 1, character[Attacker, player[Attacker].SelectedChar].Dir, Map); 
                     goto important;
                 }
 
                 if (MinDamage >= MaxDamage) 
                 {
                     Damage = MinDamage + super_damage;
-                    Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                    Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                     Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                 }
                 else 
                 { 
                     Damage = (Globals.Rand(MinDamage, MaxDamage)) + super_damage;
-                    Damage -= (Damage / 100) * PStruct.tempplayer[Attacker].ReduceDamage;
+                    Damage -= (Damage / 100) * tempplayer[Attacker].ReduceDamage;
                     Damage -= ((Damage / 100) * PlayerRelations.GetPlayerDefense(Victim));
                 }//
 
-                if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].ClassId == 2)
+                if (character[Attacker, player[Attacker].SelectedChar].ClassId == 2)
                 {
                     for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                     {
-                        if ((PStruct.skill[Attacker, i].num == 52) && (PStruct.skill[Attacker, i].level > 0))
+                        if ((skill[Attacker, i].num == 52) && (skill[Attacker, i].level > 0))
                         {
-                            Damage += ((GetPlayerMaxVitality(Victim) / 100) * (2 + PStruct.skill[Attacker, i].level));
+                            Damage += ((GetPlayerMaxVitality(Victim) / 100) * (2 + skill[Attacker, i].level));
                         }
                     }
                 }
 
-                if (PStruct.tempplayer[Attacker].ReduceDamage > 0)
+                if (tempplayer[Attacker].ReduceDamage > 0)
                 {
                     SendData.Send_ActionMsg(Victim, lang.damage_reduced, Globals.ColorWhite, VictimX, VictimY, 1, 0, Map);
-                    PStruct.tempplayer[Attacker].ReduceDamage = 0;
+                    tempplayer[Attacker].ReduceDamage = 0;
                 }
 
                 //Dano crítico?
@@ -2484,7 +2484,7 @@ namespace FORJERUM
                 int true_range = 0;
                 for (int i = 1; i <= 2; i++)
                 {
-                    if (PStruct.CanThrowPlayer(Victim, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, i))
+                    if (CanThrowPlayer(Victim, character[Attacker, player[Attacker].SelectedChar].Dir, i))
                     {
                         true_range += 1;
                     }
@@ -2501,83 +2501,83 @@ namespace FORJERUM
 
                 if (true_range > 0)
                 {
-                    PStruct.ThrowPlayer(Victim, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, true_range);
+                    ThrowPlayer(Victim, character[Attacker, player[Attacker].SelectedChar].Dir, true_range);
                 }
 
-                if (PStruct.tempplayer[Victim].preparingskill > 0)
+                if (tempplayer[Victim].preparingskill > 0)
                 {
-                    PStruct.tempplayer[Victim].preparingskill = 0;
-                    PStruct.tempplayer[Victim].preparingskillslot = 0;
-                    PStruct.tempplayer[Victim].skilltimer = 0;
+                    tempplayer[Victim].preparingskill = 0;
+                    tempplayer[Victim].preparingskillslot = 0;
+                    tempplayer[Victim].skilltimer = 0;
                     SendData.Send_ActionMsg(Victim, lang.spell_broken, Globals.ColorPink, VictimX, VictimY, 1, 0, Map);
-                    PStruct.tempplayer[Victim].movespeed = Globals.NormalMoveSpeed;
+                    tempplayer[Victim].movespeed = Globals.NormalMoveSpeed;
                     SendData.Send_MoveSpeed(Globals.Target_Player, Victim);
                     SendData.Send_BrokeSkill(Victim);
                 }
-                SendData.Send_ActionMsg(Victim, "-" + Damage.ToString(), 1, VictimX, VictimY, 1, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map); 
+                SendData.Send_ActionMsg(Victim, "-" + Damage.ToString(), 1, VictimX, VictimY, 1, character[Attacker, player[Attacker].SelectedChar].Dir, Map); 
             }
             else
             {
-                if (isSpell > 0) { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), Globals.ColorPink, VictimX, VictimY, Globals.Action_Msg_Scroll, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map); }
-                else { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), 4, VictimX, VictimY, Globals.Action_Msg_Scroll, PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Dir, Map); }
+                if (isSpell > 0) { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), Globals.ColorPink, VictimX, VictimY, Globals.Action_Msg_Scroll, character[Attacker, player[Attacker].SelectedChar].Dir, Map); }
+                else { SendData.Send_ActionMsg(Attacker, "-" + Damage.ToString(), 4, VictimX, VictimY, Globals.Action_Msg_Scroll, character[Attacker, player[Attacker].SelectedChar].Dir, Map); }
             }
 
             important:
             //Nova vida do jogador
-            PStruct.tempplayer[Victim].Vitality -= Damage;
+            tempplayer[Victim].Vitality -= Damage;
 
             //Sleep?
-            if (PStruct.tempplayer[Victim].Sleeping)
+            if (tempplayer[Victim].Sleeping)
             {
-                PStruct.tempplayer[Victim].Sleeping = false;
-                PStruct.tempplayer[Victim].SleepTimer = 0;
+                tempplayer[Victim].Sleeping = false;
+                tempplayer[Victim].SleepTimer = 0;
                 SendData.Send_Sleep(Map, 2, Victim, 0);
             }
 
             //Enviamos a nova vida do jogador
-            SendData.Send_PlayerVitalityToMap(Map, Victim, PStruct.tempplayer[Victim].Vitality);
+            SendData.Send_PlayerVitalityToMap(Map, Victim, tempplayer[Victim].Vitality);
 
-            if (PStruct.tempplayer[Victim].Vitality <= 0)
+            if (tempplayer[Victim].Vitality <= 0)
             {
                 tempplayer[Victim].PetTarget = 0;
                 tempplayer[Victim].PetTargetType = 0;
                 if (!MStruct.tempmap[Map].WarActive)
                 {
-                    if (!PStruct.tempplayer[Victim].SORE)
+                    if (!tempplayer[Victim].SORE)
                     {
-                        int lvd = PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Level - PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Level;
+                        int lvd = character[Attacker, player[Attacker].SelectedChar].Level - character[Victim, player[Victim].SelectedChar].Level;
                         if (lvd > 5)
                         {
-                            if (!PStruct.character[Victim, PStruct.player[Victim].SelectedChar].PVP)
+                            if (!character[Victim, player[Victim].SelectedChar].PVP)
                             {
-                                PStruct.tempplayer[Attacker].SORE = true;
-                                PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].PVPPenalty = 300000 + Loops.TickCount.ElapsedMilliseconds;
+                                tempplayer[Attacker].SORE = true;
+                                character[Attacker, player[Attacker].SelectedChar].PVPPenalty = 300000 + Loops.TickCount.ElapsedMilliseconds;
                                 SendData.Send_PlayerSoreToMap(Attacker);
                                 SendData.Send_PlayerPvpSoreTimer(Attacker);
                                 SendData.Send_Animation(Map, Globals.Target_Player, Attacker, 147);
 
                                 //Relacionado a definição de vida para novos e velhos jogadores
-                                if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Vitality > PStruct.GetPlayerMaxVitality(Attacker))
+                                if (character[Attacker, player[Attacker].SelectedChar].Vitality > GetPlayerMaxVitality(Attacker))
                                 {
-                                    PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Vitality = PStruct.GetPlayerMaxVitality(Attacker);
-                                    PStruct.tempplayer[Attacker].Vitality = PStruct.GetPlayerMaxVitality(Attacker);
-                                    SendData.Send_PlayerVitalityToMap(Map, Attacker, PStruct.tempplayer[Attacker].Vitality);
-                                    if (PStruct.tempplayer[Attacker].Party > 0)
+                                    character[Attacker, player[Attacker].SelectedChar].Vitality = GetPlayerMaxVitality(Attacker);
+                                    tempplayer[Attacker].Vitality = GetPlayerMaxVitality(Attacker);
+                                    SendData.Send_PlayerVitalityToMap(Map, Attacker, tempplayer[Attacker].Vitality);
+                                    if (tempplayer[Attacker].Party > 0)
                                     {
-                                        SendData.Send_PlayerVitalityToParty(PStruct.tempplayer[Attacker].Party, Attacker, PStruct.tempplayer[Attacker].Vitality);
+                                        SendData.Send_PlayerVitalityToParty(tempplayer[Attacker].Party, Attacker, tempplayer[Attacker].Vitality);
                                     }
                                 }
 
 
                                 //Relacionado a definição de mana para novos e velhos jogadores
-                                if (PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Spirit > PStruct.GetPlayerMaxSpirit(Attacker))
+                                if (character[Attacker, player[Attacker].SelectedChar].Spirit > GetPlayerMaxSpirit(Attacker))
                                 {
-                                    PStruct.character[Attacker, PStruct.player[Attacker].SelectedChar].Spirit = PStruct.GetPlayerMaxSpirit(Attacker);
-                                    PStruct.tempplayer[Attacker].Spirit = PStruct.GetPlayerMaxSpirit(Attacker);
-                                    SendData.Send_PlayerSpiritToMap(Map, Attacker, PStruct.tempplayer[Attacker].Spirit);
-                                    if (PStruct.tempplayer[Attacker].Party > 0)
+                                    character[Attacker, player[Attacker].SelectedChar].Spirit = GetPlayerMaxSpirit(Attacker);
+                                    tempplayer[Attacker].Spirit = GetPlayerMaxSpirit(Attacker);
+                                    SendData.Send_PlayerSpiritToMap(Map, Attacker, tempplayer[Attacker].Spirit);
+                                    if (tempplayer[Attacker].Party > 0)
                                     {
-                                        SendData.Send_PlayerSpiritToParty(PStruct.tempplayer[Attacker].Party, Attacker, PStruct.tempplayer[Attacker].Spirit);
+                                        SendData.Send_PlayerSpiritToParty(tempplayer[Attacker].Party, Attacker, tempplayer[Attacker].Spirit);
                                     }
                                 }
                             }
@@ -2590,22 +2590,22 @@ namespace FORJERUM
                 }
                 else
                 {
-                    int exp = PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Exp / 2;
+                    int exp = character[Victim, player[Victim].SelectedChar].Exp / 2;
                     PlayerRelations.GivePlayerExp(Attacker, exp);
-                    PStruct.character[Victim, PStruct.player[Victim].SelectedChar].Exp -= exp;
+                    character[Victim, player[Victim].SelectedChar].Exp -= exp;
                     SendData.Send_PlayerExp(Victim);
                     SendData.Send_ActionMsg(Victim, "-" + exp + lang.exp, 0, PlayerX, PlayerY, 1, 0, Map);
                     SendData.Send_Animation(Map, Globals.Target_Player, Attacker, 148);
-                    PStruct.tempplayer[Victim].SORE = false;
-                    PStruct.character[Victim, PStruct.player[Victim].SelectedChar].PVPPenalty = 0;
-                    PStruct.character[Victim, PStruct.player[Victim].SelectedChar].PVP = false;
-                    PStruct.character[Victim, PStruct.player[Victim].SelectedChar].PVPBanTimer = 60000 + Loops.TickCount.ElapsedMilliseconds;
+                    tempplayer[Victim].SORE = false;
+                    character[Victim, player[Victim].SelectedChar].PVPPenalty = 0;
+                    character[Victim, player[Victim].SelectedChar].PVP = false;
+                    character[Victim, player[Victim].SelectedChar].PVPBanTimer = 60000 + Loops.TickCount.ElapsedMilliseconds;
                     SendData.Send_PlayerPvpToMap(Victim);
                     SendData.Send_PlayerSoreToMap(Victim);
                     SendData.Send_PlayerPvpBanTimer(Victim);
                 }
               //Morte
-              PStruct.tempplayer[Victim].isDead = true;
+              tempplayer[Victim].isDead = true;
               SendData.Send_PlayerDeathToMap(Victim);
             }
         }
@@ -2624,9 +2624,9 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int x = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            int y = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
+            int map = character[index, player[index].SelectedChar].Map;
+            int x = character[index, player[index].SelectedChar].X;
+            int y = character[index, player[index].SelectedChar].Y;
             //Tentamos nos mover
             switch (Dir)
             {
@@ -2725,23 +2725,23 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int x = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            int y = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
+            int map = character[index, player[index].SelectedChar].Map;
+            int x = character[index, player[index].SelectedChar].X;
+            int y = character[index, player[index].SelectedChar].Y;
 
             switch (dir)
             {
                 case 8:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Y = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y) - range);
+                    character[index, player[index].SelectedChar].Y = Convert.ToByte(Convert.ToInt32(character[index, player[index].SelectedChar].Y) - range);
                     break;
                 case 2:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Y = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y) + range);
+                    character[index, player[index].SelectedChar].Y = Convert.ToByte(Convert.ToInt32(character[index, player[index].SelectedChar].Y) + range);
                     break;
                 case 4:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].X = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X) - range);
+                    character[index, player[index].SelectedChar].X = Convert.ToByte(Convert.ToInt32(character[index, player[index].SelectedChar].X) - range);
                     break;
                 case 6:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].X = Convert.ToByte(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X) + range);
+                    character[index, player[index].SelectedChar].X = Convert.ToByte(Convert.ToInt32(character[index, player[index].SelectedChar].X) + range);
                     break;
                 default:
                     WinsockAsync.Log(String.Format("Direção nula"));
@@ -2870,7 +2870,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxPTempSpells; i++)
             {
-                if (PStruct.ptempspell[id, i].active == false)
+                if (ptempspell[id, i].active == false)
                 {
                     return i;
                 }
@@ -2891,98 +2891,98 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int Attacker = PStruct.ptempspell[index, PStempSpell].attacker;
-            int Map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
+            int Attacker = ptempspell[index, PStempSpell].attacker;
+            int Map = character[index, player[index].SelectedChar].Map;
 
             if ((UserConnection.Getindex(Attacker) < 0) || (UserConnection.Getindex(Attacker) >= WinsockAsync.Clients.Count())) 
             { 
-                PStruct.ptempspell[index, PStempSpell].attacker = 0;
-                PStruct.ptempspell[index, PStempSpell].timer = 0;
-                PStruct.ptempspell[index, PStempSpell].spellnum = 0;
-                PStruct.ptempspell[index, PStempSpell].repeats = 0;
-                PStruct.ptempspell[index, PStempSpell].active = false;
+                ptempspell[index, PStempSpell].attacker = 0;
+                ptempspell[index, PStempSpell].timer = 0;
+                ptempspell[index, PStempSpell].spellnum = 0;
+                ptempspell[index, PStempSpell].repeats = 0;
+                ptempspell[index, PStempSpell].active = false;
                 return;
             }
 
             //Verificar se o jogador não se desconectou no processo
             if (!WinsockAsync.Clients[(UserConnection.Getindex(Attacker))].IsConnected)
             {
-                PStruct.ptempspell[index, PStempSpell].attacker = 0;
-                PStruct.ptempspell[index, PStempSpell].timer = 0;
-                PStruct.ptempspell[index, PStempSpell].spellnum = 0;
-                PStruct.ptempspell[index, PStempSpell].repeats = 0;
-                PStruct.ptempspell[index, PStempSpell].active = false;
+                ptempspell[index, PStempSpell].attacker = 0;
+                ptempspell[index, PStempSpell].timer = 0;
+                ptempspell[index, PStempSpell].spellnum = 0;
+                ptempspell[index, PStempSpell].repeats = 0;
+                ptempspell[index, PStempSpell].active = false;
                 return;
             }
 
-            if (PStruct.tempplayer[index].Vitality <= 0)
+            if (tempplayer[index].Vitality <= 0)
             {
-                PStruct.ptempspell[index, PStempSpell].attacker = 0;
-                PStruct.ptempspell[index, PStempSpell].timer = 0;
-                PStruct.ptempspell[index, PStempSpell].spellnum = 0;
-                PStruct.ptempspell[index, PStempSpell].repeats = 0;
-                PStruct.ptempspell[index, PStempSpell].active = false;
+                ptempspell[index, PStempSpell].attacker = 0;
+                ptempspell[index, PStempSpell].timer = 0;
+                ptempspell[index, PStempSpell].spellnum = 0;
+                ptempspell[index, PStempSpell].repeats = 0;
+                ptempspell[index, PStempSpell].active = false;
                 return;
             }
 
-            SendData.Send_Animation(Map, 1, index, PStruct.ptempspell[index, PStempSpell].anim);
+            SendData.Send_Animation(Map, 1, index, ptempspell[index, PStempSpell].anim);
 
-            if (PStruct.ptempspell[index, PStempSpell].area_range <= 0)
+            if (ptempspell[index, PStempSpell].area_range <= 0)
             {
-                if (!PStruct.ptempspell[index, PStempSpell].is_heal)
+                if (!ptempspell[index, PStempSpell].is_heal)
                 {
-                    PStruct.PlayerAttackPlayer(Attacker, index, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                    PlayerAttackPlayer(Attacker, index, ptempspell[index, PStempSpell].spellnum, Map);
                 }
                 else
                 {
-                    PlayerLogic.HealPlayer(index, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                    PlayerLogic.HealPlayer(index, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                 }
             }
             else
             {
-                if (!PStruct.ptempspell[index, PStempSpell].is_heal)
+                if (!ptempspell[index, PStempSpell].is_heal)
                 {
-                    PlayerAttackPlayer(Attacker, index, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                    PlayerAttackPlayer(Attacker, index, ptempspell[index, PStempSpell].spellnum, Map);
                     for (int i = 0; i <= MStruct.tempmap[Map].NpcCount; i++)
                     {
-                        for (int r = 1; r <= PStruct.ptempspell[index, PStempSpell].area_range; r++)
+                        for (int r = 1; r <= ptempspell[index, PStempSpell].area_range; r++)
                         {
-                            if ((NStruct.tempnpc[Map, i].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X - r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X + r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
 
 
                             //Is line?
-                            if (PStruct.ptempspell[index, PStempSpell].is_line)
+                            if (ptempspell[index, PStempSpell].is_line)
                             {
-                                if ((NStruct.tempnpc[Map, i].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X - r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((NStruct.tempnpc[Map, i].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X + r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((NStruct.tempnpc[Map, i].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X + r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((NStruct.tempnpc[Map, i].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X - r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
                             }
                         }
@@ -2990,46 +2990,46 @@ namespace FORJERUM
 
                     for (int i = 0; i <= Globals.Player_Highindex; i++)
                     {
-                        if ((PStruct.character[i, PStruct.player[i].SelectedChar].Map == Map) && (PStruct.character[index, PStruct.player[index].SelectedChar].PVP) && (i != index))
+                        if ((character[i, player[i].SelectedChar].Map == Map) && (character[index, player[index].SelectedChar].PVP) && (i != index))
                         {
-                            for (int r = 1; r <= PStruct.ptempspell[index, PStempSpell].area_range; r++)
+                            for (int r = 1; r <= ptempspell[index, PStempSpell].area_range; r++)
                             {
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X - r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X + r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y - r == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y + r == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
 
 
                                 //Is line?
-                                if (PStruct.ptempspell[index, PStempSpell].is_line)
+                                if (ptempspell[index, PStempSpell].is_line)
                                 {
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X - r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y + r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                        PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                     }
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X + r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y - r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                        PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                     }
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X + r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y + r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                        PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                     }
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X - r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y - r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PStruct.PlayerAttackPlayer(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                        PlayerAttackPlayer(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                     }
                                 }
                             }
@@ -3038,48 +3038,48 @@ namespace FORJERUM
                 }
                 else
                 {
-                    PlayerLogic.HealPlayer(index, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
-                    PlayerAttackPlayer(Attacker, index, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                    PlayerLogic.HealPlayer(index, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
+                    PlayerAttackPlayer(Attacker, index, ptempspell[index, PStempSpell].spellnum, Map);
                     for (int i = 0; i <= MStruct.tempmap[Map].NpcCount; i++)
                     {
-                        for (int r = 1; r <= PStruct.ptempspell[index, PStempSpell].area_range; r++)
+                        for (int r = 1; r <= ptempspell[index, PStempSpell].area_range; r++)
                         {
-                            if ((NStruct.tempnpc[Map, i].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X - r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X + r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                            if ((NStruct.tempnpc[Map, i].X == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == character[index, player[index].SelectedChar].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                             }
 
 
                             //Is line?
-                            if (PStruct.ptempspell[index, PStempSpell].is_line)
+                            if (ptempspell[index, PStempSpell].is_line)
                             {
-                                if ((NStruct.tempnpc[Map, i].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X - r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((NStruct.tempnpc[Map, i].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X + r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((NStruct.tempnpc[Map, i].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X + r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y + r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
-                                if ((NStruct.tempnpc[Map, i].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == PStruct.character[index, PStruct.player[index].SelectedChar].Y))
+                                if ((NStruct.tempnpc[Map, i].X - r == character[index, player[index].SelectedChar].X) && (NStruct.tempnpc[Map, i].Y - r == character[index, player[index].SelectedChar].Y))
                                 {
-                                    PStruct.PlayerAttackNpc(Attacker, i, PStruct.ptempspell[index, PStempSpell].spellnum, Map);
+                                    PlayerAttackNpc(Attacker, i, ptempspell[index, PStempSpell].spellnum, Map);
                                 }
                             }
                         }
@@ -3087,46 +3087,46 @@ namespace FORJERUM
 
                     for (int i = 0; i <= Globals.Player_Highindex; i++)
                     {
-                        if ((PStruct.character[i, PStruct.player[i].SelectedChar].Map == Map) && (PStruct.character[index, PStruct.player[index].SelectedChar].PVP) && (i != index))
+                        if ((character[i, player[i].SelectedChar].Map == Map) && (character[index, player[index].SelectedChar].PVP) && (i != index))
                         {
-                            for (int r = 1; r <= PStruct.ptempspell[index, PStempSpell].area_range; r++)
+                            for (int r = 1; r <= ptempspell[index, PStempSpell].area_range; r++)
                             {
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X - r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X + r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y - r == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                if ((character[i, player[i].SelectedChar].X == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y + r == character[index, player[i].SelectedChar].Y))
                                 {
-                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                    PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                 }
 
 
                                 //Is line?
-                                if (PStruct.ptempspell[index, PStempSpell].is_line)
+                                if (ptempspell[index, PStempSpell].is_line)
                                 {
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X - r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y + r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                     }
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X + r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y - r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                     }
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X + r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y + r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                     }
-                                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == PStruct.character[index, PStruct.player[index].SelectedChar].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == PStruct.character[index, PStruct.player[i].SelectedChar].Y))
+                                    if ((character[i, player[i].SelectedChar].X - r == character[index, player[index].SelectedChar].X) && (character[i, player[i].SelectedChar].Y - r == character[index, player[i].SelectedChar].Y))
                                     {
-                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, PStruct.ptempspell[index, PStempSpell].spellnum));
+                                        PlayerLogic.HealPlayer(i, PlayerLogic.HealSpellDamage(Attacker, ptempspell[index, PStempSpell].spellnum));
                                     }
                                 }
                             }
@@ -3135,23 +3135,23 @@ namespace FORJERUM
                 }
             }
 
-            PStruct.ptempspell[index, PStempSpell].repeats -= 1;
+            ptempspell[index, PStempSpell].repeats -= 1;
 
-            if (PStruct.ptempspell[index, PStempSpell].repeats <= 0)
+            if (ptempspell[index, PStempSpell].repeats <= 0)
             {
-                if ((SStruct.skill[PStruct.ptempspell[index, PStempSpell].spellnum].slow) || (PStruct.ptempspell[index, PStempSpell].fast_buff))
+                if ((SStruct.skill[ptempspell[index, PStempSpell].spellnum].slow) || (ptempspell[index, PStempSpell].fast_buff))
                 {
-                    PStruct.tempplayer[index].movespeed = Globals.NormalMoveSpeed;
+                    tempplayer[index].movespeed = Globals.NormalMoveSpeed;
                     SendData.Send_MoveSpeed(1, index);
                 }
-                PStruct.ptempspell[index, PStempSpell].attacker = 0;
-                PStruct.ptempspell[index, PStempSpell].timer = 0;
-                PStruct.ptempspell[index, PStempSpell].spellnum = 0;
-                PStruct.ptempspell[index, PStempSpell].repeats = 0;
-                PStruct.ptempspell[index, PStempSpell].active = false;
+                ptempspell[index, PStempSpell].attacker = 0;
+                ptempspell[index, PStempSpell].timer = 0;
+                ptempspell[index, PStempSpell].spellnum = 0;
+                ptempspell[index, PStempSpell].repeats = 0;
+                ptempspell[index, PStempSpell].active = false;
             }
 
-            PStruct.ptempspell[index, PStempSpell].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[PStruct.ptempspell[index, PStempSpell].spellnum].interval;
+            ptempspell[index, PStempSpell].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[ptempspell[index, PStempSpell].spellnum].interval;
 
         }
         //*********************************************************************************************
@@ -3185,7 +3185,7 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty > Loops.TickCount.ElapsedMilliseconds) { return true; } else { PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty = 0; return false; }
+            if (character[index, player[index].SelectedChar].PVPPenalty > Loops.TickCount.ElapsedMilliseconds) { return true; } else { character[index, player[index].SelectedChar].PVPPenalty = 0; return false; }
         }
         //*********************************************************************************************
         // PlayerRegen / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -3200,43 +3200,43 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].isDead) { return; }
-            if (PStruct.tempplayer[index].Vitality < PStruct.GetPlayerMaxVitality(index))
+            if (tempplayer[index].isDead) { return; }
+            if (tempplayer[index].Vitality < GetPlayerMaxVitality(index))
             {
                 //Regen por segundo
-                PStruct.tempplayer[index].Vitality += GetPlayerVitalityRegen(index);
+                tempplayer[index].Vitality += GetPlayerVitalityRegen(index);
                 //Vida atual ficou maior que a máxima?
-                if (PStruct.tempplayer[index].Vitality > GetPlayerMaxVitality(index))
+                if (tempplayer[index].Vitality > GetPlayerMaxVitality(index))
                 {
-                    PStruct.tempplayer[index].Vitality = GetPlayerMaxVitality(index);
+                    tempplayer[index].Vitality = GetPlayerMaxVitality(index);
                 }
                 //Envia vida recuperada
-                SendData.Send_PlayerVitalityToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index, PStruct.tempplayer[index].Vitality);
+                SendData.Send_PlayerVitalityToMap(character[index, player[index].SelectedChar].Map, index, tempplayer[index].Vitality);
                 //Se estiver em grupo atualiza para o grupo também
-                if (PStruct.tempplayer[index].Party > 0)
+                if (tempplayer[index].Party > 0)
                 {
-                    SendData.Send_PlayerVitalityToParty(PStruct.tempplayer[index].Party, index, PStruct.tempplayer[index].Vitality);
+                    SendData.Send_PlayerVitalityToParty(tempplayer[index].Party, index, tempplayer[index].Vitality);
                 }
             }
-            if (PStruct.tempplayer[index].Spirit < PStruct.GetPlayerMaxSpirit(index))
+            if (tempplayer[index].Spirit < GetPlayerMaxSpirit(index))
             {
                 //Regen por segundo
-                PStruct.tempplayer[index].Spirit += GetPlayerSpiritRegen(index);
+                tempplayer[index].Spirit += GetPlayerSpiritRegen(index);
                 //Mana atual ficou maior que a máxima?
-                if (PStruct.tempplayer[index].Spirit > GetPlayerMaxSpirit(index))
+                if (tempplayer[index].Spirit > GetPlayerMaxSpirit(index))
                 {
-                    PStruct.tempplayer[index].Spirit = GetPlayerMaxSpirit(index);
+                    tempplayer[index].Spirit = GetPlayerMaxSpirit(index);
                 }
                 //Envia vida recuperada
-                SendData.Send_PlayerSpiritToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index, PStruct.tempplayer[index].Spirit);
+                SendData.Send_PlayerSpiritToMap(character[index, player[index].SelectedChar].Map, index, tempplayer[index].Spirit);
                 //Se estiver em grupo atualiza para o grupo também
-                if (PStruct.tempplayer[index].Party > 0)
+                if (tempplayer[index].Party > 0)
                 {
-                    SendData.Send_PlayerSpiritToParty(PStruct.tempplayer[index].Party, index, PStruct.tempplayer[index].Spirit);
+                    SendData.Send_PlayerSpiritToParty(tempplayer[index].Party, index, tempplayer[index].Spirit);
                 }
             }
 
-            PStruct.tempplayer[index].RegenTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
+            tempplayer[index].RegenTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
         }
     }
 

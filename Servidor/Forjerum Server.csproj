@@ -61,7 +61,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Server\Core\Globals\Globals.cs" />
+    <Compile Include="Server\Core\Globals.cs" />
     <Compile Include="Server\Core\Relations\BankRelations.cs" />
     <Compile Include="Server\Core\Relations\CombatRelations.cs" />
     <Compile Include="Server\Core\Relations\EquipmentRelations.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Server\Extensions\terabin\Interpreter\Commands.cs" />
     <Compile Include="Server\Extensions\terabin\Mail\Mail.cs" />
     <Compile Include="Server\Core\Network\SendData.cs" />
-    <Compile Include="Server\Core\Globals\UserConnection.cs" />
+    <Compile Include="Server\Core\Network\UserConnection.cs" />
     <Compile Include="Server\Core\Database\Database.cs" />
     <Compile Include="Server\Core\Loop\Loop.cs" />
     <Compile Include="Server\Core\Network\WinsockAsync.cs" />

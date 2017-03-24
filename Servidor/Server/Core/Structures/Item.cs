@@ -8,9 +8,9 @@ namespace FORJERUM
     //*********************************************************************************************
     class IStruct
     {
-        public static IStruct.Item[] item = new IStruct.Item[1001];
-        public static IStruct.ItemExtra[] itemextra = new IStruct.ItemExtra[1001];
-        public static IStruct.ItemEffect[,] itemeffect = new IStruct.ItemEffect[1001, 100];
+        public static Item[] item = new Item[Globals.MaxItems];
+        public static ItemExtra[] itemextra = new ItemExtra[Globals.MaxItems];
+        public static ItemEffect[,] itemeffect = new ItemEffect[Globals.MaxItems, 100];
 
         public struct Item
         {

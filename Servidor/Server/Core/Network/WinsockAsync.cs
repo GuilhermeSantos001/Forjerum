@@ -417,7 +417,7 @@ namespace FORJERUM
             catch
             {
                 //É possível que o jogador perca a conexão durante o processo da Thread original,
-                //nesse caso, ele será desconectador em breve, não temos que nos preocupar com isso.
+                //nesse caso, ele será desconectado em breve, não temos que nos preocupar com isso.
                 return;
             }
         }

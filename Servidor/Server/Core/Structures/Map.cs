@@ -16,24 +16,24 @@ namespace FORJERUM
         // de claros algumas informações como onde estão determinados itens no mapa e informações gerais
         // sobre missões e receitas.
         //*********************************************************************************************
-        public static MStruct.Map[] map = new MStruct.Map[Globals.MaxMaps];
-        public static MStruct.Tile[,,] tile = new MStruct.Tile[Globals.MaxMaps, Globals.MaxMapsX, Globals.MaxMapsY];
-        public static MStruct.TempMap[] tempmap = new MStruct.TempMap[Globals.MaxMaps];
-        public static MStruct.MapItem[,] mapitem = new MStruct.MapItem[Globals.MaxMaps, Globals.MaxMapItems];
-        public static MStruct.CraftPoint[] craftpoint = new MStruct.CraftPoint[Globals.Max_CraftPoints];
-        public static MStruct.CraftRecipe[,,] craftrecipe = new MStruct.CraftRecipe[4, Globals.Max_CraftRecipes, Globals.Max_Craft];
-        public static MStruct.WorkPoint[] workpoint = new MStruct.WorkPoint[Globals.Max_WorkPoints];
-        public static MStruct.ChestPoint[] chestpoint = new MStruct.ChestPoint[Globals.Max_Chests];
-        public static MStruct.BankPoint[] bankpoint = new MStruct.BankPoint[Globals.Max_BankPoints];
-        public static MStruct.TpPoint[] tppoint = new MStruct.TpPoint[Globals.Max_TpPoints];
-        public static MStruct.SavePoint[] savepoint = new MStruct.SavePoint[Globals.Max_SavePoints];
-        public static MStruct.TempWorkPoint[] tempworkpoint = new MStruct.TempWorkPoint[Globals.Max_WorkPoints];
-        public static MStruct.QuestGiver[] questgiver = new MStruct.QuestGiver[Globals.MaxQuestGivers];
-        public static MStruct.Quest[,] quest = new MStruct.Quest[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver];
-        public static MStruct.QuestKills[,,] questkills = new MStruct.QuestKills[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestKills];
-        public static MStruct.QuestActions[,,] questactions = new MStruct.QuestActions[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestActions];
-        public static MStruct.QuestItems[,,] questitems = new MStruct.QuestItems[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestItems];
-        public static MStruct.QuestRewards[,,] questrewards = new MStruct.QuestRewards[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestRewards];
+        public static Map[] map = new Map[Globals.MaxMaps];
+        public static Tile[,,] tile = new Tile[Globals.MaxMaps, Globals.MaxMapsX, Globals.MaxMapsY];
+        public static TempMap[] tempmap = new TempMap[Globals.MaxMaps];
+        public static MapItem[,] mapitem = new MapItem[Globals.MaxMaps, Globals.MaxMapItems];
+        public static CraftPoint[] craftpoint = new CraftPoint[Globals.Max_CraftPoints];
+        public static CraftRecipe[,,] craftrecipe = new CraftRecipe[4, Globals.Max_CraftRecipes, Globals.Max_Craft];
+        public static WorkPoint[] workpoint = new WorkPoint[Globals.Max_WorkPoints];
+        public static ChestPoint[] chestpoint = new ChestPoint[Globals.Max_Chests];
+        public static BankPoint[] bankpoint = new BankPoint[Globals.Max_BankPoints];
+        public static TpPoint[] tppoint = new TpPoint[Globals.Max_TpPoints];
+        public static SavePoint[] savepoint = new SavePoint[Globals.Max_SavePoints];
+        public static TempWorkPoint[] tempworkpoint = new TempWorkPoint[Globals.Max_WorkPoints];
+        public static QuestGiver[] questgiver = new QuestGiver[Globals.MaxQuestGivers];
+        public static Quest[,] quest = new Quest[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver];
+        public static QuestKills[,,] questkills = new QuestKills[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestKills];
+        public static QuestActions[,,] questactions = new QuestActions[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestActions];
+        public static QuestItems[,,] questitems = new QuestItems[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestItems];
+        public static QuestRewards[,,] questrewards = new QuestRewards[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver, Globals.MaxQuestRewards];
 
         public struct Map
         {
@@ -245,7 +245,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_WorkPoints; i++)
             {
-                if (MStruct.workpoint[i].map == 0)
+                if (workpoint[i].map == 0)
                 {
                     worknum = i;
                     break;
@@ -272,7 +272,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_Chests; i++)
             {
-                if (MStruct.chestpoint[i].map == 0)
+                if (chestpoint[i].map == 0)
                 {
                     chestnum = i;
                     break;
@@ -299,7 +299,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_BankPoints; i++)
             {
-                if (MStruct.bankpoint[i].map == 0)
+                if (bankpoint[i].map == 0)
                 {
                     banknum = i;
                     break;
@@ -326,7 +326,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_TpPoints; i++)
             {
-                if (MStruct.tppoint[i].map == 0)
+                if (tppoint[i].map == 0)
                 {
                     tpnum = i;
                     break;
@@ -353,7 +353,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_SavePoints; i++)
             {
-                if (MStruct.savepoint[i].map == 0)
+                if (savepoint[i].map == 0)
                 {
                     savenum = i;
                     break;
@@ -380,7 +380,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_CraftPoints; i++)
             {
-                if (MStruct.craftpoint[i].map == 0)
+                if (craftpoint[i].map == 0)
                 {
                     craftnum = i;
                     break;
@@ -406,7 +406,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.MaxMapItems; i++)
             {
-                if (MStruct.mapitem[map, i].ItemNum == 0)
+                if (mapitem[map, i].ItemNum == 0)
                 {
                     itemnum = i;
                     break;
@@ -432,7 +432,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.MaxMapItems; i++)
             {
-                if (MStruct.mapitem[map, i].ItemNum > 0)
+                if (mapitem[map, i].ItemNum > 0)
                 {
                     count = i;
                 }
@@ -529,16 +529,16 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxMapItems; i++)
             {
-                if ((MStruct.mapitem[map, i].ItemNum != 0) && (MStruct.mapitem[map,i].Timer < Loops.TickCount.ElapsedMilliseconds))
+                if ((mapitem[map, i].ItemNum != 0) && (mapitem[map,i].Timer < Loops.TickCount.ElapsedMilliseconds))
                 {
-                    MStruct.mapitem[map, i].Value = 0;
-                    MStruct.mapitem[map, i].ItemType = 0;
-                    MStruct.mapitem[map, i].X = 0;
-                    MStruct.mapitem[map, i].Y = 0;
-                    MStruct.mapitem[map, i].ItemNum = 0;
-                    MStruct.mapitem[map, i].Refin = 0;
-                    MStruct.mapitem[map, i].Exp = 0;
-                    MStruct.mapitem[map, i].Timer = 0;
+                    mapitem[map, i].Value = 0;
+                    mapitem[map, i].ItemType = 0;
+                    mapitem[map, i].X = 0;
+                    mapitem[map, i].Y = 0;
+                    mapitem[map, i].ItemNum = 0;
+                    mapitem[map, i].Refin = 0;
+                    mapitem[map, i].Exp = 0;
+                    mapitem[map, i].Timer = 0;
                     SendData.Send_MapItem(map, i);
                 }
             }

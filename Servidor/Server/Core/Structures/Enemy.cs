@@ -8,9 +8,9 @@ namespace FORJERUM
     //*********************************************************************************************
     class EStruct
     {
-        public static EStruct.Enemy[] enemy = new EStruct.Enemy[1001];
-        public static EStruct.EnemyParams[,] enemyparams = new EStruct.EnemyParams[1001, 20];
-        public static EStruct.EnemyDrops[,] enemydrops = new EStruct.EnemyDrops[1001, 20];
+        public static Enemy[] enemy = new Enemy[Globals.MaxEnemies];
+        public static EnemyParams[,] enemyparams = new EnemyParams[Globals.MaxEnemies, 20];
+        public static EnemyDrops[,] enemydrops = new EnemyDrops[Globals.MaxEnemies, 20];
 
         public struct Enemy
         {

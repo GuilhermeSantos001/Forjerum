@@ -8,8 +8,8 @@ namespace FORJERUM
     //*********************************************************************************************
     class ShopStruct
     {
-        public static ShopStruct.Shop[] shop = new ShopStruct.Shop[1001];
-        public static ShopStruct.ShopItems[,] shopitem = new ShopStruct.ShopItems[1001, 100];
+        public static Shop[] shop = new Shop[1001];
+        public static ShopItems[,] shopitem = new ShopItems[1001, 100];
 
         public struct Shop
         {

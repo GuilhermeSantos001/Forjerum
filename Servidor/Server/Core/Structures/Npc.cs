@@ -14,11 +14,11 @@ namespace FORJERUM
         // ESTRUTURA DOS NPCS
         // Estruturas gerais contendo o drop, magias, e informações temporárias
         //*********************************************************************************************
-        public static NStruct.TempNpc[,] tempnpc = new NStruct.TempNpc[Globals.MaxMaps, 1001];
-        public static NStruct.NTempSpell[,,] ntempspell = new NStruct.NTempSpell[Globals.MaxMaps, 1001, Globals.MaxNTempSpells];
-        public static NStruct.NSpell[, ,] nspell = new NStruct.NSpell[Globals.MaxMaps, 1001, Globals.Max_Npc_Spells];
-        public static NStruct.Npc[,] npc = new NStruct.Npc[Globals.MaxMaps, 1001];
-        public static NStruct.NpcDrop[,,] npcdrop = new NStruct.NpcDrop[Globals.MaxMaps, 1001, 5];
+        public static TempNpc[,] tempnpc = new TempNpc[Globals.MaxMaps, 1001];
+        public static NTempSpell[,,] ntempspell = new NTempSpell[Globals.MaxMaps, 1001, Globals.MaxNTempSpells];
+        public static NSpell[, ,] nspell = new NSpell[Globals.MaxMaps, 1001, Globals.Max_Npc_Spells];
+        public static Npc[,] npc = new Npc[Globals.MaxMaps, 1001];
+        public static NpcDrop[,,] npcdrop = new NpcDrop[Globals.MaxMaps, 1001, 5];
 
         public struct Npc
         {
@@ -135,7 +135,7 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.MaxNTempSpells; i++)
             {
-                if (NStruct.ntempspell[map, id, i].active == false)
+                if (ntempspell[map, id, i].active == false)
                 {
                     return i;
                 }
@@ -162,7 +162,7 @@ namespace FORJERUM
 
             for (int i = 0; i < Globals.MaxNpcDrops; i++)
             {
-                if (NStruct.npcdrop[map, id, i].ItemNum > 0)
+                if (npcdrop[map, id, i].ItemNum > 0)
                 {
                     count += 1;
                 }
@@ -183,7 +183,7 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            double WaterCritical = Convert.ToDouble(NStruct.npc[Map, index].Luck) * 1.0;
+            double WaterCritical = Convert.ToDouble(npc[Map, index].Luck) * 1.0;
             int critical = Convert.ToInt32(WaterCritical);
 
             return critical;
@@ -202,7 +202,7 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            double WindParry = Convert.ToDouble(NStruct.npc[Map, index].Agility) * 1.0;
+            double WindParry = Convert.ToDouble(npc[Map, index].Agility) * 1.0;
             int parry = Convert.ToInt32(WindParry);
 
             return parry;
@@ -220,45 +220,45 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            if ((NStruct.tempnpc[Map, index].Vitality <= 0) || (NStruct.tempnpc[Map, index].Dead)) { return; }
-            if ((NStruct.tempnpc[Map, index].Vitality == NStruct.npc[Map, index].Vitality) && (NStruct.tempnpc[Map, index].Spirit == NStruct.npc[Map, index].Spirit)) { return; }
+            if ((tempnpc[Map, index].Vitality <= 0) || (tempnpc[Map, index].Dead)) { return; }
+            if ((tempnpc[Map, index].Vitality == npc[Map, index].Vitality) && (tempnpc[Map, index].Spirit == npc[Map, index].Spirit)) { return; }
 
             if (SuperRegen)
             {
-                if (NStruct.tempnpc[Map, index].Vitality < NStruct.npc[Map, index].Vitality)
+                if (tempnpc[Map, index].Vitality < npc[Map, index].Vitality)
                 {
-                    NStruct.tempnpc[Map, index].Vitality = NStruct.npc[Map, index].Vitality;
+                    tempnpc[Map, index].Vitality = npc[Map, index].Vitality;
                     return;
                 }
 
-                if (NStruct.tempnpc[Map, index].Spirit < NStruct.npc[Map, index].Spirit)
+                if (tempnpc[Map, index].Spirit < npc[Map, index].Spirit)
                 {
-                    NStruct.tempnpc[Map, index].Spirit = NStruct.npc[Map, index].Spirit;
+                    tempnpc[Map, index].Spirit = npc[Map, index].Spirit;
                     return;
                 }
                 return;
             }
 
-            if (NStruct.tempnpc[Map, index].Vitality < NStruct.npc[Map, index].Vitality)
+            if (tempnpc[Map, index].Vitality < npc[Map, index].Vitality)
             {
-                NStruct.tempnpc[Map, index].Vitality += (NStruct.npc[Map, index].Vitality / 150);
-                if (NStruct.tempnpc[Map, index].Vitality > NStruct.npc[Map, index].Vitality)
+                tempnpc[Map, index].Vitality += (npc[Map, index].Vitality / 150);
+                if (tempnpc[Map, index].Vitality > npc[Map, index].Vitality)
                 {
-                    NStruct.tempnpc[Map, index].Vitality = NStruct.npc[Map, index].Vitality;
+                    tempnpc[Map, index].Vitality = npc[Map, index].Vitality;
                 }
-                SendData.Send_NpcVitality(Map, index, NStruct.tempnpc[Map, index].Vitality);
+                SendData.Send_NpcVitality(Map, index, tempnpc[Map, index].Vitality);
             }
 
-            if (NStruct.tempnpc[Map, index].Spirit < NStruct.npc[Map, index].Spirit)
+            if (tempnpc[Map, index].Spirit < npc[Map, index].Spirit)
             {
-                NStruct.tempnpc[Map, index].Spirit += (NStruct.npc[Map, index].Spirit / 10);
-                if (NStruct.tempnpc[Map, index].Spirit > NStruct.npc[Map, index].Spirit)
+                tempnpc[Map, index].Spirit += (npc[Map, index].Spirit / 10);
+                if (tempnpc[Map, index].Spirit > npc[Map, index].Spirit)
                 {
-                    NStruct.tempnpc[Map, index].Spirit = NStruct.npc[Map, index].Spirit;
+                    tempnpc[Map, index].Spirit = npc[Map, index].Spirit;
                 }
             }
 
-            NStruct.tempnpc[Map, index].RegenTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
+            tempnpc[Map, index].RegenTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
         }
         //*********************************************************************************************
         // ClearTempNpc / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -274,46 +274,46 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            NStruct.npc[mapnum, i2].Name = "";
-            NStruct.npc[mapnum, i2].Map = 0;
-            NStruct.npc[mapnum, i2].X = 0;
-            NStruct.npc[mapnum, i2].Y = 0;
-            NStruct.npc[mapnum, i2].Vitality = 0;
-            NStruct.npc[mapnum, i2].Spirit = 0;
-            NStruct.tempnpc[mapnum, i2].Target = 0;
-            NStruct.tempnpc[mapnum, i2].X = 0;
-            NStruct.tempnpc[mapnum, i2].Y = 0;
-            NStruct.tempnpc[mapnum, i2].curTargetX = 0;
-            NStruct.tempnpc[mapnum, i2].curTargetY = 0;
-            NStruct.tempnpc[mapnum, i2].Vitality = 0;
-            NStruct.npc[mapnum, i2].Attack = 0;
-            NStruct.npc[mapnum, i2].Defense = 0;
-            NStruct.npc[mapnum, i2].Agility = 0;
-            NStruct.npc[mapnum, i2].MagicDefense = 0;
-            NStruct.npc[mapnum, i2].MagicAttack = 0;
-            NStruct.npc[mapnum, i2].Luck = 0;
-            NStruct.npc[mapnum, i2].Sprite = "";
-            NStruct.npc[mapnum, i2].index = 0;
-            NStruct.npc[mapnum, i2].Type = 0;
-            NStruct.npc[mapnum, i2].Range = 0;
+            npc[mapnum, i2].Name = "";
+            npc[mapnum, i2].Map = 0;
+            npc[mapnum, i2].X = 0;
+            npc[mapnum, i2].Y = 0;
+            npc[mapnum, i2].Vitality = 0;
+            npc[mapnum, i2].Spirit = 0;
+            tempnpc[mapnum, i2].Target = 0;
+            tempnpc[mapnum, i2].X = 0;
+            tempnpc[mapnum, i2].Y = 0;
+            tempnpc[mapnum, i2].curTargetX = 0;
+            tempnpc[mapnum, i2].curTargetY = 0;
+            tempnpc[mapnum, i2].Vitality = 0;
+            npc[mapnum, i2].Attack = 0;
+            npc[mapnum, i2].Defense = 0;
+            npc[mapnum, i2].Agility = 0;
+            npc[mapnum, i2].MagicDefense = 0;
+            npc[mapnum, i2].MagicAttack = 0;
+            npc[mapnum, i2].Luck = 0;
+            npc[mapnum, i2].Sprite = "";
+            npc[mapnum, i2].index = 0;
+            npc[mapnum, i2].Type = 0;
+            npc[mapnum, i2].Range = 0;
 
             //if (notedata.Length - 1 > 11)
             //{
-            //    NStruct.npc[mapnum, i2].KnockAttack = Convert.ToBoolean(notedata[12]);
-            //    NStruct.npc[mapnum, i2].KnockRange = Convert.ToInt32(notedata[13]);
-            //    NStruct.nspell[mapnum, i2, 1].spellnum = Convert.ToInt32(notedata[14]);
-            //    NStruct.nspell[mapnum, i2, 2].spellnum = Convert.ToInt32(notedata[15]);
-            //    NStruct.nspell[mapnum, i2, 3].spellnum = Convert.ToInt32(notedata[16]);
-            //    NStruct.nspell[mapnum, i2, 4].spellnum = Convert.ToInt32(notedata[17]);
+            //    npc[mapnum, i2].KnockAttack = Convert.ToBoolean(notedata[12]);
+            //    npc[mapnum, i2].KnockRange = Convert.ToInt32(notedata[13]);
+            //    nspell[mapnum, i2, 1].spellnum = Convert.ToInt32(notedata[14]);
+            //    nspell[mapnum, i2, 2].spellnum = Convert.ToInt32(notedata[15]);
+            //    nspell[mapnum, i2, 3].spellnum = Convert.ToInt32(notedata[16]);
+            //    nspell[mapnum, i2, 4].spellnum = Convert.ToInt32(notedata[17]);
             //}
 
-            NStruct.npc[mapnum, i2].Animation = 0;
-            NStruct.npc[mapnum, i2].SpeedMove = 0;
-            NStruct.tempnpc[mapnum, i2].movespeed = 0;
-            NStruct.npc[mapnum, i2].Respawn = 0;
-            NStruct.npc[mapnum, i2].Exp = 0;
-            NStruct.npc[mapnum, i2].Gold = 0;
-            NStruct.tempnpc[mapnum, i2].guildnum = 0;
+            npc[mapnum, i2].Animation = 0;
+            npc[mapnum, i2].SpeedMove = 0;
+            tempnpc[mapnum, i2].movespeed = 0;
+            npc[mapnum, i2].Respawn = 0;
+            npc[mapnum, i2].Exp = 0;
+            npc[mapnum, i2].Gold = 0;
+            tempnpc[mapnum, i2].guildnum = 0;
         }
         //*********************************************************************************************
         // ExecuteTempSpell / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -328,90 +328,90 @@ namespace FORJERUM
             }
 
             //CÓDIGO
-            int Attacker = NStruct.ntempspell[Map, index, NStempSpell].attacker;
+            int Attacker = ntempspell[Map, index, NStempSpell].attacker;
 
             if ((UserConnection.Getindex(Attacker) < 0) || (UserConnection.Getindex(Attacker) >= WinsockAsync.Clients.Count()))
             {
-                NStruct.ntempspell[Map, index, NStempSpell].attacker = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].timer = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].spellnum = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].repeats = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].active = false;
+                ntempspell[Map, index, NStempSpell].attacker = 0;
+                ntempspell[Map, index, NStempSpell].timer = 0;
+                ntempspell[Map, index, NStempSpell].spellnum = 0;
+                ntempspell[Map, index, NStempSpell].repeats = 0;
+                ntempspell[Map, index, NStempSpell].active = false;
                 return;
             }
 
             //Verificar se o jogador não se desconectou no processo
             if (!WinsockAsync.Clients[(UserConnection.Getindex(Attacker))].IsConnected)
             {
-                NStruct.ntempspell[Map, index, NStempSpell].attacker = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].timer = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].spellnum = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].repeats = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].active = false;
+                ntempspell[Map, index, NStempSpell].attacker = 0;
+                ntempspell[Map, index, NStempSpell].timer = 0;
+                ntempspell[Map, index, NStempSpell].spellnum = 0;
+                ntempspell[Map, index, NStempSpell].repeats = 0;
+                ntempspell[Map, index, NStempSpell].active = false;
                 return;
             }
 
-            if (NStruct.tempnpc[Map, index].Vitality <= 0)
+            if (tempnpc[Map, index].Vitality <= 0)
             {
-                NStruct.ntempspell[Map, index, NStempSpell].attacker = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].timer = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].spellnum = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].repeats = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].active = false;
+                ntempspell[Map, index, NStempSpell].attacker = 0;
+                ntempspell[Map, index, NStempSpell].timer = 0;
+                ntempspell[Map, index, NStempSpell].spellnum = 0;
+                ntempspell[Map, index, NStempSpell].repeats = 0;
+                ntempspell[Map, index, NStempSpell].active = false;
                 return;
             }
 
-            SendData.Send_Animation(Map, 2, index, NStruct.ntempspell[Map, index, NStempSpell].anim);
+            SendData.Send_Animation(Map, 2, index, ntempspell[Map, index, NStempSpell].anim);
             
-            if (NStruct.ntempspell[Map, index, NStempSpell].area_range <= 0)
+            if (ntempspell[Map, index, NStempSpell].area_range <= 0)
             {
-                PStruct.PlayerAttackNpc(Attacker, index, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                PStruct.PlayerAttackNpc(Attacker, index, ntempspell[Map, index, NStempSpell].spellnum, Map);
             }
             else
             {
-                PStruct.PlayerAttackNpc(Attacker, index, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                PStruct.PlayerAttackNpc(Attacker, index, ntempspell[Map, index, NStempSpell].spellnum, Map);
                 for (int i = 0; i <= Globals.Player_Highindex; i++)
                 {
                     if ((PStruct.character[i, PStruct.player[i].SelectedChar].Map == Map) && (PStruct.character[index, PStruct.player[index].SelectedChar].PVP) && (i != index))
                     {
-                        for (int r = 1; r <= NStruct.ntempspell[Map, index, NStempSpell].area_range; r++)
+                        for (int r = 1; r <= ntempspell[Map, index, NStempSpell].area_range; r++)
                         {
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == NStruct.tempnpc[Map, index].Y))
+                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == NStruct.tempnpc[Map, index].Y))
+                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == NStruct.tempnpc[Map, index].Y))
+                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == NStruct.tempnpc[Map, index].Y))
+                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].X == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
 
 
                             //Is line?
-                            if (NStruct.ntempspell[Map, index, NStempSpell].is_line)
+                            if (ntempspell[Map, index, NStempSpell].is_line)
                             {
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == NStruct.tempnpc[Map, index].Y))
+                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == tempnpc[Map, index].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                    PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == NStruct.tempnpc[Map, index].Y))
+                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == tempnpc[Map, index].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                    PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == NStruct.tempnpc[Map, index].Y))
+                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X + r == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y + r == tempnpc[Map, index].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                    PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                                 }
-                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == NStruct.tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == NStruct.tempnpc[Map, index].Y))
+                                if ((PStruct.character[i, PStruct.player[i].SelectedChar].X - r == tempnpc[Map, index].X) && (PStruct.character[i, PStruct.player[i].SelectedChar].Y - r == tempnpc[Map, index].Y))
                                 {
-                                    PStruct.PlayerAttackPlayer(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                    PStruct.PlayerAttackPlayer(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                                 }
                             }
                         }
@@ -420,67 +420,67 @@ namespace FORJERUM
                 
                 for (int i = 0; i <= MStruct.tempmap[Map].NpcCount; i++)
                 {
-                    for (int r = 1; r <= NStruct.ntempspell[Map, index, NStempSpell].area_range; r++)
+                    for (int r = 1; r <= ntempspell[Map, index, NStempSpell].area_range; r++)
                     {
-                        if ((NStruct.tempnpc[Map, i].X - r == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y == NStruct.tempnpc[Map, index].Y))
+                        if ((tempnpc[Map, i].X - r == tempnpc[Map, index].X) && (tempnpc[Map, i].Y == tempnpc[Map, index].Y))
                         {
-                            PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                            PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                         }
-                        if ((NStruct.tempnpc[Map, i].X + r == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y == NStruct.tempnpc[Map, index].Y))
+                        if ((tempnpc[Map, i].X + r == tempnpc[Map, index].X) && (tempnpc[Map, i].Y == tempnpc[Map, index].Y))
                         {
-                            PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                            PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                         }
-                        if ((NStruct.tempnpc[Map, i].X == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y - r == NStruct.tempnpc[Map, index].Y))
+                        if ((tempnpc[Map, i].X == tempnpc[Map, index].X) && (tempnpc[Map, i].Y - r == tempnpc[Map, index].Y))
                         {
-                            PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                            PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                         }
-                        if ((NStruct.tempnpc[Map, i].X == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y + r == NStruct.tempnpc[Map, index].Y))
+                        if ((tempnpc[Map, i].X == tempnpc[Map, index].X) && (tempnpc[Map, i].Y + r == tempnpc[Map, index].Y))
                         {
-                            PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                            PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                         }
 
 
                         //Is line?
-                        if (NStruct.ntempspell[Map, index, NStempSpell].is_line)
+                        if (ntempspell[Map, index, NStempSpell].is_line)
                         {
-                            if ((NStruct.tempnpc[Map, i].X - r == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y + r == NStruct.tempnpc[Map, index].Y))
+                            if ((tempnpc[Map, i].X - r == tempnpc[Map, index].X) && (tempnpc[Map, i].Y + r == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X + r == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y - r == NStruct.tempnpc[Map, index].Y))
+                            if ((tempnpc[Map, i].X + r == tempnpc[Map, index].X) && (tempnpc[Map, i].Y - r == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X + r == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y + r == NStruct.tempnpc[Map, index].Y))
+                            if ((tempnpc[Map, i].X + r == tempnpc[Map, index].X) && (tempnpc[Map, i].Y + r == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
-                            if ((NStruct.tempnpc[Map, i].X - r == NStruct.tempnpc[Map, index].X) && (NStruct.tempnpc[Map, i].Y - r == NStruct.tempnpc[Map, index].Y))
+                            if ((tempnpc[Map, i].X - r == tempnpc[Map, index].X) && (tempnpc[Map, i].Y - r == tempnpc[Map, index].Y))
                             {
-                                PStruct.PlayerAttackNpc(Attacker, i, NStruct.ntempspell[Map, index, NStempSpell].spellnum, Map);
+                                PStruct.PlayerAttackNpc(Attacker, i, ntempspell[Map, index, NStempSpell].spellnum, Map);
                             }
                         }
                     }
                 }
             }
 
-            NStruct.ntempspell[Map, index, NStempSpell].repeats -= 1;
+            ntempspell[Map, index, NStempSpell].repeats -= 1;
 
-            if (NStruct.ntempspell[Map, index, NStempSpell].repeats <= 0)
+            if (ntempspell[Map, index, NStempSpell].repeats <= 0)
             {
-                if (SStruct.skill[NStruct.ntempspell[Map, index, NStempSpell].spellnum].slow)
+                if (SStruct.skill[ntempspell[Map, index, NStempSpell].spellnum].slow)
                 {
-                    NStruct.tempnpc[Map, index].movespeed = NStruct.npc[Map, index].SpeedMove / 64;
+                    tempnpc[Map, index].movespeed = npc[Map, index].SpeedMove / 64;
                     SendData.Send_MoveSpeed(2, index, Map);
                 }
-                NStruct.ntempspell[Map, index, NStempSpell].attacker = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].timer = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].spellnum = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].repeats = 0;
-                NStruct.ntempspell[Map, index, NStempSpell].active = false;
+                ntempspell[Map, index, NStempSpell].attacker = 0;
+                ntempspell[Map, index, NStempSpell].timer = 0;
+                ntempspell[Map, index, NStempSpell].spellnum = 0;
+                ntempspell[Map, index, NStempSpell].repeats = 0;
+                ntempspell[Map, index, NStempSpell].active = false;
             }
 
-            NStruct.ntempspell[Map, index, NStempSpell].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[NStruct.ntempspell[Map, index, NStempSpell].spellnum].interval;
+            ntempspell[Map, index, NStempSpell].timer = Loops.TickCount.ElapsedMilliseconds + SStruct.skill[ntempspell[Map, index, NStempSpell].spellnum].interval;
 
         }
     }

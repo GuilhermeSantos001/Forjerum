@@ -8,9 +8,9 @@ namespace FORJERUM
     //*********************************************************************************************
     class AStruct
     {
-        public static AStruct.Armor[] armor = new AStruct.Armor[1001];
-        public static AStruct.ArmorParams[,] armorparams = new AStruct.ArmorParams[1001, 20];
-        public static AStruct.ArmorFeature[,] armorfeatures = new AStruct.ArmorFeature[1001, 100];
+        public static Armor[] armor = new Armor[1001];
+        public static ArmorParams[,] armorparams = new ArmorParams[1001, 20];
+        public static ArmorFeature[,] armorfeatures = new ArmorFeature[1001, 100];
 
         public struct Armor
         {

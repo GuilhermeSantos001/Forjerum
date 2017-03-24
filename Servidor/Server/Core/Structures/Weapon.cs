@@ -8,9 +8,9 @@ namespace FORJERUM
     //*********************************************************************************************
     class WStruct
     {
-        public static WStruct.Weapon[] weapon = new WStruct.Weapon[1001];
-        public static WStruct.WeaponParams[,] weaponparams = new WStruct.WeaponParams[1001, 20];
-        public static WStruct.WeaponFeature[,] weaponfeatures = new WStruct.WeaponFeature[1001, 100];
+        public static Weapon[] weapon = new Weapon[1001];
+        public static WeaponParams[,] weaponparams = new WeaponParams[1001, 20];
+        public static WeaponFeature[,] weaponfeatures = new WeaponFeature[1001, 100];
 
         public struct Weapon
         {

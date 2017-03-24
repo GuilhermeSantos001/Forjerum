@@ -8,8 +8,8 @@ namespace FORJERUM
     //*********************************************************************************************
     class SStruct
     {
-        public static SStruct.Skill[] skill = new SStruct.Skill[1001];
-        public static SStruct.SkillEffect[,] skilleffect = new SStruct.SkillEffect[1001, 100];
+        public static Skill[] skill = new Skill[1001];
+        public static SkillEffect[,] skilleffect = new SkillEffect[1001, 100];
 
         public struct Skill
         { 
