@@ -416,8 +416,9 @@ namespace FORJERUM
             }
             catch
             {
-                //NO!
-                Log(String.Format(lang.forcibly_closed_connection));
+                //É possível que o jogador perca a conexão durante o processo da Thread original,
+                //nesse caso, ele será desconectador em breve, não temos que nos preocupar com isso.
+                return;
             }
         }
         //*********************************************************************************************
@@ -441,9 +442,14 @@ namespace FORJERUM
                 // Completa o envio
                 int bytesSent = handler.EndSend(ar);
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e.ToString());
+                //O sendCallback pode criar exceções quando uma informação é enviada e não consegue
+                //alcançar o jogador, ou caso ele tenha sido desconectado no processo, de toda forma não
+                //podemos identificar todas as Threads que essa conexão criou no intervalo em que foi
+                //fechada, então simplesmente deixamos as exceções serem ignoradas até que o jogador
+                //seja desconectado pelo AlphaLoop.
+                return;
             }
         }
         //*********************************************************************************************
