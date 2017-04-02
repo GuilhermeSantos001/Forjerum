@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-
-namespace FORJERUM.Extensions
+namespace __Forjerum.Extensions
 {
     //*********************************************************************************************
     // O console do servidor passa a interpretar comandos
@@ -27,7 +26,7 @@ namespace FORJERUM.Extensions
         // Adiciona um novo comando a ser interpretado no console junto com uma ação
         // exemplo: AddCommand(Método, "método")
         //*********************************************************************************************
-        public static bool AddCommand(Action<object[]> action, string command)
+        public static bool addCommand(Action<object[]> action, string command)
         {
             for (int i = 1; i < 1000; i++)
             {
@@ -47,7 +46,7 @@ namespace FORJERUM.Extensions
         public static void start(params object[] args)
         {
             // Cria a Thread principal.
-            Thread iThread = new Thread(new ThreadStart(InterpreterLoop));
+            Thread iThread = new Thread(new ThreadStart(interpreterLoop));
 
             // Iniciar a Thread principal
             iThread.Start();
@@ -56,7 +55,7 @@ namespace FORJERUM.Extensions
         // InterpreterLoop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Ler/processar o que é escrito ignorando a thread principal.
         //*********************************************************************************************
-        public static void InterpreterLoop()
+        public static void interpreterLoop()
         {
             // Objeto de informações do console
             ConsoleKeyInfo cki;
@@ -87,7 +86,7 @@ namespace FORJERUM.Extensions
                     // Mover o cursor para o final
                     Console.SetCursorPosition(x, y + 1);
 
-                    DoInterpreter(command);
+                    doInterpreter(command);
                     command = "";
                 }
                 if (cki.Key == ConsoleKey.Backspace)
@@ -117,7 +116,7 @@ namespace FORJERUM.Extensions
         // DoInterpreter / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Verifica se existe o comando enviado, se existir chama diretamente a ação
         //*********************************************************************************************
-        public static void DoInterpreter(string command)
+        public static void doInterpreter(string command)
         {
             string[] data = command.Split(' ');
 

@@ -1,96 +1,96 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     class TradeRelations
     {
         //*********************************************************************************************
-        // GetPlayerTradeOffersCount
+        // getPlayerTradeOffersCount
         // Retorna o número de ofertas na troca
         //*********************************************************************************************
-        public static int GetPlayerTradeOffersCount(int index)
+        public static int getPlayerTradeOffersCount(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            int finalindex = 0;
+            int finals = 0;
 
             //Checa o slot que não possúi item
             for (int i = 1; i < Globals.MaxTradeOffers; i++)
             {
-                if ((PStruct.tradeslot[index, i].item == Globals.NullItem) || (String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
+                if ((PlayerStruct.tradeslot[s, i].item == Globals.NullItem) || (String.IsNullOrEmpty(PlayerStruct.tradeslot[s, i].item)))
                 {
-                    finalindex = i;
+                    finals = i;
                     break;
                 }
             }
 
-            if (finalindex == 0) { finalindex = 9; }
+            if (finals == 0) { finals = 9; }
 
-            int totalcount = finalindex - 1;
+            int totalcount = finals - 1;
 
             return totalcount;
         }
         //*********************************************************************************************
-        // GetFreeTradeOffer
+        // getFreeTradeOffer
         // Retorna um slot na oferta que esteja livre
         //*********************************************************************************************
-        public static int GetFreeTradeOffer(int index)
+        public static int getFreeTradeOffer(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            int finalindex = 0;
+            int finals = 0;
 
             //Checa o slot que possúi o jogador
             for (int i = 1; i < Globals.MaxTradeOffers; i++)
             {
-                if ((PStruct.tradeslot[index, i].item == Globals.NullItem) || (String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
+                if ((PlayerStruct.tradeslot[s, i].item == Globals.NullItem) || (String.IsNullOrEmpty(PlayerStruct.tradeslot[s, i].item)))
                 {
-                    finalindex = i;
+                    finals = i;
                     break;
                 }
             }
 
-            return finalindex;
+            return finals;
         }
         //*********************************************************************************************
-        // GiveTradeTo
+        // giveTradeTo
         // Entrega itens da troca para determinado jogador
         //*********************************************************************************************
-        public static void GiveTradeTo(int index, int intrade)
+        public static void giveTradeTo(int s, int intrade)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, intrade) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, intrade) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].TradeG > 0)
+            if (PlayerStruct.tempplayer[s].TradeG > 0)
             {
-                PlayerRelations.GivePlayerGold(intrade, PStruct.tempplayer[index].TradeG);
+                PlayerRelations.givePlayerGold(intrade, PlayerStruct.tempplayer[s].TradeG);
             }
 
             for (int i = 1; i < Globals.MaxTradeOffers; i++)
             {
-                if ((PStruct.tradeslot[index, i].item != Globals.NullItem) && (!String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
+                if ((PlayerStruct.tradeslot[s, i].item != Globals.NullItem) && (!String.IsNullOrEmpty(PlayerStruct.tradeslot[s, i].item)))
                 {
-                    string[] splititem = PStruct.tradeslot[index, i].item.Split(',');
+                    string[] splititem = PlayerStruct.tradeslot[s, i].item.Split(',');
 
                     int itemNum = Convert.ToInt32(splititem[1]);
                     int itemType = Convert.ToInt32(splititem[0]);
@@ -98,35 +98,35 @@ namespace FORJERUM
                     int itemRefin = Convert.ToInt32(splititem[3]);
                     int itemExp = Convert.ToInt32(splititem[4]);
 
-                    InventoryRelations.GiveItem(intrade, itemType, itemNum, itemValue, itemRefin, itemExp);
+                    InventoryRelations.giveItem(intrade, itemType, itemNum, itemValue, itemRefin, itemExp);
 
-                    PStruct.tradeslot[index, i].item = Globals.NullItem;
+                    PlayerStruct.tradeslot[s, i].item = Globals.NullItem;
                 }
             }
         }
         //*********************************************************************************************
-        // GiveTrade
+        // giveTrade
         // Entrega itens da troca
         //*********************************************************************************************
-        public static void GiveTrade(int index)
+        public static void giveTrade(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].TradeG > 0)
+            if (PlayerStruct.tempplayer[s].TradeG > 0)
             {
-                PlayerRelations.GivePlayerGold(index, PStruct.tempplayer[index].TradeG);
+                PlayerRelations.givePlayerGold(s, PlayerStruct.tempplayer[s].TradeG);
             }
             for (int i = 1; i < Globals.MaxTradeOffers; i++)
             {
-                if ((PStruct.tradeslot[index, i].item != Globals.NullItem) && (!String.IsNullOrEmpty(PStruct.tradeslot[index, i].item)))
+                if ((PlayerStruct.tradeslot[s, i].item != Globals.NullItem) && (!String.IsNullOrEmpty(PlayerStruct.tradeslot[s, i].item)))
                 {
-                    string[] splititem = PStruct.tradeslot[index, i].item.Split(',');
+                    string[] splititem = PlayerStruct.tradeslot[s, i].item.Split(',');
 
                     int itemNum = Convert.ToInt32(splititem[1]);
                     int itemType = Convert.ToInt32(splititem[0]);
@@ -134,35 +134,35 @@ namespace FORJERUM
                     int itemRefin = Convert.ToInt32(splititem[3]);
                     int itemExp = Convert.ToInt32(splititem[4]);
 
-                    InventoryRelations.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp);
+                    InventoryRelations.giveItem(s, itemType, itemNum, itemValue, itemRefin, itemExp);
 
-                    PStruct.tradeslot[index, i].item = Globals.NullItem;
+                    PlayerStruct.tradeslot[s, i].item = Globals.NullItem;
                 }
             }
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
         }
         //*********************************************************************************************
-        // ClearTempTrade
+        // clearTempTrade
         // Limpa dados da troca de determinado jogador
         //*********************************************************************************************
-        public static void ClearTempTrade(int index)
+        public static void clearTempTrade(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            PStruct.tempplayer[index].InTrade = 0;
-            PStruct.tempplayer[index].TradeG = 0;
-            PStruct.tempplayer[index].TradeStatus = 0;
+            PlayerStruct.tempplayer[s].InTrade = 0;
+            PlayerStruct.tempplayer[s].TradeG = 0;
+            PlayerStruct.tempplayer[s].TradeStatus = 0;
 
             //Limpa slot de troca
             for (int i = 1; i < Globals.MaxTradeOffers; i++)
             {
-                PStruct.tradeslot[index, i].item = Globals.NullItem;
+                PlayerStruct.tradeslot[s, i].item = Globals.NullItem;
             }
         }
     }

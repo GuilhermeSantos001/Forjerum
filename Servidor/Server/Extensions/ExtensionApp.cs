@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 // que esse não é um método override real, e sim simulado já que é impossível usar o override 
 // em métodos estatícos.
 //*********************************************************************************************
-namespace FORJERUM.Extensions
+namespace __Forjerum.Extensions
 {
     class ExtensionApp
     {
@@ -26,7 +26,7 @@ namespace FORJERUM.Extensions
         public static List<Type> types = new List<Type>(Assembly.GetExecutingAssembly().GetTypes());
         public static string nameSpace = "FORJERUM.Extensions";
 
-        public static void InstanceTypes()
+        public static void instanceTypes()
         {
             List<Type> temp_types = new List<Type>();
             foreach (Type type in types)
@@ -43,11 +43,11 @@ namespace FORJERUM.Extensions
         }
 
         //*************************************************************
-        // Método ExtendMyApp é responsável por receber parâmetros de
+        // Método extendMyApp é responsável por receber parâmetros de
         // TODO o Core do projeto e processa-los com base nas extensões,
         // ele também funciona dentro de cada Thread.
         //************************************************************
-        public static object ExtendMyApp(params object[] args)
+        public static object extendMyApp(params object[] args)
         {
             //Strings para comparação
             string method_name = args[0].ToString();

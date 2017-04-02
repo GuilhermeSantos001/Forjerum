@@ -1,21 +1,195 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     class PlayerRelations : Languages.LStruct
     {
         //*********************************************************************************************
-        // GetPlayerCritical
+        // getPlayerMaxSpirit
+        // Retorna enegia máxima de determinado jogador
         //*********************************************************************************************
-        public static int GetPlayerCritical(int index)
+        public static int getPlayerMaxSpirit(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            int LevelVital = 0;
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 1) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 30; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 2) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 22; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 3) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 60; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 4) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 18; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 14; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 6) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 40; }
+            double FireVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire) * 0.5;
+            double EarthVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 0.8;
+            double WaterVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water) * 1.2;
+            double WindVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 1.3;
+            double DarkVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark) * 2;
+            double LightVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light) * 1.5;
+            double DVital = FireVital + EarthVital + WaterVital + WindVital + DarkVital + LightVital;
+            int vital = Convert.ToInt32(DVital) + LevelVital;
+            if (getExtraSpirit(s) > 0) { vital += (vital / 100) * getExtraSpirit(s); }
+            if (PlayerStruct.tempplayer[s].SORE) { vital = vital / 2; }
+            return vital;
+        }
+        //*********************************************************************************************
+        // getPlayerMaxVitality
+        // Retorna vida máxima de determinado jogador
+        //*********************************************************************************************
+        public static int getPlayerMaxVitality(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            int LevelVital = 0;
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 1) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 52; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 2) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 63; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 3) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 34; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 4) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 40; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 76; }
+            else if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 6) { LevelVital = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level * 32; }
+            //int LevelVital = character[s, (PlayerStruct.player[s].SelectedChar].Level * 75;
+            double FireVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire) * 2.5;
+            double EarthVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 4;
+            double WaterVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water) * 2.3;
+            double WindVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 2.2;
+            double DarkVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark) * 1.8;
+            double LightVital = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light) * 1.5;
+            double DVital = FireVital + EarthVital + WaterVital + WindVital + DarkVital + LightVital;
+            int vital = Convert.ToInt32(DVital) + LevelVital;
+            if (getExtraVitality(s) > 0) { vital += (vital / 100) * getExtraVitality(s); }
+            if (PlayerStruct.tempplayer[s].SORE) { vital = vital / 2; }
+            return vital;
+        }
+        //*********************************************************************************************
+        // getExtraVitality
+        // Vida que deve ser adicionada baseado em algum status, magia ou item especial
+        //*********************************************************************************************
+        public static int getExtraVitality(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            int vital = 0;
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5)
+            {
+                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
+                {
+                    if ((PlayerStruct.skill[s, i].num == 35) && (PlayerStruct.skill[s, i].level > 0))
+                    {
+                        vital = 40;
+                        break;
+                    }
+                }
+            }
+            return vital;
+        }
+        //*********************************************************************************************
+        // getExtraSpirit
+        // Energia que deve ser adicionada baseada em algum status, item ou magia especial
+        //*********************************************************************************************
+        public static int getExtraSpirit(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            int vital = 0;
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 1)
+            {
+                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
+                {
+                    if ((PlayerStruct.skill[s, i].num == 46) && (PlayerStruct.skill[s, i].level > 0))
+                    {
+                        vital = 10;
+                        break;
+                    }
+                }
+            }
+            return vital;
+        }
+        //*********************************************************************************************
+        // getPlayerVitalityRegen
+        //*********************************************************************************************
+        public static int getPlayerVitalityRegen(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            double LightRegen = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light) * 0.6;
+            int vital = 1 + Convert.ToInt32(LightRegen); //per second
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 2)
+            {
+                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
+                {
+                    if ((PlayerStruct.skill[s, i].num == 52) && (PlayerStruct.skill[s, i].level > 0))
+                    {
+                        vital += ((getPlayerMaxVitality(s) / 100) * PlayerStruct.skill[s, i].level);
+                        break;
+                    }
+                }
+            }
+            return vital;
+        }
+        //*********************************************************************************************
+        // getPlayerSpiritRegen
+        //*********************************************************************************************
+        public static int getPlayerSpiritRegen(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            double DarkRegen = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark) * 0.3;
+            int vital = 1 + Convert.ToInt32(DarkRegen); //per second
+            return vital;
+        }
+        //*********************************************************************************************
+        // getPlayerCritical
+        //*********************************************************************************************
+        public static int getPlayerCritical(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -25,62 +199,62 @@ namespace FORJERUM
             double helmetcrit = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armorcrit = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 7].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 7].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armorcrit = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 7].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 7].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponcrit = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 7].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 7].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponcrit = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 7].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 7].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldcrit = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 7].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 7].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldcrit = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 7].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 7].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetcrit = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 7].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 7].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetcrit = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 7].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 7].value / 100) * (level * 7));
             }
 
             double totalitemcrit = armorcrit + weaponcrit + shieldcrit + helmetcrit;
 
-            double watercrit = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Water) * 0.2;
+            double watercrit = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water) * 0.2;
             double dtotalcrit = totalitemcrit + watercrit;
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 4)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 4)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 48) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 48) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        dtotalcrit += (PStruct.skill[index, i].level * 1.5);
+                        dtotalcrit += (PlayerStruct.skill[s, i].level * 1.5);
                         break;
                     }
                 }
             }
 
-            if (PStruct.tempplayer[index].SORE) { dtotalcrit = dtotalcrit / 2; }
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalcrit = dtotalcrit / 2; }
 
             int totalcrit = Convert.ToInt32(dtotalcrit);
 
             return totalcrit;
         }
         //*********************************************************************************************
-        // GetPlayerParry
+        // getPlayerParry
         // Chance de bloqueio
         //*********************************************************************************************
-        public static int GetPlayerParry(int index)
+        public static int getPlayerParry(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -90,47 +264,47 @@ namespace FORJERUM
             double helmetparry = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armorparry = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 6].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 6].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armorparry = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 6].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 6].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponparry = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 6].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 6].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponparry = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 6].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 6].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldparry = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 6].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 6].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldparry = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 6].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 6].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetparry = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 6].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 6].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetparry = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 6].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 6].value / 100) * (level * 7));
             }
 
             double totalitemparry = armorparry + weaponparry + shieldparry + helmetparry;
 
-            double windparry = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 0.3;
+            double windparry = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 0.3;
             double dtotalparry = totalitemparry + windparry;
-            if (PStruct.tempplayer[index].SORE) { dtotalparry = dtotalparry / 2; }
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalparry = dtotalparry / 2; }
             int totalparry = Convert.ToInt32(dtotalparry);
 
             return totalparry;
         }
         //*********************************************************************************************
-        // GetPlayerDefense
+        // getPlayerDefense
         //*********************************************************************************************
-        public static int GetPlayerDefense(int index)
+        public static int getPlayerDefense(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -140,47 +314,47 @@ namespace FORJERUM
             double helmetdef = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armordef = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 3].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 3].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armordef = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 3].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 3].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weapondef = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 3].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 3].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weapondef = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 3].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 3].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shielddef = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 3].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 3].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shielddef = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 3].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 3].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetdef = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 3].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 3].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetdef = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 3].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 3].value / 100) * (level * 7));
             }
 
             double totalitemdef = armordef + weapondef + shielddef + helmetdef;
 
-            double earthdefense = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.05;
+            double earthdefense = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 0.05;
             double dtotaldefense = totalitemdef + earthdefense;
-            if (PStruct.tempplayer[index].SORE) { dtotaldefense = dtotaldefense / 2; }
+            if (PlayerStruct.tempplayer[s].SORE) { dtotaldefense = dtotaldefense / 2; }
             int totaldefense = Convert.ToInt32(dtotaldefense);
 
             return totaldefense;
         }
         //*********************************************************************************************
-        // GetPlayerMinAttack
+        // getPlayerMinAttack
         //*********************************************************************************************
-        public static int GetPlayerMinAttack(int index)
+        public static int getPlayerMinAttack(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -190,72 +364,72 @@ namespace FORJERUM
             double helmetatk = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 0].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 0].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armoratk = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 0].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 0].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 0].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 0].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponatk = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 0].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 0].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 0].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 0].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 0].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 0].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 0].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 0].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 0].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 0].value / 100) * (level * 7));
             }
 
             double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
 
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.7;
+            double earthatk = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 0.7;
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 6)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 39) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 0.7;
+                        earthatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 0.7;
                         break;
                     }
                 }
             }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 35) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.7;
+                        earthatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 0.7;
                         break;
                     }
                 }
             }
 
             double dtotalatk = totalitematk + earthatk;
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalatk = dtotalatk / 2; }
             int totalatk = Convert.ToInt32(dtotalatk);
 
             return totalatk;
         }
         //*********************************************************************************************
-        // GetPlayerMinMagic
+        // getPlayerMinMagic
         //*********************************************************************************************
-        public static int GetPlayerMinMagic(int index)
+        public static int getPlayerMinMagic(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -265,139 +439,50 @@ namespace FORJERUM
             double helmetatk = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 1].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 1].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armoratk = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 1].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 1].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 1].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 1].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponatk = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 1].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 1].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 1].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 1].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 1].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 1].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 1].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 1].value / 100) * (level * 7));
-            }
-
-            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
-
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 0.6;
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 0.6;
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
-                    {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 0.6;
-                        break;
-                    }
-                }
-            }
-
-            double dtotalatk = totalitematk + earthatk;
-
-
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1)
-            {
-                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
-                {
-                    if ((PStruct.skill[index, i].num == 46) && (PStruct.skill[index, i].level > 0))
-                    {
-                        dtotalatk += ((dtotalatk / 100) * (5 * PStruct.skill[index, i].level));
-                        break;
-                    }
-                }
-            }
-
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
-
-            return totalatk;
-        }
-        //*********************************************************************************************
-        // GetPlayerMaxMagic
-        //*********************************************************************************************
-        public static int GetPlayerMaxMagic(int index)
-        {
-            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
-            {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
-            }
-
-            //CÓDIGO
-            double armoratk = 0.0;
-            double weaponatk = 0.0;
-            double shieldatk = 0.0;
-            double helmetatk = 0.0;
-            int level = 0;
-
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
-            {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 4].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 4].value / 100) * (level * 7));
-            }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
-            {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 4].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 4].value / 100) * (level * 7));
-            }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
-            {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 4].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 4].value / 100) * (level * 7));
-            }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
-            {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 4].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 4].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 1].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 1].value / 100) * (level * 7));
             }
 
             double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
 
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Dark) * 1.5;
+            double earthatk = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark) * 0.6;
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 6)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 39) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 1.5;
+                        earthatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 0.6;
                         break;
                     }
                 }
             }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 35) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        earthatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 1.5;
+                        earthatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 0.6;
                         break;
                     }
                 }
@@ -405,33 +490,35 @@ namespace FORJERUM
 
             double dtotalatk = totalitematk + earthatk;
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 1)
+
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 1)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 46) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 46) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        dtotalatk += ((dtotalatk / 100) * (5 * PStruct.skill[index, i].level));
+                        dtotalatk += ((dtotalatk / 100) * (5 * PlayerStruct.skill[s, i].level));
                         break;
                     }
                 }
             }
 
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalatk = dtotalatk / 2; }
             int totalatk = Convert.ToInt32(dtotalatk);
+
             return totalatk;
         }
         //*********************************************************************************************
-        // GetPlayerMagicDef / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getPlayerMaxMagic
         //*********************************************************************************************
-        public static int GetPlayerMagicDef(int index)
+        public static int getPlayerMaxMagic(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -441,47 +528,84 @@ namespace FORJERUM
             double helmetatk = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 5].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 5].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armoratk = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 4].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 4].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 5].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 5].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponatk = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 4].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 4].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 5].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 5].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 4].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 4].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 5].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 5].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 4].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 4].value / 100) * (level * 7));
             }
 
             double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
 
-            double earthatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Light) * 0.05;
+            double earthatk = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark) * 1.5;
+
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 6)
+            {
+                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
+                {
+                    if ((PlayerStruct.skill[s, i].num == 39) && (PlayerStruct.skill[s, i].level > 0))
+                    {
+                        earthatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 1.5;
+                        break;
+                    }
+                }
+            }
+
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5)
+            {
+                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
+                {
+                    if ((PlayerStruct.skill[s, i].num == 35) && (PlayerStruct.skill[s, i].level > 0))
+                    {
+                        earthatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 1.5;
+                        break;
+                    }
+                }
+            }
+
             double dtotalatk = totalitematk + earthatk;
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
-            int totalatk = Convert.ToInt32(dtotalatk);
 
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 1)
+            {
+                for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
+                {
+                    if ((PlayerStruct.skill[s, i].num == 46) && (PlayerStruct.skill[s, i].level > 0))
+                    {
+                        dtotalatk += ((dtotalatk / 100) * (5 * PlayerStruct.skill[s, i].level));
+                        break;
+                    }
+                }
+            }
+
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalatk = dtotalatk / 2; }
+            int totalatk = Convert.ToInt32(dtotalatk);
             return totalatk;
         }
         //*********************************************************************************************
-        // GetPlayerMaxAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getPlayerMagicDef / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetPlayerMaxAttack(int index)
+        public static int getPlayerMagicDef(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -491,57 +615,107 @@ namespace FORJERUM
             double helmetatk = 0.0;
             int level = 0;
 
-            if (EquipmentRelations.GetPlayerArmor(index) != 0)
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerArmorRefin(index);
-                armoratk = AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 2].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerArmor(index), 2].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armoratk = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 5].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 5].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerWeapon(index) != 0)
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerWeaponRefin(index);
-                weaponatk = WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 2].value + ((WStruct.weaponparams[EquipmentRelations.GetPlayerWeapon(index), 2].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponatk = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 5].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 5].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerShield(index) != 0)
+            if (EquipmentRelations.getPlayerShield(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerShieldRefin(index);
-                shieldatk = AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 2].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerShield(index), 2].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 5].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 5].value / 100) * (level * 7));
             }
-            if (EquipmentRelations.GetPlayerHelmet(index) != 0)
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
             {
-                level = EquipmentRelations.GetPlayerHelmetRefin(index);
-                helmetatk = AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 2].value + ((AStruct.armorparams[EquipmentRelations.GetPlayerHelmet(index), 2].value / 100) * (level * 7));
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 5].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 5].value / 100) * (level * 7));
             }
 
             double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
 
-            double fireatk = Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Fire) * 1.8;
+            double earthatk = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light) * 0.05;
+            double dtotalatk = totalitematk + earthatk;
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalatk = dtotalatk / 2; }
+            int totalatk = Convert.ToInt32(dtotalatk);
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 6)
+            return totalatk;
+        }
+        //*********************************************************************************************
+        // getPlayerMaxAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static int getPlayerMaxAttack(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            double armoratk = 0.0;
+            double weaponatk = 0.0;
+            double shieldatk = 0.0;
+            double helmetatk = 0.0;
+            int level = 0;
+
+            if (EquipmentRelations.getPlayerArmor(s) != 0)
+            {
+                level = EquipmentRelations.getPlayerArmorRefin(s);
+                armoratk = ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 2].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerArmor(s), 2].value / 100) * (level * 7));
+            }
+            if (EquipmentRelations.getPlayerWeapon(s) != 0)
+            {
+                level = EquipmentRelations.getPlayerWeaponRefin(s);
+                weaponatk = WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 2].value + ((WeaponStruct.weaponparams[EquipmentRelations.getPlayerWeapon(s), 2].value / 100) * (level * 7));
+            }
+            if (EquipmentRelations.getPlayerShield(s) != 0)
+            {
+                level = EquipmentRelations.getPlayerShieldRefin(s);
+                shieldatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 2].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerShield(s), 2].value / 100) * (level * 7));
+            }
+            if (EquipmentRelations.getPlayerHelmet(s) != 0)
+            {
+                level = EquipmentRelations.getPlayerHelmetRefin(s);
+                helmetatk = ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 2].value + ((ArmorStruct.armorparams[EquipmentRelations.getPlayerHelmet(s), 2].value / 100) * (level * 7));
+            }
+
+            double totalitematk = armoratk + weaponatk + shieldatk + helmetatk;
+
+            double fireatk = Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire) * 1.8;
+
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 6)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 39) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 39) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        fireatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Wind) * 1.8;
+                        fireatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind) * 1.8;
                         break;
                     }
                 }
             }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId == 5)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId == 5)
             {
                 for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
                 {
-                    if ((PStruct.skill[index, i].num == 35) && (PStruct.skill[index, i].level > 0))
+                    if ((PlayerStruct.skill[s, i].num == 35) && (PlayerStruct.skill[s, i].level > 0))
                     {
-                        fireatk += Convert.ToDouble(PStruct.character[index, PStruct.player[index].SelectedChar].Earth) * 1.8;
+                        fireatk += Convert.ToDouble(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth) * 1.8;
                         break;
                     }
                 }
             }
 
             double dtotalatk = totalitematk + fireatk;
-            if (PStruct.tempplayer[index].SORE) { dtotalatk = dtotalatk / 2; }
+            if (PlayerStruct.tempplayer[s].SORE) { dtotalatk = dtotalatk / 2; }
             int totalatk = Convert.ToInt32(dtotalatk);
 
             return totalatk;
@@ -550,33 +724,33 @@ namespace FORJERUM
         // GivePlayerGold / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Entrega determinada quantidade de ouro para determinado jogador
         //*********************************************************************************************
-        public static void GivePlayerGold(int index, int gold)
+        public static void givePlayerGold(int s, int gold)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, gold) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, gold) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            PStruct.character[index, PStruct.player[index].SelectedChar].Gold += gold;
-            SendData.Send_PlayerG(index);
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold += gold;
+            SendData.sendPlayerG(s);
         }
-        public static int GetPlayerOriunklatex(int index)
+        public static int getPlayerOriunklatex(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
             for (int i = 1; i < Globals.MaxInvSlot; i++)
             {
-                string item = PStruct.invslot[index, i].item;
+                string item = PlayerStruct.invslot[s, i].item;
                 string[] splititem = item.Split(',');
 
                 int itemNum = Convert.ToInt32(splititem[1]);
@@ -587,25 +761,25 @@ namespace FORJERUM
             return 0;
         }
         //*********************************************************************************************
-        // GetPlayerExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getPlayerExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Entrega determinada quantidade de exp para determinado jogador
         //*********************************************************************************************
-        public static void GivePlayerExp(int index, int exp)
+        public static void givePlayerExp(int s, int exp)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, exp) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, exp) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int PlayerX = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            int PlayerY = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
-            int Map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Exp += exp;
+            int PlayerX = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X;
+            int PlayerY = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y;
+            int Map = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Exp += exp;
 
-            string equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
+            string equipment = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment;
             string[] equipdata = equipment.Split(',');
             string[] petdata = equipdata[4].Split(';');
 
@@ -617,60 +791,60 @@ namespace FORJERUM
             {
                 petexp += exp;
 
-                if (petexp >= LevelRelations.GetPetExpToNextLevel(index, petlvl))
+                if (petexp >= LevelRelations.getPetExpToNextLevel(s, petlvl))
                 {
-                    petexp -= LevelRelations.GetPetExpToNextLevel(index, petlvl);
+                    petexp -= LevelRelations.getPetExpToNextLevel(s, petlvl);
                     petlvl += 1;
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + petnum + ";" + petlvl + ";" + petexp;
-                    SendData.Send_ActionMsg(index, lang.pet_evolve, 3, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, Map);
-                    SendData.Send_PlayerEquipmentTo(index, index);
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + petnum + ";" + petlvl + ";" + petexp;
+                    SendData.sendActionMsg(s, lang.pet_evolve, 3, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0, Map);
+                    SendData.sendPlayerEquipmentTo(s, s);
                 }
                 else
                 {
                     //Enviar nova exp
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + petnum + ";" + petlvl + ";" + petexp;
-                    SendData.Send_PlayerEquipmentTo(index, index);
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + petnum + ";" + petlvl + ";" + petexp;
+                    SendData.sendPlayerEquipmentTo(s, s);
                 }
             }
 
             //Verificamos se ele subiu de nível
-            if ((PStruct.character[index, PStruct.player[index].SelectedChar].Exp >= LevelRelations.GetExpToNextLevel(index)) && (PStruct.character[index, PStruct.player[index].SelectedChar].Level < 99))
+            if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Exp >= LevelRelations.getExpToNextLevel(s)) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level < 99))
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Exp -= LevelRelations.GetExpToNextLevel(index);
-                PStruct.character[index, PStruct.player[index].SelectedChar].Level += 1;
-                PStruct.character[index, PStruct.player[index].SelectedChar].Points += 5;
-                PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints += 1;
-                SendData.Send_ActionMsg(index, lang.level_up, 3, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, Map);
-                SendData.Send_Animation(Map, 1, index, 109);
-                SendData.Send_PlayerExp(index);
-                SendData.Send_PlayerLevel(index, index);
-                SendData.Send_PlayerSkillPoints(index);
-                SendData.Send_PlayerAtrTo(index);
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Exp -= LevelRelations.getExpToNextLevel(s);
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level += 1;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points += 5;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].SkillPoints += 1;
+                SendData.sendActionMsg(s, lang.level_up, 3, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0, Map);
+                SendData.sendAnimation(Map, 1, s, 109);
+                SendData.sendPlayerExp(s);
+                SendData.sendPlayerLevel(s, s);
+                SendData.sendPlayerSkillPoints(s);
+                SendData.sendPlayerAtrTo(s);
             }
             else
             {
                 //GetExpToNextLevel
-                SendData.Send_PlayerExp(index);
+                SendData.sendPlayerExp(s);
                 //Enviamos uma animação bonitinha de exp :D
-                SendData.Send_ActionMsg(index, "+" + exp + lang.exp, 0, PlayerX, PlayerY, 1, 0, Map);
+                SendData.sendActionMsg(s, "+" + exp + lang.exp, 0, PlayerX, PlayerY, 1, 0, Map);
             }
         }
         //*********************************************************************************************
         // IsPlayerPremmy
         // Retorna se determinado jogador é assinante
         //*********************************************************************************************
-        public static bool IsPlayerPremmy(int index)
+        public static bool isPlayerPremmy(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            DateTime myDate = DateTime.Parse(PStruct.player[index].Premmy);
+            DateTime myDate = DateTime.Parse(PlayerStruct.player[s].Premmy);
             int result = DateTime.Compare(myDate, DateTime.Now);
 
             if (result <= 0)
@@ -686,18 +860,18 @@ namespace FORJERUM
         // IsPlayerBanned
         // Retorna se o jogador está banido
         //*********************************************************************************************
-        public static bool IsPlayerBanned(int index)
+        public static bool isPlayerBanned(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            DateTime myDate = DateTime.Parse(PStruct.player[index].Banned);
+            DateTime myDate = DateTime.Parse(PlayerStruct.player[s].Banned);
             int result = DateTime.Compare(myDate, DateTime.Now);
 
             if (result <= 0)
@@ -708,6 +882,314 @@ namespace FORJERUM
             {
                 return true;
             }
+        }
+        //*********************************************************************************************
+        // PlayerRegen / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static void playerRegen(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return;
+            }
+
+            //CÓDIGO
+            if (PlayerStruct.tempplayer[s].isDead) { return; }
+            if (PlayerStruct.tempplayer[s].Vitality < getPlayerMaxVitality(s))
+            {
+                //Regen por segundo
+                PlayerStruct.tempplayer[s].Vitality += getPlayerVitalityRegen(s);
+                //Vida atual ficou maior que a máxima?
+                if (PlayerStruct.tempplayer[s].Vitality > getPlayerMaxVitality(s))
+                {
+                    PlayerStruct.tempplayer[s].Vitality = getPlayerMaxVitality(s);
+                }
+                //Envia vida recuperada
+                SendData.sendPlayerVitalityToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s, PlayerStruct.tempplayer[s].Vitality);
+                //Se estiver em grupo atualiza para o grupo também
+                if (PlayerStruct.tempplayer[s].Party > 0)
+                {
+                    SendData.sendPlayerVitalityToParty(PlayerStruct.tempplayer[s].Party, s, PlayerStruct.tempplayer[s].Vitality);
+                }
+            }
+            if (PlayerStruct.tempplayer[s].Spirit < getPlayerMaxSpirit(s))
+            {
+                //Regen por segundo
+                PlayerStruct.tempplayer[s].Spirit += getPlayerSpiritRegen(s);
+                //Mana atual ficou maior que a máxima?
+                if (PlayerStruct.tempplayer[s].Spirit > getPlayerMaxSpirit(s))
+                {
+                    PlayerStruct.tempplayer[s].Spirit = getPlayerMaxSpirit(s);
+                }
+                //Envia vida recuperada
+                SendData.sendPlayerSpiritToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s, PlayerStruct.tempplayer[s].Spirit);
+                //Se estiver em grupo atualiza para o grupo também
+                if (PlayerStruct.tempplayer[s].Party > 0)
+                {
+                    SendData.sendPlayerSpiritToParty(PlayerStruct.tempplayer[s].Party, s, PlayerStruct.tempplayer[s].Spirit);
+                }
+            }
+
+            PlayerStruct.tempplayer[s].RegenTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
+        }
+        //*********************************************************************************************
+        // PlayerDeath / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static void playerDeath(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return;
+            }
+
+            //CÓDIGO
+            PlayerStruct.tempplayer[s].Vitality = 1;
+            PlayerStruct.tempplayer[s].Spirit = 1;
+
+        }
+        //*********************************************************************************************
+        // PlayerIsSore / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static bool playerIsSore(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPPenalty > Loops.TickCount.ElapsedMilliseconds) { return true; } else { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPPenalty = 0; return false; }
+        }
+        //*********************************************************************************************
+        // getOpenPTempSpell / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static int getOpenTempSpell(int id)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, id) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, id));
+            }
+
+            //CÓDIGO
+            for (int i = 1; i < Globals.MaxPTempSpells; i++)
+            {
+                if (PlayerStruct.ptempspell[id, i].active == false)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+        //*********************************************************************************************
+        // getMinerLevel / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static int getMinerLevel(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            int exp = 0;//character[s, (PlayerStruct.player[s].SelectedChar].Miner;
+
+            int level = (exp / 100);
+
+            return level;
+        }
+        //*********************************************************************************************
+        // getSkillOpenSlot
+        // Retorna slot de skill livre para determinado jogador
+        //*********************************************************************************************
+        public static int getSkillOpenSlot(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            for (int i = 9; i < Globals.MaxPlayer_Skills; i++)
+            {
+                if (PlayerStruct.skill[s, i].num == 0) { return i; }
+            }
+
+            return 0;
+        }
+
+        //*********************************************************************************************
+        // getPlayerElement / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        //*********************************************************************************************
+        public static int getPlayerElement(int s, int element)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, element) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, element));
+            }
+
+            //CÓDIGO
+            int quantity = 0;
+
+            if (element == 1)
+            {
+                return Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire);
+            }
+
+            if (element == 2)
+            {
+                return Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth);
+            }
+            if (element == 3)
+            {
+                return Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water);
+            }
+            if (element == 4)
+            {
+                return Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind);
+            }
+            if (element == 5)
+            {
+                return Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark);
+            }
+            if (element == 6)
+            {
+                return Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light);
+            }
+
+            return quantity;
+        }
+        //*********************************************************************************************
+        // ResetPlayerStatus
+        // Reinicia os status de determinado jogador (OBSOLETO)
+        //*********************************************************************************************
+        public static void resetPlayerStatus(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return;
+            }
+
+            //CÓDIGO
+            int totalpoints = 0;
+
+            totalpoints += PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth - 1;
+            totalpoints += PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind - 1;
+            totalpoints += PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark - 1;
+            totalpoints += PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light - 1;
+            totalpoints += PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water - 1;
+            totalpoints += PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire - 1;
+
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth = 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind = 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark = 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light = 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water = 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire = 1;
+
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points += totalpoints;
+            SendData.sendPlayerAtrToMap(s);
+            SendData.sendMsgToPlayer(s, lang.success_atributte_reset, Globals.ColorGreen, Globals.Msg_Type_Server);
+        }
+        //*********************************************************************************************
+        // PlayerAddPremmy
+        // Adiciona tempo de assinatura
+        //*********************************************************************************************
+        public static void playerAddPremmy(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return;
+            }
+
+            //CÓDIGO
+            //return;
+            DateTime myDate = DateTime.Parse(PlayerStruct.player[s].Premmy);
+            myDate = myDate.AddDays(30);
+            PlayerStruct.player[s].Premmy = myDate.ToString();
+            Console.WriteLine(PlayerStruct.player[s].Premmy);
+            Database.Accounts.saveAccount(s);
+        }
+        //*********************************************************************************************
+        // getPlayerProf
+        // Retorna profissão do jogador
+        //*********************************************************************************************
+        public static int getPlayerProf(int s, int type)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, type) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, type));
+            }
+
+            //CÓDIGO
+            int prof = 0;
+
+            for (int i = 1; i < Globals.Max_Profs_Per_Char; i++)
+            {
+                if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Type[i] == type)
+                {
+                    prof = i;
+                    break;
+                }
+            }
+
+            return prof;
+        }
+
+        //*********************************************************************************************
+        // getFreeCraft
+        // Retorna um slot no craft que esteja livre
+        //*********************************************************************************************
+        public static int getFreeCraft(int s)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
+            }
+
+            //CÓDIGO
+            int finals = -1;
+
+            //Checa o slot que possúi o jogador
+            for (int i = 1; i < Globals.Max_Craft; i++)
+            {
+                if ((PlayerStruct.craft[s, i].num == 0))
+                {
+                    finals = i;
+                    break;
+                }
+            }
+
+            return finals;
         }
     }
 }

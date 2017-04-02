@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Estruturas e métodos relacionados a guildas.
-    // GStruct.cs
+    // GuildStruct.cs
     //*********************************************************************************************
-    class GStruct
+    class GuildStruct
     {
         //*********************************************************************************************
         // ESTRUTURA DAS GUILDAS
@@ -25,15 +25,15 @@ namespace FORJERUM
             public string[] memberlist;
             public string[] membersprite;
             public int[] memberhue;
-            public int[] membersprite_index;
+            public int[] membersprite_s;
         }
         //*********************************************************************************************
         // InitializeGuildArrays / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void InitializeGuildArrays()
+        public static void initializeGuildArrays()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
                 return;
@@ -45,19 +45,19 @@ namespace FORJERUM
                 guild[i].memberlist = new string[Globals.Max_Guild_Members];
                 guild[i].membersprite = new string[Globals.Max_Guild_Members];
                 guild[i].memberhue = new int[Globals.Max_Guild_Members];
-                guild[i].membersprite_index = new int[Globals.Max_Guild_Members];
+                guild[i].membersprite_s = new int[Globals.Max_Guild_Members];
             }
         }
         //*********************************************************************************************
-        // GetOpenGuildSlot / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenGuildSlot / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetOpenGuildSlot()
+        public static int getOpenGuildSlot()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
@@ -74,16 +74,16 @@ namespace FORJERUM
             return count;
         }
         //*********************************************************************************************
-        // GetMember_Count / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getMember_Count / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna número de membros em determinada guilda.
         //*********************************************************************************************
-        public static int GetMember_Count(int guildnum)
+        public static int getMember_Count(int guildnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guildnum) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guildnum));
             }
 
@@ -100,15 +100,15 @@ namespace FORJERUM
             return count;
         }
         //*********************************************************************************************
-        // GetOpenMemberSlot / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenMemberSlot / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetOpenMemberSlot(int guildnum)
+        public static int getOpenMemberSlot(int guildnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guildnum) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guildnum));
             }
 

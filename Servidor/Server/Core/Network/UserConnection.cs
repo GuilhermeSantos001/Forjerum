@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Métodos de gerenciamento e obtênção da conexão relacionada ao Winsock e ao servidor.
@@ -18,11 +18,11 @@ namespace FORJERUM
         public static bool isConnected(int clientid)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, clientid) != null)
             {
                 return Convert.ToBoolean
-                (Extensions.ExtensionApp.ExtendMyApp(MethodBase.GetCurrentMethod().Name, clientid));
+                (Extensions.ExtensionApp.extendMyApp(MethodBase.GetCurrentMethod().Name, clientid));
             }
 
             //CÓDIGO
@@ -48,23 +48,23 @@ namespace FORJERUM
 
         }
         //*********************************************************************************************
-        // CheckIndex / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Verifica se determinado valor de index está livre.
+        // Checks / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // Verifica se determinado valor de s está livre.
         //*********************************************************************************************
-        public static bool Checkindex(int index)
+        public static bool checkS(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return Convert.ToBoolean
-                (Extensions.ExtensionApp.ExtendMyApp(MethodBase.GetCurrentMethod().Name, index));
+                (Extensions.ExtensionApp.extendMyApp(MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
             for (int i = 0; i < WinsockAsync.Clients.Count; i++)
             {
-                if (WinsockAsync.Clients[i].index == index)
+                if (WinsockAsync.Clients[i].s == s)
                 {
                     return false;
                 }
@@ -72,23 +72,23 @@ namespace FORJERUM
             return true;
         }
         //*********************************************************************************************
-        // GetIndex / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
-        // Retorna o index do jogador baseado no servidor, e não na conexão.
+        // gets / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // Retorna o s do jogador baseado no servidor, e não na conexão.
         //*********************************************************************************************
-        public static int Getindex(int index)
+        public static int getS(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return Convert.ToInt32
-                (Extensions.ExtensionApp.ExtendMyApp(MethodBase.GetCurrentMethod().Name, index));
+                (Extensions.ExtensionApp.extendMyApp(MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
             for (int i = 0; i < WinsockAsync.Clients.Count; i++)
             {
-                if (WinsockAsync.Clients[i].index == index)
+                if (WinsockAsync.Clients[i].s == s)
                 {
                     if ((i < 0) || (i >= WinsockAsync.Clients.Count())) { return -1; }
                     return i;

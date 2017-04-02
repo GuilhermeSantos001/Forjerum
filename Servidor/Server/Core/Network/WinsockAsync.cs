@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Objeto com caractéristicas que serão usadas pelo Winsock.
@@ -25,12 +25,12 @@ namespace FORJERUM
         public byte[] buffer = new byte[BufferSize];
         // Para receber strings e processar.
         public StringBuilder sb = new StringBuilder();
-        // index do cliente
+        // s do cliente
         public int clientid { get; set; }
         public StateObject(Socket t, int i) { Async = t; clientid = i; }
         // Informações sobre status do jogador na conexão
         public bool IsConnected { get; set; }
-        public int index { get; set; }
+        public int s { get; set; }
     }
     //*********************************************************************************************
     // Classe principal de conexão assíncrona.
@@ -47,7 +47,7 @@ namespace FORJERUM
         public static string Motd = "Bem vindo a " + Globals.GAME_NAME + "!";
         // Obsoleto agora
         public static string[] connected = new string[] { };
-        //public void Send(Socket sck, string message, Encoding encoding);
+        //public void send(Socket sck, string message, Encoding encoding);
         static ConsoleEventDelegate event_handler; 
         // Pinvoke
         private delegate bool ConsoleEventDelegate(int eventType);
@@ -61,7 +61,7 @@ namespace FORJERUM
         public static void start()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
                 return;
@@ -113,10 +113,10 @@ namespace FORJERUM
         static bool ConsoleEventCallback(int eventType)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, eventType) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, eventType));
             }
 
@@ -125,21 +125,21 @@ namespace FORJERUM
             {
                 for (int i = 0; i <= WinsockAsync.Clients.Count; i++)
                 {
-                    WinsockAsync.DisconnectUser(i);
+                    WinsockAsync.disconnectUser(i);
                 }
             }
             return false;
         }
         //*********************************************************************************************
-        // IsNumeric / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // isNumeric / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static bool IsNumeric(string data)
+        public static bool isNumeric(string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data));
             }
 
@@ -157,7 +157,7 @@ namespace FORJERUM
         public static void Listen()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
                 return; 
@@ -196,7 +196,7 @@ namespace FORJERUM
         public static void AcceptCallback(IAsyncResult ar)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, ar) != null)
             {
                 return;
@@ -218,39 +218,39 @@ namespace FORJERUM
             Clients[Clients.Count - 1].Async.NoDelay = true;
             Clients[Clients.Count - 1].IsConnected = true;
             
-            //Vamos analisar qual index está disponível para o jogador
+            //Vamos analisar qual s está disponível para o jogador
             for (int i = 0; i < 100; i++)
             {
-                if (UserConnection.Checkindex(i))
+                if (UserConnection.checkS(i))
                 {
-                    Clients[(Clients.Count() - 1)].index = i;
+                    Clients[(Clients.Count() - 1)].s = i;
                     break;
                 }
             }
 
             //Ele não está logado, pois se conectou agora
-            PStruct.tempplayer[WinsockAsync.Clients[(WinsockAsync.Clients.Count() - 1)].index].Logged = false;
+            PlayerStruct.tempplayer[WinsockAsync.Clients[(WinsockAsync.Clients.Count() - 1)].s].Logged = false;
 
             //Ele não está no jogo pois se conectou agora
-            PStruct.tempplayer[WinsockAsync.Clients[(WinsockAsync.Clients.Count() - 1)].index].ingame = false;
+            PlayerStruct.tempplayer[WinsockAsync.Clients[(WinsockAsync.Clients.Count() - 1)].s].ingame = false;
 
-            //Zerar o Player_Highindex pra evitar problemas
-            Globals.Player_Highindex = 0;
+            //Zerar o Player_Highs pra evitar problemas
+            Globals.Player_Highs = 0;
 
 
-            //Vamos atualizar o Player_Highindex sem frescura
+            //Vamos atualizar o Player_Highs sem frescura
             for (int i = 0; i < WinsockAsync.Clients.Count(); i++)
             {
-                if (WinsockAsync.Clients[i].index > Globals.Player_Highindex)
+                if (WinsockAsync.Clients[i].s > Globals.Player_Highs)
                 {
-                    Globals.Player_Highindex = WinsockAsync.Clients[i].index;
+                    Globals.Player_Highs = WinsockAsync.Clients[i].s;
                 }
             }
 
-            //Vamos atualizar o Player_Highindex para todos os jogadores
-            SendData.Send_UpdatePlayerHighindex();
+            //Vamos atualizar o Player_Highs para todos os jogadores
+            SendData.sendUpdatePlayerHighs();
 
-            //WinsockAnsyc.Clients[Clients.Count() - 1].Listindex = Clients.Count() - 1;
+            //WinsockAnsyc.Clients[Clients.Count() - 1].Lists = Clients.Count() - 1;
             Log(String.Format("Cliente conectado: {0}", Clients.Count() - 1));
 
             // Cria o objeto de conexão do jogador
@@ -262,15 +262,15 @@ namespace FORJERUM
         public const int FIONREAD = 0x4004667F;
 
         //*********************************************************************************************
-        // GetPendingByteCount / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getPendingByteCount / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetPendingByteCount(Socket s)
+        public static int getPendingByteCount(Socket s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, s));
             }
 
@@ -300,7 +300,7 @@ namespace FORJERUM
         public static void ReadCallback(IAsyncResult ar)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, ar) != null)
             {
                 return;
@@ -315,9 +315,9 @@ namespace FORJERUM
 
 
             if (handler == null) { return; }; if (!handler.Connected) { return; }
-            if (state.index < 0) { return; }
+            if (state.s < 0) { return; }
 
-            int clientid = UserConnection.Getindex(state.index);
+            int clientid = UserConnection.getS(state.s);
 
             //Se ultrapassar os limites, fechar conexão.
             if ((clientid < 0) || (clientid > Clients.Count - 1))
@@ -325,15 +325,15 @@ namespace FORJERUM
                 return;
             }
 
-            int index = Clients[clientid].index;
+            int s = Clients[clientid].s;
             // Clients[Clients.Count - 1].Ansyc.EndReceive(ar)
 
             //Obtenção da informação
-            int buffersize = GetPendingByteCount(handler);
+            int buffersize = getPendingByteCount(handler);
 
             if (buffersize > 1000)
             {
-                if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 1)
+                if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 1)
                 {
                     Console.WriteLine(lang.player_buffer_limit_exceeded);
                     return;
@@ -356,10 +356,10 @@ namespace FORJERUM
                     content = state.sb.ToString();
 
                     // Extender APP / Cancelar Thread atual para executar a próxima?
-                    Extensions.ExtensionApp.ExtendMyApp(index, content);
+                    Extensions.ExtensionApp.extendMyApp(s, content);
 
                     //Enviamos os dados para o SelectPacket
-                    ReceiveData.SelectPacket(index, content);
+                    ReceiveData.selectPacket(s, content);
 
                     //Limpar a stream de dados pois já foram processados.
                     state.sb.Clear();
@@ -377,13 +377,13 @@ namespace FORJERUM
                     return;
                 }
                 Console.WriteLine(lang.connection_critical_error);
-                Database.LogError(e);
+                Database.Handler.logError(e);
                 return;
             }
             catch (Exception e)
             {
                 Console.WriteLine(lang.player_critical_error);
-                Database.LogError(e);
+                Database.Handler.logError(e);
                 return;
             }
         }
@@ -391,10 +391,10 @@ namespace FORJERUM
         // Send / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Enviar informações.
         //*********************************************************************************************
-        public static void Send(int clientid, string data)
+        public static void send(int clientid, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data) != null)
             {
                 return;
@@ -411,7 +411,7 @@ namespace FORJERUM
 
                     // Envia a informação para o cliente
                     Clients[clientid].Async.BeginSend(byteData, 0, byteData.Length, 0,
-                        new AsyncCallback(SendCallback), Clients[clientid].Async);
+                        new AsyncCallback(sendCallback), Clients[clientid].Async);
                 }
             }
             catch
@@ -424,10 +424,10 @@ namespace FORJERUM
         //*********************************************************************************************
         // SendCallBack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void SendCallback(IAsyncResult ar)
+        public static void sendCallback(IAsyncResult ar)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, ar) != null)
             {
                 return;
@@ -455,10 +455,10 @@ namespace FORJERUM
         //*********************************************************************************************
         // ShutdownUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ShutdownUser(int clientid)
+        public static void shutdownUser(int clientid)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, clientid) != null)
             {
                 return;
@@ -473,10 +473,10 @@ namespace FORJERUM
         // DisconnectUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Desconectar o jogador.
         //*********************************************************************************************
-        public static void DisconnectUser(int clientid)
+        public static void disconnectUser(int clientid)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, clientid) != null)
             {
                 return;
@@ -486,59 +486,59 @@ namespace FORJERUM
             //LOL
             if ((Clients.Count <= 0) || (clientid > Clients.Count - 1)) { return; }
             //Se estiver morto, resetar posição
-            //PStruct.tempplayer[Clients[clientid].index].isDead = false;
+            //PlayerStruct.tempplayer[Clients[clientid].s].isDead = false;
 
             //Sai da troca
-            if (PStruct.tempplayer[Clients[clientid].index].InTrade > 0)
+            if (PlayerStruct.tempplayer[Clients[clientid].s].InTrade > 0)
             {
-                TradeRelations.GiveTrade(Clients[clientid].index);
-                TradeRelations.GiveTrade(PStruct.tempplayer[Clients[clientid].index].InTrade);
+                TradeRelations.giveTrade(Clients[clientid].s);
+                TradeRelations.giveTrade(PlayerStruct.tempplayer[Clients[clientid].s].InTrade);
 
                 //Verificar se o jogador não se desconectou no processo
-                if (Clients[(UserConnection.Getindex(PStruct.tempplayer[Clients[clientid].index].InTrade))].IsConnected)
+                if (Clients[(UserConnection.getS(PlayerStruct.tempplayer[Clients[clientid].s].InTrade))].IsConnected)
                 {
-                    SendData.Send_PlayerG(PStruct.tempplayer[Clients[clientid].index].InTrade);
-                    SendData.Send_TradeClose(PStruct.tempplayer[Clients[clientid].index].InTrade);
-                    SendData.Send_InvSlots(PStruct.tempplayer[Clients[clientid].index].InTrade, PStruct.player[PStruct.tempplayer[Clients[clientid].index].InTrade].SelectedChar);
+                    SendData.sendPlayerG(PlayerStruct.tempplayer[Clients[clientid].s].InTrade);
+                    SendData.sendTradeClose(PlayerStruct.tempplayer[Clients[clientid].s].InTrade);
+                    SendData.sendInvSlots(PlayerStruct.tempplayer[Clients[clientid].s].InTrade, PlayerStruct.player[PlayerStruct.tempplayer[Clients[clientid].s].InTrade].SelectedChar);
                 }
 
-                TradeRelations.ClearTempTrade(PStruct.tempplayer[Clients[clientid].index].InTrade);
-                TradeRelations.ClearTempTrade(Clients[clientid].index);
+                TradeRelations.clearTempTrade(PlayerStruct.tempplayer[Clients[clientid].s].InTrade);
+                TradeRelations.clearTempTrade(Clients[clientid].s);
             }
 
             //Sai do Craft
-            if (PStruct.tempplayer[Clients[clientid].index].InCraft)
+            if (PlayerStruct.tempplayer[Clients[clientid].s].InCraft)
             {
                 for (int i = 1; i < Globals.Max_Craft; i++)
                 {
-                    if (PStruct.craft[Clients[clientid].index, i].num > 0)
+                    if (PlayerStruct.craft[Clients[clientid].s, i].num > 0)
                     {
-                        InventoryRelations.GiveItem(Clients[clientid].index, PStruct.craft[Clients[clientid].index, i].type, PStruct.craft[Clients[clientid].index, i].num, PStruct.craft[Clients[clientid].index, i].value, PStruct.craft[Clients[clientid].index, i].refin, PStruct.craft[Clients[clientid].index, i].exp);
+                        InventoryRelations.giveItem(Clients[clientid].s, PlayerStruct.craft[Clients[clientid].s, i].type, PlayerStruct.craft[Clients[clientid].s, i].num, PlayerStruct.craft[Clients[clientid].s, i].value, PlayerStruct.craft[Clients[clientid].s, i].refin, PlayerStruct.craft[Clients[clientid].s, i].exp);
                     }
                 }
             }
 
             //Salva o jogador SE PRECISAR
-            if (PStruct.tempplayer[Clients[clientid].index].ingame)
+            if (PlayerStruct.tempplayer[Clients[clientid].s].ingame)
             {
-                Database.SaveCharacter(Clients[clientid].index, PStruct.player[Clients[clientid].index].Email, PStruct.player[Clients[clientid].index].SelectedChar);
-                Database.SaveBank(Clients[clientid].index);
-                Database.SaveFriendList(Clients[clientid].index);
+                Database.Characters.saveCharacter(Clients[clientid].s, PlayerStruct.player[Clients[clientid].s].Email, PlayerStruct.player[Clients[clientid].s].SelectedChar);
+                Database.Banks.saveBank(Clients[clientid].s);
+                Database.FriendLists.saveFriendList(Clients[clientid].s);
             }
 
             //Sai do grupo
-            if (PStruct.tempplayer[Clients[clientid].index].Party > 0)
+            if (PlayerStruct.tempplayer[Clients[clientid].s].Party > 0)
             {
-                PartyRelations.KickParty(Clients[clientid].index, Clients[clientid].index, true);
+                PartyRelations.kickParty(Clients[clientid].s, Clients[clientid].s, true);
             }
 
             //Vamos avisar ao mapa que o jogador saiu
-            SendData.Send_PlayerLeft(PStruct.character[Clients[clientid].index, PStruct.player[Clients[clientid].index].SelectedChar].Map, Clients[clientid].index);
+            SendData.sendPlayerLeft(PlayerStruct.character[Clients[clientid].s, PlayerStruct.player[Clients[clientid].s].SelectedChar].Map, Clients[clientid].s);
 
             //Apagamos o banco
-            Database.ClearBank(Clients[clientid].index);
+            Database.Banks.clearBank(Clients[clientid].s);
 
-            Console.WriteLine(lang.player_cleared + " " + clientid + Clients[clientid].index);
+            Console.WriteLine(lang.player_cleared + " " + clientid + Clients[clientid].s);
 
             //Fecha a conexão
             Clients[clientid].Async.Close();
@@ -547,50 +547,50 @@ namespace FORJERUM
             Clients[clientid].Async = null;
 
             //Limpa dados temporários sobre o jogador
-            Database.ClearPlayer(Clients[clientid].index, true);
-            PStruct.ClearTempPlayer(Clients[clientid].index);
+            PlayerStruct.clearPlayer(Clients[clientid].s, true);
+            PlayerStruct.clearTempPlayer(Clients[clientid].s);
 
             //Limpa informações gerais da conexão
-            Clients[clientid].index = -1;
+            Clients[clientid].s = -1;
 
             //Remova da lista de clientes do servidor
             Clients.RemoveAt(clientid);
 
-            //Zerar o Player_Highindex pra evitar problemas
-            Globals.Player_Highindex = 0;
+            //Zerar o Player_Highs pra evitar problemas
+            Globals.Player_Highs = 0;
 
-            //Vamos atualizar o Player_Highindex sem frescura
+            //Vamos atualizar o Player_Highs sem frescura
             for (int i = 0; i < WinsockAsync.Clients.Count(); i++)
             {
-                if (Clients[i].index > Globals.Player_Highindex)
+                if (Clients[i].s > Globals.Player_Highs)
                 {
-                    Globals.Player_Highindex = Clients[i].index;
+                    Globals.Player_Highs = Clients[i].s;
                 }
             }
 
-            //Vamos atualizar o Player_Highindex para todos os jogadores
-            SendData.Send_UpdatePlayerHighindex();
+            //Vamos atualizar o Player_Highs para todos os jogadores
+            SendData.sendUpdatePlayerHighs();
 
             Log(lang.player_disconnected + " " + clientid);
         }
         //*********************************************************************************************
         // LoginAnswer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static string LoginAnswer(string[] data, int index)
+        public static string LoginAnswer(string[] data, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, data, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, data, s) != null)
             {
-                return Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, data, index).ToString();
+                return Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, data, s).ToString();
             }
 
             //CÓDIGO
             string password = data[1];
             Console.WriteLine(lang.login + " " + data[0]);
             Console.WriteLine(lang.password + " " + password);
-            if(Database.TryLogin(index, data[0], password))
+            if(Database.Accounts.tryLogin(s, data[0], password))
             {
 
                 if (PlayerLogic.isPlayerConnected(data[0]) == true)
@@ -599,7 +599,7 @@ namespace FORJERUM
                 }
                 else
                 {
-                    PStruct.player[index].Email = data[0];
+                    PlayerStruct.player[s].Email = data[0];
                     Log(lang.player_authenticated + ": " + data[0] + " / " + password);
                     return "a";
                 }
@@ -612,7 +612,7 @@ namespace FORJERUM
         public static void Log(string data, ConsoleColor c = ConsoleColor.Gray)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data, c) != null)
             {
                 return;

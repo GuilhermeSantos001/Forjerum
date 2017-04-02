@@ -2,22 +2,22 @@
 using System.Text;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Métodos e tratamentos de todas as informações que serão enviadas pelo servidor.
-    // SendData.cs
+    // sendData.cs
     //*********************************************************************************************
     class SendData
     {
         //*********************************************************************************************
-        // SendToAll / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendToAll / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada packet para todas as conexões.
         //*********************************************************************************************
-        public static void SendToAll(string packet)
+        public static void sendToAll(string packet)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, packet) != null)
             {
                 return;
@@ -26,109 +26,109 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 0; i < WinsockAsync.Clients.Count; i++)
             {
-                WinsockAsync.Send(i, packet);
+                WinsockAsync.send(i, packet);
             }
         }
         //*********************************************************************************************
-        // SendToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada packet para todos os jogadores em determinado mapa.
         //*********************************************************************************************
-        public static void SendToMap(int map, string packet)
+        public static void sendToMap(int map, string packet)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, packet) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if ((PStruct.character[i, PStruct.player[i].SelectedChar].Map == map) && (PStruct.tempplayer[i].ingame == true))
+                if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Map == map) && (PlayerStruct.tempplayer[i].ingame == true))
                 {
-                    SendToUser(i, packet);
+                    sendToUser(i, packet);
                 }
             }
         }
         //*********************************************************************************************
-        // SendToGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendToGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada packet para todos os membros de determinada guilda.
         //*********************************************************************************************
-        public static void SendToGuild(int guild, string packet)
+        public static void sendToGuild(int guild, string packet)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guild, packet) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if ((PStruct.character[i, PStruct.player[i].SelectedChar].Guild == guild) && (PStruct.tempplayer[i].ingame == true))
+                if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Guild == guild) && (PlayerStruct.tempplayer[i].ingame == true))
                 {
-                    SendToUser(i, packet);
+                    sendToUser(i, packet);
                 }
             }
         }
         //*********************************************************************************************
-        // SendToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada packet para membros de determinado grupo.
         //*********************************************************************************************
-        public static void SendToParty(int partynum, string packet)
+        public static void sendToParty(int partynum, string packet)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, partynum, packet) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if ((PStruct.tempplayer[i].Party == partynum) && (PStruct.tempplayer[i].ingame == true))
+                if ((PlayerStruct.tempplayer[i].Party == partynum) && (PlayerStruct.tempplayer[i].ingame == true))
                 {
-                    SendToUser(i, packet);
+                    sendToUser(i, packet);
                 }
             }
         }
         //*********************************************************************************************
-        // SendToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada packet para jogadores em um determinado mapa com exceção de um determinado
         // jogador.
         //*********************************************************************************************
-        public static void SendToMapBut(int index, int map, string packet)
+        public static void sendToMapBut(int s, int map, string packet)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, map, packet) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, map, packet) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (i != index)
+                if (i != s)
                 {
-                    if ((PStruct.character[i, PStruct.player[i].SelectedChar].Map == map)  && (PStruct.tempplayer[i].ingame == true))
+                    if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Map == map)  && (PlayerStruct.tempplayer[i].ingame == true))
                     {
-                        SendToUser(i, packet);
+                        sendToUser(i, packet);
                     }
                 }
             }
         }
         //*********************************************************************************************
-        // SendToUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendToUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada packet apenas para um determinado usuário.
         //*********************************************************************************************
-        public static void SendToUser(int clientid, string packet)
+        public static void sendToUser(int clientid, string packet)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, clientid, packet) != null)
             {
                 return;
@@ -137,157 +137,157 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 0; i < WinsockAsync.Clients.Count; i++)
             {
-                if (WinsockAsync.Clients[i].index == clientid)
+                if (WinsockAsync.Clients[i].s == clientid)
                 {
-                    WinsockAsync.Send(i, packet);
+                    WinsockAsync.send(i, packet);
                 }
             }
         }
         //*********************************************************************************************
-        // Send_PlayerDataToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerDataToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia informações de um jogador para todos em determinado mapa com exceção de um jogador.
         //*********************************************************************************************
-        public static void Send_PlayerDataToMapBut(int index, string username, int charId)
+        public static void sendPlayerDataToMapBut(int s, string username, int charId)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, username, charId) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, username, charId) != null)
             {
                 return;
             }
 
 
             //CÓDIGO
-            string charName = (PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName);
-            int charSpriteindex = (PStruct.character[index, PStruct.player[index].SelectedChar].Spriteindex);
-            int charClass = (PStruct.character[index, PStruct.player[index].SelectedChar].ClassId);
-            string charSprite = (PStruct.character[index, PStruct.player[index].SelectedChar].Sprite);
-            int charLevel = (PStruct.character[index, PStruct.player[index].SelectedChar].Level);
-            int charExp = (PStruct.character[index, PStruct.player[index].SelectedChar].Exp);
-            int charFire = (PStruct.character[index, PStruct.player[index].SelectedChar].Fire);
-            int charEarth = (PStruct.character[index, PStruct.player[index].SelectedChar].Earth);
-            int charWater = (PStruct.character[index, PStruct.player[index].SelectedChar].Water);
-            int charWind = (PStruct.character[index, PStruct.player[index].SelectedChar].Wind);
-            int charDark = (PStruct.character[index, PStruct.player[index].SelectedChar].Dark);
-            int charLight = (PStruct.character[index, PStruct.player[index].SelectedChar].Light);
-            int charPoints = PStruct.character[index, PStruct.player[index].SelectedChar].Points;
-            int charMap = (PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-            byte charX = (PStruct.character[index, PStruct.player[index].SelectedChar].X);
-            byte charY = (PStruct.character[index, PStruct.player[index].SelectedChar].Y);
-            byte charDir = (PStruct.character[index, PStruct.player[index].SelectedChar].Dir);
-            int charVitality = PStruct.tempplayer[index].Vitality;
-            int charSpirit = PStruct.tempplayer[index].Spirit;
-            int charAccess = (PStruct.character[index, PStruct.player[index].SelectedChar].Access);
-            int SkillPoints = PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints;
-            int charHue = PStruct.character[index, PStruct.player[index].SelectedChar].Hue;
-            int charGender = PStruct.character[index, PStruct.player[index].SelectedChar].Gender;
-            string Equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
-            int extra_vitality = PStruct.GetExtraVitality(index);
-            int extra_spirit = PStruct.GetExtraVitality(index);
+            string charName = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName);
+            int charSprites = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprites);
+            int charClass = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId);
+            string charSprite = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprite);
+            int charLevel = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level);
+            int charExp = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Exp);
+            int charFire = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire);
+            int charEarth = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth);
+            int charWater = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water);
+            int charWind = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind);
+            int charDark = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark);
+            int charLight = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light);
+            int charPoints = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points;
+            int charMap = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+            byte charX = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X);
+            byte charY = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y);
+            byte charDir = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir);
+            int charVitality = PlayerStruct.tempplayer[s].Vitality;
+            int charSpirit = PlayerStruct.tempplayer[s].Spirit;
+            int charAccess = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access);
+            int SkillPoints = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].SkillPoints;
+            int charHue = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Hue;
+            int charGender = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gender;
+            string Equipment = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment;
+            int extra_vitality = PlayerRelations.getExtraVitality(s);
+            int extra_spirit = PlayerRelations.getExtraVitality(s);
 
             string packet = "";
-            packet = packet + index + ";";
-            packet = packet + charName + ";"; packet = packet + charSpriteindex + ";"; packet = packet + charClass + ";"; packet = packet + charSprite + ";"; packet = packet + charLevel + ";";
+            packet = packet + s + ";";
+            packet = packet + charName + ";"; packet = packet + charSprites + ";"; packet = packet + charClass + ";"; packet = packet + charSprite + ";"; packet = packet + charLevel + ";";
             packet = packet + charExp + ";"; packet = packet + charFire + ";"; packet = packet + charEarth + ";"; packet = packet + charWater + ";"; packet = packet + charWind + ";";
             packet = packet + charDark + ";"; packet = packet + charLight + ";"; packet = packet + charPoints + ";"; packet = packet + charMap + ";"; packet = packet + charX + ";";
             packet = packet + charY + ";"; packet = packet + charDir + ";"; packet = packet + charVitality + ";"; packet = packet + charSpirit + ";"; packet = packet + charAccess + ";";
             packet = packet + charHue + ";"; packet = packet + charGender + ";"; packet = packet + SkillPoints + ";"; packet = packet + Equipment + ";"; packet = packet + extra_vitality + ";";
             packet = packet + extra_spirit + ";";
 
-            SendToMapBut(index, charMap, String.Format("<8>{0}></8>\n", packet));
+            sendToMapBut(s, charMap, String.Format("<8>{0}></8>\n", packet));
 
         }
         //*********************************************************************************************
-        // Send_PlayerDataTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerDataTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia informações de um determinado jogador para outro determinado jogador.
         //*********************************************************************************************
-        public static void Send_PlayerDataTo(int Receiver, int index, string username, int charId)
+        public static void sendPlayerDataTo(int Receiver, int s, string username, int charId)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, Receiver, index, username, charId) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, Receiver, s, username, charId) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            string charName = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName;
-            int charSpriteindex = PStruct.character[index, PStruct.player[index].SelectedChar].Spriteindex;
-            int charClass = PStruct.character[index, PStruct.player[index].SelectedChar].ClassId;
-            string charSprite = PStruct.character[index, PStruct.player[index].SelectedChar].Sprite;
-            int charLevel = PStruct.character[index, PStruct.player[index].SelectedChar].Level;
-            int charExp = PStruct.character[index, PStruct.player[index].SelectedChar].Exp;
-            int charFire = PStruct.character[index, PStruct.player[index].SelectedChar].Fire;
-            int charEarth = PStruct.character[index, PStruct.player[index].SelectedChar].Earth;
-            int charWater = PStruct.character[index, PStruct.player[index].SelectedChar].Water;
-            int charWind = PStruct.character[index, PStruct.player[index].SelectedChar].Wind;
-            int charDark = PStruct.character[index, PStruct.player[index].SelectedChar].Dark;
-            int charLight = PStruct.character[index, PStruct.player[index].SelectedChar].Light;
-            int charPoints = PStruct.character[index, PStruct.player[index].SelectedChar].Points;
-            int charMap = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            byte charX = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            byte charY = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
-            byte charDir = PStruct.character[index, PStruct.player[index].SelectedChar].Dir;
-            int charVitality = PStruct.tempplayer[index].Vitality;
-            int charSpirit = PStruct.tempplayer[index].Spirit;
-            int charAccess = PStruct.character[index, PStruct.player[index].SelectedChar].Access;
-            int charHue = PStruct.character[index, PStruct.player[index].SelectedChar].Hue;
-            int charGender = PStruct.character[index, PStruct.player[index].SelectedChar].Gender;
-            int SkillPoints = PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints;
-            string Equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
+            string charName = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName;
+            int charSprites = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprites;
+            int charClass = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].ClassId;
+            string charSprite = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprite;
+            int charLevel = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level;
+            int charExp = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Exp;
+            int charFire = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire;
+            int charEarth = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth;
+            int charWater = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water;
+            int charWind = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind;
+            int charDark = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark;
+            int charLight = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light;
+            int charPoints = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points;
+            int charMap = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            byte charX = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X;
+            byte charY = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y;
+            byte charDir = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir;
+            int charVitality = PlayerStruct.tempplayer[s].Vitality;
+            int charSpirit = PlayerStruct.tempplayer[s].Spirit;
+            int charAccess = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access;
+            int charHue = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Hue;
+            int charGender = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gender;
+            int SkillPoints = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].SkillPoints;
+            string Equipment = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment;
 
             string packet = "";
-            packet = packet + index + ";";
-            packet = packet + charName + ";"; packet = packet + charSpriteindex + ";"; packet = packet + charClass + ";"; packet = packet + charSprite + ";"; packet = packet + charLevel + ";";
+            packet = packet + s + ";";
+            packet = packet + charName + ";"; packet = packet + charSprites + ";"; packet = packet + charClass + ";"; packet = packet + charSprite + ";"; packet = packet + charLevel + ";";
             packet = packet + charExp + ";"; packet = packet + charFire + ";"; packet = packet + charEarth + ";"; packet = packet + charWater + ";"; packet = packet + charWind + ";";
             packet = packet + charDark + ";"; packet = packet + charLight + ";"; packet = packet + charPoints + ";"; packet = packet + charMap + ";"; packet = packet + charX + ";";
             packet = packet + charY + ";"; packet = packet + charDir + ";"; packet = packet + charVitality + ";"; packet = packet + charSpirit + ";"; packet = packet + charAccess + ";";
             packet = packet + charHue + ";"; packet = packet + charGender + ";"; packet = packet + SkillPoints + ";"; packet = packet + Equipment + ";";
 
-            SendToUser(Receiver, String.Format("<8>{0}</8>\n", packet));
+            sendToUser(Receiver, String.Format("<8>{0}</8>\n", packet));
 
         }
         //*********************************************************************************************
-        // Send_UpdatePlayerHighIndex / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendUpdatePlayerHighs / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_UpdatePlayerHighindex()
+        public static void sendUpdatePlayerHighs()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToAll(String.Format("<9>{0}</9>\n", Globals.Player_Highindex));
+            sendToAll(String.Format("<9>{0}</9>\n", Globals.Player_Highs));
         }
         //*********************************************************************************************
-        // Send_PlayerXY / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerXY / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza a posição de um jogador para um mapa.
         //*********************************************************************************************
-        public static void Send_PlayerXY(int index)
+        public static void sendPlayerXY(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int charX = (PStruct.character[index, Convert.ToInt32(PStruct.player[index].SelectedChar)].X);
-            int charY = (PStruct.character[index, Convert.ToInt32(PStruct.player[index].SelectedChar)].Y);
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<10>{0}</10>\n", index + ";" + charX + ";" + charY));
+            int charX = (PlayerStruct.character[s, Convert.ToInt32(PlayerStruct.player[s].SelectedChar)].X);
+            int charY = (PlayerStruct.character[s, Convert.ToInt32(PlayerStruct.player[s].SelectedChar)].Y);
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<10>{0}</10>\n", s + ";" + charX + ";" + charY));
         }
         //*********************************************************************************************
-        // Send_MsgToAll / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMsgToAll / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia uma mensagem no chat de todos.
         //*********************************************************************************************
-        public static void Send_MsgToAll(string msg, int color, int type)
+        public static void sendMsgToAll(string msg, int color, int type)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, msg, color, type) != null)
             {
                 return;
@@ -297,17 +297,17 @@ namespace FORJERUM
             byte[] databyte = Encoding.Unicode.GetBytes(msg);
             string output = Encoding.Unicode.GetString(databyte);
 
-            SendToAll(String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
+            sendToAll(String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
         }
         //*********************************************************************************************
-        // Send_MsgToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMsgToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia uma mensagem no chat para jogadores em um determinado mapa.
         //*********************************************************************************************
-        public static void Send_MsgToMap(int index, string msg, int color, int type)
+        public static void sendMsgToMap(int s, string msg, int color, int type)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, msg, color, type) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, msg, color, type) != null)
             {
                 return;
             }
@@ -316,32 +316,32 @@ namespace FORJERUM
             byte[] databyte = Encoding.Unicode.GetBytes(msg);
             string output = Encoding.Unicode.GetString(databyte);
 
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
         }
         //*********************************************************************************************
-        // Send_MsgToPlayer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMsgToPlayer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia uma mensagem no chat para um determinado jogador.
         //*********************************************************************************************
-        public static void Send_MsgToPlayer(int index, string msg, int color, int type)
+        public static void sendMsgToPlayer(int s, string msg, int color, int type)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, msg, color, type) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, msg, color, type) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<11 {0};{1}>{2}</11>\n", msg, color, type));
+            sendToUser(s, String.Format("<11 {0};{1}>{2}</11>\n", msg, color, type));
         }
         //*********************************************************************************************
-        // Send_MsgToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMsgToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia uma mensagem no chat de um determinado grupo.
         //*********************************************************************************************
-        public static void Send_MsgToParty(int party, string msg, int color, int type)
+        public static void sendMsgToParty(int party, string msg, int color, int type)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, party, msg, color, type) != null)
             {
                 return;
@@ -351,16 +351,16 @@ namespace FORJERUM
             byte[] databyte = Encoding.Unicode.GetBytes(msg);
             string output = Encoding.Unicode.GetString(databyte);
 
-            SendToParty(party, String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
+            sendToParty(party, String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
         }
         //*********************************************************************************************
-        // Send_MsgToGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMsgToGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia determinada mensagem no chat para uma guilda determinada.
         //*********************************************************************************************
-        public static void Send_MsgToGuild(int guild, string msg, int color, int type)
+        public static void sendMsgToGuild(int guild, string msg, int color, int type)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guild, msg, color, type) != null)
             {
                 return;
@@ -370,17 +370,17 @@ namespace FORJERUM
             byte[] databyte = Encoding.Unicode.GetBytes(msg);
             string output = Encoding.Unicode.GetString(databyte);
 
-            SendToGuild(guild, String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
+            sendToGuild(guild, String.Format("<11 {0};{1}>{2}</11>\n", output, color, type));
         }
         //*********************************************************************************************
-        // Send_InvSlots / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendInvSlots / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza o inventário de um determinado jogador.
         //*********************************************************************************************
-        public static void Send_InvSlots(int index, int characterslot)
+        public static void sendInvSlots(int s, int characterslot)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, characterslot) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, characterslot) != null)
             {
                 return;
             }
@@ -393,112 +393,112 @@ namespace FORJERUM
             for (int i = 1; i < Globals.MaxInvSlot; i++)
             {
                 packet = packet + i + ";";
-                packet = packet + index + ";";
-                packet = packet + PStruct.invslot[index, i].item + ";";
+                packet = packet + s + ";";
+                packet = packet + PlayerStruct.invslot[s, i].item + ";";
             }
 
-            SendToUser(index, String.Format("<12>{0}</12>\n", packet));
+            sendToUser(s, String.Format("<12>{0}</12>\n", packet));
 
         }
         //*********************************************************************************************
-        // Send_NpcTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNpcTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_NpcTo(int index, int map, int id)
+        public static void sendNpcTo(int s, int map, int id)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, map, id) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, map, id) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            string name = NStruct.npc[map, id].Name;
-            string sprite = NStruct.npc[map, id].Sprite;
-            int npcindex = NStruct.npc[map, id].index;
-            int x = NStruct.tempnpc[map, id].X;
-            int y = NStruct.tempnpc[map, id].Y;
-            int vitality = NStruct.npc[map, id].Vitality;
-            int dir = NStruct.tempnpc[map, id].Dir;
+            string name = NpcStruct.npc[map, id].Name;
+            string sprite = NpcStruct.npc[map, id].Sprite;
+            int npcs = NpcStruct.npc[map, id].s;
+            int x = NpcStruct.tempnpc[map, id].X;
+            int y = NpcStruct.tempnpc[map, id].Y;
+            int vitality = NpcStruct.npc[map, id].Vitality;
+            int dir = NpcStruct.tempnpc[map, id].Dir;
 
-            SendToUser(index, String.Format("<14 {0};{1};{2};{3};{4};{5};{6}>{7}</14>\n", id, name, sprite, npcindex, x, y, vitality, dir));
+            sendToUser(s, String.Format("<14 {0};{1};{2};{3};{4};{5};{6}>{7}</14>\n", id, name, sprite, npcs, x, y, vitality, dir));
         }
         //*********************************************************************************************
-        // Send_NpcToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNpcToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_NpcToMap(int map, int id)
+        public static void sendNpcToMap(int map, int id)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, id) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (NStruct.tempnpc[map, id].Dead == true) { return; }
+            if (NpcStruct.tempnpc[map, id].Dead == true) { return; }
 
             string packet = "";
             packet += id + ";";
-            packet += NStruct.npc[map, id].Name + ";";
-            packet += NStruct.npc[map, id].Sprite + ";";
-            packet += NStruct.npc[map, id].index + ";";
-            packet += NStruct.tempnpc[map, id].X + ";";
-            packet += NStruct.tempnpc[map, id].Y + ";";
-            packet += NStruct.npc[map, id].Vitality + ";";
-            packet += NStruct.tempnpc[map, id].Dir + ";";
+            packet += NpcStruct.npc[map, id].Name + ";";
+            packet += NpcStruct.npc[map, id].Sprite + ";";
+            packet += NpcStruct.npc[map, id].s + ";";
+            packet += NpcStruct.tempnpc[map, id].X + ";";
+            packet += NpcStruct.tempnpc[map, id].Y + ";";
+            packet += NpcStruct.npc[map, id].Vitality + ";";
+            packet += NpcStruct.tempnpc[map, id].Dir + ";";
 
             packet = "1" + ";" + packet;
 
-            SendToMap(map, String.Format("<14>{0}</14>\n", packet));
+            sendToMap(map, String.Format("<14>{0}</14>\n", packet));
         }
         //*********************************************************************************************
-        // Send_MapNpcsTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMapNpcsTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_MapNpcsTo(int index)
+        public static void sendMapNpcsTo(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int map = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map);
+            int map = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
 
-            if (MStruct.tempmap[map].NpcCount == 0) { return; }
+            if (MapStruct.tempmap[map].NpcCount == 0) { return; }
 
             string packet = "";
             int count = 0;
 
-            for (int i = 1; i <= MStruct.tempmap[map].NpcCount; i++)
+            for (int i = 1; i <= MapStruct.tempmap[map].NpcCount; i++)
             {
-                if (!NStruct.tempnpc[map, i].Dead)
+                if (!NpcStruct.tempnpc[map, i].Dead)
                 {
                     packet += i + ";";
-                    packet += NStruct.npc[map, i].Name + ";";
-                    packet += NStruct.npc[map, i].Sprite + ";";
-                    packet += NStruct.npc[map, i].index + ";";
-                    packet += NStruct.tempnpc[map, i].X + ";";
-                    packet += NStruct.tempnpc[map, i].Y + ";";
-                    packet += NStruct.npc[map, i].Vitality + ";";
-                    packet += NStruct.tempnpc[map, i].Dir + ";";
+                    packet += NpcStruct.npc[map, i].Name + ";";
+                    packet += NpcStruct.npc[map, i].Sprite + ";";
+                    packet += NpcStruct.npc[map, i].s + ";";
+                    packet += NpcStruct.tempnpc[map, i].X + ";";
+                    packet += NpcStruct.tempnpc[map, i].Y + ";";
+                    packet += NpcStruct.npc[map, i].Vitality + ";";
+                    packet += NpcStruct.tempnpc[map, i].Dir + ";";
                     count += 1;
                 }
             }
 
             packet = count + ";" + packet;
 
-            SendToUser(index, String.Format("<14>{0}</14>\n", packet));
+            sendToUser(s, String.Format("<14>{0}</14>\n", packet));
         }
         //*********************************************************************************************
-        // Send_NpcMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNpcMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_NpcMove(int map, int id)
+        public static void sendNpcMove(int map, int id)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, id) != null)
             {
                 return;
@@ -506,68 +506,68 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            packet += id + ";"; packet += NStruct.tempnpc[map, id].X + ";"; packet += NStruct.tempnpc[map, id].Y + ";";
-            SendToMap(map, String.Format("<15>{0}</15>\n", packet));
+            packet += id + ";"; packet += NpcStruct.tempnpc[map, id].X + ";"; packet += NpcStruct.tempnpc[map, id].Y + ";";
+            sendToMap(map, String.Format("<15>{0}</15>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerLeft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerLeft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Avisa ao mapa que determinado jogador saiu.
         //*********************************************************************************************
-        public static void Send_PlayerLeft(int map, int index)
+        public static void sendPlayerLeft(int map, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMapBut(index, map, String.Format("<16>{0}</16>\n", index));
+            sendToMapBut(s, map, String.Format("<16>{0}</16>\n", s));
         }
         //*********************************************************************************************
-        // Send_PlayerEquipmentToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerEquipmentToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia informações dos itens equipados de um determinado jogador ao mapa.
         // O visual style está praticamente feito, apenas falta o client side. ;)
         //*********************************************************************************************
-        public static void Send_PlayerEquipmentToMap(int index)
+        public static void sendPlayerEquipmentToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<17 {0}>{1}</17>\n", index, PStruct.character[index, PStruct.player[index].SelectedChar].Equipment));
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<17 {0}>{1}</17>\n", s, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment));
 
         }
         //*********************************************************************************************
-        // Send_PlayerEquipmentTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerEquipmentTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia informações de itens equipados de um jogador para outro.
         //*********************************************************************************************
-        public static void Send_PlayerEquipmentTo(int index, int playerindex)
+        public static void sendPlayerEquipmentTo(int s, int players)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, playerindex) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, players) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<17 {0}>{1}</17>\n", playerindex, PStruct.character[playerindex, PStruct.player[playerindex].SelectedChar].Equipment));
+            sendToUser(s, String.Format("<17 {0}>{1}</17>\n", players, PlayerStruct.character[players, PlayerStruct.player[players].SelectedChar].Equipment));
 
         }
         //*********************************************************************************************
-        // Send_PlayerSkills / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSkills / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerSkills(int index)
+        public static void sendPlayerSkills(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -580,22 +580,22 @@ namespace FORJERUM
             for (int i = 1; i < Globals.MaxPlayer_Skills; i++)
             {
                 packet = packet + i + ";";
-                packet = packet + PStruct.skill[index, i].num + ";";
-                packet = packet + PStruct.skill[index, i].level + ";";
+                packet = packet + PlayerStruct.skill[s, i].num + ";";
+                packet = packet + PlayerStruct.skill[s, i].level + ";";
             }
 
-            SendToUser(index, String.Format("<18>{0}</18>\n", packet));
+            sendToUser(s, String.Format("<18>{0}</18>\n", packet));
 
         }
         //*********************************************************************************************
-        // Send_PlayerFriends / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerFriends / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza a lista de amigos.
         //*********************************************************************************************
-        public static void Send_PlayerFriends(int index)
+        public static void sendPlayerFriends(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -603,51 +603,51 @@ namespace FORJERUM
             //CÓDIGO
             string packet = "";
 
-            int friendscount = FriendRelations.GetPlayerFriendsCount(index);
+            int friendscount = FriendRelations.getPlayerFriendsCount(s);
 
             packet = packet + friendscount + ";";
 
-            //PStruct.AddFriend(index, index);
+            //PlayerStruct.addFriend(s, s);
 
             for (int i = 1; i <= friendscount; i++)
             {
                 packet = packet + i + ";";
-                packet = packet + PStruct.player[index].friend[i].name + ";";
-                packet = packet + PStruct.player[index].friend[i].sprite + ";";
-                packet = packet + PStruct.player[index].friend[i].sprite_index + ";";
-                packet = packet + PStruct.player[index].friend[i].classid + ";";
-                packet = packet + PStruct.player[index].friend[i].level + ";";
-                packet = packet + PStruct.player[index].friend[i].guildname + ";";
-                if (FriendRelations.FriendIsOnline(index, i)) { packet = packet + "1" + ";"; } else { packet = packet + "0" + ";"; }
+                packet = packet + PlayerStruct.player[s].friend[i].name + ";";
+                packet = packet + PlayerStruct.player[s].friend[i].sprite + ";";
+                packet = packet + PlayerStruct.player[s].friend[i].sprite_s + ";";
+                packet = packet + PlayerStruct.player[s].friend[i].classid + ";";
+                packet = packet + PlayerStruct.player[s].friend[i].level + ";";
+                packet = packet + PlayerStruct.player[s].friend[i].guildname + ";";
+                if (FriendRelations.friendIsOnline(s, i)) { packet = packet + "1" + ";"; } else { packet = packet + "0" + ";"; }
             }
 
-            SendToUser(index, String.Format("<87>{0}</87>\n", packet));
+            sendToUser(s, String.Format("<87>{0}</87>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerWarp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerWarp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Avisa sobre o teleporte do mapa ao jogador.
         //*********************************************************************************************
-        public static void Send_PlayerWarp(int index)
+        public static void sendPlayerWarp(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<19>{0}</19>\n", PStruct.character[index, PStruct.player[index].SelectedChar].Map + ";" + PStruct.character[index, PStruct.player[index].SelectedChar].X + ";" + PStruct.character[index, PStruct.player[index].SelectedChar].Y + ";" + PStruct.character[index, PStruct.player[index].SelectedChar].Dir));
+            sendToUser(s, String.Format("<19>{0}</19>\n", PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map + ";" + PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X + ";" + PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y + ";" + PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir));
         }
         //*********************************************************************************************
-        // Send_PlayerDir / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerDir / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza a direção de um jogador.
         //*********************************************************************************************
-        public static void Send_PlayerDir(int index, int ToMap = 0)
+        public static void sendPlayerDir(int s, int ToMap = 0)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, ToMap) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, ToMap) != null)
             {
                 return;
             }
@@ -655,21 +655,21 @@ namespace FORJERUM
             //CÓDIGO
             if (ToMap == 0)
             {
-                SendToUser(index, String.Format("<20 {0}>{1}</20>\n", index, PStruct.character[index, PStruct.player[index].SelectedChar].Dir));
+                sendToUser(s, String.Format("<20 {0}>{1}</20>\n", s, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir));
             }
             else
             {
-                SendToMapBut(index, PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<20 {0}>{1}</20>\n", index, PStruct.character[index, PStruct.player[index].SelectedChar].Dir));
+                sendToMapBut(s, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<20 {0}>{1}</20>\n", s, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir));
             }
         }
         //*********************************************************************************************
-        // Send_ActionMsg / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendActionMsg / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_ActionMsg(int index, string msg, int color, int x, int y, int type, int dir, int ToMap = 0)
+        public static void sendActionMsg(int s, string msg, int color, int x, int y, int type, int dir, int ToMap = 0)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, msg, color, x, y, type, dir, ToMap) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, msg, color, x, y, type, dir, ToMap) != null)
             {
                 return;
             }
@@ -677,144 +677,144 @@ namespace FORJERUM
             //CÓDIGO
             if (ToMap == 0)
             {
-                SendToUser(index, String.Format("<21>{0}</21>\n", msg + ";" + color + ";" + x + ";" + y + ";" + type + ";" + dir));
+                sendToUser(s, String.Format("<21>{0}</21>\n", msg + ";" + color + ";" + x + ";" + y + ";" + type + ";" + dir));
             }
             else
             {
-                SendToMap(ToMap, String.Format("<21>{0}</21>\n", msg + ";" + color + ";" + x + ";" + y + ";" + type + ";" + dir));
+                sendToMap(ToMap, String.Format("<21>{0}</21>\n", msg + ";" + color + ";" + x + ";" + y + ";" + type + ";" + dir));
             }
         }
         //*********************************************************************************************
-        // Send_Animation / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendAnimation / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia uma animação em um determinado alvo e mapa.
         //*********************************************************************************************
-        public static void Send_Animation(int map, int targettype, int target, int animid)
+        public static void sendAnimation(int map, int targettype, int target, int animid)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, targettype, target, animid) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<22 {0};{1}>{2}</22>\n", targettype, target, animid));
+            sendToMap(map, String.Format("<22 {0};{1}>{2}</22>\n", targettype, target, animid));
         }
         //*********************************************************************************************
-        // Send_NpcLeft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNpcLeft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Aviso de que o npc precisa sumir.
         //*********************************************************************************************
-        public static void Send_NpcLeft(int map, int id)
+        public static void sendNpcLeft(int map, int id)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, id) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<23>{0}</23>\n", id)); 
+            sendToMap(map, String.Format("<23>{0}</23>\n", id)); 
         }
         //*********************************************************************************************
-        // Send_NpcVitality / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNpcVitality / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_NpcVitality(int map, int id, int vitality)
+        public static void sendNpcVitality(int map, int id, int vitality)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, id, vitality) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<24 {0}>{1}</24>\n", id, vitality));
+            sendToMap(map, String.Format("<24 {0}>{1}</24>\n", id, vitality));
         }
         //*********************************************************************************************
-        // Send_PlayerVitalityToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerVitalityToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerVitalityToMap(int map, int index, int vitality)
+        public static void sendPlayerVitalityToMap(int map, int s, int vitality)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, index, vitality) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, s, vitality) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<25 {0}>{1}</25>\n", index, vitality));
+            sendToMap(map, String.Format("<25 {0}>{1}</25>\n", s, vitality));
         }
         //*********************************************************************************************
-        // Send_PlayerVitalityToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerVitalityToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerVitalityToParty(int partynum, int index, int vitality)
+        public static void sendPlayerVitalityToParty(int partynum, int s, int vitality)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index, vitality) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, partynum, s, vitality) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToParty(partynum, String.Format("<25 {0}>{1}</25>\n", index, vitality));
+            sendToParty(partynum, String.Format("<25 {0}>{1}</25>\n", s, vitality));
         }
         //*********************************************************************************************
-        // Send_PlayerSpiritToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSpiritToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerSpiritToMap(int map, int index, int spirit)
+        public static void sendPlayerSpiritToMap(int map, int s, int spirit)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, index, spirit) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, s, spirit) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<30 {0}>{1}</30>\n", index, spirit));
+            sendToMap(map, String.Format("<30 {0}>{1}</30>\n", s, spirit));
         }
         //*********************************************************************************************
-        // Send_PlayerSpiritToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSpiritToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerSpiritToParty(int partynum, int index, int spirit)
+        public static void sendPlayerSpiritToParty(int partynum, int s, int spirit)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index, spirit) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, partynum, s, spirit) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToParty(partynum, String.Format("<30 {0}>{1}</30>\n", index, spirit));
+            sendToParty(partynum, String.Format("<30 {0}>{1}</30>\n", s, spirit));
         }
         //*********************************************************************************************
-        // Send_NpcDir / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNpcDir / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza a direção de um NPC.
         //*********************************************************************************************
-        public static void Send_NpcDir(int map, int id, int dir)
+        public static void sendNpcDir(int map, int id, int dir)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, id, dir) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<26 {0}>{1}</26>\n", id, dir));
+            sendToMap(map, String.Format("<26 {0}>{1}</26>\n", id, dir));
         }
         //*********************************************************************************************
-        // Send_MapItems / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMapItems / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_MapItems(int index)
+        public static void sendMapItems(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -829,15 +829,15 @@ namespace FORJERUM
 
             string packet = "";
 
-            for (int i = 1; i <= MStruct.GetMapItemMaxindex(Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map)); i++)
+            for (int i = 1; i <= MapStruct.getMapItemMaxs(Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)); i++)
             {
-                if (MStruct.mapitem[PStruct.character[index, PStruct.player[index].SelectedChar].Map, i].ItemNum > 0)
+                if (MapStruct.mapitem[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, i].ItemNum > 0)
                 {
-                    ItemNum = MStruct.mapitem[PStruct.character[index, PStruct.player[index].SelectedChar].Map, i].ItemNum;
-                    ItemType = MStruct.mapitem[PStruct.character[index, PStruct.player[index].SelectedChar].Map, i].ItemType;
-                    Value = MStruct.mapitem[PStruct.character[index, PStruct.player[index].SelectedChar].Map, i].Value;
-                    X = MStruct.mapitem[PStruct.character[index, PStruct.player[index].SelectedChar].Map, i].X;
-                    Y = MStruct.mapitem[PStruct.character[index, PStruct.player[index].SelectedChar].Map, i].Y;
+                    ItemNum = MapStruct.mapitem[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, i].ItemNum;
+                    ItemType = MapStruct.mapitem[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, i].ItemType;
+                    Value = MapStruct.mapitem[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, i].Value;
+                    X = MapStruct.mapitem[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, i].X;
+                    Y = MapStruct.mapitem[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, i].Y;
 
                     packet = packet + i + ";";
                     packet = packet + ItemNum + ";"; packet = packet + ItemType + ";"; packet = packet + Value + ";";
@@ -848,26 +848,26 @@ namespace FORJERUM
 
             packet = packet + count;
 
-            SendToUser(index, String.Format("<28>{0}</28>\n", packet));
+            sendToUser(s, String.Format("<28>{0}</28>\n", packet));
         }
         //*********************************************************************************************
-        // Send_MapItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMapItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_MapItem(int map, int mapitemnum)
+        public static void sendMapItem(int map, int mapitemnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, mapitemnum) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int ItemNum = MStruct.mapitem[map, mapitemnum].ItemNum;
-            int ItemType = MStruct.mapitem[map, mapitemnum].ItemType;
-            int Value = MStruct.mapitem[map, mapitemnum].Value;
-            int X = MStruct.mapitem[map, mapitemnum].X;
-            int Y = MStruct.mapitem[map, mapitemnum].Y;
+            int ItemNum = MapStruct.mapitem[map, mapitemnum].ItemNum;
+            int ItemType = MapStruct.mapitem[map, mapitemnum].ItemType;
+            int Value = MapStruct.mapitem[map, mapitemnum].Value;
+            int X = MapStruct.mapitem[map, mapitemnum].X;
+            int Y = MapStruct.mapitem[map, mapitemnum].Y;
 
             string packet = "";
             packet = packet + mapitemnum + ";";
@@ -875,32 +875,32 @@ namespace FORJERUM
             packet = packet + X + ";"; packet = packet + Y + ";";
             packet = packet + "1" + ";";
 
-            SendToMap(map, String.Format("<28>{0}</28>\n", packet));
+            sendToMap(map, String.Format("<28>{0}</28>\n", packet));
         }
         //*********************************************************************************************
-        // Send_ClearMapItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendClearMapItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_ClearMapItem(int map, int mapitemnum)
+        public static void sendClearMapItem(int map, int mapitemnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map, mapitemnum) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<29>{0}</29>\n", mapitemnum));
+            sendToMap(map, String.Format("<29>{0}</29>\n", mapitemnum));
         }
         //*********************************************************************************************
-        // Send_PlayerHotkeys / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerHotkeys / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza os atalhos de um jogador.
         //*********************************************************************************************
-        public static void Send_PlayerHotkeys(int index)
+        public static void sendPlayerHotkeys(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -909,35 +909,35 @@ namespace FORJERUM
             string packet = "";
             for (int i = 1; i < Globals.MaxHotkeys; i++)
             {
-                packet = packet + PStruct.hotkey[index, i].type + "," + PStruct.hotkey[index, i].num + ",";
+                packet = packet + PlayerStruct.hotkey[s, i].type + "," + PlayerStruct.hotkey[s, i].num + ",";
             }
-            SendToUser(index, String.Format("<31>{0}</31>\n", packet));
+            sendToUser(s, String.Format("<31>{0}</31>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendplayerAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Avisa ao mapa que determinado jogador está atacando.
         //*********************************************************************************************
-        public static void Send_PlayerAttack(int index)
+        public static void sendplayerAttack(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<32>{0}</32>\n", index));
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<32>{0}</32>\n", s));
         }
         //*********************************************************************************************
-        // SendFrozen / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendFrozen / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Avisa que determinado jogador está congelado.
         //*********************************************************************************************
-        public static void Send_Frozen(int type, int index, int map = 0)
+        public static void sendFrozen(int type, int s, int map = 0)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, type, index, map) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, type, s, map) != null)
             {
                 return;
             }
@@ -946,24 +946,24 @@ namespace FORJERUM
             int value = 0;
             if (type == Globals.Target_Player)
             {
-                if (PStruct.tempplayer[index].isFrozen) { value = 1; }
-                SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<84>{0}</84>\n", type + ";" + index + ";" + value));
+                if (PlayerStruct.tempplayer[s].isFrozen) { value = 1; }
+                sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<84>{0}</84>\n", type + ";" + s + ";" + value));
             }
             else
             {
-                if (NStruct.tempnpc[map, index].isFrozen) { value = 1; }
-                SendToMap(map, String.Format("<84>{0}</84>\n", type + ";" + index + ";" + value));
+                if (NpcStruct.tempnpc[map, s].isFrozen) { value = 1; }
+                sendToMap(map, String.Format("<84>{0}</84>\n", type + ";" + s + ";" + value));
             }
         }
         //*********************************************************************************************
-        // Send_MoveSpeed / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMoveSpeed / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza a velocidade de movimento de um jogador para o mapa.
         //*********************************************************************************************
-        public static void Send_MoveSpeed(int type, int index, int map = 0)
+        public static void sendMoveSpeed(int type, int s, int map = 0)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, type, index, map) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, type, s, map) != null)
             {
                 return;
             }
@@ -971,358 +971,358 @@ namespace FORJERUM
             //CÓDIGO
             if (type == 1)
             {
-                SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<33>{0}</33>\n", type + ";" + index + ";" + PStruct.tempplayer[index].movespeed));
+                sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<33>{0}</33>\n", type + ";" + s + ";" + PlayerStruct.tempplayer[s].movespeed));
             }
             else
             {
-                SendToMap(map, String.Format("<33>{0}</33>\n", type + ";" + index + ";" + NStruct.tempnpc[map, index].movespeed));
+                sendToMap(map, String.Format("<33>{0}</33>\n", type + ";" + s + ";" + NpcStruct.tempnpc[map, s].movespeed));
             }
         }
         //*********************************************************************************************
-        // Send_PlayerAtrToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerAtrToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerAtrToMapBut(int index, string username, string charId)
+        public static void sendPlayerAtrToMapBut(int s, string username, string charId)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, username, charId) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, username, charId) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int charMap = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int charFire = (PStruct.character[index, PStruct.player[index].SelectedChar].Fire);
-            int charEarth = (PStruct.character[index, PStruct.player[index].SelectedChar].Earth);
-            int charWater = (PStruct.character[index, PStruct.player[index].SelectedChar].Water);
-            int charWind = (PStruct.character[index, PStruct.player[index].SelectedChar].Wind);
-            int charDark = (PStruct.character[index, PStruct.player[index].SelectedChar].Dark);
-            int charLight = (PStruct.character[index, PStruct.player[index].SelectedChar].Light);
-            int charPoints = (PStruct.character[index, PStruct.player[index].SelectedChar].Points);
+            int charMap = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int charFire = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire);
+            int charEarth = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth);
+            int charWater = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water);
+            int charWind = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind);
+            int charDark = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark);
+            int charLight = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light);
+            int charPoints = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points);
 
             string packet = "";
-            packet += index + ";"; packet += charFire + ";"; packet += charEarth + ";";
+            packet += s + ";"; packet += charFire + ";"; packet += charEarth + ";";
             packet += charWater + ";"; packet += charWind + ";";
             packet += charDark + ";"; packet += charLight + ";"; packet += charPoints + ";";
 
-            SendToMapBut(index, charMap, String.Format("<34>{0}</34>\n", packet));
+            sendToMapBut(s, charMap, String.Format("<34>{0}</34>\n", packet));
         }
         //*********************************************************************************************
-        // Send_MapGuildTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMapGuildTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_MapGuildTo(int index)
+        public static void sendMapGuildTo(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int charMap = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int MapGuild = MStruct.map[charMap].guildnum;
+            int charMap = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int MapGuild = MapStruct.map[charMap].guildnum;
 
             string packet = "";
-            packet += GStruct.guild[MapGuild].name + ";"; packet += GStruct.guild[MapGuild].shield + ";"; packet += GStruct.guild[MapGuild].hue + ";";
+            packet += GuildStruct.guild[MapGuild].name + ";"; packet += GuildStruct.guild[MapGuild].shield + ";"; packet += GuildStruct.guild[MapGuild].hue + ";";
 
-            SendToUser(index, String.Format("<83>{0}</83>\n", packet));
+            sendToUser(s, String.Format("<83>{0}</83>\n", packet));
         }
         //*********************************************************************************************
-        // Send_MapGuildToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendMapGuildToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_MapGuildToMap(int map)
+        public static void sendMapGuildToMap(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int MapGuild = MStruct.map[map].guildnum;
+            int MapGuild = MapStruct.map[map].guildnum;
 
             string packet = "";
-            packet += GStruct.guild[MapGuild].name + ";"; packet += GStruct.guild[MapGuild].shield + ";"; packet += GStruct.guild[MapGuild].hue + ";";
+            packet += GuildStruct.guild[MapGuild].name + ";"; packet += GuildStruct.guild[MapGuild].shield + ";"; packet += GuildStruct.guild[MapGuild].hue + ";";
 
-            SendToMap(map, String.Format("<83>{0}</83>\n", packet));
+            sendToMap(map, String.Format("<83>{0}</83>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerAtrTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerAtrTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerAtrTo(int index)
+        public static void sendPlayerAtrTo(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int charMap = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int charFire = (PStruct.character[index, PStruct.player[index].SelectedChar].Fire);
-            int charEarth = (PStruct.character[index, PStruct.player[index].SelectedChar].Earth);
-            int charWater = (PStruct.character[index, PStruct.player[index].SelectedChar].Water);
-            int charWind = (PStruct.character[index, PStruct.player[index].SelectedChar].Wind);
-            int charDark = (PStruct.character[index, PStruct.player[index].SelectedChar].Dark);
-            int charLight = (PStruct.character[index, PStruct.player[index].SelectedChar].Light);
-            int charPoints = (PStruct.character[index, PStruct.player[index].SelectedChar].Points);
+            int charMap = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int charFire = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire);
+            int charEarth = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth);
+            int charWater = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water);
+            int charWind = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind);
+            int charDark = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark);
+            int charLight = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light);
+            int charPoints = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points);
 
             string packet = "";
-            packet += index + ";"; packet += charFire + ";"; packet += charEarth + ";";
+            packet += s + ";"; packet += charFire + ";"; packet += charEarth + ";";
             packet += charWater + ";"; packet += charWind + ";";
             packet += charDark + ";"; packet += charLight + ";"; packet += charPoints + ";";
 
-            SendToUser(index, String.Format("<34>{0}</34>\n", packet));
+            sendToUser(s, String.Format("<34>{0}</34>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerExtraVitalityTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExtraVitalityTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerExtraVitalityTo(int user, int index)
+        public static void sendPlayerExtraVitalityTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int extra_vitality = PStruct.GetExtraVitality(index);
+            int extra_vitality = PlayerRelations.getExtraVitality(s);
 
             string packet = "";
-            packet += index + ";"; packet += extra_vitality + ";";
+            packet += s + ";"; packet += extra_vitality + ";";
 
-            SendToUser(user, String.Format("<79>{0}</79>\n", packet));
+            sendToUser(user, String.Format("<79>{0}</79>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerExtraVitalityToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExtraVitalityToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerExtraVitalityToMap(int index)
+        public static void sendPlayerExtraVitalityToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             {
-                int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-                int extra_vitality = PStruct.GetExtraVitality(index);
+                int map = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+                int extra_vitality = PlayerRelations.getExtraVitality(s);
 
                 string packet = "";
-                packet += index + ";"; packet += extra_vitality + ";";
+                packet += s + ";"; packet += extra_vitality + ";";
 
-                SendToMap(map, String.Format("<79>{0}</79>\n", packet));
+                sendToMap(map, String.Format("<79>{0}</79>\n", packet));
             }
         }
         //*********************************************************************************************
-        // Send_PlayerExtraVitalityToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExtraVitalityToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerExtraVitalityToParty(int partynum, int index)
+        public static void sendPlayerExtraVitalityToParty(int partynum, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, partynum, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int extra_vitality = PStruct.GetExtraVitality(index);
+            int extra_vitality = PlayerRelations.getExtraVitality(s);
 
             string packet = "";
-            packet += index + ";"; packet += extra_vitality + ";";
+            packet += s + ";"; packet += extra_vitality + ";";
 
-            SendToParty(partynum, String.Format("<79>{0}</79>\n", packet));
+            sendToParty(partynum, String.Format("<79>{0}</79>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerExtraSpiritTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExtraSpiritTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerExtraSpiritTo(int user, int index)
+        public static void sendPlayerExtraSpiritTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int extra_vitality = PStruct.GetExtraSpirit(index);
+            int extra_vitality = PlayerRelations.getExtraSpirit(s);
 
             string packet = "";
-            packet += index + ";"; packet += extra_vitality + ";";
+            packet += s + ";"; packet += extra_vitality + ";";
 
-            SendToUser(user, String.Format("<80>{0}</80>\n", packet));
+            sendToUser(user, String.Format("<80>{0}</80>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerExtraSpiritToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExtraSpiritToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerExtraSpiritToMap(int index)
+        public static void sendPlayerExtraSpiritToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int extra_vitality = PStruct.GetExtraSpirit(index);
+            int map = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int extra_vitality = PlayerRelations.getExtraSpirit(s);
 
             string packet = "";
-            packet += index + ";"; packet += extra_vitality + ";";
+            packet += s + ";"; packet += extra_vitality + ";";
 
-            SendToMap(map, String.Format("<80>{0}</80>\n", packet));
+            sendToMap(map, String.Format("<80>{0}</80>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerExtraSpiritToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExtraSpiritToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerExtraSpiritToParty(int partynum, int index)
+        public static void sendPlayerExtraSpiritToParty(int partynum, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, partynum, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int extra_vitality = PStruct.GetExtraSpirit(index);
+            int extra_vitality = PlayerRelations.getExtraSpirit(s);
 
             string packet = "";
-            packet += index + ";"; packet += extra_vitality + ";";
+            packet += s + ";"; packet += extra_vitality + ";";
 
-            SendToParty(partynum, String.Format("<80>{0}</80>\n", packet));
+            sendToParty(partynum, String.Format("<80>{0}</80>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerAtrToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerAtrToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerAtrToMap(int index)
+        public static void sendPlayerAtrToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int charMap = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int charFire = (PStruct.character[index, PStruct.player[index].SelectedChar].Fire);
-            int charEarth = (PStruct.character[index, PStruct.player[index].SelectedChar].Earth);
-            int charWater = (PStruct.character[index, PStruct.player[index].SelectedChar].Water);
-            int charWind = (PStruct.character[index, PStruct.player[index].SelectedChar].Wind);
-            int charDark = (PStruct.character[index, PStruct.player[index].SelectedChar].Dark);
-            int charLight = (PStruct.character[index, PStruct.player[index].SelectedChar].Light);
-            int charPoints = (PStruct.character[index, PStruct.player[index].SelectedChar].Points);
+            int charMap = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int charFire = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire);
+            int charEarth = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth);
+            int charWater = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water);
+            int charWind = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind);
+            int charDark = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark);
+            int charLight = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light);
+            int charPoints = (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points);
 
             string packet = "";
-            packet += index + ";"; packet += charFire + ";"; packet += charEarth + ";";
+            packet += s + ";"; packet += charFire + ";"; packet += charEarth + ";";
             packet += charWater + ";"; packet += charWind + ";";
             packet += charDark + ";"; packet += charLight + ";"; packet += charPoints + ";";
 
-            SendToMap(charMap, String.Format("<34>{0}</34>\n", packet));
+            sendToMap(charMap, String.Format("<34>{0}</34>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza experiência do jogador.
         //*********************************************************************************************
-        public static void Send_PlayerExp(int index)
+        public static void sendPlayerExp(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<35>{0}</35>\n", PStruct.character[index, PStruct.player[index].SelectedChar].Exp));
+            sendToUser(s, String.Format("<35>{0}</35>\n", PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Exp));
         }
         //*********************************************************************************************
-        // Send_PlayerSkillPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSkillPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza os pontos de habilidade de um jogador.
         //*********************************************************************************************
-        public static void Send_PlayerSkillPoints(int index)
+        public static void sendPlayerSkillPoints(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<36>{0}</36>\n", PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints));
+            sendToUser(s, String.Format("<36>{0}</36>\n", PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].SkillPoints));
         }
         //*********************************************************************************************
-        // Send_PlayerLevel / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerLevel / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza o nível de um jogador.
         //*********************************************************************************************
-        public static void Send_PlayerLevel(int index, int user)
+        public static void sendPlayerLevel(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, user) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<37 {0}>{1}</37>\n", index, PStruct.character[index, PStruct.player[index].SelectedChar].Level));
+            sendToUser(user, String.Format("<37 {0}>{1}</37>\n", s, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level));
         }
         //*********************************************************************************************
-        // Send_PartyRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPartyRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PartyRequest(int index, int user)
+        public static void sendPartyRequest(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, user) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<38>{0}</38>\n", index));
+            sendToUser(user, String.Format("<38>{0}</38>\n", s));
         }
         //*********************************************************************************************
-        // Send_PartyDataTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPartyDataTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PartyDataTo(int partynum, int index)
+        public static void sendPartyDataTo(int partynum, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, partynum, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string packet = "";
-            int partymemberscount = PartyRelations.GetPartyMembersCount(partynum);
+            int partymemberscount = PartyRelations.getPartyMembersCount(partynum);
             packet = packet + (partymemberscount) + ",";
-            packet = packet + PStruct.party[partynum].leader + ",";
+            packet = packet + PlayerStruct.party[partynum].leader + ",";
             for (int i = 1; i <= partymemberscount; i++)
             {
-                packet = packet + PStruct.partymembers[partynum, i].index + ",";
+                packet = packet + PlayerStruct.partymembers[partynum, i].s + ",";
             }
-            SendToUser(index, String.Format("<39>{0}</39>\n", packet));
+            sendToUser(s, String.Format("<39>{0}</39>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PartyDataToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPartyDataToParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PartyDataToParty(int partynum)
+        public static void sendPartyDataToParty(int partynum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, partynum) != null)
             {
                 return;
@@ -1330,319 +1330,319 @@ namespace FORJERUM
 
             //CÓDIGO
             string packet = "";
-            int partymemberscount = PartyRelations.GetPartyMembersCount(partynum);
+            int partymemberscount = PartyRelations.getPartyMembersCount(partynum);
             packet = packet + (partymemberscount) + ",";
-            packet = packet + PStruct.party[partynum].leader + ",";
+            packet = packet + PlayerStruct.party[partynum].leader + ",";
             for (int i = 1; i <= partymemberscount; i++)
             {
-                packet = packet + PStruct.partymembers[partynum, i].index + ",";
+                packet = packet + PlayerStruct.partymembers[partynum, i].s + ",";
             }
-            SendToParty(partynum, String.Format("<39>{0}</39>\n", packet));
+            sendToParty(partynum, String.Format("<39>{0}</39>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PartyKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPartyKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PartyKick(int index)
+        public static void sendPartyKick(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<40></40>\n"));
+            sendToUser(s, String.Format("<40></40>\n"));
         }
         //*********************************************************************************************
-        // Send_PartyVital / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPartyVital / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza a vida de todos no grupo.
         //*********************************************************************************************
-        public static void Send_PartyVital(int partynum, int index)
+        public static void sendPartyVital(int partynum, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, partynum, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, partynum, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string packet = "";
-            int partymemberscount = PartyRelations.GetPartyMembersCount(partynum);
+            int partymemberscount = PartyRelations.getPartyMembersCount(partynum);
             for (int i = 1; i <= partymemberscount; i++)
             {
-                packet = packet + PStruct.character[PStruct.partymembers[partynum, i].index, PStruct.player[PStruct.partymembers[partynum, i].index].SelectedChar].Vitality + ",";
-                packet = packet + PStruct.character[PStruct.partymembers[partynum, i].index, PStruct.player[PStruct.partymembers[partynum, i].index].SelectedChar].Spirit + ",";
+                packet = packet + PlayerStruct.character[PlayerStruct.partymembers[partynum, i].s, PlayerStruct.player[PlayerStruct.partymembers[partynum, i].s].SelectedChar].Vitality + ",";
+                packet = packet + PlayerStruct.character[PlayerStruct.partymembers[partynum, i].s, PlayerStruct.player[PlayerStruct.partymembers[partynum, i].s].SelectedChar].Spirit + ",";
             }
 
-            SendToUser(index, String.Format("<40>{0}</40>\n", packet));
+            sendToUser(s, String.Format("<40>{0}</40>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PartyChange / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPartyChange / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PartyChange(int index, int user)
+        public static void sendPartyChange(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, user) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<41>{0}</41>\n", index));
+            sendToUser(user, String.Format("<41>{0}</41>\n", s));
         }
         //*********************************************************************************************
-        // Send_TradeRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendTradeRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_TradeRequest(int index, int user)
+        public static void sendTradeRequest(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, user) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<42>{0}</42>\n", index));
+            sendToUser(user, String.Format("<42>{0}</42>\n", s));
         }
         //*********************************************************************************************
-        // Send_GuildRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendGuildRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_GuildRequest(int index, int user)
+        public static void sendGuildRequest(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, user) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<68>{0}</68>\n", index));
+            sendToUser(user, String.Format("<68>{0}</68>\n", s));
         }
         //*********************************************************************************************
-        // Send_FriendRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendFriendRequest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_FriendRequest(int index, int user)
+        public static void sendFriendRequest(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<86>{0}</86>\n", index));
+            sendToUser(user, String.Format("<86>{0}</86>\n", s));
         }
         //*********************************************************************************************
-        // Send_PetAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPetAttack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Avisa que o pet está atacando.
         //*********************************************************************************************
-        public static void Send_PetAttack(int index, int target, int targettype)
+        public static void sendPetAttack(int s, int target, int targettype)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, target, targettype) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, target, targettype) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string packet = "";
-            packet = packet + index + ";";
+            packet = packet + s + ";";
             packet = packet + target + ";";
             packet = packet + targettype + ";";
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<85>{0}</85>\n", packet));
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<85>{0}</85>\n", packet));
         }
         //*********************************************************************************************
-        // Send_TradeOffers / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendTradeOffers / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza itens em oferta em uma troca.
         //*********************************************************************************************
-        public static void Send_TradeOffers(int index, int user)
+        public static void sendTradeOffers(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, user) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string packet = "";
-            int tradeofferscount = TradeRelations.GetPlayerTradeOffersCount(index);
-            packet = packet + (index) + ";";
+            int tradeofferscount = TradeRelations.getPlayerTradeOffersCount(s);
+            packet = packet + (s) + ";";
             packet = packet + tradeofferscount + ";";
-            packet = packet + PStruct.tempplayer[index].TradeG + ";";
+            packet = packet + PlayerStruct.tempplayer[s].TradeG + ";";
             for (int i = 1; i <= tradeofferscount; i++)
             {
-                packet = packet + PStruct.tradeslot[index, i].item + ";";
+                packet = packet + PlayerStruct.tradeslot[s, i].item + ";";
             }
-            SendToUser(user, String.Format("<43>{0}</43>\n", packet));
+            sendToUser(user, String.Format("<43>{0}</43>\n", packet));
         }
         //*********************************************************************************************
-        // Send_TradeAccept / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendTradeAccept / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_TradeAccept(int user, int code)
+        public static void sendTradeAccept(int user, int code)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, user, code) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<44>{0}</44>\n", code));
+            sendToUser(user, String.Format("<44>{0}</44>\n", code));
         }
         //*********************************************************************************************
-        // Send_TradeRefuse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendTradeRefuse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_TradeRefuse(int user, int code)
+        public static void sendTradeRefuse(int user, int code)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, user, code) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<45>{0}</45>\n", code)); 
+            sendToUser(user, String.Format("<45>{0}</45>\n", code)); 
         }
         //*********************************************************************************************
-        // Send_TradeClose / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendTradeClose / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_TradeClose(int user)
+        public static void sendTradeClose(int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<46></46>\n"));
+            sendToUser(user, String.Format("<46></46>\n"));
         }
         //*********************************************************************************************
-        // Send_PlayerG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualizar ouro do jogador.
         //*********************************************************************************************
-        public static void Send_PlayerG(int user)
+        public static void sendPlayerG(int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<47>{0}</47>\n", PStruct.character[user, PStruct.player[user].SelectedChar].Gold));
+            sendToUser(user, String.Format("<47>{0}</47>\n", PlayerStruct.character[user, PlayerStruct.player[user].SelectedChar].Gold));
         }
         //*********************************************************************************************
-        // Send_PlayerC / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerC / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Cash :D
         //*********************************************************************************************
-        public static void Send_PlayerC(int user)
+        public static void sendPlayerC(int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<48>{0}</48>\n", PStruct.character[user, PStruct.player[user].SelectedChar].Cash));
+            sendToUser(user, String.Format("<48>{0}</48>\n", PlayerStruct.character[user, PlayerStruct.player[user].SelectedChar].Cash));
         }
         //*********************************************************************************************
-        // Send_TradeG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendTradeG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza ouro na troca.
         //*********************************************************************************************
-        public static void Send_TradeG(int index, int user)
+        public static void sendTradeG(int s, int user)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, user) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<49 {0}>{1}</49>\n", index, PStruct.tempplayer[index].TradeG));
+            sendToUser(user, String.Format("<49 {0}>{1}</49>\n", s, PlayerStruct.tempplayer[s].TradeG));
         }
         //*********************************************************************************************
-        // Send_AllQuests / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendAllQuests / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualizar missões para um jogador.
         //*********************************************************************************************
-        public static void Send_AllQuests(int index)
+        public static void sendAllQuests(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string packet = "";
-            int questcount = QuestRelations.GetPlayerQuestsCount(index);
+            int questcount = QuestRelations.getPlayerQuestsCount(s);
             packet = packet + questcount + ";";
             for (int g = 1; g < Globals.MaxQuestGivers; g++)
             {
                 for (int q = 1; q < Globals.MaxQuestPerGiver; q++)
                 {
-                    if (PStruct.queststatus[index, g, q].status != 0)
+                    if (PlayerStruct.queststatus[s, g, q].status != 0)
                     {
                         packet = packet + g + ";";
                         packet = packet + q + ";";
-                        packet = packet + PStruct.queststatus[index, g, q].status + ";";
+                        packet = packet + PlayerStruct.queststatus[s, g, q].status + ";";
                         for (int k = 1; k < Globals.MaxQuestKills; k++)
                         {
-                            packet = packet + PStruct.questkills[index, g, q, k].kills + ";";
+                            packet = packet + PlayerStruct.questkills[s, g, q, k].kills + ";";
                         }
                         for (int a = 1; a < Globals.MaxQuestActions; a++)
                         {
                             string actioninfo = "0";
 
-                            if (PStruct.questactions[index, g, q, a].actiondone == true) { actioninfo = "1"; }
-                            if (PStruct.questactions[index, g, q, a].actiondone == false) { actioninfo = "0"; }
+                            if (PlayerStruct.questactions[s, g, q, a].actiondone == true) { actioninfo = "1"; }
+                            if (PlayerStruct.questactions[s, g, q, a].actiondone == false) { actioninfo = "0"; }
 
                             packet = packet + actioninfo + ";";
                         }
                     }
                 }
             }
-            SendToUser(index, String.Format("<50>{0}</50>\n", packet));
+            sendToUser(s, String.Format("<50>{0}</50>\n", packet));
         }
         //*********************************************************************************************
-        // Send_QuestKill / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendQuestKill / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_QuestKill(int index, int g, int q, int k)
+        public static void sendQuestKill(int s, int g, int q, int k)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, g, q, k) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, g, q, k) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<51>{0}</51>\n", g + ";" + q + ";" + k + ";" + PStruct.questkills[index, g, q, k].kills));
+            sendToUser(s, String.Format("<51>{0}</51>\n", g + ";" + q + ";" + k + ";" + PlayerStruct.questkills[s, g, q, k].kills));
         }
         //*********************************************************************************************
-        // Send_QuestAction / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendQuestAction / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_QuestAction(int index, int g, int q, int a)
+        public static void sendQuestAction(int s, int g, int q, int a)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, q, q, a) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, q, q, a) != null)
             {
                 return;
             }
@@ -1650,96 +1650,96 @@ namespace FORJERUM
             //CÓDIGO
             string actioninfo = "0";
 
-            if (PStruct.questactions[index, g, q, a].actiondone == true) { actioninfo = "1"; }
-            if (PStruct.questactions[index, g, q, a].actiondone == false) { actioninfo = "0"; }
+            if (PlayerStruct.questactions[s, g, q, a].actiondone == true) { actioninfo = "1"; }
+            if (PlayerStruct.questactions[s, g, q, a].actiondone == false) { actioninfo = "0"; }
 
-            SendToUser(index, String.Format("<62>{0}</62>\n", g + ";" + q + ";" + a + ";" + actioninfo));
+            sendToUser(s, String.Format("<62>{0}</62>\n", g + ";" + q + ";" + a + ";" + actioninfo));
         }
         //*********************************************************************************************
-        // Send_KnockBack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendKnockBack / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Envia um empurrão para o jogador ou npc.
         //*********************************************************************************************
-        public static void Send_KnockBack(int map, int type, int index, int dir, int range)
+        public static void sendKnockBack(int map, int type, int s, int dir, int range)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, type, index, dir, range) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, type, s, dir, range) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<52>{0}</52>\n", type + ";" + index + ";" + dir + ";" + range));
+            sendToMap(map, String.Format("<52>{0}</52>\n", type + ";" + s + ";" + dir + ";" + range));
         }
         //*********************************************************************************************
-        // Send_Sleep / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendSleep / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Sleep(int map, int type, int index, int is_sleeping)
+        public static void sendSleep(int map, int type, int s, int is_sleeping)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, type, index, is_sleeping) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, type, s, is_sleeping) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<53>{0}</53>\n", type + ";" + index + ";" + is_sleeping));
+            sendToMap(map, String.Format("<53>{0}</53>\n", type + ";" + s + ";" + is_sleeping));
 
         }
         //*********************************************************************************************
-        // Send_Stun / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendStun / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Stun(int map, int type, int index, int is_stunned)
+        public static void sendStun(int map, int type, int s, int is_stunned)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, type, index, is_stunned) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, type, s, is_stunned) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<54>{0}</54>\n", type + ";" + index + ";" + is_stunned));
+            sendToMap(map, String.Format("<54>{0}</54>\n", type + ";" + s + ";" + is_stunned));
         }
         //*********************************************************************************************
-        // Send_SleepToUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendSleepToUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_SleepToUser(int user, int type, int index, int is_sleeping)
+        public static void sendSleepToUser(int user, int type, int s, int is_sleeping)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, type, index, is_sleeping) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, type, s, is_sleeping) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(user, String.Format("<53>{0}</53>\n", type + ";" + index + ";" + is_sleeping));
+            sendToMap(user, String.Format("<53>{0}</53>\n", type + ";" + s + ";" + is_sleeping));
         }
         //*********************************************************************************************
-        // Send_StunToUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendStunToUser / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_StunToUser(int user, int type, int index, int is_stunned)
+        public static void sendStunToUser(int user, int type, int s, int is_stunned)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, type, index, is_stunned) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, type, s, is_stunned) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(user, String.Format("<54>{0}</54>\n", type + ";" + index + ";" + is_stunned));
+            sendToUser(user, String.Format("<54>{0}</54>\n", type + ";" + s + ";" + is_stunned));
         }
         //*********************************************************************************************
-        // Send_Shop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Shop(int index, int shopnum)
+        public static void sendShop(int s, int shopnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, shopnum) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, shopnum) != null)
             {
                 return;
             }
@@ -1748,25 +1748,25 @@ namespace FORJERUM
             string packet = "";
             int item_count = ShopStruct.shop[shopnum].item_count;
             packet = packet + item_count + ";";
-            for (int s = 1; s <= item_count; s++)
+            for (int slot = 1; s <= item_count; s++)
             {
                 packet = packet + s + ";";
-                packet = packet + ShopStruct.shopitem[shopnum, s].type + ";";
-                packet = packet + ShopStruct.shopitem[shopnum, s].num + ";";
-                packet = packet + ShopStruct.shopitem[shopnum, s].value + ";";
-                packet = packet + ShopStruct.shopitem[shopnum, s].refin + ";";
-                packet = packet + ShopStruct.shopitem[shopnum, s].price + ";";
+                packet = packet + ShopStruct.shopitem[shopnum, slot].type + ";";
+                packet = packet + ShopStruct.shopitem[shopnum, slot].num + ";";
+                packet = packet + ShopStruct.shopitem[shopnum, slot].value + ";";
+                packet = packet + ShopStruct.shopitem[shopnum, slot].refin + ";";
+                packet = packet + ShopStruct.shopitem[shopnum, slot].price + ";";
             }
-            SendToUser(index, String.Format("<55>{0}</55>\n", packet));
+            sendToUser(s, String.Format("<55>{0}</55>\n", packet));
         }
         //*********************************************************************************************
-        // Send_Craft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendCraft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Craft(int index)
+        public static void sendCraft(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -1776,110 +1776,110 @@ namespace FORJERUM
             for (int c = 1; c < Globals.Max_Craft; c++)
             {
                 packet = packet + c + ";";
-                packet = packet + PStruct.craft[index, c].type + ";";
-                packet = packet + PStruct.craft[index, c].num + ";";
-                packet = packet + PStruct.craft[index, c].value + ";";
-                packet = packet + PStruct.craft[index, c].refin + ";";
+                packet = packet + PlayerStruct.craft[s, c].type + ";";
+                packet = packet + PlayerStruct.craft[s, c].num + ";";
+                packet = packet + PlayerStruct.craft[s, c].value + ";";
+                packet = packet + PlayerStruct.craft[s, c].refin + ";";
             }
-            SendToUser(index, String.Format("<56>{0}</56>\n", packet));
+            sendToUser(s, String.Format("<56>{0}</56>\n", packet));
         }
         //*********************************************************************************************
-        // Send_Profs / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendProfs / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Profs(int index)
+        public static void sendProfs(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            //PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Type[1] = 2;
-            //PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[1] = 3;
-            //PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Exp[1] = 2;
+            //PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Type[1] = 2;
+            //PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Level[1] = 3;
+            //PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Exp[1] = 2;
             string packet = "";
             int prof_count = Globals.Max_Profs_Per_Char - 1;
             packet = packet + prof_count + ";";
             for (int j = 1; j < Globals.Max_Profs_Per_Char; j++)
             {
                 packet = packet + j + ";";
-                packet = packet + PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Type[j] + ";";
-                packet = packet + PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[j] + ";";
-                packet = packet + PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Exp[j] + ";";
+                packet = packet + PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Type[j] + ";";
+                packet = packet + PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Level[j] + ";";
+                packet = packet + PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Exp[j] + ";";
             }
-            SendToUser(index, String.Format("<60>{0}</60>\n", packet));
+            sendToUser(s, String.Format("<60>{0}</60>\n", packet));
         }
         //*********************************************************************************************
-        // Send_ProfExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendProfExp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_ProfEXP(int index, int profnum)
+        public static void sendProfEXP(int s, int profnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, profnum) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, profnum) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<57>{0};{1}</57>\n", profnum, PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum]));
+            sendToUser(s, String.Format("<57>{0};{1}</57>\n", profnum, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Exp[profnum]));
         }
         //*********************************************************************************************
-        // Send_ProfLEVEL / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendProfLEVEL / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_ProfLEVEL(int index, int profnum)
+        public static void sendProfLEVEL(int s, int profnum)
         {            //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, profnum) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, profnum) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<58>{0};{1}</58>\n", profnum, PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[profnum]));
+            sendToUser(s, String.Format("<58>{0};{1}</58>\n", profnum, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Level[profnum]));
         }
         //*********************************************************************************************
-        // Send_EventGraphic / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendEventGraphic / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza o visual de um evento no jogo.
         //*********************************************************************************************
-        public static void Send_EventGraphic(int index, int event_id, string graphic, int graphic_index, byte is_tile = 0, byte dir = 2)
+        public static void sendEventGraphic(int s, int event_id, string graphic, int graphic_s, byte is_tile = 0, byte dir = 2)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, event_id, graphic, graphic_index, is_tile, dir) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, event_id, graphic, graphic_s, is_tile, dir) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<59>{0}</59>\n", event_id + ";" + graphic + ";" + graphic_index + ";" + is_tile + ";" + dir));
+            sendToUser(s, String.Format("<59>{0}</59>\n", event_id + ";" + graphic + ";" + graphic_s + ";" + is_tile + ";" + dir));
         }
         //*********************************************************************************************
-        // Send_EventGraphicToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendEventGraphicToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza o visual de um evento no jogo.
         //*********************************************************************************************
-        public static void Send_EventGraphicToMap(int map, int event_id, string graphic, int graphic_index, byte is_tile = 0, byte dir = 2)
+        public static void sendEventGraphicToMap(int map, int event_id, string graphic, int graphic_s, byte is_tile = 0, byte dir = 2)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, map, event_id, graphic, graphic_index, is_tile, dir) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, map, event_id, graphic, graphic_s, is_tile, dir) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToMap(map, String.Format("<59>{0}</59>\n", event_id + ";" + graphic + ";" + graphic_index + ";" + is_tile + ";" + dir));
+            sendToMap(map, String.Format("<59>{0}</59>\n", event_id + ";" + graphic + ";" + graphic_s + ";" + is_tile + ";" + dir));
         }
         //*********************************************************************************************
-        // Send_BankSlots / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendBankSlots / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_BankSlots(int index)
+        public static void sendBankSlots(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -1891,22 +1891,22 @@ namespace FORJERUM
             for (int b = 1; b < Globals.Max_BankSlots; b++)
             {
                 packet = packet + b + ";";
-                packet = packet + PStruct.player[index].bankslot[b].type + ";";
-                packet = packet + PStruct.player[index].bankslot[b].num + ";";
-                packet = packet + PStruct.player[index].bankslot[b].value + ";";
-                packet = packet + PStruct.player[index].bankslot[b].refin + ";";
-                packet = packet + PStruct.player[index].bankslot[b].exp + ";";
+                packet = packet + PlayerStruct.player[s].bankslot[b].type + ";";
+                packet = packet + PlayerStruct.player[s].bankslot[b].num + ";";
+                packet = packet + PlayerStruct.player[s].bankslot[b].value + ";";
+                packet = packet + PlayerStruct.player[s].bankslot[b].refin + ";";
+                packet = packet + PlayerStruct.player[s].bankslot[b].exp + ";";
             }
-            SendToUser(index, String.Format("<61>{0}</61>\n", packet));
+            sendToUser(s, String.Format("<61>{0}</61>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PShopSlots / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPShopSlots / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PShopSlots(int shopindex, int index)
+        public static void sendPShopSlots(int shops, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, shopindex, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, shops, s) != null)
             {
                 return;
             }
@@ -1914,65 +1914,65 @@ namespace FORJERUM
             //CÓDIGO
             string packet = "";
             int pshop_count = Globals.Max_PShops - 1;
-            packet = packet + shopindex + ";";
+            packet = packet + shops + ";";
             packet = packet + pshop_count + ";";
             for (int b = 1; b < Globals.Max_PShops; b++)
             {
                 packet = packet + b + ";";
-                packet = packet + PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[b].type + ";";
-                packet = packet + PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[b].num + ";";
-                packet = packet + PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[b].value + ";";
-                packet = packet + PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[b].refin + ";";
-                packet = packet + PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[b].exp + ";";
-                packet = packet + PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[b].price + ";";
+                packet = packet + PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[b].type + ";";
+                packet = packet + PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[b].num + ";";
+                packet = packet + PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[b].value + ";";
+                packet = packet + PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[b].refin + ";";
+                packet = packet + PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[b].exp + ";";
+                packet = packet + PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[b].price + ";";
             }
-            SendToUser(index, String.Format("<81>{0}</81>\n", packet));
+            sendToUser(s, String.Format("<81>{0}</81>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerShoppingTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerShoppingTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerShoppingTo(int user, int index)
+        public static void sendPlayerShoppingTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int value = 0;
-            if (PStruct.tempplayer[index].Shopping) { value = 1; }
+            if (PlayerStruct.tempplayer[s].Shopping) { value = 1; }
 
-            SendToUser(user, String.Format("<82>{0};{1}</82>\n", index, value));
+            sendToUser(user, String.Format("<82>{0};{1}</82>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerShoppingToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerShoppingToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerShoppingToMap(int index)
+        public static void sendPlayerShoppingToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int value = 0;
-            if (PStruct.tempplayer[index].Shopping) { value = 1; }
+            if (PlayerStruct.tempplayer[s].Shopping) { value = 1; }
 
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<82>{0};{1}</82>\n", index, value));
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<82>{0};{1}</82>\n", s, value));
 
         }
         //*********************************************************************************************
-        // Send_Premmy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPremmy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Premmy(int index)
+        public static void sendPremmy(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -1980,33 +1980,33 @@ namespace FORJERUM
             //CÓDIGO
             int result = 0;
 
-            if (PlayerRelations.IsPlayerPremmy(index)) { result = 1; }
+            if (PlayerRelations.isPlayerPremmy(s)) { result = 1; }
 
-            SendToUser(index, String.Format("<63>{0};{1}</63>\n", result, PStruct.player[index].Premmy));
+            sendToUser(s, String.Format("<63>{0};{1}</63>\n", result, PlayerStruct.player[s].Premmy));
         }
         //*********************************************************************************************
-        // Send_WPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendWPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_WPoints(int index)
+        public static void sendWPoints(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<64>{0}</64>\n", PStruct.player[index].WPoints));
+            sendToUser(s, String.Format("<64>{0}</64>\n", PlayerStruct.player[s].WPoints));
         }
         //*********************************************************************************************
-        // Send_Recipe / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendRecipe / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Recipe(int index, int recipetype, int recipenum)
+        public static void sendRecipe(int s, int recipetype, int recipenum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, recipetype, recipenum) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, recipetype, recipenum) != null)
             {
                 return;
             }
@@ -2019,115 +2019,115 @@ namespace FORJERUM
             for (int r = 1; r < Globals.Max_Craft; r++)
             {
                 packet = packet + r + ";";
-                packet = packet + MStruct.craftrecipe[recipetype, recipenum, r].type + ";";
-                packet = packet + MStruct.craftrecipe[recipetype, recipenum, r].num + ";";
-                packet = packet + MStruct.craftrecipe[recipetype, recipenum, r].value + ";";
-                packet = packet + MStruct.craftrecipe[recipetype, recipenum, r].refin + ";";
+                packet = packet + MapStruct.craftrecipe[recipetype, recipenum, r].type + ";";
+                packet = packet + MapStruct.craftrecipe[recipetype, recipenum, r].num + ";";
+                packet = packet + MapStruct.craftrecipe[recipetype, recipenum, r].value + ";";
+                packet = packet + MapStruct.craftrecipe[recipetype, recipenum, r].refin + ";";
             }
-            SendToUser(index, String.Format("<65>{0}</65>\n", packet));
+            sendToUser(s, String.Format("<65>{0}</65>\n", packet));
         }
         //*********************************************************************************************
-        // Send_GuildTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendGuildTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_GuildTo(int user, int index)
+        public static void sendGuildTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0) { return; }
-            SendToUser(user, String.Format("<66>{0}</66>\n", index + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].name + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].shield + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].hue));
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0) { return; }
+            sendToUser(user, String.Format("<66>{0}</66>\n", s + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].name + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].shield + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].hue));
         }
         //*********************************************************************************************
-        // Send_GuildToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendGuildToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_GuildToMap(int mapnum, int index)
+        public static void sendGuildToMap(int mapnum, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, mapnum, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, mapnum, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0) { return; }
-            SendToMap(mapnum, String.Format("<66>{0}</66>\n", index + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].name + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].shield + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].hue));
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0) { return; }
+            sendToMap(mapnum, String.Format("<66>{0}</66>\n", s + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].name + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].shield + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].hue));
         }
         //*********************************************************************************************
-        // Send_GuildToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendGuildToMapBut / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_GuildToMapBut(int mapnum, int index)
+        public static void sendGuildToMapBut(int mapnum, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, mapnum, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, mapnum, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0) { return; }
-            SendToMapBut(index, mapnum, String.Format("<66>{0}</66>\n", index + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].name + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].shield + ";" + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].hue));
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0) { return; }
+            sendToMapBut(s, mapnum, String.Format("<66>{0}</66>\n", s + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].name + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].shield + ";" + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].hue));
         }
         //*********************************************************************************************
-        // Send_CompleteGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendCompleteGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_CompleteGuild(int index)
+        public static void sendCompleteGuild(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO  
-            // PStruct.character[index, PStruct.player[index].SelectedChar].Guild = 1;
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0) { return; }
+            // PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = 1;
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0) { return; }
 
             string packet = "";
-            int member_count = GStruct.GetMember_Count(PStruct.character[index, PStruct.player[index].SelectedChar].Guild);
+            int member_count = GuildStruct.getMember_Count(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild);
 
             if (member_count <= 0) { return; }
 
             packet = packet + member_count + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].name + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].level + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].exp + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].shield + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].hue + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].leader + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].name + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].level + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].exp + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].shield + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].hue + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].leader + ";";
 
             for (int i = 1; i <= member_count; i++)
             {
                 packet = packet + i + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].memberlist[i] + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].membersprite[i] + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].memberhue[i] + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].membersprite_index[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].memberlist[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].membersprite[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].memberhue[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].membersprite_s[i] + ";";
             }
 
-            SendToUser(index, String.Format("<67>{0}</67>\n", packet));
+            sendToUser(s, String.Format("<67>{0}</67>\n", packet));
         }
         //*********************************************************************************************
-        // Send_CompleteClearGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendCompleteClearGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_CompleteClearGuild(int index)
+        public static void sendCompleteClearGuild(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            // PStruct.character[index, PStruct.player[index].SelectedChar].Guild = 1;
+            // PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = 1;
 
             string packet = "";
             int member_count = 0;
@@ -2149,54 +2149,54 @@ namespace FORJERUM
                 packet = packet + 0 + ";";
             }
 
-            SendToUser(index, String.Format("<67>{0}</67>\n", packet));
+            sendToUser(s, String.Format("<67>{0}</67>\n", packet));
         }
         //*********************************************************************************************
-        // Send_CompleteGuildToGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendCompleteGuildToGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_CompleteGuildToGuild(int index)
+        public static void sendCompleteGuildToGuild(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0) { return; }
 
             string packet = "";
-            int member_count = GStruct.GetMember_Count(PStruct.character[index, PStruct.player[index].SelectedChar].Guild);
+            int member_count = GuildStruct.getMember_Count(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild);
 
             if (member_count <= 0) { return; }
 
             packet = packet + member_count + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].name + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].level + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].exp + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].shield + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].hue + ";";
-            packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].leader + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].name + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].level + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].exp + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].shield + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].hue + ";";
+            packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].leader + ";";
 
             for (int i = 1; i <= member_count; i++)
             {
                 packet = packet + i + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].memberlist[i] + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].membersprite[i] + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].memberhue[i] + ";";
-                packet = packet + GStruct.guild[PStruct.character[index, PStruct.player[index].SelectedChar].Guild].membersprite_index[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].memberlist[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].membersprite[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].memberhue[i] + ";";
+                packet = packet + GuildStruct.guild[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild].membersprite_s[i] + ";";
             }
 
-            SendToGuild(PStruct.character[index, PStruct.player[index].SelectedChar].Guild, String.Format("<67>{0}</67>\n", packet));
+            sendToGuild(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild, String.Format("<67>{0}</67>\n", packet));
         }
         //*********************************************************************************************
-        // Send_CompleteGuildToGuildG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendCompleteGuildToGuildG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_CompleteGuildToGuildG(int guildnum)
+        public static void sendCompleteGuildToGuildG(int guildnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, guildnum) != null)
             {
                 return;
@@ -2206,37 +2206,37 @@ namespace FORJERUM
             if (guildnum <= 0) { return; }
 
             string packet = "";
-            int member_count = GStruct.GetMember_Count(guildnum);
+            int member_count = GuildStruct.getMember_Count(guildnum);
 
             if (member_count <= 0) { return; }
 
             packet = packet + member_count + ";";
-            packet = packet + GStruct.guild[guildnum].name + ";";
-            packet = packet + GStruct.guild[guildnum].level + ";";
-            packet = packet + GStruct.guild[guildnum].exp + ";";
-            packet = packet + GStruct.guild[guildnum].shield + ";";
-            packet = packet + GStruct.guild[guildnum].hue + ";";
-            packet = packet + GStruct.guild[guildnum].leader + ";";
+            packet = packet + GuildStruct.guild[guildnum].name + ";";
+            packet = packet + GuildStruct.guild[guildnum].level + ";";
+            packet = packet + GuildStruct.guild[guildnum].exp + ";";
+            packet = packet + GuildStruct.guild[guildnum].shield + ";";
+            packet = packet + GuildStruct.guild[guildnum].hue + ";";
+            packet = packet + GuildStruct.guild[guildnum].leader + ";";
 
             for (int i = 1; i <= member_count; i++)
             {
                 packet = packet + i + ";";
-                packet = packet + GStruct.guild[guildnum].memberlist[i] + ";";
-                packet = packet + GStruct.guild[guildnum].membersprite[i] + ";";
-                packet = packet + GStruct.guild[guildnum].memberhue[i] + ";";
-                packet = packet + GStruct.guild[guildnum].membersprite_index[i] + ";";
+                packet = packet + GuildStruct.guild[guildnum].memberlist[i] + ";";
+                packet = packet + GuildStruct.guild[guildnum].membersprite[i] + ";";
+                packet = packet + GuildStruct.guild[guildnum].memberhue[i] + ";";
+                packet = packet + GuildStruct.guild[guildnum].membersprite_s[i] + ";";
             }
 
-            SendToGuild(guildnum, String.Format("<67>{0}</67>\n", packet));
+            sendToGuild(guildnum, String.Format("<67>{0}</67>\n", packet));
         }
         //*********************************************************************************************
-        // Send_PlayerDeathToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerDeathToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerDeathToMap(int index)
+        public static void sendPlayerDeathToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -2244,18 +2244,18 @@ namespace FORJERUM
             //CÓDIGO
             int value = 0;
 
-            if (PStruct.tempplayer[index].isDead) { value = 1; }
+            if (PlayerStruct.tempplayer[s].isDead) { value = 1; }
 
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<69>{0};{1}</69>\n", index, value));
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<69>{0};{1}</69>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerDeathTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerDeathTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerDeathTo(int user, int index)
+        public static void sendPlayerDeathTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
@@ -2263,197 +2263,197 @@ namespace FORJERUM
             //CÓDIGO
             int value = 0;
 
-            if (PStruct.tempplayer[index].isDead) { value = 1; }
+            if (PlayerStruct.tempplayer[s].isDead) { value = 1; }
 
-            SendToUser(user, String.Format("<69>{0};{1}</69>\n", index, value));
+            sendToUser(user, String.Format("<69>{0};{1}</69>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerPvpToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerPvpToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerPvpToMap(int index)
+        public static void sendPlayerPvpToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int value;
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVP) { value = 1; } else { value = 0; }
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<70>{0};{1}</70>\n", index, value));
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVP) { value = 1; } else { value = 0; }
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<70>{0};{1}</70>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerPvpTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerPvpTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerPvpTo(int user, int index)
+        public static void sendPlayerPvpTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int value;
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVP) { value = 1; } else { value = 0; }
-            SendToUser(user, String.Format("<70>{0};{1}</70>\n", index, value));
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVP) { value = 1; } else { value = 0; }
+            sendToUser(user, String.Format("<70>{0};{1}</70>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerPvpChangeTimer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerPvpChangeTimer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerPvpChangeTimer(int index)
+        public static void sendPlayerPvpChangeTimer(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            long result = PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer - Loops.TickCount.ElapsedMilliseconds;
+            long result = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPChangeTimer - Loops.TickCount.ElapsedMilliseconds;
             if (result < 0) { result = 0; }
-            SendToUser(index, String.Format("<71>{0}</71>\n", result));
+            sendToUser(s, String.Format("<71>{0}</71>\n", result));
         }
         //*********************************************************************************************
-        // Send_PlayerPvpBanTimer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerPvpBanTimer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerPvpBanTimer(int index)
+        public static void sendPlayerPvpBanTimer(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            long result = PStruct.character[index, PStruct.player[index].SelectedChar].PVPBanTimer - Loops.TickCount.ElapsedMilliseconds;
+            long result = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPBanTimer - Loops.TickCount.ElapsedMilliseconds;
             if (result < 0) { result = 0; }
-            SendToUser(index, String.Format("<72>{0}</72>\n", result));
+            sendToUser(s, String.Format("<72>{0}</72>\n", result));
         }
         //*********************************************************************************************
-        // Send_PlayerSoreToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSoreToMap / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerSoreToMap(int index)
+        public static void sendPlayerSoreToMap(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int value;
-            if (PStruct.PlayerIsSore(index)) { value = 1; } else { value = 0; }
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<73>{0};{1}</73>\n", index, value));
+            if (PlayerRelations.playerIsSore(s)) { value = 1; } else { value = 0; }
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<73>{0};{1}</73>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerSoreTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSoreTo / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerSoreTo(int user, int index)
+        public static void sendPlayerSoreTo(int user, int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, user, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, user, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int value;
-            if (PStruct.PlayerIsSore(index)) { value = 1; } else { value = 0; }
-            SendToUser(user, String.Format("<73>{0};{1}</73>\n", index, value));
+            if (PlayerRelations.playerIsSore(s)) { value = 1; } else { value = 0; }
+            sendToUser(user, String.Format("<73>{0};{1}</73>\n", s, value));
         }
         //*********************************************************************************************
-        // Send_PlayerPvpSoreTimer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerPvpSoreTimer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerPvpSoreTimer(int index)
+        public static void sendPlayerPvpSoreTimer(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            long result = PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty - Loops.TickCount.ElapsedMilliseconds;
+            long result = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPPenalty - Loops.TickCount.ElapsedMilliseconds;
             if (result < 0) { result = 0; }
-            SendToUser(index, String.Format("<74>{0}</74>\n", result));
+            sendToUser(s, String.Format("<74>{0}</74>\n", result));
         }
         //*********************************************************************************************
-        // Send_PlayerSkillCoolDown / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSkillCoolDown / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_PlayerSkillCooldown(int index, int slot, int cooldown)
+        public static void sendPlayerSkillCooldown(int s, int slot, int cooldown)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, slot, cooldown) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, slot, cooldown) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<75>{0};{1}</75>\n", slot, cooldown));
+            sendToUser(s, String.Format("<75>{0};{1}</75>\n", slot, cooldown));
         }
         //*********************************************************************************************
-        // Send_NStatus / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNStatus / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_NStatus(int index, string msg)
+        public static void sendNStatus(int s, string msg)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, msg) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, msg) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<76>{0}</76>\n", msg));
+            sendToUser(s, String.Format("<76>{0}</76>\n", msg));
         }
         //*********************************************************************************************
-        // Send_Notice / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendNotice / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_Notice(int index)
+        public static void sendNotice(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<77>{0}</77>\n", Globals.NOTICE));
+            sendToUser(s, String.Format("<77>{0}</77>\n", Globals.NOTICE));
         }
         //*********************************************************************************************
-        // Send_BrokeSkill / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendBrokeSkill / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void Send_BrokeSkill(int index)
+        public static void sendBrokeSkill(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendToUser(index, String.Format("<78></78>\n"));
+            sendToUser(s, String.Format("<78></78>\n"));
         }
         //*********************************************************************************************
-        // Send_PlayerSprite / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // sendPlayerSprite / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Atualiza o visual de um jogador.
         //*********************************************************************************************
-        public static void Send_PlayerSprite(int index, string sprite_name, int sprite_index)
+        public static void sendPlayerSprite(int s, string sprite_name, int sprite_s)
         {
-            string packet = index + ";" + sprite_name + ";" + sprite_index;
-            SendToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, String.Format("<91>{0}</91>\n", packet));
+            string packet = s + ";" + sprite_name + ";" + sprite_s;
+            sendToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, String.Format("<91>{0}</91>\n", packet));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // FORJERUM - Forjerum BETA 1!
@@ -30,7 +30,7 @@ namespace FORJERUM
         //*********************************************************************************************
         static void Main(string[] args)
         {
-            LoadLang();
+            loadLang();
             Console.WriteLine("");
             Console.WriteLine("///////////////////////////////////////////////////////");
             Console.WriteLine("/                                                     /");
@@ -48,64 +48,64 @@ namespace FORJERUM
 
             Console.WriteLine("");
             Console.WriteLine(lang.making_the_query_extensions_in_project);
-            Extensions.ExtensionApp.InstanceTypes();
+            Extensions.ExtensionApp.instanceTypes();
 
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, args) != null)
             {
                 return;
             }
 
             //CÓDIGO PARA RESETAR JOGADORES
-            //PStruct.InitializePlayerArrays();
+            //PlayerStruct.InitializePlayerArrays();
             //Database.ResetAndGiveExp();
 
             Log(Languages.LStruct.lang.starting_server);
             Log(lang.setting_global_names);
-            Globals.GAME_NAME = Database.GET_GAME_NAME();
-            Globals.MOTD = Database.GET_MOTD();
-            Globals.NOTICE = Database.GET_NOTICE();
+            Globals.GAME_NAME = Database.Handler.getGameName();
+            Globals.MOTD = Database.Handler.getMOTD();
+            Globals.NOTICE = Database.Handler.getNotice();
             Log(lang.starting_server);
             Log(lang.client_defined);
             Log("");
             Log(lang.starting_player_arrays);
-            PStruct.InitializePlayerArrays();
+            PlayerStruct.initializePlayerArrays();
             Log(lang.starting_guild_arrays);
-            GStruct.InitializeGuildArrays();
+            GuildStruct.initializeGuildArrays();
             Log(lang.arrays_started);
             Log("");
             Log(lang.loading_enemies);
-            Database.LoadEnemies();
+            Database.Enemies.loadEnemies();
             Log(lang.loaded);
             Log(lang.loading_maps_monsters_and_missions);
-            Database.LoadMaps();
+            Database.Maps.loadAll();
             Log(lang.loaded);
             Log(lang.loading_items);
-            Database.LoadItems();
+            Database.Items.loadItems();
             Log(lang.loaded);
             Log(lang.loading_weapons);
-            Database.LoadWeapons();
+            Database.Weapons.loadWeapons();
             Log(lang.loaded);
             Log(lang.loading_armors);
-            Database.LoadArmors();
+            Database.Armors.loadArmors();
             Log(lang.loaded);
             Log(lang.loading_skills);
-            Database.LoadSkills();
+            Database.Skills.loadSkills();
             Log(lang.loaded);
             Log(lang.loading_shops);
-            Database.LoadShops();
+            Database.Shops.loadShops();
             //Rudimentar :/
-            Database.LoadShopsRud();
+            Database.Manual.loadShopsRud();
             Log(lang.loaded);
             Log(lang.loading_recipes);
-            Database.LoadRecipes();
+            Database.Manual.loadRecipes();
             Log(lang.loaded);
             Log(lang.loading_guilds);
-            Database.LoadGuilds();
+            Database.Guilds.loadGuilds();
             Log(lang.loaded);
             Log(lang.loading_classes);
-            Database.DEFINE_CLASSES_DATA();
+            Database.Handler.defineClassesData();
             Log(lang.loaded);
             Log("");
             Log(lang.setting_variables);
@@ -123,7 +123,7 @@ namespace FORJERUM
         public static void Log(string data, ConsoleColor c = ConsoleColor.Gray)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data, c) != null)
             {
                 return;

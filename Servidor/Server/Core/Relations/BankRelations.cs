@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     class BankRelations
     {
         //*********************************************************************************************
-        // GiveBankItem
+        // giveBankItem
         // Entrega determinado item do banco para determinado jogador
         //*********************************************************************************************
-        public static bool GiveBankItem(int index, int itemt, int itemn, int itemv, int itemr, int itemex)
+        public static bool giveBankItem(int s, int itemt, int itemn, int itemv, int itemr, int itemex)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, itemt, itemn, itemv, itemr, itemex) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr, itemex));
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, itemt, itemn, itemv, itemr, itemex));
             }
 
             //CÓDIGO
@@ -24,26 +24,26 @@ namespace FORJERUM
             for (int i = 1; i < Globals.Max_BankSlots; i++)
             {
 
-                int itemNum = PStruct.player[index].bankslot[i].num;
-                int itemType = PStruct.player[index].bankslot[i].type;
-                int itemValue = PStruct.player[index].bankslot[i].value;
-                int itemRefin = PStruct.player[index].bankslot[i].refin;
-                int itemExp = PStruct.player[index].bankslot[i].exp;
+                int itemNum = PlayerStruct.player[s].bankslot[i].num;
+                int itemType = PlayerStruct.player[s].bankslot[i].type;
+                int itemValue = PlayerStruct.player[s].bankslot[i].value;
+                int itemRefin = PlayerStruct.player[s].bankslot[i].refin;
+                int itemExp = PlayerStruct.player[s].bankslot[i].exp;
 
                 if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemex == itemExp))
                 {
-                    PStruct.player[index].bankslot[i].value += itemv;
+                    PlayerStruct.player[s].bankslot[i].value += itemv;
                     return true;
                 }
             }
-            if (GetBankOpenSlot(index) > 0)
+            if (getBankOpenSlot(s) > 0)
             {
-                int openslot = GetBankOpenSlot(index);
-                PStruct.player[index].bankslot[openslot].type = itemt;
-                PStruct.player[index].bankslot[openslot].num = itemn;
-                PStruct.player[index].bankslot[openslot].value = itemv;
-                PStruct.player[index].bankslot[openslot].refin = itemr;
-                PStruct.player[index].bankslot[openslot].exp = itemex;
+                int openslot = getBankOpenSlot(s);
+                PlayerStruct.player[s].bankslot[openslot].type = itemt;
+                PlayerStruct.player[s].bankslot[openslot].num = itemn;
+                PlayerStruct.player[s].bankslot[openslot].value = itemv;
+                PlayerStruct.player[s].bankslot[openslot].refin = itemr;
+                PlayerStruct.player[s].bankslot[openslot].exp = itemex;
                 return true;
             }
             else
@@ -52,67 +52,67 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // GetBankOpenSlot
+        // getBankOpenSlot
         // Retorna slot livre no banco de determinado jogador
         //*********************************************************************************************
-        public static int GetBankOpenSlot(int index)
+        public static int getBankOpenSlot(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
             for (int i = 1; i < Globals.Max_BankSlots; i++)
             {
-                if (PStruct.player[index].bankslot[i].num == 0) { return i; }
+                if (PlayerStruct.player[s].bankslot[i].num == 0) { return i; }
             }
 
             return 0;
         }
         //*********************************************************************************************
-        // PickBankItem
+        // pickBankItem
         // Pegar determinado item do banco
         //*********************************************************************************************
-        public static bool PickBankItem(int index, int itemt, int itemn, int itemv, int itemr)
+        public static bool pickBankItem(int s, int itemt, int itemn, int itemv, int itemr)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, itemt, itemn, itemv, itemr) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, itemt, itemn, itemv, itemr));
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, itemt, itemn, itemv, itemr));
             }
 
             //CÓDIGO
             for (int i = 1; i < Globals.Max_BankSlots; i++)
             {
-                int itemNum = PStruct.player[index].bankslot[i].num;
-                int itemType = PStruct.player[index].bankslot[i].type;
-                int itemValue = PStruct.player[index].bankslot[i].value;
-                int itemRefin = PStruct.player[index].bankslot[i].refin;
+                int itemNum = PlayerStruct.player[s].bankslot[i].num;
+                int itemType = PlayerStruct.player[s].bankslot[i].type;
+                int itemValue = PlayerStruct.player[s].bankslot[i].value;
+                int itemRefin = PlayerStruct.player[s].bankslot[i].refin;
 
                 if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemv == itemValue))
                 {
-                    PStruct.player[index].bankslot[i].type = 0;
-                    PStruct.player[index].bankslot[i].num = 0;
-                    PStruct.player[index].bankslot[i].value = 0;
-                    PStruct.player[index].bankslot[i].refin = 0;
-                    PStruct.player[index].bankslot[i].exp = 0;
+                    PlayerStruct.player[s].bankslot[i].type = 0;
+                    PlayerStruct.player[s].bankslot[i].num = 0;
+                    PlayerStruct.player[s].bankslot[i].value = 0;
+                    PlayerStruct.player[s].bankslot[i].refin = 0;
+                    PlayerStruct.player[s].bankslot[i].exp = 0;
 
                     return true;
                 }
 
                 if ((itemn == itemNum) && (itemt == itemType) && (itemr == itemRefin) && (itemv <= itemValue))
                 {
-                    PStruct.player[index].bankslot[i].type = 0;
-                    PStruct.player[index].bankslot[i].num = 0;
-                    PStruct.player[index].bankslot[i].value -= itemv;
-                    PStruct.player[index].bankslot[i].refin = 0;
-                    PStruct.player[index].bankslot[i].exp = 0;
+                    PlayerStruct.player[s].bankslot[i].type = 0;
+                    PlayerStruct.player[s].bankslot[i].num = 0;
+                    PlayerStruct.player[s].bankslot[i].value -= itemv;
+                    PlayerStruct.player[s].bankslot[i].refin = 0;
+                    PlayerStruct.player[s].bankslot[i].exp = 0;
                     return true;
                 }
             }

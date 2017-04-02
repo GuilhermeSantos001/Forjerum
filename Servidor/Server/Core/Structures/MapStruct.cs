@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Estruturas e métodos relacionados aos mapas.
-    // MStruct.cs
+    // MapStruct.cs
     //*********************************************************************************************
-    class MStruct
+    class MapStruct
     {
         //*********************************************************************************************
         // ESTRUTURA DOS MAPAS
@@ -26,7 +26,7 @@ namespace FORJERUM
         public static ChestPoint[] chestpoint = new ChestPoint[Globals.Max_Chests];
         public static BankPoint[] bankpoint = new BankPoint[Globals.Max_BankPoints];
         public static TpPoint[] tppoint = new TpPoint[Globals.Max_TpPoints];
-        public static SavePoint[] savepoint = new SavePoint[Globals.Max_SavePoints];
+        public static savePoint[] savepoint = new savePoint[Globals.Max_savePoints];
         public static TempWorkPoint[] tempworkpoint = new TempWorkPoint[Globals.Max_WorkPoints];
         public static QuestGiver[] questgiver = new QuestGiver[Globals.MaxQuestGivers];
         public static Quest[,] quest = new Quest[Globals.MaxQuestGivers, Globals.MaxQuestPerGiver];
@@ -67,7 +67,7 @@ namespace FORJERUM
             public byte[] tp_y;
         }
 
-        public struct SavePoint
+        public struct savePoint
         {
             public int map;
             public int save_map;
@@ -137,9 +137,9 @@ namespace FORJERUM
             public string[] reward;
             public int key;
             public string active_sprite;
-            public int active_sprite_index;
+            public int active_sprite_s;
             public string inactive_sprite;
-            public int inactive_sprite_index;
+            public int inactive_sprite_s;
             public bool is_random;
         }
 
@@ -204,10 +204,10 @@ namespace FORJERUM
         public static bool MapIsPVP(int mapnum)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, mapnum) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, mapnum));
             }
 
@@ -227,16 +227,16 @@ namespace FORJERUM
             return true;
         }
         //*********************************************************************************************
-        // GetOpenWorkPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenWorkPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna array de interação livre.
         //*********************************************************************************************
-        public static int GetOpenWorkPoint()
+        public static int getOpenWorkPoint()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
@@ -254,16 +254,16 @@ namespace FORJERUM
             return worknum;
         }
         //*********************************************************************************************
-        // GetOpenChestPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenChestPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna array de baú livre.
         //*********************************************************************************************
-        public static int GetOpenChestPoint()
+        public static int getOpenChestPoint()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
@@ -281,16 +281,16 @@ namespace FORJERUM
             return chestnum;
         }
         //*********************************************************************************************
-        // GetOpenBankPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenBankPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna array para bancos livre.
         //*********************************************************************************************
-        public static int GetOpenBankPoint()
+        public static int getOpenBankPoint()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
@@ -308,16 +308,16 @@ namespace FORJERUM
             return banknum;
         }
         //*********************************************************************************************
-        // GetOpenTpPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenTpPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna array de ponto de teleporte livre.
         //*********************************************************************************************
-        public static int GetOpenTpPoint()
+        public static int getOpenTpPoint()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
@@ -335,23 +335,23 @@ namespace FORJERUM
             return tpnum;
         }
         //*********************************************************************************************
-        // GetOpenSavePoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpensavePoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna array para save point livre.
         //*********************************************************************************************
-        public static int GetOpenSavePoint()
+        public static int getOpensavePoint()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
             //CÓDIGO
             int savenum = 0;
 
-            for (int i = 1; i < Globals.Max_SavePoints; i++)
+            for (int i = 1; i < Globals.Max_savePoints; i++)
             {
                 if (savepoint[i].map == 0)
                 {
@@ -362,16 +362,16 @@ namespace FORJERUM
             return savenum;
         }
         //*********************************************************************************************
-        // GetOpenCraftPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getOpenCraftPoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna array para criação de itens livre.
         //*********************************************************************************************
-        public static int GetOpenCraftPoint()
+        public static int getOpenCraftPoint()
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name));
             }
 
@@ -389,15 +389,15 @@ namespace FORJERUM
             return craftnum;
         }
         //*********************************************************************************************
-        // GetNullMapItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getNullMapItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetNullMapItem(int map)
+        public static int getNullMapItem(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map));
             }
 
@@ -415,15 +415,15 @@ namespace FORJERUM
             return itemnum;
         }
         //*********************************************************************************************
-        // GetMapItemMaxIndex / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getMapItemMaxs / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetMapItemMaxindex(int map)
+        public static int getMapItemMaxs(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map));
             }
 
@@ -440,15 +440,15 @@ namespace FORJERUM
             return count;
         }
         //*********************************************************************************************
-        // GetMapNpcSlot / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getMapNpcSlot / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static int GetMapNpcSlot(int map)
+        public static int getMapNpcSlot(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map));
             }
 
@@ -457,7 +457,7 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.MaxMapNpcs; i++)
             {
-                if (String.IsNullOrEmpty(NStruct.npc[map, i].Name))
+                if (String.IsNullOrEmpty(NpcStruct.npc[map, i].Name))
                 {
                     return i;
                 }
@@ -465,16 +465,16 @@ namespace FORJERUM
             return count;
         }
         //*********************************************************************************************
-        // GetMapNpcCount / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // getMapNpcCount / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retorna o número de npcs em determinado mapa.
         //*********************************************************************************************
-        public static int GetMapNpcCount(int map)
+        public static int getMapNpcCount(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map));
             }
 
@@ -483,7 +483,7 @@ namespace FORJERUM
 
             for (int i = 0; i < Globals.MaxMapNpcs; i++)
             {
-                if (!String.IsNullOrEmpty(NStruct.npc[map, i].Name))
+                if (!String.IsNullOrEmpty(NpcStruct.npc[map, i].Name))
                 {
                     count += 1;
                 }
@@ -497,17 +497,17 @@ namespace FORJERUM
         public static bool ExistPlayerInMap(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map));
             }
 
             //CÓDIGO
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if ((PStruct.tempplayer[i].ingame) && (PStruct.character[i, PStruct.player[i].SelectedChar].Map == map))
+                if ((PlayerStruct.tempplayer[i].ingame) && (PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Map == map))
                 {
                     return true;
                 }
@@ -520,7 +520,7 @@ namespace FORJERUM
         public static void CheckMapItems(int map)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, map) != null)
             {
                 return;
@@ -539,7 +539,7 @@ namespace FORJERUM
                     mapitem[map, i].Refin = 0;
                     mapitem[map, i].Exp = 0;
                     mapitem[map, i].Timer = 0;
-                    SendData.Send_MapItem(map, i);
+                    SendData.sendMapItem(map, i);
                 }
             }
         }

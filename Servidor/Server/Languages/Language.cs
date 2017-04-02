@@ -5,11 +5,11 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 
-namespace FORJERUM.Languages
+namespace __Forjerum.Languages
 {
     class LStruct
     {
-        public static void LoadLang()
+        public static void loadLang()
         {
             StreamReader s = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\language.txt");
 

@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Estruturas e métodos relacionados a itens.
-    // IStruct.cs
+    // ItemStruct.cs
     //*********************************************************************************************
-    class IStruct
+    class ItemStruct
     {
         public static Item[] item = new Item[Globals.MaxItems];
         public static ItemExtra[] itemextra = new ItemExtra[Globals.MaxItems];
@@ -36,7 +36,7 @@ namespace FORJERUM
         {
             public int type;
             public string sprite;
-            public int sprite_index;
+            public int sprite_s;
         }
 
         public struct ItemEffect

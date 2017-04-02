@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Estruturas e métodos relacionados a inimigos.
-    // EStruct.cs
+    // EnemyStruct.cs
     //*********************************************************************************************
-    class EStruct
+    class EnemyStruct
     {
         public static Enemy[] enemy = new Enemy[Globals.MaxEnemies];
         public static EnemyParams[,] enemyparams = new EnemyParams[Globals.MaxEnemies, 20];

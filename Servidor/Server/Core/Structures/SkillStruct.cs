@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Estruturas e métodos relacionados as magias.
-    // SStruct.cs
+    // SkillStruct.cs
     //*********************************************************************************************
-    class SStruct
+    class SkillStruct
     {
         public static Skill[] skill = new Skill[1001];
         public static SkillEffect[,] skilleffect = new SkillEffect[1001, 100];

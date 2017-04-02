@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FORJERUM.Extensions
+namespace __Forjerum.Extensions
 {
     //*********************************************************************************************
     // Exemplo de comandos no interpreter / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
@@ -16,14 +16,14 @@ namespace FORJERUM.Extensions
         // Adicionar um novo comando no interpreter, junto com seu método de chamada
         //*********************************************************************************************
         public static object Main(params object[] args){
-            Interpreter.AddCommand(SetAccess, "setaccess");
+            Interpreter.addCommand(setAccess, "setaccess");
             return ExtensionApp.EXTEND;
         }
         //*********************************************************************************************
         // SetAccess / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Entrega acesso a um jogador e salva ele na Database.
         //*********************************************************************************************
-        public static void SetAccess(object[] args)
+        public static void setAccess(object[] args)
         {
             if (args.Length != 3)
             {
@@ -33,15 +33,15 @@ namespace FORJERUM.Extensions
                 return;
             }
 
-            if (Globals.Player_Highindex <= 0) { Console.WriteLine("\n");Console.WriteLine("Não há jogadores online, busca ineficiente"); return; }
+            if (Globals.Player_Highs <= 0) { Console.WriteLine("\n");Console.WriteLine("Não há jogadores online, busca ineficiente"); return; }
 
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == args[1])
+                if (PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == args[1])
                 {
-                    PStruct.character[i, PStruct.player[i].SelectedChar].Access = Convert.ToInt32(args[2]);
-                    Database.SaveCharacter(i, PStruct.player[i].Email, PStruct.player[i].SelectedChar);
-                    SendData.Send_MsgToPlayer(i, "Você recebeu nível de acesso, reconecte-se para vê-lo em vigor.", Globals.ColorGreen, Globals.Msg_Type_Server);
+                    PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Access = Convert.ToInt32(args[2]);
+                    Database.Characters.saveCharacter(i, PlayerStruct.player[i].Email, PlayerStruct.player[i].SelectedChar);
+                    SendData.sendMsgToPlayer(i, "Você recebeu nível de acesso, reconecte-se para vê-lo em vigor.", Globals.ColorGreen, Globals.Msg_Type_Server);
                     return;
                 }
             }

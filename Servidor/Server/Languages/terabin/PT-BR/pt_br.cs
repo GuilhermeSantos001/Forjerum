@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FORJERUM.Languages
+namespace __Forjerum.Languages
 {
     class pt_br : LStruct
     {

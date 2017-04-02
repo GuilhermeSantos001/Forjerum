@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Estruturas e métodos relacionados as lojas.

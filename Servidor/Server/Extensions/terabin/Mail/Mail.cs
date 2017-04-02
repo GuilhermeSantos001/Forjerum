@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net.Mail;
 
-namespace FORJERUM.Extensions
+namespace __Forjerum.Extensions
 {
     //*********************************************************************************************
     // Sistema para interação com EMAILS no Forjerum
@@ -10,19 +10,19 @@ namespace FORJERUM.Extensions
     //*********************************************************************************************
     class Mail : Languages.LStruct  
     {
-        public static string SMTP_SERVER = GET_SMTP_SERVER();
-        public static string SMTP_USER = GET_SMTP_USER();
-        public static string SMTP_PASS = GET_SMTP_PASS();
+        public static string SMTP_SERVER = getSmtpServer();
+        public static string SMTP_USER = getSmtpUser();
+        public static string SMTP_PASS = getSmtpPass();
 
 
         //*********************************************************************************************
         // SelectPacket 
         // Método é obrigado a checar novas packets recebidas
         //*********************************************************************************************
-        public static object SelectPacket(params object[] args)
+        public static object selectPacket(params object[] args)
         {
             //Parâmetros originais
-            int index = Convert.ToInt32(args[1]);
+            int s = Convert.ToInt32(args[1]);
             string data = args[2].ToString();
 
             //Ação
@@ -31,12 +31,12 @@ namespace FORJERUM.Extensions
             for (int i = 0; i < packets.Length; i++)
             {
                 if (packets[i] == String.Empty) { break; }
-                if ((!PStruct.tempplayer[index].ingame))
+                if ((!PlayerStruct.tempplayer[s].ingame))
                 {
                     //Tratamento das packets
-                    if (packets[i].StartsWith("<67>")) { ReceivedForget(index, packets[i]); }
-                    else if (packets[i].StartsWith("<68>")) { ReceivedActivation(index, packets[i]); }
-                    else if (packets[i].StartsWith("<69>")) { ReceivedEmailActivation(index); }
+                    if (packets[i].StartsWith("<67>")) { receivedForget(s, packets[i]); }
+                    else if (packets[i].StartsWith("<68>")) { receivedActivation(s, packets[i]); }
+                    else if (packets[i].StartsWith("<69>")) { receivedEmailActivation(s); }
                 }
             }
 
@@ -44,9 +44,9 @@ namespace FORJERUM.Extensions
             return ExtensionApp.EXTEND;
         }
         //*********************************************************************************************
-        // GET_SMTP_SERVER 
+        // getSmtpServer 
         //*********************************************************************************************
-        public static string GET_SMTP_SERVER()
+        public static string getSmtpServer()
         {
             StreamReader s = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\smtp_server.txt");
 
@@ -55,9 +55,9 @@ namespace FORJERUM.Extensions
             return smtp_server;
         }
         //*********************************************************************************************
-        // GET_SMTP_USER
+        // getSmtpUser
         //*********************************************************************************************
-        public static string GET_SMTP_USER()
+        public static string getSmtpUser()
         {
             StreamReader s = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\smtp_user.txt");
 
@@ -66,9 +66,9 @@ namespace FORJERUM.Extensions
             return smtp_user;
         }
         //*********************************************************************************************
-        // GET_SMTP_PASS
+        // getSmtpPass
         //*********************************************************************************************
-        public static string GET_SMTP_PASS()
+        public static string getSmtpPass()
         {
             StreamReader s = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\smtp_pass.txt");
 
@@ -80,9 +80,9 @@ namespace FORJERUM.Extensions
         // ReceivedRegister
         // No registro é necessário enviar o código de ativação
         //*********************************************************************************************
-        public static object ReceivedRegister(params object[] args)
+        public static object receivedRegister(params object[] args)
         {
-            int Index = Convert.ToInt32(args[1]);
+            int s = Convert.ToInt32(args[1]);
             string data = args[2].ToString();
 
             string[] register = data.Replace("<5>", "").Split(';');
@@ -92,15 +92,15 @@ namespace FORJERUM.Extensions
             if (register[1].Length > 8) { return false; }
             if (register[2].Length > 100) { return false; }
 
-            if (Database.NameIsIllegal(register[0])) { return false; }
-            if (Database.NameIsIllegal(register[1])) { return false; }
-            if (Database.NameIsIllegal(register[2])) { return false; }
+            if (Database.Handler.nameIsIllegal(register[0])) { return false; }
+            if (Database.Handler.nameIsIllegal(register[1])) { return false; }
+            if (Database.Handler.nameIsIllegal(register[2])) { return false; }
 
             register[2] = register[2].ToLower();
 
-            if (!(Database.AccountExists(register[2])))
+            if (!(Database.Accounts.accountExists(register[2])))
             {
-              Mail.Send_ActivationCode(Index, register[2]);
+              Mail.sendActivationCode(s, register[2]);
             }
             
             //Extender, não sob escrever
@@ -110,62 +110,62 @@ namespace FORJERUM.Extensions
         // ReceivedActivation
         // Recebe a tentativa para ativar determinada conta.
         //*********************************************************************************************
-        public static void ReceivedActivation(int index, string data)
+        public static void receivedActivation(int s, string data)
         {
             string[] packet = data.Replace("<68>", "").Split(';');
 
             if (packet.Length != 1) { return; }
-            if (!ReceiveData.IsNumeric(packet[0])) { return; }
+            if (!ReceiveData.isNumeric(packet[0])) { return; }
             if (packet[0].Length < 4) { return; }
             if (packet[0].Length > 5) { return; }
 
-            if (Convert.ToInt32(packet[0]) == PStruct.tempplayer[index].ActivationCode)
+            if (Convert.ToInt32(packet[0]) == PlayerStruct.tempplayer[s].ActivationCode)
             {
-                PStruct.player[index].Confirmed = true;
-                Database.SaveAccount(index);
-                if (!PStruct.tempplayer[index].Logged)
+                PlayerStruct.player[s].Confirmed = true;
+                Database.Accounts.saveAccount(s);
+                if (!PlayerStruct.tempplayer[s].Logged)
                 {
-                    SendData.SendToUser(index, String.Format("<5 {0};{1}>a</5>\n", PStruct.player[index].Email, PStruct.player[index].Password));
+                    SendData.sendToUser(s, String.Format("<5 {0};{1}>a</5>\n", PlayerStruct.player[s].Email, PlayerStruct.player[s].Password));
                 }
                 else
                 {
-                    SendData.SendToUser(index, String.Format("<5 {0};{1}>v</5>\n", "", ""));
+                    SendData.sendToUser(s, String.Format("<5 {0};{1}>v</5>\n", "", ""));
                 }
             }
             else
             {
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>f</5>\n", PStruct.player[index].Email, ""));
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>f</5>\n", PlayerStruct.player[s].Email, ""));
             }
         }
         //*********************************************************************************************
         // ReceivedForget
         // Recebe o pedido para que o servidor envie os dados perdidos do jogados
         //*********************************************************************************************
-        public static void ReceivedForget(int index, string data)
+        public static void receivedForget(int s, string data)
         {
             string[] packet = data.Replace("<67>", "").Split(';');
             if (packet.Length != 2) { return; }
-            if (!ReceiveData.IsNumeric(packet[0])) { return; }
+            if (!ReceiveData.isNumeric(packet[0])) { return; }
             if (Convert.ToInt32(packet[0]) > 1) { return; }
             if (Convert.ToInt32(packet[0]) < 0) { return; }
             if (packet[1].Length > 100) { return; }
             if (packet[1].Length < 5) { return; }
 
-            Mail.Send_Account(index, 1, packet[1]);
+            Mail.sendAccount(s, 1, packet[1]);
         }
         //*********************************************************************************************
         // ReceivedEmailActivation
         // Envia novamente o código para confirmação
         //*********************************************************************************************
-        public static void ReceivedEmailActivation(int index)
+        public static void receivedEmailActivation(int s)
         {
-            if (PStruct.tempplayer[index].ActivationCode > 0) { return; }
-            Mail.Send_ActivationCode(index, PStruct.player[index].Email);
+            if (PlayerStruct.tempplayer[s].ActivationCode > 0) { return; }
+            Mail.sendActivationCode(s, PlayerStruct.player[s].Email);
         }
         //*********************************************************************************************
-        // Send_ActivationCode
+        // sendActivationCode
         //*********************************************************************************************
-        public static void Send_ActivationCode(int index, string email)
+        public static void sendActivationCode(int s, string email)
         {
             //Define os dados do e-mail
             string nomeRemetente = Globals.GAME_NAME;
@@ -181,7 +181,7 @@ namespace FORJERUM.Extensions
 
             int code = Globals.Rand(1000, 9999);
 
-            PStruct.tempplayer[index].ActivationCode = code;
+            PlayerStruct.tempplayer[s].ActivationCode = code;
 
             Console.WriteLine(email);
 
@@ -200,8 +200,8 @@ namespace FORJERUM.Extensions
             }
             catch
             {
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>h</5>\n", "", ""));
-                Database.DeleteAccount(PStruct.player[index].Email);
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>h</5>\n", "", ""));
+                Database.Accounts.deleteAccount(PlayerStruct.player[s].Email);
             }
 
             //Enviar cópia para.
@@ -239,16 +239,16 @@ namespace FORJERUM.Extensions
             }
             catch (Exception ex)
             {
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>h</5>\n", "", ""));
-                Database.DeleteAccount(PStruct.player[index].Email);
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>h</5>\n", "", ""));
+                Database.Accounts.deleteAccount(PlayerStruct.player[s].Email);
                 Console.Write(lang.problems_in_email_sent + lang.error + " = " + ex.Message);
             }
 
         }
         //*********************************************************************************************
-        // Send_Account
+        // sendAccount
         //*********************************************************************************************
-        public static void Send_Account(int index, int type, string data)
+        public static void sendAccount(int s, int type, string data)
         {
             string user;
             string password;
@@ -275,7 +275,7 @@ namespace FORJERUM.Extensions
             }
             else
             {
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>o</5>\n", "", ""));
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>o</5>\n", "", ""));
                 return;
             }
 
@@ -347,12 +347,12 @@ namespace FORJERUM.Extensions
             try
             {
                 SmtpServer.SendAsync(objEmail, null);
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>k</5>\n", "", ""));
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>k</5>\n", "", ""));
                 //Response.Write("E-mail enviado com sucesso !");
             }
             catch (Exception ex)
             {
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>o</5>\n", "", ""));
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>o</5>\n", "", ""));
                 Console.WriteLine(lang.problems_in_email_sent + lang.error + " = " + ex.Message);
             }
 

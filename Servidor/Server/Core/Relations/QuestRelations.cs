@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     class QuestRelations
     {
         //*********************************************************************************************
-        // GetActualPlayerQuestPerGiver
+        // getActualPlayerQuestPerGiver
         // Retorna o número de quests que o jogador tem por npc
         //*********************************************************************************************
-        public static int GetActualPlayerQuestPerGiver(int index, int questgiver)
+        public static int getActualPlayerQuestPerGiver(int s, int questgiver)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, questgiver) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, questgiver) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, questgiver));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, questgiver));
             }
 
             //CÓDIGO
@@ -24,7 +24,7 @@ namespace FORJERUM
 
             for (int q = 1; q < Globals.MaxQuestPerGiver; q++)
             {
-                if (PStruct.queststatus[index, questgiver, q].status == 2)
+                if (PlayerStruct.queststatus[s, questgiver, q].status == 2)
                 {
                     quest += 1;
                 }
@@ -33,17 +33,17 @@ namespace FORJERUM
             return quest;
         }
         //*********************************************************************************************
-        // GetPlayerQuestGiversCount
+        // getPlayerQuestGiversCount
         // Número de npc's que deram quest ao jogador
         //*********************************************************************************************
-        public static int GetPlayerQuestGiversCount(int index)
+        public static int getPlayerQuestGiversCount(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -51,7 +51,7 @@ namespace FORJERUM
 
             for (int g = 1; g <= Globals.MaxQuestGivers; g++)
             {
-                if (PStruct.queststatus[index, g, 1].status != 0)
+                if (PlayerStruct.queststatus[s, g, 1].status != 0)
                 {
                     count += 1;
                 }
@@ -60,17 +60,17 @@ namespace FORJERUM
             return count;
         }
         //*********************************************************************************************
-        // GetPlayerQuestsCount
+        // getPlayerQuestsCount
         // Número total de quests
         //*********************************************************************************************
-        public static int GetPlayerQuestsCount(int index)
+        public static int getPlayerQuestsCount(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
@@ -80,7 +80,7 @@ namespace FORJERUM
             {
                 for (int q = 1; q < Globals.MaxQuestPerGiver; q++)
                 {
-                    if (PStruct.queststatus[index, g, q].status != 0)
+                    if (PlayerStruct.queststatus[s, g, q].status != 0)
                     {
                         count += 1;
                     }
@@ -96,10 +96,10 @@ namespace FORJERUM
         public static bool IsQuestGiverRepeatable(int questgiver)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, questgiver) != null)
             {
-                return Convert.ToBoolean(Extensions.ExtensionApp.ExtendMyApp
+                return Convert.ToBoolean(Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, questgiver));
             }
 

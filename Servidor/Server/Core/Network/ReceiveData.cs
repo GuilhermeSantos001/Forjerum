@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Métodos e tratamento de todas as informações que o servidor recebe.
@@ -14,10 +14,10 @@ namespace FORJERUM
         // SelectPacket / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Tratamento das packets enviadas pelos jogadores.
         //*********************************************************************************************
-        public static void SelectPacket(int index, string data)
+        public static void selectPacket(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp(MethodBase.GetCurrentMethod().Name, index, data) != null) { return; }
+            if (Extensions.ExtensionApp.extendMyApp(MethodBase.GetCurrentMethod().Name, s, data) != null) { return; }
 
             //CÓDIGO
             Loops.Last_Packet = data;
@@ -25,117 +25,117 @@ namespace FORJERUM
             for (int i = 0; i < packets.Length; i++)
             {
                 if (packets[i] == String.Empty) { break; }
-                if (PStruct.tempplayer[index].ingame)
+                if (PlayerStruct.tempplayer[s].ingame)
                 {
                     //Dados ingame
-                    if (packets[i].StartsWith("<11>")) { ReceivedMove(index, packets[i]); }
-                    else if (packets[i].StartsWith("<12>")) { ReceivedMessage(index, packets[i]); }
-                    else if (packets[i].StartsWith("<15>")) { MapCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<16>")) { UseItemCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<17>")) { EquipItemCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<18>")) { AttackCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<19>")) { DirCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<20>")) { PickItemCheck(index); }
-                    else if (packets[i].StartsWith("<21>")) { DropItemCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<22>")) { ItemCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<23>")) { WeaponCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<24>")) { ArmorCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<25>")) { SkillCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<26>")) { HotkeyCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<27>")) { TargetCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<28>")) { EnemyCheck(index, packets[i]); }
-                    else if (packets[i].StartsWith("<29>")) { ReceivedSkill(index, packets[i]); }
-                    else if (packets[i].StartsWith("<30>")) { ReceivedAtr(index, packets[i]); }
-                    else if (packets[i].StartsWith("<31>")) { ReceivedUseSkillPoints(index, packets[i]); }
-                    else if (packets[i].StartsWith("<32>")) { ReceivedParty(index); }
-                    else if (packets[i].StartsWith("<33>")) { ReceivedPartyResponse(index, packets[i]); }
-                    else if (packets[i].StartsWith("<34>")) { ReceivedPartyKick(index, packets[i]); }
-                    else if (packets[i].StartsWith("<35>")) { ReceivedPartyChange(index, packets[i]); }
-                    else if (packets[i].StartsWith("<36>")) { ReceivedTrade(index); }
-                    else if (packets[i].StartsWith("<37>")) { ReceivedAddTradeOffer(index, packets[i]); }
-                    else if (packets[i].StartsWith("<38>")) { ReceivedAddTradeG(index, packets[i]); }
-                    else if (packets[i].StartsWith("<39>")) { ReceivedTradeResponse(index, packets[i]); }
-                    else if (packets[i].StartsWith("<40>")) { ReceivedTradeAccept(index); }
-                    else if (packets[i].StartsWith("<41>")) { ReceivedTradeRefuse(index); }
-                    else if (packets[i].StartsWith("<42>")) { ReceivedTradeClose(index); }
-                    else if (packets[i].StartsWith("<43>")) { ReceivedQuestAction(index, packets[i]); }
-                    else if (packets[i].StartsWith("<44>")) { ReceivedShop(index); }
-                    else if (packets[i].StartsWith("<45>")) { ReceivedShopBuy(index, packets[i]); }
-                    else if (packets[i].StartsWith("<46>")) { ReceivedShopSell(index, packets[i]); }
-                    else if (packets[i].StartsWith("<47>")) { ReceivedShopClose(index); }
-                    else if (packets[i].StartsWith("<48>")) { ReceivedCraftAdd(index, packets[i]); }
-                    else if (packets[i].StartsWith("<49>")) { ReceivedCraftWith(index, packets[i]); }
-                    else if (packets[i].StartsWith("<50>")) { ReceivedOpenCraft(index); }
-                    else if (packets[i].StartsWith("<51>")) { ReceivedCloseCraft(index); }
-                    else if (packets[i].StartsWith("<52>")) { ReceivedCraftCreate(index); }
-                    else if (packets[i].StartsWith("<53>")) { ReceivedItemCraft(index, packets[i]); }
-                    else if (packets[i].StartsWith("<54>")) { ReceivedOpenChest(index); }
-                    else if (packets[i].StartsWith("<55>")) { ReceivedOpenBank(index); }
-                    else if (packets[i].StartsWith("<56>")) { ReceivedBankPickItem(index, packets[i]); }
-                    else if (packets[i].StartsWith("<57>")) { ReceivedBankGiveItem(index, packets[i]); }
-                    else if (packets[i].StartsWith("<58>")) { ReceivedCloseBank(index); }
-                    else if (packets[i].StartsWith("<59>")) { ReceivedCompleteAction(index, packets[i]); }
-                    else if (packets[i].StartsWith("<61>")) { ReceivedCharacterSelection(index); }
-                    else if (packets[i].StartsWith("<62>")) { ReceivedGuild(index); }
-                    else if (packets[i].StartsWith("<63>")) { ReceivedGuildResponse(index, packets[i]); }
-                    else if (packets[i].StartsWith("<64>")) { ReceivedGuildCreate(index, packets[i]); }
-                    else if (packets[i].StartsWith("<65>")) { ReceivedGuildKick(index, packets[i]); }
-                    else if (packets[i].StartsWith("<66>")) { ReceivedRespawn(index); }
-                    else if (packets[i].StartsWith("<70>")) { ReceivedWarp(index, packets[i]); }
-                    else if (packets[i].StartsWith("<71>")) { ReceivedPVP(index); }
-                    else if (packets[i].StartsWith("<72>")) { ReceivedImprovement(index, packets[i]); }
-                    else if (packets[i].StartsWith("<74>")) { ReceivedPremmy(index, packets[i]); } //mod
-                    else if (packets[i].StartsWith("<75>")) { ReceivedBan(index, packets[i]); } //mod
-                    else if (packets[i].StartsWith("<76>")) { ReceivedKick(index, packets[i]); } //mod
-                    else if (packets[i].StartsWith("<77>")) { ReceivedWPoints(index, packets[i]); } //mod
-                    else if (packets[i].StartsWith("<78>")) { ReceivedSetPos(index, packets[i]); } //mod
-                    else if (packets[i].StartsWith("<79>")) { ReceivedTP(index, packets[i]); }
-                    else if (packets[i].StartsWith("<80>")) { ReceivedAddPShop(index, packets[i]); }
-                    else if (packets[i].StartsWith("<81>")) { ReceivedWithPShop(index, packets[i]); }
-                    else if (packets[i].StartsWith("<82>")) { ReceivedStartPShop(index); }
-                    else if (packets[i].StartsWith("<83>")) { ReceivedBuyPShop(index, packets[i]); }
-                    else if (packets[i].StartsWith("<84>")) { ReceivedOpenPShop(index, packets[i]); }
-                    else if (packets[i].StartsWith("<85>")) { ReceivedClosePShop(index); }
-                    else if (packets[i].StartsWith("<86>")) { ReceivedCollector(index); }
-                    else if (packets[i].StartsWith("<87>")) { ReceivedOutCollector(index); }
-                    else if (packets[i].StartsWith("<89>")) { ReceivedSavePoint(index); }
-                    else if (packets[i].StartsWith("<90>")) { ReceivedFriendAdd(index); }
-                    else if (packets[i].StartsWith("<91>")) { ReceivedFriendResponse(index, packets[i]); }
-                    else if (packets[i].StartsWith("<92>")) { ReceivedFriendDelete(index, packets[i]); }
+                    if (packets[i].StartsWith("<11>")) { receivedMove(s, packets[i]); }
+                    else if (packets[i].StartsWith("<12>")) { receivedMessage(s, packets[i]); }
+                    else if (packets[i].StartsWith("<15>")) { receivedMapData(s, packets[i]); }
+                    else if (packets[i].StartsWith("<16>")) { receivedUseItem(s, packets[i]); }
+                    else if (packets[i].StartsWith("<17>")) { receivedEquipItem(s, packets[i]); }
+                    else if (packets[i].StartsWith("<18>")) { receivedAttack(s, packets[i]); }
+                    else if (packets[i].StartsWith("<19>")) { receivedDir(s, packets[i]); }
+                    else if (packets[i].StartsWith("<20>")) { receivedPickItem(s); }
+                    else if (packets[i].StartsWith("<21>")) { receivedDropItem(s, packets[i]); }
+                    else if (packets[i].StartsWith("<22>")) { receivedItemData(s, packets[i]); }
+                    else if (packets[i].StartsWith("<23>")) { receivedWeaponData(s, packets[i]); }
+                    else if (packets[i].StartsWith("<24>")) { receivedArmorData(s, packets[i]); }
+                    else if (packets[i].StartsWith("<25>")) { receivedSkillData(s, packets[i]); }
+                    else if (packets[i].StartsWith("<26>")) { receivedHotkey(s, packets[i]); }
+                    else if (packets[i].StartsWith("<27>")) { receivedTarget(s, packets[i]); }
+                    else if (packets[i].StartsWith("<28>")) { receivedEnemyData(s, packets[i]); }
+                    else if (packets[i].StartsWith("<29>")) { receivedSkill(s, packets[i]); }
+                    else if (packets[i].StartsWith("<30>")) { receivedAtr(s, packets[i]); }
+                    else if (packets[i].StartsWith("<31>")) { receivedUseSkillPoints(s, packets[i]); }
+                    else if (packets[i].StartsWith("<32>")) { receivedParty(s); }
+                    else if (packets[i].StartsWith("<33>")) { receivedPartyResponse(s, packets[i]); }
+                    else if (packets[i].StartsWith("<34>")) { receivedPartyKick(s, packets[i]); }
+                    else if (packets[i].StartsWith("<35>")) { receivedPartyChange(s, packets[i]); }
+                    else if (packets[i].StartsWith("<36>")) { receivedTrade(s); }
+                    else if (packets[i].StartsWith("<37>")) { receivedAddTradeOffer(s, packets[i]); }
+                    else if (packets[i].StartsWith("<38>")) { receivedAddTradeG(s, packets[i]); }
+                    else if (packets[i].StartsWith("<39>")) { receivedTradeResponse(s, packets[i]); }
+                    else if (packets[i].StartsWith("<40>")) { receivedTradeAccept(s); }
+                    else if (packets[i].StartsWith("<41>")) { receivedTradeRefuse(s); }
+                    else if (packets[i].StartsWith("<42>")) { receivedTradeClose(s); }
+                    else if (packets[i].StartsWith("<43>")) { receivedQuestAction(s, packets[i]); }
+                    else if (packets[i].StartsWith("<44>")) { receivedShop(s); }
+                    else if (packets[i].StartsWith("<45>")) { receivedShopBuy(s, packets[i]); }
+                    else if (packets[i].StartsWith("<46>")) { receivedShopSell(s, packets[i]); }
+                    else if (packets[i].StartsWith("<47>")) { receivedShopClose(s); }
+                    else if (packets[i].StartsWith("<48>")) { receivedCraftAdd(s, packets[i]); }
+                    else if (packets[i].StartsWith("<49>")) { receivedCraftWith(s, packets[i]); }
+                    else if (packets[i].StartsWith("<50>")) { receivedOpenCraft(s); }
+                    else if (packets[i].StartsWith("<51>")) { receivedCloseCraft(s); }
+                    else if (packets[i].StartsWith("<52>")) { receivedCraftCreate(s); }
+                    else if (packets[i].StartsWith("<53>")) { receivedItemCraft(s, packets[i]); }
+                    else if (packets[i].StartsWith("<54>")) { receivedOpenChest(s); }
+                    else if (packets[i].StartsWith("<55>")) { receivedOpenBank(s); }
+                    else if (packets[i].StartsWith("<56>")) { receivedBankPickItem(s, packets[i]); }
+                    else if (packets[i].StartsWith("<57>")) { receivedBankGiveItem(s, packets[i]); }
+                    else if (packets[i].StartsWith("<58>")) { receivedCloseBank(s); }
+                    else if (packets[i].StartsWith("<59>")) { receivedCompleteAction(s, packets[i]); }
+                    else if (packets[i].StartsWith("<61>")) { receivedCharacterSelection(s); }
+                    else if (packets[i].StartsWith("<62>")) { receivedGuild(s); }
+                    else if (packets[i].StartsWith("<63>")) { receivedGuildResponse(s, packets[i]); }
+                    else if (packets[i].StartsWith("<64>")) { receivedGuildCreate(s, packets[i]); }
+                    else if (packets[i].StartsWith("<65>")) { receivedGuildKick(s, packets[i]); }
+                    else if (packets[i].StartsWith("<66>")) { receivedRespawn(s); }
+                    else if (packets[i].StartsWith("<70>")) { receivedWarp(s, packets[i]); }
+                    else if (packets[i].StartsWith("<71>")) { receivedPVP(s); }
+                    else if (packets[i].StartsWith("<72>")) { receivedImprovement(s, packets[i]); }
+                    else if (packets[i].StartsWith("<74>")) { receivedPremmy(s, packets[i]); } //mod
+                    else if (packets[i].StartsWith("<75>")) { receivedBan(s, packets[i]); } //mod
+                    else if (packets[i].StartsWith("<76>")) { receivedKick(s, packets[i]); } //mod
+                    else if (packets[i].StartsWith("<77>")) { receivedWPoints(s, packets[i]); } //mod
+                    else if (packets[i].StartsWith("<78>")) { receivedSetPos(s, packets[i]); } //mod
+                    else if (packets[i].StartsWith("<79>")) { receivedTP(s, packets[i]); }
+                    else if (packets[i].StartsWith("<80>")) { receivedAddPShop(s, packets[i]); }
+                    else if (packets[i].StartsWith("<81>")) { receivedWithPShop(s, packets[i]); }
+                    else if (packets[i].StartsWith("<82>")) { receivedStartPShop(s); }
+                    else if (packets[i].StartsWith("<83>")) { receivedBuyPShop(s, packets[i]); }
+                    else if (packets[i].StartsWith("<84>")) { receivedOpenPShop(s, packets[i]); }
+                    else if (packets[i].StartsWith("<85>")) { receivedClosePShop(s); }
+                    else if (packets[i].StartsWith("<86>")) { receivedCollector(s); }
+                    else if (packets[i].StartsWith("<87>")) { receivedOutCollector(s); }
+                    else if (packets[i].StartsWith("<89>")) { receivedsavePoint(s); }
+                    else if (packets[i].StartsWith("<90>")) { receivedFriendAdd(s); }
+                    else if (packets[i].StartsWith("<91>")) { receivedFriendResponse(s, packets[i]); }
+                    else if (packets[i].StartsWith("<92>")) { receivedFriendDelete(s, packets[i]); }
                 }
                 else
                 {
                     //Dados fora do jogo
-                    if (packets[i].StartsWith("<0>")) { ReceivedAuth(index, packets[i]); }
-                    else if (packets[i].StartsWith("<3>")) { ReceivedMotd(index); }
-                    else if (packets[i].StartsWith("<4>")) { ReceivedLogin(index, packets[i]); }
-                    else if (packets[i].StartsWith("<5>")) { ReceivedRegister(index, packets[i]); }
-                    else if (packets[i].StartsWith("<88>")) { ReceivedError(packets[i]); }
+                    if (packets[i].StartsWith("<0>")) { receivedAuth(s, packets[i]); }
+                    else if (packets[i].StartsWith("<3>")) { receivedMotd(s); }
+                    else if (packets[i].StartsWith("<4>")) { receivedLogin(s, packets[i]); }
+                    else if (packets[i].StartsWith("<5>")) { receivedRegister(s, packets[i]); }
+                    else if (packets[i].StartsWith("<88>")) { receivedError(packets[i]); }
                     //Dados depois do login
-                    if (PStruct.tempplayer[index].Logged)
+                    if (PlayerStruct.tempplayer[s].Logged)
                     {
-                        if (packets[i].StartsWith("<6>")) { ReceivedNewChar(index, packets[i]); }
-                        else if (packets[i].StartsWith("<8>")) { ReceivedIngame(index, packets[i]); }
-                        else if (packets[i].StartsWith("<60>")) { ReceivedDeleteChar(index, packets[i]); }
-                        else if (packets[i].StartsWith("<73>")) { ReceivedWBuy(index, packets[i]); }
+                        if (packets[i].StartsWith("<6>")) { receivedNewChar(s, packets[i]); }
+                        else if (packets[i].StartsWith("<8>")) { receivedIngame(s, packets[i]); }
+                        else if (packets[i].StartsWith("<60>")) { receivedDeleteChar(s, packets[i]); }
+                        else if (packets[i].StartsWith("<73>")) { receivedWBuy(s, packets[i]); }
                     }
                 }
                 
                 //Dados globais
-                if (packets[i].StartsWith("<14>")) { LatencyCheck(index); }
+                if (packets[i].StartsWith("<14>")) { receivedLatency(s); }
             }
         }
         //*********************************************************************************************
-        // IsNumeric / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // isNumeric / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static bool IsNumeric(string data)
+        public static bool isNumeric(string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data) != null)
             {
                 return Convert.ToBoolean
-                (Extensions.ExtensionApp.ExtendMyApp(MethodBase.GetCurrentMethod().Name, data));
+                (Extensions.ExtensionApp.extendMyApp(MethodBase.GetCurrentMethod().Name, data));
             }
 
             //CÓDIGO
@@ -147,84 +147,84 @@ namespace FORJERUM
             return false;
         }
         //*********************************************************************************************
-        // ReceivedPVP / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedPVP / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedPVP(int index)
+        public static void receivedPVP(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer > Loops.TickCount.ElapsedMilliseconds) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPChangeTimer > Loops.TickCount.ElapsedMilliseconds) { return; }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVP)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVP)
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].PVP = false;
-                PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer = 60000 + Loops.TickCount.ElapsedMilliseconds;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVP = false;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPChangeTimer = 60000 + Loops.TickCount.ElapsedMilliseconds;
             }
             else
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].PVP = true;
-                PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer = 60000 + Loops.TickCount.ElapsedMilliseconds;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVP = true;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPChangeTimer = 60000 + Loops.TickCount.ElapsedMilliseconds;
             }
-            SendData.Send_PlayerPvpToMap(index);
-            SendData.Send_PlayerPvpChangeTimer(index);
+            SendData.sendPlayerPvpToMap(s);
+            SendData.sendPlayerPvpChangeTimer(s);
         }
         //*********************************************************************************************
-        // ReceivedAuth / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedAuth / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedAuth(int index, string data)
+        public static void receivedAuth(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string[] packet = data.Replace("<0>", "").Split(';');
-            if (packet[0] != Globals.Client_Version) { SendData.Send_NStatus(index, "Versão inválida, por favor atualize o jogo."); WinsockAsync.ShutdownUser(UserConnection.Getindex(index)) ;return; }
-            SendData.SendToUser(index, String.Format("<0 {0}>1</0>\n", index.ToString()));
+            if (packet[0] != Globals.Client_Version) { SendData.sendNStatus(s, "Versão inválida, por favor atualize o jogo."); WinsockAsync.shutdownUser(UserConnection.getS(s)) ;return; }
+            SendData.sendToUser(s, String.Format("<0 {0}>1</0>\n", s.ToString()));
         }
         //*********************************************************************************************
-        // ReceivedMotd / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedMotd / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedMotd(int index)
+        public static void receivedMotd(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].ingame) {return;}
-            SendData.SendToUser(index, String.Format("<3>{0}</3>\n", WinsockAsync.Motd));
+            if (PlayerStruct.tempplayer[s].ingame) {return;}
+            SendData.sendToUser(s, String.Format("<3>{0}</3>\n", WinsockAsync.Motd));
         }
         //*********************************************************************************************
-        // ReceivedSetPos / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedSetPos / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedSetPos(int index, string data)
+        public static void receivedSetPos(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 10) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 10) { return; }
             string[] packet = data.Replace("<78>", "").Split(';');
             if (packet.Length != 2) { return; }
-            if (!IsNumeric(packet[1])) { return; }
-            if (!IsNumeric(packet[0])) { return; }
+            if (!isNumeric(packet[1])) { return; }
+            if (!isNumeric(packet[0])) { return; }
 
             byte x = Convert.ToByte(packet[0]);
             byte  y = Convert.ToByte(packet[1]);
@@ -232,75 +232,75 @@ namespace FORJERUM
             if ((x < 0) || (x > Globals.MaxMapsX)) { return; }
             if ((y < 0) || (y > Globals.MaxMapsY)) { return; }
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].X = x;
-            PStruct.character[index, PStruct.player[index].SelectedChar].Y = y;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X = x;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y = y;
 
-            SendData.Send_PlayerXY(index);
+            SendData.sendPlayerXY(s);
         }
         //*********************************************************************************************
-        // ReceivedFriendAdd / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedFriendAdd / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedFriendAdd(int index)
+        public static void receivedFriendAdd(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Possíveis tentativas de hacker
-            if ((PStruct.tempplayer[index].targettype != 1) || (PStruct.tempplayer[index].target <= 0) || (PStruct.tempplayer[index].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.Send_MsgToPlayer(index, lang.player_can_not_receive_invite_at_this_moment, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if ((PlayerStruct.tempplayer[s].targettype != 1) || (PlayerStruct.tempplayer[s].target <= 0) || (PlayerStruct.tempplayer[s].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.sendMsgToPlayer(s, lang.player_can_not_receive_invite_at_this_moment, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             //Não pode convidar ele mesmo
-            if (PStruct.tempplayer[index].target == index)
+            if (PlayerStruct.tempplayer[s].target == s)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_can_not_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_can_not_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            //O alvo é o index
-            int target = PStruct.tempplayer[index].target;
-            int clientindex = UserConnection.Getindex(target);
+            //O alvo é o s
+            int target = PlayerStruct.tempplayer[s].target;
+            int clients = UserConnection.getS(target);
 
 
             //Verifica se ele não se desconectou no processo
-            if ((clientindex < 0) || (clientindex >= WinsockAsync.Clients.Count()))
+            if ((clients < 0) || (clients >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[clientindex].IsConnected)
+            if (!WinsockAsync.Clients[clients].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Verificar se já não está na lista
-            if (FriendRelations.FriendNameExist(index, PStruct.character[target, PStruct.player[target].SelectedChar].CharacterName))
+            if (FriendRelations.friendNameExist(s, PlayerStruct.character[target, PlayerStruct.player[target].SelectedChar].CharacterName))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_already_is_your_friend, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_already_is_your_friend, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Criar a váriaveis gerais
-            PStruct.tempplayer[index].Inviting = PStruct.tempplayer[index].target;
-            PStruct.tempplayer[target].Invited = index;
-            PStruct.tempplayer[index].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
-            PStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[s].Inviting = PlayerStruct.tempplayer[s].target;
+            PlayerStruct.tempplayer[target].Invited = s;
+            PlayerStruct.tempplayer[s].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
 
             //Envia o convite
-            SendData.Send_FriendRequest(index, target);
+            SendData.sendFriendRequest(s, target);
         }
         //*********************************************************************************************
-        // ReceivedFriendResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedFriendResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedFriendResponse(int index, string data)
+        public static void receivedFriendResponse(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -309,53 +309,53 @@ namespace FORJERUM
             string[] splited = data.Replace("<91>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 2)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int response = Convert.ToInt32(splited[0]);
-            int clientindex = UserConnection.Getindex(PStruct.tempplayer[index].Invited);
+            int clients = UserConnection.getS(PlayerStruct.tempplayer[s].Invited);
 
             //Verificar se o jogador não se desconectou no processo
-            if ((clientindex < 0) || (clientindex >= WinsockAsync.Clients.Count()))
+            if ((clients < 0) || (clients >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[clientindex].IsConnected)
+            if (!WinsockAsync.Clients[clients].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            int target = PStruct.tempplayer[index].Invited;
+            int target = PlayerStruct.tempplayer[s].Invited;
 
             if (response == 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_have_a_new_friend, Globals.ColorGreen, Globals.Msg_Type_Server);
-                SendData.Send_MsgToPlayer(target, PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + " " + lang.accepted_your_friend_request, Globals.ColorGreen, Globals.Msg_Type_Server);
-                FriendRelations.AddFriend(index, target);
-                FriendRelations.AddFriend(target, index);
+                SendData.sendMsgToPlayer(s, lang.you_have_a_new_friend, Globals.ColorGreen, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(target, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + " " + lang.accepted_your_friend_request, Globals.ColorGreen, Globals.Msg_Type_Server);
+                FriendRelations.addFriend(s, target);
+                FriendRelations.addFriend(target, s);
             }
             else if (response == 1)
             {
                 //Limpa os valores gerais
-                PStruct.tempplayer[index].InviteTimer = 0;
-                PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                PStruct.tempplayer[index].Invited = 0;
-                SendData.Send_MsgToPlayer(target, PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + " " + lang.refused_your_friend_request, Globals.ColorRed, Globals.Msg_Type_Server);
+                PlayerStruct.tempplayer[s].InviteTimer = 0;
+                PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                PlayerStruct.tempplayer[s].Invited = 0;
+                SendData.sendMsgToPlayer(target, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + " " + lang.refused_your_friend_request, Globals.ColorRed, Globals.Msg_Type_Server);
             }
             
         }
         //*********************************************************************************************
-        // ReceivedFriendDelete / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedFriendDelete / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedFriendDelete(int index, string data)
+        public static void receivedFriendDelete(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -364,21 +364,21 @@ namespace FORJERUM
             string[] splited = data.Replace("<92>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 200)) { return; }
             int friendnum = Convert.ToInt32(splited[0]);
 
-            FriendRelations.DeleteFriend(index, friendnum);
+            FriendRelations.deleteFriend(s, friendnum);
 
         }
         //*********************************************************************************************
-        // ReceivedError / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedError / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Log de erros que os jogadores recebem no cliente.
         //*********************************************************************************************
-        public static void ReceivedError(string data)
+        public static void receivedError(string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
+            if (Extensions.ExtensionApp.extendMyApp
                 (MethodBase.GetCurrentMethod().Name, data) != null)
             {
                 return;
@@ -386,77 +386,77 @@ namespace FORJERUM
 
             //CÓDIGO
             string[] packet = data.Replace("<88>", "").Split(';');
-            Database.LogAdd(packet[0]);
+            Database.Handler.logAdd(packet[0]);
             Console.WriteLine("Um novo erro foi registrado, verifique-o em Log.txt.");
         }
         //*********************************************************************************************
         // ReceiveWPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedWPoints(int index, string data)
+        public static void receivedWPoints(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 10) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 10) { return; }
             string[] packet = data.Replace("<77>", "").Split(';');
             if (packet.Length != 2) { return; }
-            if (!IsNumeric(packet[1])) { return; }
+            if (!isNumeric(packet[1])) { return; }
 
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.player[i].Email == packet[0])
+                if (PlayerStruct.player[i].Email == packet[0])
                 {
-                    WinsockAsync.ShutdownUser(UserConnection.Getindex(i));
+                    WinsockAsync.shutdownUser(UserConnection.getS(i));
                 }
             }
 
-            if (Database.AddWPoints(packet[0], Convert.ToInt32(packet[1])))
-            { SendData.Send_MsgToPlayer(index, lang.account_received_wpoints_success, Globals.ColorGreen, Globals.Msg_Type_Server); }
-            else { SendData.Send_MsgToPlayer(index, lang.wpoints_deliver_fail, Globals.ColorGreen, Globals.Msg_Type_Server); }
+            if (Database.Accounts.addWPoints(packet[0], Convert.ToInt32(packet[1])))
+            { SendData.sendMsgToPlayer(s, lang.account_received_wpoints_success, Globals.ColorGreen, Globals.Msg_Type_Server); }
+            else { SendData.sendMsgToPlayer(s, lang.wpoints_deliver_fail, Globals.ColorGreen, Globals.Msg_Type_Server); }
         }
         //*********************************************************************************************
-        // ReceivedKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Retirar determinado jogador do jogo.
         //*********************************************************************************************
-        public static void ReceivedKick(int index, string data)
+        public static void receivedKick(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 10) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 10) { return; }
             string[] packet = data.Replace("<76>", "").Split(';');
             if (packet.Length != 1) { return; }
 
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == packet[0])
+                if (PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == packet[0])
                 {
-                    SendData.Send_MsgToPlayer(index, lang.player_has_been_kicked_success, Globals.ColorGreen, Globals.Msg_Type_Server);
-                    WinsockAsync.ShutdownUser(UserConnection.Getindex(i));
+                    SendData.sendMsgToPlayer(s, lang.player_has_been_kicked_success, Globals.ColorGreen, Globals.Msg_Type_Server);
+                    WinsockAsync.shutdownUser(UserConnection.getS(i));
                     return;
                 }
             }
-            SendData.Send_MsgToPlayer(index, lang.player_not_found, Globals.ColorGreen, Globals.Msg_Type_Server);
+            SendData.sendMsgToPlayer(s, lang.player_not_found, Globals.ColorGreen, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
-        // ReceivedTP / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedTP / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Jogador tentando se teleportar através de um TP Point.
         //*********************************************************************************************
-        public static void ReceivedTP(int index, string data)
+        public static void receivedTP(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -464,7 +464,7 @@ namespace FORJERUM
             //CÓDIGO
             string[] packet = data.Replace("<79>", "").Split(';');
             if (packet.Length != 1) { return; }
-            if (!IsNumeric(packet[0])) { return; }
+            if (!isNumeric(packet[0])) { return; }
             if (Convert.ToInt32(packet[0]) < 0) { return; }
             if (Convert.ToInt32(packet[0]) > 5) { return; }
 
@@ -472,15 +472,15 @@ namespace FORJERUM
 
             for (int i = 1; i < Globals.Max_TpPoints; i++)
             {
-                if (MStruct.tppoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (MapStruct.tppoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold >= MStruct.tppoint[i].cost)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold >= MapStruct.tppoint[i].cost)
                     {
-                        if (id <= MStruct.tppoint[i].count)
+                        if (id <= MapStruct.tppoint[i].count)
                         {
-                            MovementRelations.PlayerWarp(index, MStruct.tppoint[i].tp_map[id], MStruct.tppoint[i].tp_x[id], MStruct.tppoint[i].tp_y[id]);
-                            PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= MStruct.tppoint[i].cost;
-                            SendData.Send_PlayerG(index);
+                            MovementRelations.playerWarp(s, MapStruct.tppoint[i].tp_map[id], MapStruct.tppoint[i].tp_x[id], MapStruct.tppoint[i].tp_y[id]);
+                            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold -= MapStruct.tppoint[i].cost;
+                            SendData.sendPlayerG(s);
                         }
                     }
                     else
@@ -491,100 +491,100 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // ReceivedSavePoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedsavePoint / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Salvar nova posição de respawn do jogador.
         //*********************************************************************************************
-        public static void ReceivedSavePoint(int index)
+        public static void receivedsavePoint(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            for (int i = 1; i < Globals.Max_SavePoints; i++)
+            for (int i = 1; i < Globals.Max_savePoints; i++)
             {
-                if (MStruct.savepoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (MapStruct.savepoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    PStruct.character[index, PStruct.player[index].SelectedChar].BootMap = MStruct.savepoint[i].save_map;
-                    PStruct.character[index, PStruct.player[index].SelectedChar].BootX = MStruct.savepoint[i].save_x;
-                    PStruct.character[index, PStruct.player[index].SelectedChar].BootY = MStruct.savepoint[i].save_y;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].BootMap = MapStruct.savepoint[i].save_map;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].BootX = MapStruct.savepoint[i].save_x;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].BootY = MapStruct.savepoint[i].save_y;
                     return;
                 }
             }
         }
         //*********************************************************************************************
-        // ReceivedPremmy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedPremmy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Adicionar dias de Premmy através de um comando.
         //*********************************************************************************************
-        public static void ReceivedPremmy(int index, string data)
+        public static void receivedPremmy(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 10) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 10) { return; }
             string[] packet = data.Replace("<74>", "").Split(';');
             if (packet.Length != 2) { return; }
-            if (!IsNumeric(packet[1])) { return; }
+            if (!isNumeric(packet[1])) { return; }
 
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.player[i].Email == packet[0])
+                if (PlayerStruct.player[i].Email == packet[0])
                 {
-                    WinsockAsync.ShutdownUser(UserConnection.Getindex(i));
+                    WinsockAsync.shutdownUser(UserConnection.getS(i));
                 }
             }
 
-            if (Database.AddPremmy(packet[0], Convert.ToInt32(packet[1])))
-            { SendData.Send_MsgToPlayer(index, lang.account_received_premmy_success, Globals.ColorGreen, Globals.Msg_Type_Server); }
-            else { SendData.Send_MsgToPlayer(index, lang.account_received_premmy_fail, Globals.ColorGreen, Globals.Msg_Type_Server); }
+            if (Database.Accounts.addPremmy(packet[0], Convert.ToInt32(packet[1])))
+            { SendData.sendMsgToPlayer(s, lang.account_received_premmy_success, Globals.ColorGreen, Globals.Msg_Type_Server); }
+            else { SendData.sendMsgToPlayer(s, lang.account_received_premmy_fail, Globals.ColorGreen, Globals.Msg_Type_Server); }
         }
         //*********************************************************************************************
-        // ReceivedBan / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedBan / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para banir determinado jogador.
         //*********************************************************************************************
-        public static void ReceivedBan(int index, string data)
+        public static void receivedBan(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 10) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 10) { return; }
             string[] packet = data.Replace("<75>", "").Split(';');
             if (packet.Length != 2) { return; }
-            if (!IsNumeric(packet[1])) { return; }
+            if (!isNumeric(packet[1])) { return; }
 
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.player[i].Email == packet[0])
+                if (PlayerStruct.player[i].Email == packet[0])
                 {
-                    WinsockAsync.ShutdownUser(UserConnection.Getindex(i));
+                    WinsockAsync.shutdownUser(UserConnection.getS(i));
                 }
             }
 
-            if (Database.AddBan(packet[0], Convert.ToInt32(packet[1])))
-            { SendData.Send_MsgToPlayer(index, lang.account_banned_success, Globals.ColorGreen, Globals.Msg_Type_Server); }
-            else { SendData.Send_MsgToPlayer(index, lang.account_banned_fail, Globals.ColorGreen, Globals.Msg_Type_Server); }
+            if (Database.Accounts.addBan(packet[0], Convert.ToInt32(packet[1])))
+            { SendData.sendMsgToPlayer(s, lang.account_banned_success, Globals.ColorGreen, Globals.Msg_Type_Server); }
+            else { SendData.sendMsgToPlayer(s, lang.account_banned_fail, Globals.ColorGreen, Globals.Msg_Type_Server); }
         }
         //*********************************************************************************************
-        // ReceivedLogin / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedLogin / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedLogin(int index, string data)
+        public static void receivedLogin(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -597,140 +597,140 @@ namespace FORJERUM
             if (login[0].Length > 100) { return; }
             if (login[1].Length > 8) { return; }
 
-            if (Database.NameIsIllegal(login[0])) { return; }
-            if (Database.NameIsIllegal(login[1])) { return; }
-            if ((!PStruct.tempplayer[index].Logged) && (!String.IsNullOrEmpty(PStruct.player[index].Email))) { Database.ClearPlayer(index, true); }
+            if (Database.Handler.nameIsIllegal(login[0])) { return; }
+            if (Database.Handler.nameIsIllegal(login[1])) { return; }
+            if ((!PlayerStruct.tempplayer[s].Logged) && (!String.IsNullOrEmpty(PlayerStruct.player[s].Email))) { PlayerStruct.clearPlayer(s, true); }
 
             login[0] = login[0].ToLower();
 
-            string response = WinsockAsync.LoginAnswer(login, index);
-            //SendData.Send_NStatus(index, "Acesso bloqueado, o servidor está em manutenção."); return;
+            string response = WinsockAsync.LoginAnswer(login, s);
+            //SendData.sendNStatus(s, "Acesso bloqueado, o servidor está em manutenção."); return;
 
-            SendData.SendToUser(index, String.Format("<4 {0}>{1}</4>\n", login[0], response));
-            PStruct.tempplayer[index].ingame = false;
+            SendData.sendToUser(s, String.Format("<4 {0}>{1}</4>\n", login[0], response));
+            PlayerStruct.tempplayer[s].ingame = false;
             if (response == "a")
             {
-                if (PlayerRelations.IsPlayerBanned(index)) { SendData.Send_NStatus(index, "Essa conta está banida até " + PStruct.player[index].Banned.ToString()); return; }
-                if (!PStruct.player[index].Confirmed)
+                if (PlayerRelations.isPlayerBanned(s)) { SendData.sendNStatus(s, "Essa conta está banida até " + PlayerStruct.player[s].Banned.ToString()); return; }
+                if (!PlayerStruct.player[s].Confirmed)
                 {
-                    SendData.SendToUser(index, String.Format("<4 {0}>{1}</4>\n", "", "x"));
+                    SendData.sendToUser(s, String.Format("<4 {0}>{1}</4>\n", "", "x"));
                 }
                 else
                 {
-                    SendData.SendToUser(index, String.Format("<4 {0}>{1}</4>\n", "", "r"));
+                    SendData.sendToUser(s, String.Format("<4 {0}>{1}</4>\n", "", "r"));
                 }
-                ReceivedLoadChar(index, 0);
-                ReceivedLoadChar(index, 1);
-                ReceivedLoadChar(index, 2);
-                SendData.Send_Premmy(index);
-                SendData.Send_WPoints(index);
-                SendData.Send_Notice(index);
+                receivedLoadChar(s, 0);
+                receivedLoadChar(s, 1);
+                receivedLoadChar(s, 2);
+                SendData.sendPremmy(s);
+                SendData.sendWPoints(s);
+                SendData.sendNotice(s);
                 //Carrega os itens no banco
-                Database.LoadBank(index);
-                Database.LoadFriendList(index);
-                PStruct.tempplayer[index].Logged = true;
+                Database.Banks.loadBank(s);
+                Database.FriendLists.loadFriendList(s);
+                PlayerStruct.tempplayer[s].Logged = true;
             }
         }
         //*********************************************************************************************
-        // ReceivedWarp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedWarp / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para sair do mapa.
         //*********************************************************************************************
-        public static void ReceivedWarp(int index, string data)
+        public static void receivedWarp(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
             string[] packet = data.Replace("<70>", "").Split(';');
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access < 3) { return; }
-            MovementRelations.PlayerWarp(index, Convert.ToInt32(packet[0]), PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y);
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access < 3) { return; }
+            MovementRelations.playerWarp(s, Convert.ToInt32(packet[0]), PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y);
         }
         //*********************************************************************************************
-        // ReceivedCharacterSelection / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedCharacterSelection / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedCharacterSelection(int index)
+        public static void receivedCharacterSelection(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].ingame)
+            if (PlayerStruct.tempplayer[s].ingame)
             {
                 //Sai da troca
-                if (PStruct.tempplayer[index].InTrade > 0)
+                if (PlayerStruct.tempplayer[s].InTrade > 0)
                 {
-                    TradeRelations.GiveTrade(index);
-                    TradeRelations.GiveTrade(PStruct.tempplayer[index].InTrade);
+                    TradeRelations.giveTrade(s);
+                    TradeRelations.giveTrade(PlayerStruct.tempplayer[s].InTrade);
 
 
-                    if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
+                    if ((UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) >= WinsockAsync.Clients.Count()))
                     {
-                        TradeRelations.ClearTempTrade(PStruct.tempplayer[index].InTrade);
-                        TradeRelations.ClearTempTrade(index);
+                        TradeRelations.clearTempTrade(PlayerStruct.tempplayer[s].InTrade);
+                        TradeRelations.clearTempTrade(s);
                         return;
                     }
 
-                    if (WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
+                    if (WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].InTrade))].IsConnected)
                     {
-                        SendData.Send_PlayerG(PStruct.tempplayer[index].InTrade);
-                        SendData.Send_TradeClose(PStruct.tempplayer[index].InTrade);
-                        SendData.Send_InvSlots(PStruct.tempplayer[index].InTrade, PStruct.player[PStruct.tempplayer[index].InTrade].SelectedChar);
+                        SendData.sendPlayerG(PlayerStruct.tempplayer[s].InTrade);
+                        SendData.sendTradeClose(PlayerStruct.tempplayer[s].InTrade);
+                        SendData.sendInvSlots(PlayerStruct.tempplayer[s].InTrade, PlayerStruct.player[PlayerStruct.tempplayer[s].InTrade].SelectedChar);
                     }
 
-                    TradeRelations.ClearTempTrade(PStruct.tempplayer[index].InTrade);
-                    TradeRelations.ClearTempTrade(index);
+                    TradeRelations.clearTempTrade(PlayerStruct.tempplayer[s].InTrade);
+                    TradeRelations.clearTempTrade(s);
                 }
 
                 //Sai do Craft
-                if (PStruct.tempplayer[index].InCraft)
+                if (PlayerStruct.tempplayer[s].InCraft)
                 {
                     for (int i = 1; i < Globals.Max_Craft; i++)
                     {
-                        if (PStruct.craft[index, i].num > 0)
+                        if (PlayerStruct.craft[s, i].num > 0)
                         {
-                            InventoryRelations.GiveItem(index, PStruct.craft[index, i].type, PStruct.craft[index, i].num, PStruct.craft[index, i].value, PStruct.craft[index, i].refin, PStruct.craft[index, i].exp);
+                            InventoryRelations.giveItem(s, PlayerStruct.craft[s, i].type, PlayerStruct.craft[s, i].num, PlayerStruct.craft[s, i].value, PlayerStruct.craft[s, i].refin, PlayerStruct.craft[s, i].exp);
                         }
                     }
                 }
 
                 //Salva o jogador SE PRECISAR
-                if (PStruct.tempplayer[index].ingame)
+                if (PlayerStruct.tempplayer[s].ingame)
                 {
-                    Database.SaveCharacter(index, PStruct.player[index].Email, PStruct.player[index].SelectedChar);
-                    Database.SaveBank(index);
-                    Database.SaveFriendList(index);
+                    Database.Characters.saveCharacter(s, PlayerStruct.player[s].Email, PlayerStruct.player[s].SelectedChar);
+                    Database.Banks.saveBank(s);
+                    Database.FriendLists.saveFriendList(s);
                 }
 
                 //Sai do grupo
-                if (PStruct.tempplayer[index].Party > 0)
+                if (PlayerStruct.tempplayer[s].Party > 0)
                 {
-                    PartyRelations.KickParty(index, index, true);
+                    PartyRelations.kickParty(s, s, true);
                 }
 
                 //Vamos avisar ao mapa que o jogador saiu
-                SendData.Send_PlayerLeft(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index);
+                SendData.sendPlayerLeft(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s);
 
                 //Apagamos array do jogador
-                Database.ClearPlayer(index);
-                PStruct.ClearTempPlayer(index);
+                PlayerStruct.clearPlayer(s);
+                PlayerStruct.clearTempPlayer(s);
 
                 //Seleção de personagem
-                ReceivedLoadChar(index, 0);
-                ReceivedLoadChar(index, 1);
-                ReceivedLoadChar(index, 2);
+                receivedLoadChar(s, 0);
+                receivedLoadChar(s, 1);
+                receivedLoadChar(s, 2);
 
                 //Continua conectado
                 //Ingame no!
-                PStruct.tempplayer[index].ingame = false;
-                PStruct.tempplayer[index].Logged = true;
+                PlayerStruct.tempplayer[s].ingame = false;
+                PlayerStruct.tempplayer[s].Logged = true;
             }
             else
             {
@@ -738,13 +738,13 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // ReceivedRegister / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedRegister / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedRegister(int index, string data)
+        public static void receivedRegister(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -757,34 +757,34 @@ namespace FORJERUM
             if (register[1].Length > 8) { return; }
             if (register[2].Length > 100) { return; }
 
-            if (Database.NameIsIllegal(register[0])) { return; }
-            if (Database.NameIsIllegal(register[1])) { return; }
-            if (Database.NameIsIllegal(register[2])) { return; }
+            if (Database.Handler.nameIsIllegal(register[0])) { return; }
+            if (Database.Handler.nameIsIllegal(register[1])) { return; }
+            if (Database.Handler.nameIsIllegal(register[2])) { return; }
 
             register[2] = register[2].ToLower();
 
-            if (Database.AccountExists(register[2]))
+            if (Database.Accounts.accountExists(register[2]))
             {
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>e</5>\n", register[2], register[1]));
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>e</5>\n", register[2], register[1]));
             }
             else
             {
-                Database.RegisterNewAccount(index, register[0], register[1], register[2]);
-                Database.SaveBank(index);
-                Database.SaveFriendList(index);
-                SendData.SendToUser(index, String.Format("<5 {0};{1}>c</5>\n", register[2], register[1]));
+                Database.Accounts.registerNewAccount(s, register[0], register[1], register[2]);
+                Database.Banks.saveBank(s);
+                Database.FriendLists.saveFriendList(s);
+                SendData.sendToUser(s, String.Format("<5 {0};{1}>c</5>\n", register[2], register[1]));
                 WinsockAsync.Log(String.Format("Usuário {0} registrado!", register[0]));
             }
         }
         //*********************************************************************************************
-        // ReceivedNewChar / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedNewChar / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Criação de um novo personagem.
         //*********************************************************************************************
-        public static void ReceivedNewChar(int index, string data)
+        public static void receivedNewChar(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -793,17 +793,17 @@ namespace FORJERUM
             string[] newChar = data.Replace("<6>", "").Split(';');
 
             if (newChar.Length != 11) { return; }
-            if (!IsNumeric(newChar[1])) { return;}
-            if (!IsNumeric(newChar[2])) { return; }
-            if (!IsNumeric(newChar[3])) { return; }
-            if (!IsNumeric(newChar[4])) { return; }
-            if (!IsNumeric(newChar[5])) { return; }
-            if (!IsNumeric(newChar[6])) { return; }
-            if (!IsNumeric(newChar[7])) { return; }
-            if (!IsNumeric(newChar[8])) { return; }
-            if (!IsNumeric(newChar[9])) { return; }
-            if (!IsNumeric(newChar[10])) { return; }
-            if (Database.NameIsIllegal(newChar[0])) { return; }
+            if (!isNumeric(newChar[1])) { return;}
+            if (!isNumeric(newChar[2])) { return; }
+            if (!isNumeric(newChar[3])) { return; }
+            if (!isNumeric(newChar[4])) { return; }
+            if (!isNumeric(newChar[5])) { return; }
+            if (!isNumeric(newChar[6])) { return; }
+            if (!isNumeric(newChar[7])) { return; }
+            if (!isNumeric(newChar[8])) { return; }
+            if (!isNumeric(newChar[9])) { return; }
+            if (!isNumeric(newChar[10])) { return; }
+            if (Database.Handler.nameIsIllegal(newChar[0])) { return; }
             if (newChar[0].Length < 3) { return; }
             if (newChar[0].Length > 15) { return; }
             if (Convert.ToInt32(newChar[1]) > Globals.MaxChars - 1) { return; }
@@ -839,81 +839,81 @@ namespace FORJERUM
             int hue = Convert.ToInt32(newChar[9]);
             int gender = Convert.ToInt32(newChar[10]);
 
-            if ((!PlayerRelations.IsPlayerPremmy(index)) && (classid == 6)) { SendData.Send_NStatus(index, "Raça disponível apenas para assinantes."); return; }
+            if ((!PlayerRelations.isPlayerPremmy(s)) && (classid == 6)) { SendData.sendNStatus(s, "Raça disponível apenas para assinantes."); return; }
 
             try { if ((Convert.ToInt32(newChar[1]) < 0) || (Convert.ToInt32(newChar[1]) > Globals.MaxChars)) { return; } } catch { return; }
-            if (Database.CharExists(newChar[0]))
+            if (Database.Characters.charExists(newChar[0]))
             {
-                SendData.SendToUser(index, String.Format("<6 {0}>e</6>\n", newChar[0]));
+                SendData.sendToUser(s, String.Format("<6 {0}>e</6>\n", newChar[0]));
             }
             else
             {
-                Database.CreateNewChar(index, PStruct.player[index].Email, id, name, classid, fire, earth, water, wind, dark, light, hue, gender);
-                SendData.SendToUser(index, String.Format("<6 {0}>c</6>\n", newChar[0]));
-                //ReceivedLoadChar(index, 0);
-                //ReceivedLoadChar(index, 1);
-                //ReceivedLoadChar(index, 2);
+                Database.Characters.createNewChar(s, PlayerStruct.player[s].Email, id, name, classid, fire, earth, water, wind, dark, light, hue, gender);
+                SendData.sendToUser(s, String.Format("<6 {0}>c</6>\n", newChar[0]));
+                //receivedLoadChar(s, 0);
+                //receivedLoadChar(s, 1);
+                //receivedLoadChar(s, 2);
                 //string[] splited = data.Replace("<8>", "").Split(';');
                 string data2 = "<8>" + newChar[1];
-                ReceivedIngame(index, data2);
+                receivedIngame(s, data2);
                 WinsockAsync.Log(String.Format("Novo personagem {0}" + " Slot" + "{1}", newChar[0], newChar[1]));
             }
         }
         //*********************************************************************************************
-        // ReceivedLoadChar / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedLoadChar / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedLoadChar(int index, int ID)
+        public static void receivedLoadChar(int s, int ID)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, ID) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, ID) != null)
             {
                 return;
             }
 
             //CÓDIGO
             int intcharId = ID;
-            if (Database.SlotExists(PStruct.player[index].Email, ID.ToString()))
+            if (Database.Characters.slotExists(PlayerStruct.player[s].Email, ID.ToString()))
             {
-                Database.LoadShowChar(index, PStruct.player[index].Email, intcharId);
-                string charName = (PStruct.character[index, intcharId].CharacterName);
-                int charSpriteindex = (PStruct.character[index, intcharId].Spriteindex);
-                int charClass = (PStruct.character[index, intcharId].ClassId);
-                string charSprite = (PStruct.character[index, intcharId].Sprite);
-                int charLevel = (PStruct.character[index, intcharId].Level);
-                int charExp = (PStruct.character[index, intcharId].Exp);
-                int charFire = (PStruct.character[index, intcharId].Fire);
-                int charEarth = (PStruct.character[index, intcharId].Earth);
-                int charWater = (PStruct.character[index, intcharId].Water);
-                int charWind = (PStruct.character[index, intcharId].Wind);
-                int charDark = (PStruct.character[index, intcharId].Dark);
-                int charLight = (PStruct.character[index, intcharId].Light);
-                int charMap = (PStruct.character[index, intcharId].Map);
-                byte charX = (PStruct.character[index, intcharId].X);
-                byte charY = (PStruct.character[index, intcharId].Y);
-                int charHue = (PStruct.character[index, intcharId].Hue);
-                int charGender = (PStruct.character[index, intcharId].Gender);
+                Database.Characters.loadShowChar(s, PlayerStruct.player[s].Email, intcharId);
+                string charName = (PlayerStruct.character[s, intcharId].CharacterName);
+                int charSprites = (PlayerStruct.character[s, intcharId].Sprites);
+                int charClass = (PlayerStruct.character[s, intcharId].ClassId);
+                string charSprite = (PlayerStruct.character[s, intcharId].Sprite);
+                int charLevel = (PlayerStruct.character[s, intcharId].Level);
+                int charExp = (PlayerStruct.character[s, intcharId].Exp);
+                int charFire = (PlayerStruct.character[s, intcharId].Fire);
+                int charEarth = (PlayerStruct.character[s, intcharId].Earth);
+                int charWater = (PlayerStruct.character[s, intcharId].Water);
+                int charWind = (PlayerStruct.character[s, intcharId].Wind);
+                int charDark = (PlayerStruct.character[s, intcharId].Dark);
+                int charLight = (PlayerStruct.character[s, intcharId].Light);
+                int charMap = (PlayerStruct.character[s, intcharId].Map);
+                byte charX = (PlayerStruct.character[s, intcharId].X);
+                byte charY = (PlayerStruct.character[s, intcharId].Y);
+                int charHue = (PlayerStruct.character[s, intcharId].Hue);
+                int charGender = (PlayerStruct.character[s, intcharId].Gender);
 
                 int characterslot = ID;
 
                 //WinsockAsync.Log(String.Format(charName + charGender + charClass + charLevel));
-                SendData.SendToUser(index, String.Format("<7 {0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16}>{17}</7>\n", ID, charName, charSpriteindex, charClass, charSprite, charLevel, charExp, charFire, charEarth, charWater, charWind, charDark, charLight, charMap, charX, charY, charHue, charGender));
+                SendData.sendToUser(s, String.Format("<7 {0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16}>{17}</7>\n", ID, charName, charSprites, charClass, charSprite, charLevel, charExp, charFire, charEarth, charWater, charWind, charDark, charLight, charMap, charX, charY, charHue, charGender));
             }
             else
             {
                 WinsockAsync.Log(String.Format("Enviando personagem nulo..."));
-                SendData.SendToUser(index, String.Format("<7 {0};e;e;e;e;e;e;e;e;e;e;e;e;e;e;e;e>e</7>\n", ID));
+                SendData.sendToUser(s, String.Format("<7 {0};e;e;e;e;e;e;e;e;e;e;e;e;e;e;e;e>e</7>\n", ID));
             }
         }
         //*********************************************************************************************
-        // ReceivedDeleteChar / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedDeleteChar / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para deletar determinado personagem.
         //*********************************************************************************************
-        public static void ReceivedDeleteChar(int index, string data)
+        public static void receivedDeleteChar(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -923,38 +923,38 @@ namespace FORJERUM
             string[] splited = data.Replace("<60>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
 
             int charId = Convert.ToInt32(splited[0]);
 
             if (charId > Globals.MaxChars - 1) { return; }
             if (charId < 0) { return; }
 
-            Database.DeleteChar(index, charId);
-            ReceivedLoadChar(index, charId);
+            Database.Characters.deleteChar(s, charId);
+            receivedLoadChar(s, charId);
         }
         //*********************************************************************************************
-        // ReceivedIngame / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedIngame / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para entrar no jogo.
         //*********************************************************************************************
-        public static void ReceivedIngame(int index, string data)
+        public static void receivedIngame(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Verifica se o jogador já não está no jogo
-            if (PStruct.tempplayer[index].ingame) { return; }
+            if (PlayerStruct.tempplayer[s].ingame) { return; }
             
             //Dividimos os dados para análise
             string[] splited = data.Replace("<8>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
 
             int charId = Convert.ToInt32(splited[0]);
 
@@ -962,176 +962,176 @@ namespace FORJERUM
             if (charId < 0) { return; }
 
             //Carrega TODOS os dados do personagem
-            if (!Database.LoadCompleteChar(index, PStruct.player[index].Email, charId)) { return; }
+            if (!Database.Characters.loadCompleteChar(s, PlayerStruct.player[s].Email, charId)) { return; }
 
             //Personagem selecionado(não usamos muito isso agora)
-            PStruct.player[index].SelectedChar = Convert.ToInt32(charId);
+            PlayerStruct.player[s].SelectedChar = Convert.ToInt32(charId);
 
             //Relacionado a definição de vida para novos e velhos jogadores
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Vitality > PStruct.GetPlayerMaxVitality(index))
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Vitality > PlayerRelations.getPlayerMaxVitality(s))
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Vitality = PStruct.GetPlayerMaxVitality(index);
-                PStruct.tempplayer[index].Vitality = PStruct.GetPlayerMaxVitality(index);
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Vitality = PlayerRelations.getPlayerMaxVitality(s);
+                PlayerStruct.tempplayer[s].Vitality = PlayerRelations.getPlayerMaxVitality(s);
             }
             //else
             //{
-                PStruct.tempplayer[index].Vitality = PStruct.character[index, PStruct.player[index].SelectedChar].Vitality;
+                PlayerStruct.tempplayer[s].Vitality = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Vitality;
             //}
 
             //Relacionado a definição de mana para novos e velhos jogadores
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Spirit > PStruct.GetPlayerMaxSpirit(index))
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Spirit > PlayerRelations.getPlayerMaxSpirit(s))
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Spirit = PStruct.GetPlayerMaxSpirit(index);
-                PStruct.tempplayer[index].Spirit = PStruct.GetPlayerMaxSpirit(index);
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Spirit = PlayerRelations.getPlayerMaxSpirit(s);
+                PlayerStruct.tempplayer[s].Spirit = PlayerRelations.getPlayerMaxSpirit(s);
             }
             //else
            // {
-                PStruct.tempplayer[index].Spirit = PStruct.character[index, PStruct.player[index].SelectedChar].Spirit;
+                PlayerStruct.tempplayer[s].Spirit = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Spirit;
            // }
 
             //Se o dono entrou, dar acesso(mesmo que já tenha, tanto faz)
-            if (PStruct.player[index].Email == Globals.MASTER_EMAIL) { PStruct.character[index, PStruct.player[index].SelectedChar].Access = 10; }
+            if (PlayerStruct.player[s].Email == Globals.MASTER_EMAIL) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access = 10; }
 
             //Valores gerais de guilda e sua limpeza e auto correção
-            int guildnum = PStruct.character[index, PStruct.player[index].SelectedChar].Guild;
+            int guildnum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild;
             
 
             if (guildnum > 0)
             {
-                if (String.IsNullOrEmpty(GStruct.guild[guildnum].name)) { PStruct.character[index, PStruct.player[index].SelectedChar].Guild = 0; }
+                if (String.IsNullOrEmpty(GuildStruct.guild[guildnum].name)) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = 0; }
                 bool find = true;
 
                 for (int i = 1; i < Globals.Max_Guild_Members; i++)
                 {
-                    if (GStruct.guild[guildnum].memberlist[i] == PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName)
+                    if (GuildStruct.guild[guildnum].memberlist[i] == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName)
                     {
                         find = false;
                         break;
                     }
                 }
 
-                if (find) { PStruct.character[index, PStruct.player[index].SelectedChar].Guild = 0; }
+                if (find) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = 0; }
             }
 
             //O servidor agora sabe que o jogador está dentro do jogo.
-            PStruct.tempplayer[index].ingame = true;
-            PStruct.tempplayer[index].movespeed = Globals.NormalMoveSpeed;
+            PlayerStruct.tempplayer[s].ingame = true;
+            PlayerStruct.tempplayer[s].movespeed = Globals.NormalMoveSpeed;
 
             //Avisamos todos no mapa sobre o novo jogador.
-            SendData.Send_PlayerDataToMapBut(index, PStruct.player[index].Username, charId);
+            SendData.sendPlayerDataToMapBut(s, PlayerStruct.player[s].Username, charId);
             
             //Reset pvp values
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPBanTimer > 0) { PStruct.character[index, PStruct.player[index].SelectedChar].PVPBanTimer += Loops.TickCount.ElapsedMilliseconds; }
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer > 0) { PStruct.character[index, PStruct.player[index].SelectedChar].PVPChangeTimer += Loops.TickCount.ElapsedMilliseconds; }
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty > 0) { PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty += Loops.TickCount.ElapsedMilliseconds; PStruct.tempplayer[index].SORE = true; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPBanTimer > 0) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPBanTimer += Loops.TickCount.ElapsedMilliseconds; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPChangeTimer > 0) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPChangeTimer += Loops.TickCount.ElapsedMilliseconds; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPPenalty > 0) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPPenalty += Loops.TickCount.ElapsedMilliseconds; PlayerStruct.tempplayer[s].SORE = true; }
 
             //Send PVP values
-            SendData.Send_PlayerPvpChangeTimer(index);
-            SendData.Send_PlayerPvpBanTimer(index);
-            SendData.Send_PlayerPvpSoreTimer(index);
+            SendData.sendPlayerPvpChangeTimer(s);
+            SendData.sendPlayerPvpBanTimer(s);
+            SendData.sendPlayerPvpSoreTimer(s);
 
             //PShop Slots
-            SendData.Send_PShopSlots(index, index);
+            SendData.sendPShopSlots(s, s);
 
             //Death
-            if (PStruct.tempplayer[index].Vitality <= 0)
+            if (PlayerStruct.tempplayer[s].Vitality <= 0)
             {
-                PStruct.tempplayer[index].isDead = true;
-                SendData.Send_PlayerDeathToMap(index);
+                PlayerStruct.tempplayer[s].isDead = true;
+                SendData.sendPlayerDeathToMap(s);
             }
 
             //Enviamos os dados do jogador e dos que estão no mapa para que ele os veja.
-            for (int i = 0; i <= Globals.Player_Highindex; i++)
+            for (int i = 0; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.character[i, PStruct.player[i].SelectedChar].Map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    SendData.Send_PlayerDataTo(index, i, PStruct.player[i].Username, charId);
-                    SendData.Send_GuildTo(index, i);
-                    SendData.Send_PlayerShoppingTo(index, i);
-                    if (PStruct.tempplayer[i].Stunned) { SendData.Send_Stun(PStruct.character[index, PStruct.player[index].SelectedChar].Map, 1, i, 1); }
-                    if (PStruct.tempplayer[i].Sleeping) { SendData.Send_Sleep(PStruct.character[index, PStruct.player[index].SelectedChar].Map, 1, i, 1); }
-                    if (PStruct.tempplayer[i].isDead) { SendData.Send_PlayerDeathTo(index, i); }
-                    //SendData.Send_PlayerMoveSpeedTo(index, i);
+                    SendData.sendPlayerDataTo(s, i, PlayerStruct.player[i].Username, charId);
+                    SendData.sendGuildTo(s, i);
+                    SendData.sendPlayerShoppingTo(s, i);
+                    if (PlayerStruct.tempplayer[i].Stunned) { SendData.sendStun(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, 1, i, 1); }
+                    if (PlayerStruct.tempplayer[i].Sleeping) { SendData.sendSleep(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, 1, i, 1); }
+                    if (PlayerStruct.tempplayer[i].isDead) { SendData.sendPlayerDeathTo(s, i); }
+                    //SendData.sendPlayerMoveSpeedTo(s, i);
                 }
             }
 
             for (int i = 0; i <= Globals.Max_Chests - 1; i++)
             {
-                if (MStruct.chestpoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (MapStruct.chestpoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i])
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i])
                     {
-                        SendData.Send_EventGraphic(index, MStruct.tile[MStruct.chestpoint[i].map, MStruct.chestpoint[i].x, MStruct.chestpoint[i].y].Event_Id, MStruct.chestpoint[i].inactive_sprite, MStruct.chestpoint[i].inactive_sprite_index, 0, 8);
+                        SendData.sendEventGraphic(s, MapStruct.tile[MapStruct.chestpoint[i].map, MapStruct.chestpoint[i].x, MapStruct.chestpoint[i].y].Event_Id, MapStruct.chestpoint[i].inactive_sprite, MapStruct.chestpoint[i].inactive_sprite_s, 0, 8);
                     }
                 }
             }
 
             //Ele já recebeu seus dados, agora ele pode processar as coisas (lol)
-            SendData.Send_PlayerFriends(index);
-            SendData.Send_MapGuildTo(index);
-            SendData.Send_PlayerSkills(index);
-            SendData.Send_PlayerHotkeys(index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_MapNpcsTo(index);
-            SendData.Send_MapItems(index);
-            SendData.Send_PlayerVitalityToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index, PStruct.tempplayer[index].Vitality);
-            SendData.Send_PlayerSpiritToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index, PStruct.tempplayer[index].Spirit);
-            SendData.Send_GuildToMapBut(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index);
-            SendData.Send_CompleteGuild(index);
-            SendData.Send_PlayerG(index);
-            SendData.Send_PlayerC(index);
-            SendData.Send_AllQuests(index);
-            SendData.Send_Profs(index);
-            SendData.Send_PlayerSkillPoints(index);
-            SendData.Send_PlayerExtraSpiritToMap(index);
-            SendData.Send_PlayerExtraVitalityToMap(index);
-            SendData.Send_PlayerPvpToMap(index);
-            SendData.Send_PlayerSoreToMap(index);
-            SendData.Send_MsgToPlayer(index, Globals.MOTD, Globals.ColorGreen, Globals.Msg_Type_Server);
-            //SendData.Send_PlayerMoveSpeedToMapBut(index, PStruct.character[index, PStruct.player[index].SelectedChar].Map, index);
+            SendData.sendPlayerFriends(s);
+            SendData.sendMapGuildTo(s);
+            SendData.sendPlayerSkills(s);
+            SendData.sendPlayerHotkeys(s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+            SendData.sendMapNpcsTo(s);
+            SendData.sendMapItems(s);
+            SendData.sendPlayerVitalityToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s, PlayerStruct.tempplayer[s].Vitality);
+            SendData.sendPlayerSpiritToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s, PlayerStruct.tempplayer[s].Spirit);
+            SendData.sendGuildToMapBut(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s);
+            SendData.sendCompleteGuild(s);
+            SendData.sendPlayerG(s);
+            SendData.sendPlayerC(s);
+            SendData.sendAllQuests(s);
+            SendData.sendProfs(s);
+            SendData.sendPlayerSkillPoints(s);
+            SendData.sendPlayerExtraSpiritToMap(s);
+            SendData.sendPlayerExtraVitalityToMap(s);
+            SendData.sendPlayerPvpToMap(s);
+            SendData.sendPlayerSoreToMap(s);
+            SendData.sendMsgToPlayer(s, Globals.MOTD, Globals.ColorGreen, Globals.Msg_Type_Server);
+            //SendData.sendPlayerMoveSpeedToMapBut(s, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s);
         }
         //*********************************************************************************************
-        // ReceivedMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedMove / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido de movimento.
         //*********************************************************************************************
-        public static void ReceivedMove(int index, string data)
+        public static void receivedMove(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if ((PStruct.tempplayer[index].InBank) || (PStruct.tempplayer[index].InCraft) || (PStruct.tempplayer[index].InTrade > 0) || (PStruct.tempplayer[index].InShop > 0) || (PStruct.tempplayer[index].Stunned) || (PStruct.tempplayer[index].Sleeping)) { return; }
+            if ((PlayerStruct.tempplayer[s].InBank) || (PlayerStruct.tempplayer[s].InCraft) || (PlayerStruct.tempplayer[s].InTrade > 0) || (PlayerStruct.tempplayer[s].InShop > 0) || (PlayerStruct.tempplayer[s].Stunned) || (PlayerStruct.tempplayer[s].Sleeping)) { return; }
             string[] splited = data.Replace("<11>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 10) || (Convert.ToInt32(splited[0]) < 0)) { return; }
 
             byte Dir = Convert.ToByte(splited[0]);
 
-            if ((MovementRelations.CanPlayerMove(index, Dir) == true) && (PStruct.tempplayer[index].MoveTimer < Loops.TickCount.ElapsedMilliseconds))
+            if ((MovementRelations.canPlayerMove(s, Dir) == true) && (PlayerStruct.tempplayer[s].MoveTimer < Loops.TickCount.ElapsedMilliseconds))
             {
-                MovementRelations.PlayerMove(index, Dir);
-                PStruct.tempplayer[index].MoveTimer = Loops.TickCount.ElapsedMilliseconds + Convert.ToInt64((((8 + (4 - PStruct.tempplayer[index].movespeed) - PStruct.tempplayer[index].movespeed) * 64) - 25)); //25ms de tolerância
+                MovementRelations.playerMove(s, Dir);
+                PlayerStruct.tempplayer[s].MoveTimer = Loops.TickCount.ElapsedMilliseconds + Convert.ToInt64((((8 + (4 - PlayerStruct.tempplayer[s].movespeed) - PlayerStruct.tempplayer[s].movespeed) * 64) - 25)); //25ms de tolerância
             }
             else
             {
-                SendData.Send_PlayerXY(index);
+                SendData.sendPlayerXY(s);
             }
         }
         //*********************************************************************************************
-        // ReceivedMessage / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedMessage / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido de interação com o chat.
         //*********************************************************************************************
-        public static void ReceivedMessage(int index, string data)
+        public static void receivedMessage(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -1152,16 +1152,16 @@ namespace FORJERUM
                 {
                     charMsg = charMsg.Remove(0, 3);
                     string[] playername = charMsg.Split(' ');
-                    for (int i = 0; i <= Globals.Player_Highindex; i++)
+                    for (int i = 0; i <= Globals.Player_Highs; i++)
                     {
-                        if (i != index)
+                        if (i != s)
                         {
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == playername[0]))
+                            if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == playername[0]))
                             {
                                 charMsg = charMsg.Remove(0, playername[0].Length);
-                                msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-                                SendData.Send_MsgToPlayer(i, "[" + lang.private_msg + "] " + msg, Globals.ColorYellow, Globals.Msg_Type_Community);
-                                SendData.Send_MsgToPlayer(index, "[" + lang.private_msg + "] " + msg, Globals.ColorYellow, Globals.Msg_Type_Community);
+                                msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+                                SendData.sendMsgToPlayer(i, "[" + lang.private_msg + "] " + msg, Globals.ColorYellow, Globals.Msg_Type_Community);
+                                SendData.sendMsgToPlayer(s, "[" + lang.private_msg + "] " + msg, Globals.ColorYellow, Globals.Msg_Type_Community);
                                 break;
                             }
                         }
@@ -1173,18 +1173,18 @@ namespace FORJERUM
                 if (charMsg.StartsWith("/g "))
                 {
                     charMsg = charMsg.Remove(0, 3);
-                    msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-                    SendData.Send_MsgToGuild(index, "[" + lang.guild_msg + "] " + msg, Globals.ColorPink, Globals.Msg_Type_Guild);
+                    msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+                    SendData.sendMsgToGuild(s, "[" + lang.guild_msg + "] " + msg, Globals.ColorPink, Globals.Msg_Type_Guild);
                     return;
                 }
 
                 if (charMsg.StartsWith("/p "))
                 {
-                    if (PStruct.tempplayer[index].Party > 0)
+                    if (PlayerStruct.tempplayer[s].Party > 0)
                     {
                         charMsg = charMsg.Remove(0, 3);
-                        msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-                        SendData.Send_MsgToParty(PStruct.tempplayer[index].Party, "[" + lang.party_msg + "] " + msg, Globals.ColorGreen, Globals.Msg_Type_Community);
+                        msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+                        SendData.sendMsgToParty(PlayerStruct.tempplayer[s].Party, "[" + lang.party_msg + "] " + msg, Globals.ColorGreen, Globals.Msg_Type_Community);
                         return;
                     }
                 }
@@ -1192,18 +1192,18 @@ namespace FORJERUM
                 if (charMsg.StartsWith("/t "))
                 {
                     charMsg = charMsg.Remove(0, 3);
-                    msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-                    SendData.Send_MsgToAll("[" + lang.global_msg + "] " + msg, Globals.ColorBrown, Globals.Msg_Type_Global);
+                    msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+                    SendData.sendMsgToAll("[" + lang.global_msg + "] " + msg, Globals.ColorBrown, Globals.Msg_Type_Global);
                     return;
                 }
 
                 if (charMsg.StartsWith("/a "))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
                         charMsg = charMsg.Remove(0, 3);
-                        msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-                        SendData.Send_MsgToAll("[" + lang.admin_msg + "] " + msg, Globals.ColorGreen, Globals.Msg_Type_Global);
+                        msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+                        SendData.sendMsgToAll("[" + lang.admin_msg + "] " + msg, Globals.ColorGreen, Globals.Msg_Type_Global);
                         return;
                     }
                 }
@@ -1211,7 +1211,7 @@ namespace FORJERUM
 
                 if (charMsg.StartsWith("/item "))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
                         charMsg = charMsg.Remove(0, 6);
                         string[] itemdata = charMsg.Split(',');
@@ -1221,21 +1221,21 @@ namespace FORJERUM
                         int itemrefin = Convert.ToInt32(itemdata[3]);
                         int itemexp = Convert.ToInt32(itemdata[4]);
 
-                        InventoryRelations.GiveItem(index, itemtype, itemnum, itemvalue, itemrefin, itemexp);
+                        InventoryRelations.giveItem(s, itemtype, itemnum, itemvalue, itemrefin, itemexp);
                         return;
                     }
                 }
 
                 if (charMsg.StartsWith("/come "))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
                         charMsg = charMsg.Remove(0, 6);
-                        for (int i = 0; i <= Globals.Player_Highindex; i++)
+                        for (int i = 0; i <= Globals.Player_Highs; i++)
                         {
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == charMsg))
+                            if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == charMsg))
                             {
-                                MovementRelations.PlayerWarp(i, PStruct.character[index, PStruct.player[index].SelectedChar].Map, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y);
+                                MovementRelations.playerWarp(i, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y);
                                 break;
                             }
                         }
@@ -1245,14 +1245,14 @@ namespace FORJERUM
 
                 if (charMsg.StartsWith("/goto "))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
                         charMsg = charMsg.Remove(0, 6);
-                        for (int i = 0; i <= Globals.Player_Highindex; i++)
+                        for (int i = 0; i <= Globals.Player_Highs; i++)
                         {
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == charMsg))
+                            if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == charMsg))
                             {
-                                MovementRelations.PlayerWarp(index, PStruct.character[i, PStruct.player[i].SelectedChar].Map, PStruct.character[i, PStruct.player[i].SelectedChar].X, PStruct.character[i, PStruct.player[i].SelectedChar].Y);
+                                MovementRelations.playerWarp(s, PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Map, PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].X, PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Y);
                                 break;
                             }
                         }
@@ -1262,14 +1262,14 @@ namespace FORJERUM
 
                 if (charMsg.StartsWith("/resetplayer "))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
                         charMsg = charMsg.Remove(0, 13);
-                        for (int i = 0; i <= Globals.Player_Highindex; i++)
+                        for (int i = 0; i <= Globals.Player_Highs; i++)
                         {
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == charMsg))
+                            if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == charMsg))
                             {
-                                PStruct.ResetPlayerStatus(i);
+                                PlayerRelations.resetPlayerStatus(i);
                                 break;
                             }
                         }
@@ -1279,12 +1279,12 @@ namespace FORJERUM
 
                 if (charMsg.StartsWith("/saveplayers"))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
-                        for (int i = 0; i <= Globals.Player_Highindex; i++)
+                        for (int i = 0; i <= Globals.Player_Highs; i++)
                         {
-                            Database.SaveCharacter(i, PStruct.player[i].Email, PStruct.player[i].SelectedChar);
-                            SendData.Send_MsgToPlayer(index, lang.players_has_been_saved_with_success, Globals.ColorYellow, Globals.Msg_Type_Community);
+                            Database.Characters.saveCharacter(i, PlayerStruct.player[i].Email, PlayerStruct.player[i].SelectedChar);
+                            SendData.sendMsgToPlayer(s, lang.players_has_been_saved_with_success, Globals.ColorYellow, Globals.Msg_Type_Community);
                         }
                         return;
                     }
@@ -1292,16 +1292,16 @@ namespace FORJERUM
 
                 if (charMsg.StartsWith("/giveexp "))
                 {
-                    if (PStruct.character[index, PStruct.player[index].SelectedChar].Access > 2)
+                    if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access > 2)
                     {
                         charMsg = charMsg.Remove(0, 9);
                         string playername = charMsg.Split(' ')[0];
                         int exp = Convert.ToInt32(charMsg.Split(' ')[1]);
-                        for (int i = 0; i <= Globals.Player_Highindex; i++)
+                        for (int i = 0; i <= Globals.Player_Highs; i++)
                         {
-                            if ((PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == playername))
+                            if ((PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == playername))
                             {
-                                PlayerRelations.GivePlayerExp(i, exp);
+                                PlayerRelations.givePlayerExp(i, exp);
                                 break;
                             }
                         }
@@ -1314,80 +1314,80 @@ namespace FORJERUM
                 Console.WriteLine("Erro ao processar comando de chat.");
                 return;
             }
-            msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-            SendData.Send_MsgToMap(index, "[" + lang.map_msg + "] " +  msg, Globals.ColorWhite, Globals.Msg_Type_Map);
+            msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+            SendData.sendMsgToMap(s, "[" + lang.map_msg + "] " +  msg, Globals.ColorWhite, Globals.Msg_Type_Map);
         }
         //*********************************************************************************************
         // LatencyCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Ping
         //*********************************************************************************************
-        static void LatencyCheck(int index)
+        static void receivedLatency(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            SendData.SendToUser(index, "<13>'e'</13>\n");
+            SendData.sendToUser(s, "<13>'e'</13>\n");
         }
         //*********************************************************************************************
         // MapCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void MapCheck(int index, string data)
+        static void receivedMapData(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access <= 0) { return; }
             string[] newMap = data.Replace("<15>", "").Split(';');
             
             //variáveis simples
-            int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
+            int map = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
 
             int part = Convert.ToInt32(newMap[0]);
             int startx = Convert.ToInt32(newMap[1]);
             int startxend = Convert.ToInt32(newMap[2]);
             int starty = Convert.ToInt32(newMap[3]);
             int startyend = Convert.ToInt32(newMap[4]);
-            MStruct.map[Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map)].name = newMap[5];
+            MapStruct.map[Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)].name = newMap[5];
             
             //nosso leitor
             int reader = 6;
 
             //dados do mapa em geral
-            MStruct.map[Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map)].max_height = "14";
-            MStruct.map[Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map)].max_width = "19";
+            MapStruct.map[Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)].max_height = "14";
+            MapStruct.map[Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)].max_width = "19";
 
             //organizamos todos os dados dos tiles
             for (int x = startx; x <= startxend; x++)
                 for (int y = starty; y <= startyend; y++)
                 {
                     {
-                        MStruct.tile[Convert.ToInt32(map), x, y].Event_Id = Convert.ToInt32(newMap[reader]);
+                        MapStruct.tile[Convert.ToInt32(map), x, y].Event_Id = Convert.ToInt32(newMap[reader]);
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].Data1 = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].Data1 = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].Data2 = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].Data2 = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].Data3 = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].Data3 = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].Data4 = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].Data4 = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].DownBlock = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].DownBlock = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].LeftBlock = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].LeftBlock = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].RightBlock = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].RightBlock = newMap[reader];
                         reader += 1;
-                        MStruct.tile[Convert.ToInt32(map), x, y].UpBlock = newMap[reader];
+                        MapStruct.tile[Convert.ToInt32(map), x, y].UpBlock = newMap[reader];
                         reader += 1;
                     }
 
@@ -1397,10 +1397,10 @@ namespace FORJERUM
             if (part == 4)
             {
                 //Se já enviou todas as partes do mapa, salvar.
-                Database.SaveMap(map);
+                Database.Maps.save(map);
 
                 //Recarregar o mapa
-                Database.LoadMap(map);
+                Database.Maps.load(map);
 
                 //tudo certo
                 Console.WriteLine("O mapa " + map + " foi atualizado com sucesso.");
@@ -1411,11 +1411,11 @@ namespace FORJERUM
         // UseItemCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido de interação com um item do inventário.
         //*********************************************************************************************
-        static void UseItemCheck(int index, string data)
+        static void receivedUseItem(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -1424,14 +1424,14 @@ namespace FORJERUM
             string[] splited = data.Replace("<16>", "").Split(';');
             
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return;}
+            if (!isNumeric(splited[0])) { return;}
 
             int itemUse = Convert.ToInt32(splited[0]);
 
             if (itemUse > Globals.MaxInvSlot - 1) { return; }
             if (itemUse <= 0) { return; }
 
-            string item = PStruct.invslot[index, itemUse].item;
+            string item = PlayerStruct.invslot[s, itemUse].item;
             string[] splititem = item.Split(',');
 
             int itemNum = Convert.ToInt32(splititem[1]);
@@ -1442,17 +1442,17 @@ namespace FORJERUM
 
             if ((itemType == Globals.ArmorType) || (itemType == Globals.WeaponType))
             {
-                if (IsNumeric(IStruct.item[itemNum].note))
+                if (isNumeric(ItemStruct.item[itemNum].note))
                 {
-                    if (Convert.ToInt32(IStruct.item[itemNum].note) > PStruct.character[index, PStruct.player[index].SelectedChar].Level)
+                    if (Convert.ToInt32(ItemStruct.item[itemNum].note) > PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level)
                     {
-                        SendData.Send_MsgToPlayer(index, lang.no_level_to_use_this_item, Globals.ColorRed, Globals.Msg_Type_Server);
+                        SendData.sendMsgToPlayer(s, lang.no_level_to_use_this_item, Globals.ColorRed, Globals.Msg_Type_Server);
                         return;
                     }
                 }
             }
 
-            string equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
+            string equipment = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment;
             string[] equipdata = equipment.Split(',');
 
             string Helmet = equipdata[0].Split(';')[0];
@@ -1468,13 +1468,13 @@ namespace FORJERUM
             string PetRefin = equipdata[4].Split(';')[1];
             string PetExp = equipdata[4].Split(';')[2];
 
-            int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
+            int map = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
 
             bool equipped = false;
 
             if ((itemType == 0) || (itemType == 1))
             {
-                if (IStruct.itemextra[itemNum].type == 1)
+                if (ItemStruct.itemextra[itemNum].type == 1)
                 {
                     if (Convert.ToInt32(Pet) > 0)
                     {
@@ -1482,7 +1482,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Pet), 1, Convert.ToInt32(PetRefin), Convert.ToInt32(PetExp)))
+                        if (!InventoryRelations.giveItem(s, itemType, Convert.ToInt32(Pet), 1, Convert.ToInt32(PetRefin), Convert.ToInt32(PetExp)))
                         {
                             return;
                         }
@@ -1494,134 +1494,134 @@ namespace FORJERUM
                 }
                 if (itemNum == 58)
                 {
-                   if (PStruct.GiveSpell(index, 28))
+                   if (SkillRelations.giveSpell(s, 28))
                    {
-                       SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                       InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                       SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                       SendData.Send_PlayerSkills(index);
+                       SendData.sendMsgToPlayer(s, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
+                       InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                       SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                       SendData.sendPlayerSkills(s);
                        return;
                    }
                 }
                 if (itemNum == 59)
                 {
-                    if (PStruct.GiveSpell(index, 29))
+                    if (SkillRelations.giveSpell(s, 29))
                     {
-                        SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                        SendData.Send_PlayerSkills(index);
+                        SendData.sendMsgToPlayer(s, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                        SendData.sendPlayerSkills(s);
                         return;
                     }
                 }
                 if (itemNum == 60)
                 {
-                    if (PStruct.GiveSpell(index, 30))
+                    if (SkillRelations.giveSpell(s, 30))
                     {
-                        SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                        SendData.Send_PlayerSkills(index);
+                        SendData.sendMsgToPlayer(s, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                        SendData.sendPlayerSkills(s);
                         return;
                     }
                 }
                 if (itemNum == 61)
                 {
-                    if (PStruct.GiveSpell(index, 31))
+                    if (SkillRelations.giveSpell(s, 31))
                     {
-                        SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                        SendData.Send_PlayerSkills(index);
+                        SendData.sendMsgToPlayer(s, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                        SendData.sendPlayerSkills(s);
                         return;
                     }
                 }
                 if (itemNum == 66)
                 {
-                    if (PStruct.GiveSpell(index, 32))
+                    if (SkillRelations.giveSpell(s, 32))
                     {
-                        SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                        SendData.Send_PlayerSkills(index);
+                        SendData.sendMsgToPlayer(s, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                        SendData.sendPlayerSkills(s);
                         return;
                     }
                 }
                 if (itemNum == 67)
                 {
-                    if (PStruct.GiveSpell(index, 34))
+                    if (SkillRelations.giveSpell(s, 34))
                     {
-                        SendData.Send_MsgToPlayer(index, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                        SendData.Send_PlayerSkills(index);
+                        SendData.sendMsgToPlayer(s, lang.you_have_learned_a_new_spell, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                        SendData.sendPlayerSkills(s);
                         return;
                     }
                 }
                 if (itemNum == 69)
                 {
-                    MovementRelations.PlayerWarp(index, Globals.InitialMap, Globals.InitialX, Globals.InitialY);
-                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                    SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                    MovementRelations.playerWarp(s, Globals.InitialMap, Globals.InitialX, Globals.InitialY);
+                    InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                    SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
                 }
                 if (itemNum == 73)
                 {
-                    int target = PStruct.tempplayer[index].target;
-                    int targettype = PStruct.tempplayer[index].targettype;
+                    int target = PlayerStruct.tempplayer[s].target;
+                    int targettype = PlayerStruct.tempplayer[s].targettype;
                     if (targettype == Globals.Target_Npc) { return; }
                     //Check in
-                    if (!(PStruct.character[target, PStruct.player[target].SelectedChar].Map == map) || !(target != index))
+                    if (!(PlayerStruct.character[target, PlayerStruct.player[target].SelectedChar].Map == map) || !(target != s))
                     {
-                        PStruct.tempplayer[index].preparingskill = 0;
-                        PStruct.tempplayer[index].preparingskillslot = 0;
-                        PStruct.tempplayer[index].movespeed = Globals.NormalMoveSpeed;
-                        SendData.Send_MoveSpeed(1, index);
-                        SendData.Send_MsgToPlayer(index, lang.use_item_fail, Globals.ColorRed, Globals.Msg_Type_Server);
+                        PlayerStruct.tempplayer[s].preparingskill = 0;
+                        PlayerStruct.tempplayer[s].preparingskillslot = 0;
+                        PlayerStruct.tempplayer[s].movespeed = Globals.NormalMoveSpeed;
+                        SendData.sendMoveSpeed(1, s);
+                        SendData.sendMsgToPlayer(s, lang.use_item_fail, Globals.ColorRed, Globals.Msg_Type_Server);
                         return;
                     }
-                    if (PStruct.tempplayer[target].Vitality <= 0)
+                    if (PlayerStruct.tempplayer[target].Vitality <= 0)
                     {
-                        PStruct.tempplayer[target].isDead = false;
-                        SendData.Send_PlayerDeathToMap(target);
-                        PStruct.tempplayer[target].Vitality = 10;
-                        SendData.Send_PlayerVitalityToMap(map, target, 10);
-                        SendData.Send_Animation(map, Globals.Target_Player, target, 38);
+                        PlayerStruct.tempplayer[target].isDead = false;
+                        SendData.sendPlayerDeathToMap(target);
+                        PlayerStruct.tempplayer[target].Vitality = 10;
+                        SendData.sendPlayerVitalityToMap(map, target, 10);
+                        SendData.sendAnimation(map, Globals.Target_Player, target, 38);
                     }
-                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                    SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                    InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                    SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
                 }
                 if (itemNum == 74)
                 {
-                    if (PStruct.tempplayer[index].SORE)
+                    if (PlayerStruct.tempplayer[s].SORE)
                     {
-                        PStruct.tempplayer[index].SORE = false;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].PVPPenalty = 0;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].PVP = false;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].PVPBanTimer = 0;
-                        SendData.Send_PlayerPvpToMap(index);
-                        SendData.Send_PlayerSoreToMap(index);
-                        SendData.Send_PlayerPvpBanTimer(index);
-                        SendData.Send_Animation(map, Globals.Target_Player, index, 108);
-                        InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                        PlayerStruct.tempplayer[s].SORE = false;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPPenalty = 0;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVP = false;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].PVPBanTimer = 0;
+                        SendData.sendPlayerPvpToMap(s);
+                        SendData.sendPlayerSoreToMap(s);
+                        SendData.sendPlayerPvpBanTimer(s);
+                        SendData.sendAnimation(map, Globals.Target_Player, s, 108);
+                        InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
                     }
                 }
-                if (IStruct.item[itemNum].damage_type == 3)
+                if (ItemStruct.item[itemNum].damage_type == 3)
                 {
-                    if (PStruct.tempplayer[index].Vitality >= PStruct.GetPlayerMaxVitality(index)) { return; }
-                    if (PStruct.tempplayer[index].isDead) { return; }
-                    PlayerLogic.HealPlayer(index, (PStruct.GetPlayerMaxVitality(index) / 100) * Convert.ToInt32(IStruct.item[itemNum].damage_formula));
-                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                    SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                    if (PlayerStruct.tempplayer[s].Vitality >= PlayerRelations.getPlayerMaxVitality(s)) { return; }
+                    if (PlayerStruct.tempplayer[s].isDead) { return; }
+                    PlayerLogic.HealPlayer(s, (PlayerRelations.getPlayerMaxVitality(s) / 100) * Convert.ToInt32(ItemStruct.item[itemNum].damage_formula));
+                    InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                    SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
                     return;
                 }
-                if (IStruct.item[itemNum].damage_type == 4)
+                if (ItemStruct.item[itemNum].damage_type == 4)
                 {
-                    if (PStruct.tempplayer[index].Spirit >= PStruct.GetPlayerMaxSpirit(index)) { return; }
-                    if (PStruct.tempplayer[index].isDead) { return; }
-                    PlayerLogic.SpiritPlayer(index, (PStruct.GetPlayerMaxSpirit(index) / 100) * Convert.ToInt32(IStruct.item[itemNum].damage_formula));
-                    InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
-                    SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                    if (PlayerStruct.tempplayer[s].Spirit >= PlayerRelations.getPlayerMaxSpirit(s)) { return; }
+                    if (PlayerStruct.tempplayer[s].isDead) { return; }
+                    PlayerLogic.SpiritPlayer(s, (PlayerRelations.getPlayerMaxSpirit(s) / 100) * Convert.ToInt32(ItemStruct.item[itemNum].damage_formula));
+                    InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
+                    SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
                     return;
                 }
             }
@@ -1633,7 +1633,7 @@ namespace FORJERUM
                     {
                         itemValue += 1;
                     }
-                    if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Weapon), 1, Convert.ToInt32(WeaponRefin), Globals.NullExp))
+                    if (!InventoryRelations.giveItem(s, itemType, Convert.ToInt32(Weapon), 1, Convert.ToInt32(WeaponRefin), Globals.NullExp))
                     {
                         return;
                     }
@@ -1644,7 +1644,7 @@ namespace FORJERUM
             }
             if (itemType == 3)
             {
-                if (AStruct.armor[itemNum].etype_id == 1)
+                if (ArmorStruct.armor[itemNum].etype_id == 1)
                 {
                     if (Convert.ToInt32(Shield) > 0)
                     {
@@ -1652,7 +1652,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Shield), 1, Convert.ToInt32(ShieldRefin), Globals.NullExp))
+                        if (!InventoryRelations.giveItem(s, itemType, Convert.ToInt32(Shield), 1, Convert.ToInt32(ShieldRefin), Globals.NullExp))
                         {
                             return;
                         }
@@ -1661,7 +1661,7 @@ namespace FORJERUM
                     ShieldRefin = itemRefin.ToString();
                     equipped = true;
                 }
-                if (AStruct.armor[itemNum].etype_id == 2)
+                if (ArmorStruct.armor[itemNum].etype_id == 2)
                 {
                     if (Convert.ToInt32(Helmet) > 0)
                     {
@@ -1669,7 +1669,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Helmet), 1, Convert.ToInt32(HelmetRefin), Globals.NullExp))
+                        if (!InventoryRelations.giveItem(s, itemType, Convert.ToInt32(Helmet), 1, Convert.ToInt32(HelmetRefin), Globals.NullExp))
                         {
                             return;
                         }
@@ -1678,7 +1678,7 @@ namespace FORJERUM
                     HelmetRefin = itemRefin.ToString();
                     equipped = true;
                 }
-                if (AStruct.armor[itemNum].etype_id == 3)
+                if (ArmorStruct.armor[itemNum].etype_id == 3)
                 {
                     if (Convert.ToInt32(Armor) > 0)
                     {
@@ -1686,7 +1686,7 @@ namespace FORJERUM
                         {
                             itemValue += 1;
                         }
-                        if (!InventoryRelations.GiveItem(index, itemType, Convert.ToInt32(Armor), 1, Convert.ToInt32(ArmorRefin), Globals.NullExp))
+                        if (!InventoryRelations.giveItem(s, itemType, Convert.ToInt32(Armor), 1, Convert.ToInt32(ArmorRefin), Globals.NullExp))
                         {
                             return;
                         }
@@ -1701,15 +1701,15 @@ namespace FORJERUM
             {
                 if (itemValue > 1)
                 {
-                    PStruct.invslot[index, itemUse].item = itemType + "," + itemNum + "," + (itemValue - 1) + "," + itemRefin + "," + itemExp;
+                    PlayerStruct.invslot[s, itemUse].item = itemType + "," + itemNum + "," + (itemValue - 1) + "," + itemRefin + "," + itemExp;
                 }
                 else
                 {
-                    PStruct.invslot[index, itemUse].item = Globals.NullItem;
+                    PlayerStruct.invslot[s, itemUse].item = Globals.NullItem;
                 }
-                PStruct.character[index, PStruct.player[index].SelectedChar].Equipment = Helmet + ";" + HelmetRefin +  "," + Armor + ";" + ArmorRefin + "," + Weapon + ";" + WeaponRefin + "," + Shield + ";" + ShieldRefin + "," + Pet + ";" + PetRefin + ";" + PetExp;
-                SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                SendData.Send_PlayerEquipmentToMap(index);
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment = Helmet + ";" + HelmetRefin +  "," + Armor + ";" + ArmorRefin + "," + Weapon + ";" + WeaponRefin + "," + Shield + ";" + ShieldRefin + "," + Pet + ";" + PetRefin + ";" + PetExp;
+                SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                SendData.sendPlayerEquipmentToMap(s);
                 return;
             }
             
@@ -1718,11 +1718,11 @@ namespace FORJERUM
         // EquipItemCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido de interação com um item equipado.
         //*********************************************************************************************
-        static void EquipItemCheck(int index, string data)
+        static void receivedEquipItem(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -1730,11 +1730,11 @@ namespace FORJERUM
             //CÓDIGO
             string[] splited = data.Replace("<17>", "").Split(';');
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             int itemUse = Convert.ToInt32(splited[0]);
             if (itemUse > 4) { return; }
             if (itemUse < 0) { return; }
-            string equipment = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment;
+            string equipment = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment;
             string[] equipdata = equipment.Split(',');
             string[] equip0 = equipdata[0].Split(';');
             string[] equip1 = equipdata[1].Split(';');
@@ -1745,55 +1745,55 @@ namespace FORJERUM
             switch (itemUse)
             {
                 case 0:
-                    if (!InventoryRelations.GiveItem(index, 3, Convert.ToInt32(equip0[0]), 1, Convert.ToInt32(equip0[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.giveItem(s, 3, Convert.ToInt32(equip0[0]), 1, Convert.ToInt32(equip0[1]), Globals.NullExp)) { return; }
                     equipdata[0] = "0;0";
                     break;
                 case 1:
-                    if (!InventoryRelations.GiveItem(index, 3, Convert.ToInt32(equip1[0]), 1, Convert.ToInt32(equip1[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.giveItem(s, 3, Convert.ToInt32(equip1[0]), 1, Convert.ToInt32(equip1[1]), Globals.NullExp)) { return; }
                     equipdata[1] = "0;0";
                     break;
                 case 2:
-                    if (!InventoryRelations.GiveItem(index, 2, Convert.ToInt32(equip2[0]), 1, Convert.ToInt32(equip2[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.giveItem(s, 2, Convert.ToInt32(equip2[0]), 1, Convert.ToInt32(equip2[1]), Globals.NullExp)) { return; }
                     equipdata[2] = "0;0";
                     break;
                 case 3:
-                    if (!InventoryRelations.GiveItem(index, 3, Convert.ToInt32(equip3[0]), 1, Convert.ToInt32(equip3[1]), Globals.NullExp)) { return; }
+                    if (!InventoryRelations.giveItem(s, 3, Convert.ToInt32(equip3[0]), 1, Convert.ToInt32(equip3[1]), Globals.NullExp)) { return; }
                     equipdata[3] = "0;0";
                     break;
                 case 4:
-                    if (!InventoryRelations.GiveItem(index, 1, Convert.ToInt32(equip4[0]), 1, Convert.ToInt32(equip4[1]), Convert.ToInt32(equip4[2]))) { return; }
+                    if (!InventoryRelations.giveItem(s, 1, Convert.ToInt32(equip4[0]), 1, Convert.ToInt32(equip4[1]), Convert.ToInt32(equip4[2]))) { return; }
                     equipdata[4] = "0;0;0";
                     break;
             }
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + equipdata[4];
-            SendData.Send_PlayerEquipmentToMap(index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment = equipdata[0] + "," + equipdata[1] + "," + equipdata[2] + "," + equipdata[3] + "," + equipdata[4];
+            SendData.sendPlayerEquipmentToMap(s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
             
-            //string msg = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + ": " + charMsg;
-            //SendData.Send_Msg(index, msg);
+            //string msg = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + ": " + charMsg;
+            //SendData.sendMsg(s, msg);
         }
         //*********************************************************************************************
         // AttackCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para efetuar um ataque.
         //*********************************************************************************************
-        static void AttackCheck(int index, string data)
+        static void receivedAttack(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].AttackTimer > Loops.TickCount.ElapsedMilliseconds ) { return; }
-            if (PStruct.tempplayer[index].preparingskill > 0) { return; }
+            if (PlayerStruct.tempplayer[s].AttackTimer > Loops.TickCount.ElapsedMilliseconds ) { return; }
+            if (PlayerStruct.tempplayer[s].preparingskill > 0) { return; }
 
             string[] splited = data.Replace("<18>", "").Split(';');
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if (!IsNumeric(splited[1])) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[1])) { return; }
             int Target = Convert.ToInt32(splited[0]);
             int TargetType = Convert.ToInt32(splited[1]);
 
@@ -1802,15 +1802,15 @@ namespace FORJERUM
             if (Target < 0) { return; }
             if (TargetType < 0) { return; }
 
-            SendData.Send_PlayerAttack(index);
-            PStruct.tempplayer[index].AttackTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
+            SendData.sendplayerAttack(s);
+            PlayerStruct.tempplayer[s].AttackTimer = Loops.TickCount.ElapsedMilliseconds + 1000;
 
             if (TargetType == 1)
             {
                 //atacar jogador
-                if (PStruct.CanPlayerAttackPlayer(index, Target) == true)
+                if (CombatRelations.canPlayerAttackPlayer(s, Target) )
                 {
-                    PStruct.PlayerAttackPlayer(index, Target);
+                    CombatRelations.playerAttackPlayer(s, Target);
                     return;
                 }
             }
@@ -1818,44 +1818,44 @@ namespace FORJERUM
             if (TargetType == 2)
             {
                 //atacar npc
-                if (PStruct.CanPlayerAttackNpc(index, Target) == true)
+                if (CombatRelations.canPlayerAttackNpc(s, Target))
                 {
-                    PStruct.PlayerAttackNpc(index, Target);
+                    CombatRelations.playerAttackNpc(s, Target);
                     return;
                 }
             }
 
             for (int i = 1; i < Globals.Max_WorkPoints; i++)
             {
-                if (MStruct.workpoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (MapStruct.workpoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    switch (PStruct.character[index, PStruct.player[index].SelectedChar].Dir)
+                    switch (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir)
                     {
                         case 8:
-                            if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y - 1 == MStruct.workpoint[i].y) &&(PStruct.character[index, PStruct.player[index].SelectedChar].X == MStruct.workpoint[i].x))
-                            { 
-                                PStruct.PlayerAttackWorkPoint(index, i);
+                            if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y - 1 == MapStruct.workpoint[i].y) &&(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == MapStruct.workpoint[i].x))
+                            {
+                                MapRelations.playerAttackWorkPoint(s, i);
                                 return;
                             }
                             break;
                         case 2:
-                            if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y + 1 == MStruct.workpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X == MStruct.workpoint[i].x))
+                            if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y + 1 == MapStruct.workpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == MapStruct.workpoint[i].x))
                             {
-                                PStruct.PlayerAttackWorkPoint(index, i);
+                                MapRelations.playerAttackWorkPoint(s, i);
                                 return;
                             }
                             break;
                         case 4:
-                            if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == MStruct.workpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X - 1 == MStruct.workpoint[i].x))
+                            if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == MapStruct.workpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X - 1 == MapStruct.workpoint[i].x))
                             {
-                                PStruct.PlayerAttackWorkPoint(index, i);
+                                MapRelations.playerAttackWorkPoint(s, i);
                                 return;
                             }
                             break;
                         case 6:
-                            if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == MStruct.workpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X + 1 == MStruct.workpoint[i].x))
+                            if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == MapStruct.workpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X + 1 == MapStruct.workpoint[i].x))
                             {
-                                PStruct.PlayerAttackWorkPoint(index, i);
+                                MapRelations.playerAttackWorkPoint(s, i);
                                 return;
                             }
                             break;
@@ -1868,14 +1868,14 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // ReceivedOpenChest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedOpenChest / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para tentar abrir um baú.
         //*********************************************************************************************
-        static void ReceivedOpenChest(int index)
+        static void receivedOpenChest(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -1883,106 +1883,106 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_Chests; i++)
             {
-                if (MStruct.chestpoint[i].map > 0)
+                if (MapStruct.chestpoint[i].map > 0)
                 {
-                    if (MStruct.chestpoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                    if (MapStruct.chestpoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                     {
-                        switch (PStruct.character[index, PStruct.player[index].SelectedChar].Dir)
+                        switch (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir)
                         {
                             case 8:
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y - 1 == MStruct.chestpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X == MStruct.chestpoint[i].x))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y - 1 == MapStruct.chestpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == MapStruct.chestpoint[i].x))
                                 {
-                                    if (!PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i])
+                                    if (!PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i])
                                     {
-                                        if (MStruct.chestpoint[i].is_random)
+                                        if (MapStruct.chestpoint[i].is_random)
                                         {
                                         }
                                         else
                                         {
-                                            if (MStruct.chestpoint[i].reward_count > 0)
+                                            if (MapStruct.chestpoint[i].reward_count > 0)
                                             {
-                                                if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-                                                for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
+                                                if (InventoryRelations.getNumOfInvFreeSlots(s) < MapStruct.chestpoint[i].reward_count) { SendData.sendMsgToPlayer(s, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                                for (int r = 1; r <= MapStruct.chestpoint[i].reward_count; r++)
                                                 {
-                                                    string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                    InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                    string[] dataitem = MapStruct.chestpoint[i].reward[r].Split(',');
+                                                    InventoryRelations.giveItem(s, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                                 }
                                             }
                                         }
-                                        PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
-                                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                                        SendData.Send_ActionMsg(index, lang.finded_a_item, Globals.ColorYellow, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-                                        SendData.Send_MsgToPlayer(index, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
-                                        SendData.Send_EventGraphic(index, MStruct.tile[MStruct.chestpoint[i].map, MStruct.chestpoint[i].x, MStruct.chestpoint[i].y].Event_Id, MStruct.chestpoint[i].inactive_sprite, MStruct.chestpoint[i].inactive_sprite_index, 0, 8);
+                                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i] = true;
+                                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                                        SendData.sendActionMsg(s, lang.finded_a_item, Globals.ColorYellow, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+                                        SendData.sendMsgToPlayer(s, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
+                                        SendData.sendEventGraphic(s, MapStruct.tile[MapStruct.chestpoint[i].map, MapStruct.chestpoint[i].x, MapStruct.chestpoint[i].y].Event_Id, MapStruct.chestpoint[i].inactive_sprite, MapStruct.chestpoint[i].inactive_sprite_s, 0, 8);
                                         return;
                                     }
                                 }
                                 break;
                             case 2:
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y + 1 == MStruct.chestpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X == MStruct.chestpoint[i].x))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y + 1 == MapStruct.chestpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == MapStruct.chestpoint[i].x))
                                 {
-                                    if (!PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i])
+                                    if (!PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i])
                                     {
-                                        if (MStruct.chestpoint[i].reward_count > 0)
+                                        if (MapStruct.chestpoint[i].reward_count > 0)
                                         {
-                                            if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-                                            for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
+                                            if (InventoryRelations.getNumOfInvFreeSlots(s) < MapStruct.chestpoint[i].reward_count) { SendData.sendMsgToPlayer(s, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                            for (int r = 1; r <= MapStruct.chestpoint[i].reward_count; r++)
                                             {
-                                                string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                string[] dataitem = MapStruct.chestpoint[i].reward[r].Split(',');
+                                                InventoryRelations.giveItem(s, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                             }
                                         }
-                                        PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
-                                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                                        SendData.Send_ActionMsg(index, lang.finded_a_item, Globals.ColorYellow, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-                                        SendData.Send_MsgToPlayer(index, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
-                                        SendData.Send_EventGraphic(index, MStruct.tile[MStruct.chestpoint[i].map, MStruct.chestpoint[i].x, MStruct.chestpoint[i].y].Event_Id, MStruct.chestpoint[i].inactive_sprite, MStruct.chestpoint[i].inactive_sprite_index, 0, 8);
+                                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i] = true;
+                                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                                        SendData.sendActionMsg(s, lang.finded_a_item, Globals.ColorYellow, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+                                        SendData.sendMsgToPlayer(s, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
+                                        SendData.sendEventGraphic(s, MapStruct.tile[MapStruct.chestpoint[i].map, MapStruct.chestpoint[i].x, MapStruct.chestpoint[i].y].Event_Id, MapStruct.chestpoint[i].inactive_sprite, MapStruct.chestpoint[i].inactive_sprite_s, 0, 8);
                                         return;
                                     }
                                 }
                                 break;
                             case 4:
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == MStruct.chestpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X - 1 == MStruct.chestpoint[i].x))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == MapStruct.chestpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X - 1 == MapStruct.chestpoint[i].x))
                                 {
-                                    if (!PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i])
+                                    if (!PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i])
                                     {
-                                        if (MStruct.chestpoint[i].reward_count > 0)
+                                        if (MapStruct.chestpoint[i].reward_count > 0)
                                         {
-                                            if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-                                            for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
+                                            if (InventoryRelations.getNumOfInvFreeSlots(s) < MapStruct.chestpoint[i].reward_count) { SendData.sendMsgToPlayer(s, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                            for (int r = 1; r <= MapStruct.chestpoint[i].reward_count; r++)
                                             {
-                                                string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                string[] dataitem = MapStruct.chestpoint[i].reward[r].Split(',');
+                                                InventoryRelations.giveItem(s, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                             }
                                         }
-                                        PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
-                                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                                        SendData.Send_ActionMsg(index, lang.finded_a_item, Globals.ColorYellow, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-                                        SendData.Send_MsgToPlayer(index, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
-                                        SendData.Send_EventGraphic(index, MStruct.tile[MStruct.chestpoint[i].map, MStruct.chestpoint[i].x, MStruct.chestpoint[i].y].Event_Id, MStruct.chestpoint[i].inactive_sprite, MStruct.chestpoint[i].inactive_sprite_index, 0, 8);
+                                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i] = true;
+                                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                                        SendData.sendActionMsg(s, lang.finded_a_item, Globals.ColorYellow, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+                                        SendData.sendMsgToPlayer(s, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
+                                        SendData.sendEventGraphic(s, MapStruct.tile[MapStruct.chestpoint[i].map, MapStruct.chestpoint[i].x, MapStruct.chestpoint[i].y].Event_Id, MapStruct.chestpoint[i].inactive_sprite, MapStruct.chestpoint[i].inactive_sprite_s, 0, 8);
                                         return;
                                     }
                                 }
                                 break;
                             case 6:
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == MStruct.chestpoint[i].y) && (PStruct.character[index, PStruct.player[index].SelectedChar].X + 1 == MStruct.chestpoint[i].x))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == MapStruct.chestpoint[i].y) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X + 1 == MapStruct.chestpoint[i].x))
                                 {
-                                    if (!PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i])
+                                    if (!PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i])
                                     {
-                                        if (MStruct.chestpoint[i].reward_count > 0)
+                                        if (MapStruct.chestpoint[i].reward_count > 0)
                                         {
-                                            if (InventoryRelations.GetNumOfInvFreeSlots(index) < MStruct.chestpoint[i].reward_count) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-                                            for (int r = 1; r <= MStruct.chestpoint[i].reward_count; r++)
+                                            if (InventoryRelations.getNumOfInvFreeSlots(s) < MapStruct.chestpoint[i].reward_count) { SendData.sendMsgToPlayer(s, lang.you_dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+                                            for (int r = 1; r <= MapStruct.chestpoint[i].reward_count; r++)
                                             {
-                                                string[] dataitem = MStruct.chestpoint[i].reward[r].Split(',');
-                                                InventoryRelations.GiveItem(index, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
+                                                string[] dataitem = MapStruct.chestpoint[i].reward[r].Split(',');
+                                                InventoryRelations.giveItem(s, Convert.ToInt32(dataitem[0]), Convert.ToInt32(dataitem[1]), Convert.ToInt32(dataitem[2]), Convert.ToInt32(dataitem[3]), Globals.NullExp);
                                             }
                                         }
-                                        PStruct.character[index, PStruct.player[index].SelectedChar].Chest[i] = true;
-                                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                                        SendData.Send_ActionMsg(index, lang.finded_a_item, Globals.ColorYellow, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0, PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-                                        SendData.Send_MsgToPlayer(index, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
-                                        SendData.Send_EventGraphic(index, MStruct.tile[MStruct.chestpoint[i].map, MStruct.chestpoint[i].x, MStruct.chestpoint[i].y].Event_Id, MStruct.chestpoint[i].inactive_sprite, MStruct.chestpoint[i].inactive_sprite_index, 0, 8);
+                                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Chest[i] = true;
+                                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                                        SendData.sendActionMsg(s, lang.finded_a_item, Globals.ColorYellow, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+                                        SendData.sendMsgToPlayer(s, lang.you_have_obtained_new_items, Globals.ColorYellow, Globals.Msg_Type_Server);
+                                        SendData.sendEventGraphic(s, MapStruct.tile[MapStruct.chestpoint[i].map, MapStruct.chestpoint[i].x, MapStruct.chestpoint[i].y].Event_Id, MapStruct.chestpoint[i].inactive_sprite, MapStruct.chestpoint[i].inactive_sprite_s, 0, 8);
                                         return;
                                     }
                                 }
@@ -1999,11 +1999,11 @@ namespace FORJERUM
         // DirCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para mudar a direção em que o personagem está olhando.
         //*********************************************************************************************
-        static void DirCheck(int index, string data)
+        static void receivedDir(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2012,7 +2012,7 @@ namespace FORJERUM
             string[] splited = data.Replace("<19>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 10) || (Convert.ToInt32(splited[0]) < 0)) { return; }
             
             byte Dir = Convert.ToByte(splited[0]);
@@ -2020,220 +2020,220 @@ namespace FORJERUM
             switch (Dir)
             {
                 case 8:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirUp;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir = Globals.DirUp;
                     break;
                 case 2:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirDown;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir = Globals.DirDown;
                     break;
                 case 4:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirLeft;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir = Globals.DirLeft;
                     break;
                 case 6:
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dir = Globals.DirRight;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir = Globals.DirRight;
                     break;
                 default:
                     WinsockAsync.Log(String.Format("Direção nula"));
                     break;
             }
 
-            SendData.Send_PlayerDir(index);
-            SendData.Send_PlayerDir(index, 1);
+            SendData.sendPlayerDir(s);
+            SendData.sendPlayerDir(s, 1);
         }
         //*********************************************************************************************
-        // ReceivedOutCollector / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedOutCollector / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedOutCollector(int index)
+        static void receivedOutCollector(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int mapnum = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int guildnum = PStruct.character[index, PStruct.player[index].SelectedChar].Guild;
+            int mapnum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int guildnum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild;
 
             if (guildnum <= 0) { return; }
 
-            if (MStruct.map[mapnum].guildnum <= 0)
+            if (MapStruct.map[mapnum].guildnum <= 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.this_map_dont_have_collector_to_collect, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.this_map_dont_have_collector_to_collect, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if ((MStruct.map[mapnum].guildmember != "") && (MStruct.map[mapnum].guildmember != PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName))
+            if ((MapStruct.map[mapnum].guildmember != "") && (MapStruct.map[mapnum].guildmember != PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName))
             {
-                SendData.Send_MsgToPlayer(index, lang.you_is_not_the_collector_master, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_is_not_the_collector_master, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
 
             //Entregar o dinheiro ao jogador
-            PStruct.character[index, PStruct.player[index].SelectedChar].Gold += MStruct.map[mapnum].guildgold;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold += MapStruct.map[mapnum].guildgold;
 
             //Retirar guilda do mapa
-            MStruct.map[mapnum].guildnum = 0;
-            MStruct.map[mapnum].guildmember = "";
-            MStruct.map[mapnum].guildgold = 0;
+            MapStruct.map[mapnum].guildnum = 0;
+            MapStruct.map[mapnum].guildmember = "";
+            MapStruct.map[mapnum].guildgold = 0;
 
             //Retirar o coletor
-            for (int i2 = 0; i2 <= MStruct.tempmap[mapnum].NpcCount; i2++)
+            for (int i2 = 0; i2 <= MapStruct.tempmap[mapnum].NpcCount; i2++)
             {
-                if (NStruct.npc[mapnum, i2].Name == "Coletor de Guilda")
+                if (NpcStruct.npc[mapnum, i2].Name == "Coletor de Guilda")
                 {
                     //Avisar os clientes para apagarem o coletor do mapa
-                    SendData.Send_NpcLeft(mapnum, i2);
+                    SendData.sendNpcLeft(mapnum, i2);
 
                     //Limpar dados sobre o coletor
-                    NStruct.ClearTempNpc(mapnum, i2);
+                    NpcStruct.clearTempNpc(mapnum, i2);
                     break;
                 }
             }
 
             //Atualizaro número de npc's no mapa
-            MStruct.tempmap[mapnum].NpcCount = MStruct.GetMapNpcCount(mapnum);
+            MapStruct.tempmap[mapnum].NpcCount = MapStruct.getMapNpcCount(mapnum);
 
             //Enviar dados para todos.
-            SendData.Send_MapGuildToMap(mapnum);
-            SendData.Send_MsgToGuild(guildnum, lang.the_collector_of + " " + MStruct.map[mapnum].name + " " + lang.has_been_collected, Globals.ColorYellow, Globals.Msg_Type_Server);
+            SendData.sendMapGuildToMap(mapnum);
+            SendData.sendMsgToGuild(guildnum, lang.the_collector_of + " " + MapStruct.map[mapnum].name + " " + lang.has_been_collected, Globals.ColorYellow, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
-        // ReceivedCollector / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedCollector / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedCollector(int index)
+        static void receivedCollector(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int guildnum = PStruct.character[index, PStruct.player[index].SelectedChar].Guild;
+            int guildnum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild;
 
             if (guildnum <= 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.only_for_guild_members, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.only_for_guild_members, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            int guildlevel = GStruct.guild[guildnum].level;
+            int guildlevel = GuildStruct.guild[guildnum].level;
             int price = guildlevel * 1000;
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold < price)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold < price)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_gold_to_create_collector, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_gold_to_create_collector, Globals.ColorRed, Globals.Msg_Type_Server);
                // return;
             }
 
-            int mapnum =  PStruct.character[index, PStruct.player[index].SelectedChar].Map;
+            int mapnum =  PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
 
-            if (MStruct.map[mapnum].guildnum > 0)
+            if (MapStruct.map[mapnum].guildnum > 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.a_collector_already_exist_in_this_map, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.a_collector_already_exist_in_this_map, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             
-            int i2 = MStruct.GetMapNpcSlot(mapnum);
+            int i2 = MapStruct.getMapNpcSlot(mapnum);
             if (i2 <= 1)
             {
-                SendData.Send_MsgToPlayer(index, lang.this_map_cannot_have_collectors, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.this_map_cannot_have_collectors, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Definir a nova guilda do mapa
-            MStruct.map[mapnum].guildnum = guildnum;
-            MStruct.map[mapnum].guildmember = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName;
+            MapStruct.map[mapnum].guildnum = guildnum;
+            MapStruct.map[mapnum].guildmember = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName;
 
             //Criar o coletor
-            NStruct.npc[mapnum, i2].Name = lang.guild_collector;
-            NStruct.npc[mapnum, i2].Map = mapnum;
-            NStruct.npc[mapnum, i2].X = NStruct.npc[mapnum, 1].X;
-            NStruct.npc[mapnum, i2].Y = NStruct.npc[mapnum, 1].Y;
-            NStruct.npc[mapnum, i2].Vitality = (GStruct.guild[guildnum].level * 1000) + 1000;
-            NStruct.npc[mapnum, i2].Spirit = (GStruct.guild[guildnum].level * 200) + 200;
-            NStruct.tempnpc[mapnum, i2].Target = 0;
-            NStruct.tempnpc[mapnum, i2].X = NStruct.npc[mapnum, i2].X;
-            NStruct.tempnpc[mapnum, i2].Y = NStruct.npc[mapnum, i2].Y;
-            NStruct.tempnpc[mapnum, i2].curTargetX = NStruct.npc[mapnum, i2].X;
-            NStruct.tempnpc[mapnum, i2].curTargetY = NStruct.npc[mapnum, i2].Y;
-            NStruct.tempnpc[mapnum, i2].Vitality = NStruct.npc[mapnum, i2].Vitality;
-            NStruct.npc[mapnum, i2].Attack =  (GStruct.guild[guildnum].level * 34) + 34;
-            NStruct.npc[mapnum, i2].Defense = (GStruct.guild[guildnum].level * 22) + 22; ;
-            NStruct.npc[mapnum, i2].Agility = (GStruct.guild[guildnum].level * 4) + 4; ;
-            NStruct.npc[mapnum, i2].MagicDefense = (GStruct.guild[guildnum].level * 26) + 26;
-            NStruct.npc[mapnum, i2].MagicAttack = (GStruct.guild[guildnum].level * 48) + 48;
-            NStruct.npc[mapnum, i2].Luck = (GStruct.guild[guildnum].level * 4) + 4;
-            NStruct.npc[mapnum, i2].Sprite = "$sprite (84)";
-            NStruct.npc[mapnum, i2].index = 0;
-            NStruct.npc[mapnum, i2].Type = 1;
-            NStruct.npc[mapnum, i2].Range = 1;
-            NStruct.npc[mapnum, i2].Animation = 2;
-            NStruct.npc[mapnum, i2].SpeedMove = 256;
-            NStruct.tempnpc[mapnum, i2].movespeed = NStruct.npc[mapnum, i2].SpeedMove / 64;
-            NStruct.npc[mapnum, i2].Respawn = 0;
-            NStruct.npc[mapnum, i2].Exp = 0;
-            NStruct.npc[mapnum, i2].Gold = 0;
-            NStruct.tempnpc[mapnum, i2].guildnum = guildnum;
-            NStruct.tempnpc[mapnum, i2].prev_move = new NStruct.Point[7];
+            NpcStruct.npc[mapnum, i2].Name = lang.guild_collector;
+            NpcStruct.npc[mapnum, i2].Map = mapnum;
+            NpcStruct.npc[mapnum, i2].X = NpcStruct.npc[mapnum, 1].X;
+            NpcStruct.npc[mapnum, i2].Y = NpcStruct.npc[mapnum, 1].Y;
+            NpcStruct.npc[mapnum, i2].Vitality = (GuildStruct.guild[guildnum].level * 1000) + 1000;
+            NpcStruct.npc[mapnum, i2].Spirit = (GuildStruct.guild[guildnum].level * 200) + 200;
+            NpcStruct.tempnpc[mapnum, i2].Target = 0;
+            NpcStruct.tempnpc[mapnum, i2].X = NpcStruct.npc[mapnum, i2].X;
+            NpcStruct.tempnpc[mapnum, i2].Y = NpcStruct.npc[mapnum, i2].Y;
+            NpcStruct.tempnpc[mapnum, i2].curTargetX = NpcStruct.npc[mapnum, i2].X;
+            NpcStruct.tempnpc[mapnum, i2].curTargetY = NpcStruct.npc[mapnum, i2].Y;
+            NpcStruct.tempnpc[mapnum, i2].Vitality = NpcStruct.npc[mapnum, i2].Vitality;
+            NpcStruct.npc[mapnum, i2].Attack =  (GuildStruct.guild[guildnum].level * 34) + 34;
+            NpcStruct.npc[mapnum, i2].Defense = (GuildStruct.guild[guildnum].level * 22) + 22; ;
+            NpcStruct.npc[mapnum, i2].Agility = (GuildStruct.guild[guildnum].level * 4) + 4; ;
+            NpcStruct.npc[mapnum, i2].MagicDefense = (GuildStruct.guild[guildnum].level * 26) + 26;
+            NpcStruct.npc[mapnum, i2].MagicAttack = (GuildStruct.guild[guildnum].level * 48) + 48;
+            NpcStruct.npc[mapnum, i2].Luck = (GuildStruct.guild[guildnum].level * 4) + 4;
+            NpcStruct.npc[mapnum, i2].Sprite = "$sprite (84)";
+            NpcStruct.npc[mapnum, i2].s = 0;
+            NpcStruct.npc[mapnum, i2].Type = 1;
+            NpcStruct.npc[mapnum, i2].Range = 1;
+            NpcStruct.npc[mapnum, i2].Animation = 2;
+            NpcStruct.npc[mapnum, i2].SpeedMove = 256;
+            NpcStruct.tempnpc[mapnum, i2].movespeed = NpcStruct.npc[mapnum, i2].SpeedMove / 64;
+            NpcStruct.npc[mapnum, i2].Respawn = 0;
+            NpcStruct.npc[mapnum, i2].Exp = 0;
+            NpcStruct.npc[mapnum, i2].Gold = 0;
+            NpcStruct.tempnpc[mapnum, i2].guildnum = guildnum;
+            NpcStruct.tempnpc[mapnum, i2].prev_move = new NpcStruct.Point[7];
 
             //Atualizaro número de npc's no mapa
-            MStruct.tempmap[mapnum].NpcCount = MStruct.GetMapNpcCount(mapnum);
+            MapStruct.tempmap[mapnum].NpcCount = MapStruct.getMapNpcCount(mapnum);
             
             //Enviar dados para todos.
-            SendData.Send_MapGuildToMap(mapnum);
-            SendData.Send_NpcToMap(mapnum, i2);
-            SendData.Send_MsgToGuild(guildnum, lang.a_collector_has_been_created_in + " " + MStruct.map[mapnum].name + ".", Globals.ColorYellow, Globals.Msg_Type_Server);
+            SendData.sendMapGuildToMap(mapnum);
+            SendData.sendNpcToMap(mapnum, i2);
+            SendData.sendMsgToGuild(guildnum, lang.a_collector_has_been_created_in + " " + MapStruct.map[mapnum].name + ".", Globals.ColorYellow, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
         // PickItemCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para obter um item no mapa.
         //*********************************************************************************************
-        static void PickItemCheck(int index)
+        static void receivedPickItem(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            int map = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-            int playerx = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X);
-            int playery = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y);
+            int map = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+            int playerx = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X);
+            int playery = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y);
 
-            for (int i = 0; i <= MStruct.GetMapItemMaxindex(map); i++)
+            for (int i = 0; i <= MapStruct.getMapItemMaxs(map); i++)
             {
-                if ((MStruct.mapitem[map, i].X == playerx) && (MStruct.mapitem[map, i].Y == playery))
+                if ((MapStruct.mapitem[map, i].X == playerx) && (MapStruct.mapitem[map, i].Y == playery))
                 {
-                    if (InventoryRelations.GiveItem(index, MStruct.mapitem[map, i].ItemType, MStruct.mapitem[map, i].ItemNum, MStruct.mapitem[map, i].Value, MStruct.mapitem[map, i].Refin, MStruct.mapitem[map, i].Exp) == true)
+                    if (InventoryRelations.giveItem(s, MapStruct.mapitem[map, i].ItemType, MapStruct.mapitem[map, i].ItemNum, MapStruct.mapitem[map, i].Value, MapStruct.mapitem[map, i].Refin, MapStruct.mapitem[map, i].Exp) == true)
                     {
-                        if (MStruct.mapitem[map, i].ItemType == 1)
+                        if (MapStruct.mapitem[map, i].ItemType == 1)
                         {
-                            SendData.Send_ActionMsg(index, IStruct.item[MStruct.mapitem[map, i].ItemNum].name + " x" + MStruct.mapitem[map, i].Value, Globals.ColorWhite, playerx, playery, 1, 0, map);
+                            SendData.sendActionMsg(s, ItemStruct.item[MapStruct.mapitem[map, i].ItemNum].name + " x" + MapStruct.mapitem[map, i].Value, Globals.ColorWhite, playerx, playery, 1, 0, map);
                         }
-                        if (MStruct.mapitem[map, i].ItemType == 2)
+                        if (MapStruct.mapitem[map, i].ItemType == 2)
                         {
-                            SendData.Send_ActionMsg(index, WStruct.weapon[MStruct.mapitem[map, i].ItemNum].name + " x" + MStruct.mapitem[map, i].Value, Globals.ColorWhite, playerx, playery, 1, 0, map);
+                            SendData.sendActionMsg(s, WeaponStruct.weapon[MapStruct.mapitem[map, i].ItemNum].name + " x" + MapStruct.mapitem[map, i].Value, Globals.ColorWhite, playerx, playery, 1, 0, map);
                         }
-                        if (MStruct.mapitem[map, i].ItemType == 3)
+                        if (MapStruct.mapitem[map, i].ItemType == 3)
                         {
-                            SendData.Send_ActionMsg(index, AStruct.armor[MStruct.mapitem[map, i].ItemNum].name + " x" + MStruct.mapitem[map, i].Value, Globals.ColorWhite, playerx, playery, 1, 0, map);
+                            SendData.sendActionMsg(s, ArmorStruct.armor[MapStruct.mapitem[map, i].ItemNum].name + " x" + MapStruct.mapitem[map, i].Value, Globals.ColorWhite, playerx, playery, 1, 0, map);
                         }
-                        SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                        MStruct.mapitem[map, i].X = 0;
-                        MStruct.mapitem[map, i].Y = 0;
-                        MStruct.mapitem[map, i].ItemNum = 0;
-                        MStruct.mapitem[map, i].Value = 0;
-                        MStruct.mapitem[map, i].Refin = 0;
-                        MStruct.mapitem[map, i].Exp = 0;
-                        MStruct.mapitem[map, i].Timer = 0;
-                        SendData.Send_ClearMapItem(map, i);
+                        SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                        MapStruct.mapitem[map, i].X = 0;
+                        MapStruct.mapitem[map, i].Y = 0;
+                        MapStruct.mapitem[map, i].ItemNum = 0;
+                        MapStruct.mapitem[map, i].Value = 0;
+                        MapStruct.mapitem[map, i].Refin = 0;
+                        MapStruct.mapitem[map, i].Exp = 0;
+                        MapStruct.mapitem[map, i].Timer = 0;
+                        SendData.sendClearMapItem(map, i);
                         break;
                     }
                 }
@@ -2243,11 +2243,11 @@ namespace FORJERUM
         // DropItemCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para derrubar um item no mapa.
         //*********************************************************************************************
-        static void DropItemCheck(int index, string data)
+        static void receivedDropItem(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2256,19 +2256,19 @@ namespace FORJERUM
             string[] splited = data.Replace("<21>", "").Split(';');
 
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if (!IsNumeric(splited[1])) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[1])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1) || (Convert.ToInt32(splited[1]) > 999)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0) || (Convert.ToInt32(splited[1]) < 0)) { return; }
 
             int Slot = Convert.ToInt32(splited[0]);
             int Value = Convert.ToInt32(splited[1]);
 
-            int Map = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Map);
-            int playerx = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X);
-            int playery = Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y);
+            int Map = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map);
+            int playerx = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X);
+            int playery = Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y);
            
-            string item = PStruct.invslot[index, Convert.ToInt32(Slot)].item;
+            string item = PlayerStruct.invslot[s, Convert.ToInt32(Slot)].item;
             string[] splititem = item.Split(',');
 
             int itemexp = Convert.ToInt32(splititem[4]);
@@ -2277,48 +2277,48 @@ namespace FORJERUM
             int itemnum = Convert.ToInt32(splititem[1]);
             int itemtype = Convert.ToInt32(splititem[0]);
 
-            if (Value > itemvalue) { SendData.Send_MsgToPlayer(index, lang.you_dont_have_this_item_amount, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-            if (MStruct.GetNullMapItem(Map) == 0) { SendData.Send_MsgToPlayer(index, lang.map_item_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (Value > itemvalue) { SendData.sendMsgToPlayer(s, lang.you_dont_have_this_item_amount, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (MapStruct.getNullMapItem(Map) == 0) { SendData.sendMsgToPlayer(s, lang.map_item_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             if (itemvalue - Value > 0)
             {
                 //Há item sobrando
-                PStruct.invslot[index, Convert.ToInt32(Slot)].item = itemtype.ToString() + "," + itemnum.ToString() + "," + (itemvalue - Value).ToString() + "," + itemrefin.ToString() + "," + itemexp.ToString();
+                PlayerStruct.invslot[s, Convert.ToInt32(Slot)].item = itemtype.ToString() + "," + itemnum.ToString() + "," + (itemvalue - Value).ToString() + "," + itemrefin.ToString() + "," + itemexp.ToString();
             }
             else
             {
-                PStruct.invslot[index, Convert.ToInt32(Slot)].item = Globals.NullItem; //Não há item sobrando
+                PlayerStruct.invslot[s, Convert.ToInt32(Slot)].item = Globals.NullItem; //Não há item sobrando
             }
             //Dropar item no mapa
-            int NullMapItem = MStruct.GetNullMapItem(Map);
-            MStruct.mapitem[Map, NullMapItem].Value = Value;
-            MStruct.mapitem[Map, NullMapItem].ItemType = itemtype;
-            MStruct.mapitem[Map, NullMapItem].X = playerx;
-            MStruct.mapitem[Map, NullMapItem].Y = playery;
-            MStruct.mapitem[Map, NullMapItem].ItemNum = itemnum;
-            MStruct.mapitem[Map, NullMapItem].Refin = itemrefin;
-            MStruct.mapitem[Map, NullMapItem].Exp = itemexp;
-            MStruct.mapitem[Map, NullMapItem].Timer = Loops.TickCount.ElapsedMilliseconds + 600000;
-            SendData.Send_MapItem(Map, NullMapItem);
+            int NullMapItem = MapStruct.getNullMapItem(Map);
+            MapStruct.mapitem[Map, NullMapItem].Value = Value;
+            MapStruct.mapitem[Map, NullMapItem].ItemType = itemtype;
+            MapStruct.mapitem[Map, NullMapItem].X = playerx;
+            MapStruct.mapitem[Map, NullMapItem].Y = playery;
+            MapStruct.mapitem[Map, NullMapItem].ItemNum = itemnum;
+            MapStruct.mapitem[Map, NullMapItem].Refin = itemrefin;
+            MapStruct.mapitem[Map, NullMapItem].Exp = itemexp;
+            MapStruct.mapitem[Map, NullMapItem].Timer = Loops.TickCount.ElapsedMilliseconds + 600000;
+            SendData.sendMapItem(Map, NullMapItem);
 
             //Mandar inventário do jogador
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
             
         }
         //*********************************************************************************************
         // ItemCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ItemCheck(int index, string data)
+        static void receivedItemData(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access <= 0) { return; }
             string[] newItems = data.Replace("<22>", "").Split(';');
 
             int items_count = Convert.ToInt32(newItems[0]);
@@ -2327,70 +2327,70 @@ namespace FORJERUM
 
             for (int i = 1; i <= items_count ; i++)
             {
-                IStruct.item[i].name= newItems[reader];
+                ItemStruct.item[i].name= newItems[reader];
                 reader += 1;
-                IStruct.item[i].price = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].price = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].consumable = newItems[reader];
+                ItemStruct.item[i].consumable = newItems[reader];
                 reader += 1;
-                IStruct.item[i].success_rate = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].success_rate = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].animation_id = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].animation_id = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].note = newItems[reader];
+                ItemStruct.item[i].note = newItems[reader];
                 reader += 1;
-                IStruct.item[i].speed = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].speed = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].repeats = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].repeats = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].tp_gain = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].tp_gain = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].hit_type = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].hit_type = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].damage_type = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].damage_type = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].damage_formula = newItems[reader];
+                ItemStruct.item[i].damage_formula = newItems[reader];
                 reader += 1;
-                IStruct.item[i].damage_element = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].damage_element = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].damage_variance = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].damage_variance = Convert.ToInt32(newItems[reader]);
                 reader += 1;
-                IStruct.item[i].damage_critical = newItems[reader];
-                reader += 1;
-
-                IStruct.item[i].effects_count = Convert.ToInt32(newItems[reader]);
+                ItemStruct.item[i].damage_critical = newItems[reader];
                 reader += 1;
 
-                for (int i2 = 0; i2 <= IStruct.item[i].effects_count; i2++)
+                ItemStruct.item[i].effects_count = Convert.ToInt32(newItems[reader]);
+                reader += 1;
+
+                for (int i2 = 0; i2 <= ItemStruct.item[i].effects_count; i2++)
                 {
-                    IStruct.itemeffect[i, i2].code = Convert.ToInt32(newItems[reader]);
+                    ItemStruct.itemeffect[i, i2].code = Convert.ToInt32(newItems[reader]);
                     reader += 1;
-                    IStruct.itemeffect[i, i2].data_id = Convert.ToInt32(newItems[reader]);
+                    ItemStruct.itemeffect[i, i2].data_id = Convert.ToInt32(newItems[reader]);
                     reader += 1;
-                    IStruct.itemeffect[i, i2].value1 = Convert.ToDouble(newItems[reader]);
+                    ItemStruct.itemeffect[i, i2].value1 = Convert.ToDouble(newItems[reader]);
                     reader += 1;
-                    IStruct.itemeffect[i, i2].value2 = Convert.ToDouble(newItems[reader]);
+                    ItemStruct.itemeffect[i, i2].value2 = Convert.ToDouble(newItems[reader]);
                     reader += 1;
                 }
-                Database.SaveItem(i.ToString());
-                Database.LoadItem(i.ToString());
+                Database.Items.saveItem(i.ToString());
+                Database.Items.loadItem(i.ToString());
             }
             Console.WriteLine("Items foram salvos com sucesso.");
         }
         //*********************************************************************************************
         // WeaponCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void WeaponCheck(int index, string data)
+        static void receivedWeaponData(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access <= 0) { return; }
             string[] newWeapons = data.Replace("<23>", "").Split(';');
 
             int weapons_count = Convert.ToInt32(newWeapons[0]);
@@ -2399,56 +2399,56 @@ namespace FORJERUM
 
             for (int i = 1; i <= weapons_count; i++)
             {
-                WStruct.weapon[i].name = newWeapons[reader];
+                WeaponStruct.weapon[i].name = newWeapons[reader];
                 reader += 1;
-                WStruct.weapon[i].price = Convert.ToInt32(newWeapons[reader]);
+                WeaponStruct.weapon[i].price = Convert.ToInt32(newWeapons[reader]);
                 reader += 1;
-                WStruct.weapon[i].etype_id = Convert.ToInt32(newWeapons[reader]);
+                WeaponStruct.weapon[i].etype_id = Convert.ToInt32(newWeapons[reader]);
                 reader += 1;
-                WStruct.weapon[i].wtype_id = Convert.ToInt32(newWeapons[reader]);
+                WeaponStruct.weapon[i].wtype_id = Convert.ToInt32(newWeapons[reader]);
                 reader += 1;
-                WStruct.weapon[i].animation_id = Convert.ToInt32(newWeapons[reader]);
+                WeaponStruct.weapon[i].animation_id = Convert.ToInt32(newWeapons[reader]);
                 reader += 1;
-                WStruct.weapon[i].params_size = Convert.ToInt32(newWeapons[reader]);
+                WeaponStruct.weapon[i].params_size = Convert.ToInt32(newWeapons[reader]);
                 reader += 1;
 
-                for (int i2 = 0; i2 <= WStruct.weapon[i].params_size; i2++)
+                for (int i2 = 0; i2 <= WeaponStruct.weapon[i].params_size; i2++)
                 {
-                    WStruct.weaponparams[i, i2].value = Convert.ToInt32(newWeapons[reader]);
+                    WeaponStruct.weaponparams[i, i2].value = Convert.ToInt32(newWeapons[reader]);
                     reader += 1;
                 }
 
-                WStruct.weapon[i].features_size = Convert.ToInt32(newWeapons[reader]);
+                WeaponStruct.weapon[i].features_size = Convert.ToInt32(newWeapons[reader]);
                 reader += 1;
 
-                for (int i2 = 0; i2 <= WStruct.weapon[i].features_size; i2++)
+                for (int i2 = 0; i2 <= WeaponStruct.weapon[i].features_size; i2++)
                 {
-                    WStruct.weaponfeatures[i, i2].code = Convert.ToInt32(newWeapons[reader]);
+                    WeaponStruct.weaponfeatures[i, i2].code = Convert.ToInt32(newWeapons[reader]);
                     reader += 1;
-                    WStruct.weaponfeatures[i, i2].data_id = Convert.ToInt32(newWeapons[reader]);
+                    WeaponStruct.weaponfeatures[i, i2].data_id = Convert.ToInt32(newWeapons[reader]);
                     reader += 1;
-                    WStruct.weaponfeatures[i, i2].value = Convert.ToDouble(newWeapons[reader]);
+                    WeaponStruct.weaponfeatures[i, i2].value = Convert.ToDouble(newWeapons[reader]);
                     reader += 1;
                 }
-                Database.SaveWeapon(i.ToString());
-                Database.LoadWeapon(i.ToString());
+                Database.Weapons.saveWeapon(i.ToString());
+                Database.Weapons.loadWeapon(i.ToString());
             }
             Console.WriteLine("Armas foram salvas com sucesso.");
         }
         //*********************************************************************************************
         // ArmorCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ArmorCheck(int index, string data)
+        static void receivedArmorData(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access <= 0) { return; }
             string[] newArmors = data.Replace("<24>", "").Split(';');
 
             int armors_count = Convert.ToInt32(newArmors[0]);
@@ -2457,54 +2457,54 @@ namespace FORJERUM
 
             for (int i = 1; i <= armors_count; i++)
             {
-                AStruct.armor[i].name = newArmors[reader];
+                ArmorStruct.armor[i].name = newArmors[reader];
                 reader += 1;
-                AStruct.armor[i].price = Convert.ToInt32(newArmors[reader]);
+                ArmorStruct.armor[i].price = Convert.ToInt32(newArmors[reader]);
                 reader += 1;
-                AStruct.armor[i].etype_id = Convert.ToInt32(newArmors[reader]);
+                ArmorStruct.armor[i].etype_id = Convert.ToInt32(newArmors[reader]);
                 reader += 1;
-                AStruct.armor[i].atype_id = Convert.ToInt32(newArmors[reader]);
+                ArmorStruct.armor[i].atype_id = Convert.ToInt32(newArmors[reader]);
                 reader += 1;
-                AStruct.armor[i].params_size = Convert.ToInt32(newArmors[reader]);
+                ArmorStruct.armor[i].params_size = Convert.ToInt32(newArmors[reader]);
                 reader += 1;
 
-                for (int i2 = 0; i2 <= AStruct.armor[i].params_size; i2++)
+                for (int i2 = 0; i2 <= ArmorStruct.armor[i].params_size; i2++)
                 {
-                    AStruct.armorparams[i, i2].value = Convert.ToInt32(newArmors[reader]);
+                    ArmorStruct.armorparams[i, i2].value = Convert.ToInt32(newArmors[reader]);
                     reader += 1;
                 }
 
-                AStruct.armor[i].features_size = Convert.ToInt32(newArmors[reader]);
+                ArmorStruct.armor[i].features_size = Convert.ToInt32(newArmors[reader]);
                 reader += 1;
 
-                for (int i2 = 0; i2 <= AStruct.armor[i].features_size; i2++)
+                for (int i2 = 0; i2 <= ArmorStruct.armor[i].features_size; i2++)
                 {
-                    AStruct.armorfeatures[i, i2].code = Convert.ToInt32(newArmors[reader]);
+                    ArmorStruct.armorfeatures[i, i2].code = Convert.ToInt32(newArmors[reader]);
                     reader += 1;
-                    AStruct.armorfeatures[i, i2].data_id = Convert.ToInt32(newArmors[reader]);
+                    ArmorStruct.armorfeatures[i, i2].data_id = Convert.ToInt32(newArmors[reader]);
                     reader += 1;
-                    AStruct.armorfeatures[i, i2].value = Convert.ToDouble(newArmors[reader]);
+                    ArmorStruct.armorfeatures[i, i2].value = Convert.ToDouble(newArmors[reader]);
                     reader += 1;
                 }
-                Database.SaveArmor(i.ToString());
-                Database.SaveArmor(i.ToString());
+                Database.Armors.saveArmor(i.ToString());
+                Database.Armors.saveArmor(i.ToString());
             }
             Console.WriteLine("Armaduras foram salvas com sucesso.");
         }
         //*********************************************************************************************
         // SkillCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void SkillCheck(int index, string data)
+        static void receivedSkillData(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access <= 0) { return; }
             string[] newSkills = data.Replace("<25>", "").Split(';');
             int skills_count = Convert.ToInt32(newSkills[0]);
 
@@ -2512,82 +2512,82 @@ namespace FORJERUM
 
             for (int i = 1; i <= skills_count; i++)
             {
-                SStruct.skill[i].scope = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].scope = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].stype_id = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].stype_id = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].mp_cost = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].mp_cost = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].tp_cost = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].tp_cost = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].message1 = newSkills[reader];
+                SkillStruct.skill[i].message1 = newSkills[reader];
                 reader += 1;
-                SStruct.skill[i].message2 = newSkills[reader];
+                SkillStruct.skill[i].message2 = newSkills[reader];
                 reader += 1;
-                SStruct.skill[i].required_wtype_id1 = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].required_wtype_id1 = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].required_wtype_id2 = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].required_wtype_id2 = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].occasion = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].occasion = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].success_rate = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].success_rate = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].repeats = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].repeats = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].tp_gain = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].tp_gain = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].hit_type = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].hit_type = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].animation_id = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].animation_id = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].speed = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].speed = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].note = newSkills[reader];
+                SkillStruct.skill[i].note = newSkills[reader];
                 reader += 1;
-                SStruct.skill[i].damage_type = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].damage_type = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].damage_element = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].damage_element = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].damage_formula = newSkills[reader];
+                SkillStruct.skill[i].damage_formula = newSkills[reader];
                 reader += 1;
-                SStruct.skill[i].damage_variance = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].damage_variance = Convert.ToInt32(newSkills[reader]);
                 reader += 1;
-                SStruct.skill[i].damage_critical = newSkills[reader];
-                reader += 1;
-
-                SStruct.skill[i].effects_count = Convert.ToInt32(newSkills[reader]);
+                SkillStruct.skill[i].damage_critical = newSkills[reader];
                 reader += 1;
 
-                for (int i2 = 0; i2 <= SStruct.skill[i].effects_count; i2++)
+                SkillStruct.skill[i].effects_count = Convert.ToInt32(newSkills[reader]);
+                reader += 1;
+
+                for (int i2 = 0; i2 <= SkillStruct.skill[i].effects_count; i2++)
                 {
-                    SStruct.skilleffect[i, i2].code = Convert.ToInt32(newSkills[reader]);
+                    SkillStruct.skilleffect[i, i2].code = Convert.ToInt32(newSkills[reader]);
                     reader += 1;
-                    SStruct.skilleffect[i, i2].data_id = Convert.ToInt32(newSkills[reader]);
+                    SkillStruct.skilleffect[i, i2].data_id = Convert.ToInt32(newSkills[reader]);
                     reader += 1;
-                    SStruct.skilleffect[i, i2].value1 = Convert.ToDouble(newSkills[reader]);
+                    SkillStruct.skilleffect[i, i2].value1 = Convert.ToDouble(newSkills[reader]);
                     reader += 1;
-                    SStruct.skilleffect[i, i2].value2 = Convert.ToDouble(newSkills[reader]);
+                    SkillStruct.skilleffect[i, i2].value2 = Convert.ToDouble(newSkills[reader]);
                     reader += 1;
                 }
-                Database.SaveSkill(i.ToString());
-                Database.LoadSkill(i.ToString());
+                Database.Skills.saveSkill(i.ToString());
+                Database.Skills.loadSkill(i.ToString());
         }
             Console.WriteLine("Skills foram salvas com sucesso.");
         }
         //*********************************************************************************************
         // EnemyCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void EnemyCheck(int index, string data)
+        static void receivedEnemyData(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Access <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Access <= 0) { return; }
             string[] newEnemies = data.Replace("<28>", "").Split(';');
 
             int start = Convert.ToInt32(newEnemies[0]);
@@ -2597,41 +2597,41 @@ namespace FORJERUM
 
             for (int i = start; i <= startend; i++)
             {
-                EStruct.enemy[i].battler_name = newEnemies[reader];
+                EnemyStruct.enemy[i].battler_name = newEnemies[reader];
                 reader += 1;
-                EStruct.enemy[i].battler_hue = Convert.ToInt32(newEnemies[reader]);
+                EnemyStruct.enemy[i].battler_hue = Convert.ToInt32(newEnemies[reader]);
                 reader += 1;
-                EStruct.enemy[i].exp = Convert.ToInt32(newEnemies[reader]);
+                EnemyStruct.enemy[i].exp = Convert.ToInt32(newEnemies[reader]);
                 reader += 1;
-                EStruct.enemy[i].gold = Convert.ToInt32(newEnemies[reader]);
+                EnemyStruct.enemy[i].gold = Convert.ToInt32(newEnemies[reader]);
                 reader += 1;
-                EStruct.enemy[i].note = newEnemies[reader];
-                reader += 1;
-
-                EStruct.enemy[i].params_size = Convert.ToInt32(newEnemies[reader]);
+                EnemyStruct.enemy[i].note = newEnemies[reader];
                 reader += 1;
 
-                for (int i2 = 0; i2 <= EStruct.enemy[i].params_size; i2++)
+                EnemyStruct.enemy[i].params_size = Convert.ToInt32(newEnemies[reader]);
+                reader += 1;
+
+                for (int i2 = 0; i2 <= EnemyStruct.enemy[i].params_size; i2++)
                 {
-                    EStruct.enemyparams[i, i2].value = Convert.ToInt32(newEnemies[reader]);
+                    EnemyStruct.enemyparams[i, i2].value = Convert.ToInt32(newEnemies[reader]);
                     reader += 1;
                 }
 
-                EStruct.enemy[i].drops_size = Convert.ToInt32(newEnemies[reader]);
+                EnemyStruct.enemy[i].drops_size = Convert.ToInt32(newEnemies[reader]);
                 reader += 1;
 
-                for (int i2 = 0; i2 <= EStruct.enemy[i].drops_size; i2++)
+                for (int i2 = 0; i2 <= EnemyStruct.enemy[i].drops_size; i2++)
                 {
-                    EStruct.enemydrops[i, i2].kind = Convert.ToInt32(newEnemies[reader]);
+                    EnemyStruct.enemydrops[i, i2].kind = Convert.ToInt32(newEnemies[reader]);
                     reader += 1;
-                    EStruct.enemydrops[i, i2].data_id = Convert.ToInt32(newEnemies[reader]);
+                    EnemyStruct.enemydrops[i, i2].data_id = Convert.ToInt32(newEnemies[reader]);
                     reader += 1;
-                    EStruct.enemydrops[i, i2].denominator = Convert.ToInt32(newEnemies[reader]);
+                    EnemyStruct.enemydrops[i, i2].denominator = Convert.ToInt32(newEnemies[reader]);
                     reader += 1;
                 }
 
-                Database.SaveEnemy(i.ToString());
-                Database.LoadEnemy(i.ToString());
+                Database.Enemies.saveEnemy(i.ToString());
+                Database.Enemies.loadEnemy(i.ToString());
             }
 
             if (start == 951)
@@ -2642,11 +2642,11 @@ namespace FORJERUM
         //*********************************************************************************************
         // HotkeyCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void HotkeyCheck(int index, string data)
+        static void receivedHotkey(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2655,9 +2655,9 @@ namespace FORJERUM
             string[] splited = data.Replace("<26>", "").Split(';');
 
             if (splited.Length != 3) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if (!IsNumeric(splited[1])) { return; }
-            if (!IsNumeric(splited[2])) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[1])) { return; }
+            if (!isNumeric(splited[2])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1) || (Convert.ToInt32(splited[1]) > Globals.MaxHotkeys - 1) || (Convert.ToInt32(splited[2]) > 2)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0) || (Convert.ToInt32(splited[1]) < 0) || (Convert.ToInt32(splited[2]) < 0)) { return; }
 
@@ -2668,40 +2668,40 @@ namespace FORJERUM
             if (type == 1)
             {
                 if (slot > Globals.MaxPlayer_Skills - 1) { return; }
-                if (PStruct.skill[index, slot].num > 0)
+                if (PlayerStruct.skill[s, slot].num > 0)
                 {
-                    PStruct.hotkey[index, hotkeyslot].num = slot;
-                    PStruct.hotkey[index, hotkeyslot].type = type;
-                    SendData.Send_PlayerHotkeys(index);
+                    PlayerStruct.hotkey[s, hotkeyslot].num = slot;
+                    PlayerStruct.hotkey[s, hotkeyslot].type = type;
+                    SendData.sendPlayerHotkeys(s);
                 }
             }
 
             else if (type == 2)
             {
-                if ((Convert.ToInt32(PStruct.invslot[index, slot].item.Split(',')[0]) <= 1) && (Convert.ToInt32(PStruct.invslot[index, slot].item.Split(',')[1]) > 0))
+                if ((Convert.ToInt32(PlayerStruct.invslot[s, slot].item.Split(',')[0]) <= 1) && (Convert.ToInt32(PlayerStruct.invslot[s, slot].item.Split(',')[1]) > 0))
                 {
-                    PStruct.hotkey[index, hotkeyslot].num = Convert.ToInt32(PStruct.invslot[index, slot].item.Split(',')[1]);
-                    PStruct.hotkey[index, hotkeyslot].type = type;
-                    SendData.Send_PlayerHotkeys(index);
+                    PlayerStruct.hotkey[s, hotkeyslot].num = Convert.ToInt32(PlayerStruct.invslot[s, slot].item.Split(',')[1]);
+                    PlayerStruct.hotkey[s, hotkeyslot].type = type;
+                    SendData.sendPlayerHotkeys(s);
                 }  
             }
 
             else if (type == 0)
             {
-                PStruct.hotkey[index, hotkeyslot].num = 0;
-                PStruct.hotkey[index, hotkeyslot].type = type;
-                SendData.Send_PlayerHotkeys(index);
+                PlayerStruct.hotkey[s, hotkeyslot].num = 0;
+                PlayerStruct.hotkey[s, hotkeyslot].type = type;
+                SendData.sendPlayerHotkeys(s);
             }
         }
         //*********************************************************************************************
         // TargetCheck / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido de alteração para o alvo atual.
         //*********************************************************************************************
-        static void TargetCheck(int index, string data)
+        static void receivedTarget(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2710,8 +2710,8 @@ namespace FORJERUM
             string[] splited = data.Replace("<27>", "").Split(';');
 
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if (!IsNumeric(splited[1])) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[1])) { return; }
             if ((Convert.ToInt32(splited[0]) > 2) || (Convert.ToInt32(splited[1]) > 255)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0) || (Convert.ToInt32(splited[1]) < 0)) { return; }
 
@@ -2723,33 +2723,33 @@ namespace FORJERUM
             if (targettype == 1)
             {
                 //Verificar se o jogador não se desconectou no processo
-                int clientindex = UserConnection.Getindex(target);
-                if ((clientindex < 0) || (clientindex >= WinsockAsync.Clients.Count())) { return; }
-                if ((clientindex < 0) || (clientindex >= WinsockAsync.Clients.Count())) { return; }
-                if (!WinsockAsync.Clients[clientindex].IsConnected) { return; }
-                if ((target > Globals.Player_Highindex) || (target < 0)) { return; }
+                int clients = UserConnection.getS(target);
+                if ((clients < 0) || (clients >= WinsockAsync.Clients.Count())) { return; }
+                if ((clients < 0) || (clients >= WinsockAsync.Clients.Count())) { return; }
+                if (!WinsockAsync.Clients[clients].IsConnected) { return; }
+                if ((target > Globals.Player_Highs) || (target < 0)) { return; }
             }
 
             if (targettype == 2)
             {
-                if ((target > MStruct.tempmap[PStruct.character[index, PStruct.player[index].SelectedChar].Map].NpcCount) || (target < 0)) { return; }
+                if ((target > MapStruct.tempmap[PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map].NpcCount) || (target < 0)) { return; }
             }
 
-            if ((PStruct.tempplayer[index].targettype == targettype) && (PStruct.tempplayer[index].target == target)) { return; }
+            if ((PlayerStruct.tempplayer[s].targettype == targettype) && (PlayerStruct.tempplayer[s].target == target)) { return; }
 
-            PStruct.tempplayer[index].targettype = targettype;
-            PStruct.tempplayer[index].target = target;
+            PlayerStruct.tempplayer[s].targettype = targettype;
+            PlayerStruct.tempplayer[s].target = target;
 
         }
         //*********************************************************************************************
-        // ReceivedSkill / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedSkill / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido de execução de determinada magia.
         //*********************************************************************************************
-        static void ReceivedSkill(int index, string data)
+        static void receivedSkill(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2758,46 +2758,46 @@ namespace FORJERUM
             string[] splited = data.Replace("<29>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxPlayer_Skills - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int intslot = Convert.ToInt32(splited[0]);
 
             if ((intslot <= 0) && (intslot >= 6)) { return; }
-            if ((PStruct.skill[index, PStruct.hotkey[index, intslot].num].num <= 0)) { return; }
+            if ((PlayerStruct.skill[s, PlayerStruct.hotkey[s, intslot].num].num <= 0)) { return; }
 
-            if (PStruct.hotkey[index, intslot].type != Globals.Hotkey_Type_Skill) { return; }
-            if ((PStruct.skill[index, PStruct.hotkey[index, intslot].num].cooldown > Loops.TickCount.ElapsedMilliseconds)) { return; }
-            if (PStruct.skill[index, PStruct.hotkey[index, intslot].num].level <= 0) { return; }
-            if (SStruct.skill[PStruct.skill[index, PStruct.hotkey[index, intslot].num].num].mp_cost * PStruct.skill[index, PStruct.hotkey[index, intslot].num].level > PStruct.tempplayer[index].Spirit)
+            if (PlayerStruct.hotkey[s, intslot].type != Globals.Hotkey_Type_Skill) { return; }
+            if ((PlayerStruct.skill[s, PlayerStruct.hotkey[s, intslot].num].cooldown > Loops.TickCount.ElapsedMilliseconds)) { return; }
+            if (PlayerStruct.skill[s, PlayerStruct.hotkey[s, intslot].num].level <= 0) { return; }
+            if (SkillStruct.skill[PlayerStruct.skill[s, PlayerStruct.hotkey[s, intslot].num].num].mp_cost * PlayerStruct.skill[s, PlayerStruct.hotkey[s, intslot].num].level > PlayerStruct.tempplayer[s].Spirit)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_mana_to_spell, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_mana_to_spell, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            //SendData.Send_ActionMsg(index, SStruct.skill[PStruct.tempplayer[index].preparingskill].
-            PStruct.tempplayer[index].preparingskillslot = intslot;
-            PStruct.tempplayer[index].preparingskill = PStruct.skill[index, PStruct.hotkey[index, intslot].num].num;
-            PStruct.tempplayer[index].skilltimer = Loops.TickCount.ElapsedMilliseconds + (SStruct.skill[PStruct.tempplayer[index].preparingskill].speed * 100);
-            PStruct.tempplayer[index].movespeed -= 0.2;
+            //SendData.sendActionMsg(s, SkillStruct.skill[PlayerStruct.tempplayer[s].preparingskill].
+            PlayerStruct.tempplayer[s].preparingskillslot = intslot;
+            PlayerStruct.tempplayer[s].preparingskill = PlayerStruct.skill[s, PlayerStruct.hotkey[s, intslot].num].num;
+            PlayerStruct.tempplayer[s].skilltimer = Loops.TickCount.ElapsedMilliseconds + (SkillStruct.skill[PlayerStruct.tempplayer[s].preparingskill].speed * 100);
+            PlayerStruct.tempplayer[s].movespeed -= 0.2;
             //CORRECT SKILL INCOMPT
-            SendData.Send_MoveSpeed(1, index);
-            SendData.Send_Animation(PStruct.character[index, PStruct.player[index].SelectedChar].Map, 1, index, 81);
-            //PStruct.tempplayer[index].targettype;
-            //PStruct.tempplayer[index].target;
+            SendData.sendMoveSpeed(1, s);
+            SendData.sendAnimation(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, 1, s, 81);
+            //PlayerStruct.tempplayer[s].targettype;
+            //PlayerStruct.tempplayer[s].target;
            // Console.WriteLine("Novo alvo");
 
         }
         //*********************************************************************************************
-        // ReceivedAtr / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedAtr / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para usar os pontos de atributo.
         //*********************************************************************************************
-        static void ReceivedAtr(int index, string data)
+        static void receivedAtr(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2806,51 +2806,51 @@ namespace FORJERUM
             string[] splited = data.Replace("<30>", "").Split(';');
             
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxPlayer_Skills - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int atr = Convert.ToInt32(splited[0]);
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Points <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points <= 0) { return; }
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Points -= 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Points -= 1;
 
             switch (splited[0])
             {
                 case "1":
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Fire += 1;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Fire += 1;
                     break;
                 case "2":
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Earth += 1;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Earth += 1;
                     break;
                 case "3":
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Water += 1;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Water += 1;
                     break;
                 case "4":
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Wind += 1;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Wind += 1;
                     break;
                 case "5":
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Dark += 1;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dark += 1;
                     break;
                 case "6":
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Light += 1;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Light += 1;
                     break;
                 default:
                     WinsockAsync.Log(String.Format("Direção nula"));
                     break;
             }
-            SendData.Send_PlayerAtrTo(index);
+            SendData.sendPlayerAtrTo(s);
         }
         //*********************************************************************************************
-        // ReceivedUseSkillPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedUseSkillPoints / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para usar os pontos de habilidade.
         //*********************************************************************************************
-        static void ReceivedUseSkillPoints(int index, string data)
+        static void receivedUseSkillPoints(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2859,13 +2859,13 @@ namespace FORJERUM
             string[] splited = data.Replace("<31>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxPlayer_Skills - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int skill = Convert.ToInt32(splited[0]);
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints <= 0) { return; }
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].SkillPoints <= 0) { return; }
             
             int lv_ok = 0;
             if (skill == 2) { lv_ok = 5; } 
@@ -2879,96 +2879,96 @@ namespace FORJERUM
 
             if (skill <= 4)
             {
-                if (PStruct.character[index, PStruct.player[index].SelectedChar].Level < lv_ok)
+                if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level < lv_ok)
                 {
                     return;
                 }
             }
 
-            int max_level = SStruct.skill[PStruct.skill[index, skill].num].success_rate;
+            int max_level = SkillStruct.skill[PlayerStruct.skill[s, skill].num].success_rate;
 
-            if (PStruct.skill[index, skill].level >= max_level)
+            if (PlayerStruct.skill[s, skill].level >= max_level)
             {
-                SendData.Send_MsgToPlayer(index, lang.this_spell_cannot_be_evolved, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.this_spell_cannot_be_evolved, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].SkillPoints -= 1;
-            PStruct.skill[index, skill].level += 1;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].SkillPoints -= 1;
+            PlayerStruct.skill[s, skill].level += 1;
 
-            SendData.Send_PlayerSkills(index);
-            SendData.Send_PlayerSkillPoints(index);
+            SendData.sendPlayerSkills(s);
+            SendData.sendPlayerSkillPoints(s);
         }
         //*********************************************************************************************
-        // ReceivedParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedParty / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedParty(int index)
+        static void receivedParty(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Possíveis tentativas de hacker
-            if ((PStruct.tempplayer[index].targettype != 1) || (PStruct.tempplayer[index].target <= 0) || (PStruct.tempplayer[index].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.Send_MsgToPlayer(index, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if ((PlayerStruct.tempplayer[s].targettype != 1) || (PlayerStruct.tempplayer[s].target <= 0) || (PlayerStruct.tempplayer[s].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.sendMsgToPlayer(s, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             //Não pode convidar ele mesmo
-            if (PStruct.tempplayer[index].target == index) 
+            if (PlayerStruct.tempplayer[s].target == s) 
             {
-                SendData.Send_MsgToPlayer(index, lang.you_cannot_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_cannot_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
                 return; 
             }
 
-            //O alvo é o index
-            int target = PStruct.tempplayer[index].target;
-            int clientindex = UserConnection.Getindex(target);
+            //O alvo é o s
+            int target = PlayerStruct.tempplayer[s].target;
+            int clients = UserConnection.getS(target);
 
 
             //Verifica se ele não se desconectou no processo
-            if ((clientindex < 0) || (clientindex >= WinsockAsync.Clients.Count()))
+            if ((clients < 0) || (clients >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[clientindex].IsConnected)
+            if (!WinsockAsync.Clients[clients].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Veririficar se há não tem um grupo
-            if (PStruct.tempplayer[target].Party > 0) 
+            if (PlayerStruct.tempplayer[target].Party > 0) 
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_in_another_party, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_in_another_party, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Verifica se ele pode ser convidado
-            if (PStruct.IsBusy(target)) {
-                SendData.Send_MsgToPlayer(index, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server);
+            if (InviteRelations.isBusy(target)) {
+                SendData.sendMsgToPlayer(s, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Criar a váriaveis gerais
-            PStruct.tempplayer[index].Inviting = PStruct.tempplayer[index].target;
-            PStruct.tempplayer[target].Invited = index;
-            PStruct.tempplayer[index].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
-            PStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[s].Inviting = PlayerStruct.tempplayer[s].target;
+            PlayerStruct.tempplayer[target].Invited = s;
+            PlayerStruct.tempplayer[s].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
 
             //Envia o convite
-            SendData.Send_PartyRequest(index, target);
+            SendData.sendPartyRequest(s, target);
         }
         //*********************************************************************************************
-        // ReceivedPartyResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedPartyResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedPartyResponse(int index, string data)
+        static void receivedPartyResponse(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -2977,7 +2977,7 @@ namespace FORJERUM
             string[] splited = data.Replace("<33>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 2)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
@@ -2986,87 +2986,87 @@ namespace FORJERUM
             int partynum = 0;
 
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].Invited) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].Invited) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].Invited) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].Invited) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].Invited))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].Invited))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             if (response == 0)
             {
                 //Criação do grupo
-                if (PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party == 0)
+                if (PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Party == 0)
                 {
                     //Checa um grupo livre
-                    partynum = PartyRelations.GetPartyFree();
+                    partynum = PartyRelations.getPartyFree();
 
                     //Definindo posições
-                    PStruct.party[partynum].leader = PStruct.tempplayer[index].Invited;
-                    PStruct.partymembers[partynum, 1].index = PStruct.tempplayer[index].Invited;
-                    PStruct.partymembers[partynum, 2].index = index;
-                    PStruct.party[partynum].active = true;
-                    PStruct.tempplayer[index].Party = partynum;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party = partynum;
+                    PlayerStruct.party[partynum].leader = PlayerStruct.tempplayer[s].Invited;
+                    PlayerStruct.partymembers[partynum, 1].s = PlayerStruct.tempplayer[s].Invited;
+                    PlayerStruct.partymembers[partynum, 2].s = s;
+                    PlayerStruct.party[partynum].active = true;
+                    PlayerStruct.tempplayer[s].Party = partynum;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Party = partynum;
                     
                     //Envia o grupo atualizado
-                    SendData.Send_PartyDataToParty(partynum);
-                    SendData.Send_PlayerExtraSpiritToParty(partynum, index);
-                    SendData.Send_PlayerExtraVitalityToParty(partynum, index);
-                    SendData.Send_PlayerExtraSpiritToParty(partynum, PStruct.tempplayer[index].Invited);
-                    SendData.Send_PlayerExtraVitalityToParty(partynum, PStruct.tempplayer[index].Invited);
+                    SendData.sendPartyDataToParty(partynum);
+                    SendData.sendPlayerExtraSpiritToParty(partynum, s);
+                    SendData.sendPlayerExtraVitalityToParty(partynum, s);
+                    SendData.sendPlayerExtraSpiritToParty(partynum, PlayerStruct.tempplayer[s].Invited);
+                    SendData.sendPlayerExtraVitalityToParty(partynum, PlayerStruct.tempplayer[s].Invited);
                    
                     //Limpa os valores gerais
-                    PStruct.tempplayer[index].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                    PStruct.tempplayer[index].Invited = 0;
+                    PlayerStruct.tempplayer[s].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                    PlayerStruct.tempplayer[s].Invited = 0;
                     
                     //Mensagem de que o grupo foi criado
-                    SendData.Send_MsgToParty(partynum, lang.party_created, Globals.ColorGreen, Globals.Msg_Type_Server);
+                    SendData.sendMsgToParty(partynum, lang.party_created, Globals.ColorGreen, Globals.Msg_Type_Server);
                 }
                 else
                 {
                     //Apenas adiciona o jogador no grupo
                     for (int i = 1; i < Globals.MaxPartyMembers; i++)
                     {
-                        if (PStruct.partymembers[PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party, i].index == 0)
+                        if (PlayerStruct.partymembers[PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Party, i].s == 0)
                         {
                             //Posição no grupo
-                            PStruct.partymembers[PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party, i].index = index;
-                            PStruct.tempplayer[index].Party = PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party;
-                            int p_index;
-                            int partymemberscount = PartyRelations.GetPartyMembersCount(PStruct.tempplayer[index].Party);
+                            PlayerStruct.partymembers[PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Party, i].s = s;
+                            PlayerStruct.tempplayer[s].Party = PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Party;
+                            int p_s;
+                            int partymemberscount = PartyRelations.getPartyMembersCount(PlayerStruct.tempplayer[s].Party);
                             for (int p = 1; p <= partymemberscount; p++)
                             {
-                                p_index = PStruct.partymembers[PStruct.tempplayer[index].Party, p].index;
-                                if (PStruct.character[p_index, PStruct.player[p_index].SelectedChar].Map != PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                                p_s = PlayerStruct.partymembers[PlayerStruct.tempplayer[s].Party, p].s;
+                                if (PlayerStruct.character[p_s, PlayerStruct.player[p_s].SelectedChar].Map != PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                                 {
-                                    SendData.Send_PlayerDataTo(p_index, index, PStruct.player[index].Username, PStruct.player[index].SelectedChar);
-                                    SendData.Send_PlayerDataTo(index, p_index, PStruct.player[p_index].Username, PStruct.player[p_index].SelectedChar);
-                                    SendData.Send_PlayerExtraVitalityTo(p_index, index);
-                                    SendData.Send_PlayerExtraSpiritTo(p_index, index);
-                                    SendData.Send_PlayerExtraVitalityTo(index, p_index);
-                                    SendData.Send_PlayerExtraSpiritTo(index, p_index);
+                                    SendData.sendPlayerDataTo(p_s, s, PlayerStruct.player[s].Username, PlayerStruct.player[s].SelectedChar);
+                                    SendData.sendPlayerDataTo(s, p_s, PlayerStruct.player[p_s].Username, PlayerStruct.player[p_s].SelectedChar);
+                                    SendData.sendPlayerExtraVitalityTo(p_s, s);
+                                    SendData.sendPlayerExtraSpiritTo(p_s, s);
+                                    SendData.sendPlayerExtraVitalityTo(s, p_s);
+                                    SendData.sendPlayerExtraSpiritTo(s, p_s);
                                 }
                                 
                             }
 
                             //Envia o grupo atualizado
-                            SendData.Send_PartyDataToParty(PStruct.tempplayer[PStruct.tempplayer[index].Invited].Party);
+                            SendData.sendPartyDataToParty(PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Party);
                             
                             //Limpa os valores gerais
-                            PStruct.tempplayer[index].InviteTimer = 0;
-                            PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                            PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                            PStruct.tempplayer[index].Invited = 0;
+                            PlayerStruct.tempplayer[s].InviteTimer = 0;
+                            PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                            PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                            PlayerStruct.tempplayer[s].Invited = 0;
 
                             //Envia mensagem ao grupo de que um novo jogador entrou
-                            SendData.Send_MsgToParty(PStruct.tempplayer[index].Party, PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + " " + lang.joined_in_party, Globals.ColorGreen, Globals.Msg_Type_Server);
+                            SendData.sendMsgToParty(PlayerStruct.tempplayer[s].Party, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + " " + lang.joined_in_party, Globals.ColorGreen, Globals.Msg_Type_Server);
                             break;
                         }
                     }
@@ -3074,18 +3074,18 @@ namespace FORJERUM
             }
             else
             {
-                SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.player_refused_party_invite, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(PlayerStruct.tempplayer[s].Invited, lang.player_refused_party_invite, Globals.ColorRed, Globals.Msg_Type_Server);
             }
         }
         //*********************************************************************************************
-        // ReceivedPartyKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedPartyKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para retirar determinado membro do grupo.
         //*********************************************************************************************
-        static void ReceivedPartyKick(int index, string data)
+        static void receivedPartyKick(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3094,24 +3094,24 @@ namespace FORJERUM
             string[] splited = data.Replace("<34>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if ((Convert.ToInt32(splited[0]) > Globals.Player_Highindex)) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if ((Convert.ToInt32(splited[0]) > Globals.Player_Highs)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int kicktarget = Convert.ToInt32(splited[0]);
             
             //Será o melhor?
-            PartyRelations.KickParty(index, kicktarget);
+            PartyRelations.kickParty(s, kicktarget);
         }
         //*********************************************************************************************
-        // ReceivedPartChange / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedPartChange / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Obsoleto
         //*********************************************************************************************
-        static void ReceivedPartyChange(int index, string data)
+        static void receivedPartyChange(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3120,157 +3120,157 @@ namespace FORJERUM
             //string[] splited = data.Replace("<35>", "").Split(';');
         }
         //*********************************************************************************************
-        // ReceivedTrade / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedTrade / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedTrade(int index)
+        static void receivedTrade(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Possíveis tentativas de hacker
-            if ((PStruct.tempplayer[index].targettype != 1) || (PStruct.tempplayer[index].target <= 0) || (PStruct.tempplayer[index].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.Send_MsgToPlayer(index, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if ((PlayerStruct.tempplayer[s].targettype != 1) || (PlayerStruct.tempplayer[s].target <= 0) || (PlayerStruct.tempplayer[s].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.sendMsgToPlayer(s, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             //Não pode convidar ele mesmo
-            if (PStruct.tempplayer[index].target == index)
+            if (PlayerStruct.tempplayer[s].target == s)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_cannot_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_cannot_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            //O alvo é o index
-            int target = PStruct.tempplayer[index].target;
+            //O alvo é o s
+            int target = PlayerStruct.tempplayer[s].target;
 
             //Verifica se ele não se desconectou no processo
-            if ((UserConnection.Getindex(target) < 0) || (UserConnection.Getindex(target) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(target) < 0) || (UserConnection.getS(target) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(target))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(target))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Veririficar se há não tem uma troca
-            if (PStruct.tempplayer[target].InTrade > 0)
+            if (PlayerStruct.tempplayer[target].InTrade > 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_already_trading, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_already_trading, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Verifica se ele pode ser convidado
-            if (PStruct.IsBusy(target))
+            if (InviteRelations.isBusy(target))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Criar a váriaveis gerais
-            PStruct.tempplayer[index].Inviting = PStruct.tempplayer[index].target;
-            PStruct.tempplayer[target].Invited = index;
-            PStruct.tempplayer[index].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
-            PStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[s].Inviting = PlayerStruct.tempplayer[s].target;
+            PlayerStruct.tempplayer[target].Invited = s;
+            PlayerStruct.tempplayer[s].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
 
             //Envia o convite
-            SendData.Send_TradeRequest(index, target);
+            SendData.sendTradeRequest(s, target);
         }
         //*********************************************************************************************
-        // ReceivedGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedGuild / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedGuild(int index)
+        static void receivedGuild(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Possíveis tentativas de hacker
-            if ((PStruct.tempplayer[index].targettype != 1) || (PStruct.tempplayer[index].target <= 0) || (PStruct.tempplayer[index].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.Send_MsgToPlayer(index, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if ((PlayerStruct.tempplayer[s].targettype != 1) || (PlayerStruct.tempplayer[s].target <= 0) || (PlayerStruct.tempplayer[s].InviteTimer > Loops.TickCount.ElapsedMilliseconds)) { SendData.sendMsgToPlayer(s, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             //Não pode convidar ele mesmo
-            if (PStruct.tempplayer[index].target == index)
+            if (PlayerStruct.tempplayer[s].target == s)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_cannot_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_cannot_invite_yourself, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            //O alvo é o index
-            int target = PStruct.tempplayer[index].target;
-            int clientindex = UserConnection.Getindex(target);
+            //O alvo é o s
+            int target = PlayerStruct.tempplayer[s].target;
+            int clients = UserConnection.getS(target);
 
             //Verifica se ele não se desconectou no processo
-            if ((clientindex < 0) || (clientindex >= WinsockAsync.Clients.Count()))
+            if ((clients < 0) || (clients >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[clientindex].IsConnected)
+            if (!WinsockAsync.Clients[clients].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Veririficar se há não tem uma troca
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_already_have_guild, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_already_have_guild, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Verifica se ele pode ser convidado
-            if (PStruct.IsBusy(target))
+            if (InviteRelations.isBusy(target))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_busy, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             //Criar a váriaveis gerais
-            PStruct.tempplayer[index].Inviting = PStruct.tempplayer[index].target;
-            PStruct.tempplayer[target].Invited = index;
-            PStruct.tempplayer[index].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
-            PStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[s].Inviting = PlayerStruct.tempplayer[s].target;
+            PlayerStruct.tempplayer[target].Invited = s;
+            PlayerStruct.tempplayer[s].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
+            PlayerStruct.tempplayer[target].InviteTimer = Loops.TickCount.ElapsedMilliseconds + 10000;
 
             //Envia o convite
-            SendData.Send_GuildRequest(index, target);
+            SendData.sendGuildRequest(s, target);
         }
         //*********************************************************************************************
-        // ReceivedAddTradeOffer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedAddTradeOffer / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedAddTradeOffer(int index, string data)
+        static void receivedAddTradeOffer(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Verifica se ele não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].InTrade))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             string[] splited = data.Replace("<37>", "").Split(';');
 
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[1]) > 999)) { return; }
@@ -3278,9 +3278,9 @@ namespace FORJERUM
 
             int slot = Convert.ToInt32(splited[0]);
 
-            if (PStruct.invslot[index, slot].item == Globals.NullItem) { SendData.Send_MsgToPlayer(index, lang.item_null, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (PlayerStruct.invslot[s, slot].item == Globals.NullItem) { SendData.sendMsgToPlayer(s, lang.item_null, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
-            string[] splititem = PStruct.invslot[index, slot].item.Split(',');
+            string[] splititem = PlayerStruct.invslot[s, slot].item.Split(',');
 
             int value = Convert.ToInt32(splited[1]);
 
@@ -3292,44 +3292,44 @@ namespace FORJERUM
 
             if (itemValue < value) 
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_this_amount, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_this_amount, Globals.ColorRed, Globals.Msg_Type_Server);
                 return; 
             }
 
-            int tradeslot = TradeRelations.GetFreeTradeOffer(index);
+            int tradeslot = TradeRelations.getFreeTradeOffer(s);
 
             if (tradeslot == 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.dont_have_more_slots, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.dont_have_more_slots, Globals.ColorRed, Globals.Msg_Type_Server);
                 return; 
             }
 
             if (value != itemValue)
             {
-                PStruct.invslot[index, slot].item = itemType + "," + itemNum + "," + (itemValue - value) + "," + itemRefin + "," + itemExp;
-                PStruct.tradeslot[index, tradeslot].item = itemType + "," + itemNum + "," + value + "," + itemRefin + "," + itemExp;
+                PlayerStruct.invslot[s, slot].item = itemType + "," + itemNum + "," + (itemValue - value) + "," + itemRefin + "," + itemExp;
+                PlayerStruct.tradeslot[s, tradeslot].item = itemType + "," + itemNum + "," + value + "," + itemRefin + "," + itemExp;
             }
             else
             {
-                PStruct.invslot[index, slot].item = Globals.NullItem;
-                PStruct.tradeslot[index, tradeslot].item = itemType + "," + itemNum + "," + value + "," + itemRefin + "," + itemExp;
+                PlayerStruct.invslot[s, slot].item = Globals.NullItem;
+                PlayerStruct.tradeslot[s, tradeslot].item = itemType + "," + itemNum + "," + value + "," + itemRefin + "," + itemExp;
             }
 
             //Envia o grupo atualizado
-            SendData.Send_TradeOffers(PStruct.tempplayer[index].InTrade, PStruct.tempplayer[index].InTrade);
-            SendData.Send_TradeOffers(index, PStruct.tempplayer[index].InTrade);
-            SendData.Send_TradeOffers(index, index);
-            SendData.Send_TradeOffers(PStruct.tempplayer[index].InTrade, index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            SendData.sendTradeOffers(PlayerStruct.tempplayer[s].InTrade, PlayerStruct.tempplayer[s].InTrade);
+            SendData.sendTradeOffers(s, PlayerStruct.tempplayer[s].InTrade);
+            SendData.sendTradeOffers(s, s);
+            SendData.sendTradeOffers(PlayerStruct.tempplayer[s].InTrade, s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
         }
         //*********************************************************************************************
-        // ReceivedGuildCreate / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedGuildCreate / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedGuildCreate(int index, string data)
+        static void receivedGuildCreate(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3338,15 +3338,15 @@ namespace FORJERUM
             string[] splited = data.Replace("<64>", "").Split(';');
 
             if (splited.Length != 3) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if (!IsNumeric(splited[1])) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[1])) { return; }
             if ((Convert.ToInt32(splited[0]) > 999)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[1]) > 360)) { return; }
             if ((Convert.ToInt32(splited[1]) < 0)) { return; }
             if ((splited[2].Length > 15)) { return; }
             if ((splited[2].Length < 3)) { return; }
-            if (Database.NameIsIllegal(splited[2])) { return; }
+            if (Database.Handler.nameIsIllegal(splited[2])) { return; }
 
             int shield = Convert.ToInt32(splited[0]);
             int hue = Convert.ToInt32(splited[1]);
@@ -3354,56 +3354,56 @@ namespace FORJERUM
 
             if ((shield < 17) || (shield > 31)) { return; }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Guild > 0)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild > 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_need_to_exit_your_guild_to_create_a_new, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_need_to_exit_your_guild_to_create_a_new, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold < 1000000)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold < 1000000)
             {
-                SendData.Send_MsgToPlayer(index, lang.not_enough_gold_to_guild, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.not_enough_gold_to_guild, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             for (int i = 1; i < Globals.Max_Guilds; i++)
             {
-                if (GStruct.guild[i].name == name)
+                if (GuildStruct.guild[i].name == name)
                 {
-                    SendData.Send_MsgToPlayer(index, lang.guild_name_already_exist, Globals.ColorRed, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(s, lang.guild_name_already_exist, Globals.ColorRed, Globals.Msg_Type_Server);
                     return;
                 }
             }
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= 1000000;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold -= 1000000;
 
-            SendData.Send_PlayerG(index);
+            SendData.sendPlayerG(s);
 
-            int slot = GStruct.GetOpenGuildSlot();
+            int slot = GuildStruct.getOpenGuildSlot();
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Guild = slot;
-            GStruct.guild[slot].name = name;
-            GStruct.guild[slot].shield = shield;
-            GStruct.guild[slot].hue = hue;
-            GStruct.guild[slot].memberlist[1] = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName;
-            GStruct.guild[slot].membersprite[1] = PStruct.character[index, PStruct.player[index].SelectedChar].Sprite;
-            GStruct.guild[slot].memberhue[1] = PStruct.character[index, PStruct.player[index].SelectedChar].Hue;
-            GStruct.guild[slot].membersprite_index[1] = PStruct.character[index, PStruct.player[index].SelectedChar].Spriteindex;
-            GStruct.guild[slot].leader = 1;
-            GStruct.guild[slot].level = 1;
-            GStruct.guild[slot].exp = 0;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = slot;
+            GuildStruct.guild[slot].name = name;
+            GuildStruct.guild[slot].shield = shield;
+            GuildStruct.guild[slot].hue = hue;
+            GuildStruct.guild[slot].memberlist[1] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName;
+            GuildStruct.guild[slot].membersprite[1] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprite;
+            GuildStruct.guild[slot].memberhue[1] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Hue;
+            GuildStruct.guild[slot].membersprite_s[1] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprites;
+            GuildStruct.guild[slot].leader = 1;
+            GuildStruct.guild[slot].level = 1;
+            GuildStruct.guild[slot].exp = 0;
 
-            Database.SaveGuild(slot.ToString());
-            SendData.Send_CompleteGuild(index);  
+            Database.Guilds.saveGuild(slot.ToString());
+            SendData.sendCompleteGuild(s);  
         }
         //*********************************************************************************************
-        // ReceivedGuildResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedGuildResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedGuildResponse(int index, string data)
+        static void receivedGuildResponse(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3412,94 +3412,94 @@ namespace FORJERUM
             string[] splited = data.Replace("<63>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int response = Convert.ToInt32(splited[0]);
 
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].Invited) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].Invited) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].Invited) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].Invited) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[UserConnection.Getindex(PStruct.tempplayer[index].Invited)].IsConnected)
+            if (!WinsockAsync.Clients[UserConnection.getS(PlayerStruct.tempplayer[s].Invited)].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             if (response == 0)
             {
-                int guildnum = PStruct.character[PStruct.tempplayer[index].Invited, PStruct.player[PStruct.tempplayer[index].Invited].SelectedChar].Guild;
+                int guildnum = PlayerStruct.character[PlayerStruct.tempplayer[s].Invited, PlayerStruct.player[PlayerStruct.tempplayer[s].Invited].SelectedChar].Guild;
                 //guildnum = 1;
                 //Criação da troca
-                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Guild <= 0) && (guildnum > 0))
+                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild <= 0) && (guildnum > 0))
                 {
 
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Guild = PStruct.character[PStruct.tempplayer[index].Invited, PStruct.player[PStruct.tempplayer[index].Invited].SelectedChar].Guild;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = PlayerStruct.character[PlayerStruct.tempplayer[s].Invited, PlayerStruct.player[PlayerStruct.tempplayer[s].Invited].SelectedChar].Guild;
 
-                    int slot = GStruct.GetOpenMemberSlot(guildnum);
+                    int slot = GuildStruct.getOpenMemberSlot(guildnum);
 
                     if (slot <= 0)
                     {
-                        SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.dont_have_guild_slots, Globals.ColorRed, Globals.Msg_Type_Server);
-                        SendData.Send_MsgToPlayer(index, lang.dont_have_guild_slots, Globals.ColorRed, Globals.Msg_Type_Server);
+                        SendData.sendMsgToPlayer(PlayerStruct.tempplayer[s].Invited, lang.dont_have_guild_slots, Globals.ColorRed, Globals.Msg_Type_Server);
+                        SendData.sendMsgToPlayer(s, lang.dont_have_guild_slots, Globals.ColorRed, Globals.Msg_Type_Server);
                         return;
                     }
 
-                    GStruct.guild[guildnum].memberlist[slot] = PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName;
-                    GStruct.guild[guildnum].membersprite[slot] = PStruct.character[index, PStruct.player[index].SelectedChar].Sprite;
-                    GStruct.guild[guildnum].memberhue[slot] = PStruct.character[index, PStruct.player[index].SelectedChar].Hue;
-                    GStruct.guild[guildnum].membersprite_index[slot] = PStruct.character[index, PStruct.player[index].SelectedChar].Spriteindex;
+                    GuildStruct.guild[guildnum].memberlist[slot] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName;
+                    GuildStruct.guild[guildnum].membersprite[slot] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprite;
+                    GuildStruct.guild[guildnum].memberhue[slot] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Hue;
+                    GuildStruct.guild[guildnum].membersprite_s[slot] = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Sprites;
 
                     //Envia a guilda atualizada para todos online da guilda
-                    SendData.Send_CompleteGuildToGuild(index);
+                    SendData.sendCompleteGuildToGuild(s);
 
                     //Limpa os valores gerais
-                    PStruct.tempplayer[index].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                    PStruct.tempplayer[index].Invited = 0;
+                    PlayerStruct.tempplayer[s].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                    PlayerStruct.tempplayer[s].Invited = 0;
 
                     //Envia mensagem de congratulações
-                    SendData.Send_MsgToGuild(guildnum, PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName + " " + lang.has_joined_in_the_guild, Globals.ColorYellow, Globals.Msg_Type_Server);
-                    Database.SaveGuild(guildnum.ToString());
+                    SendData.sendMsgToGuild(guildnum, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName + " " + lang.has_joined_in_the_guild, Globals.ColorYellow, Globals.Msg_Type_Server);
+                    Database.Guilds.saveGuild(guildnum.ToString());
                 }
                 else
                 {
                     //Limpa os valores gerais
-                    PStruct.tempplayer[index].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                    PStruct.tempplayer[index].Invited = 0;
+                    PlayerStruct.tempplayer[s].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                    PlayerStruct.tempplayer[s].Invited = 0;
 
                     //Envia msg
-                    SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.player_cannot_enter_in_guild_at_this_moment, Globals.ColorRed, Globals.Msg_Type_Server);
-                    SendData.Send_MsgToPlayer(index, lang.player_cannot_enter_in_guild_at_this_moment, Globals.ColorRed, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(PlayerStruct.tempplayer[s].Invited, lang.player_cannot_enter_in_guild_at_this_moment, Globals.ColorRed, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(s, lang.player_cannot_enter_in_guild_at_this_moment, Globals.ColorRed, Globals.Msg_Type_Server);
                 }
             }
             else
             {
                 //Limpa os valores gerais
-                PStruct.tempplayer[index].InviteTimer = 0;
-                PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                PStruct.tempplayer[index].Invited = 0;
+                PlayerStruct.tempplayer[s].InviteTimer = 0;
+                PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                PlayerStruct.tempplayer[s].Invited = 0;
 
-                SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.player_refused_guild_invite, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(PlayerStruct.tempplayer[s].Invited, lang.player_refused_guild_invite, Globals.ColorRed, Globals.Msg_Type_Server);
             }
         }
         //*********************************************************************************************
-        // ReceivedGuildKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedGuildKick / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para retirar um membro da guilda.
         //*********************************************************************************************
-        static void ReceivedGuildKick(int index, string data)
+        static void receivedGuildKick(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3508,90 +3508,90 @@ namespace FORJERUM
             string[] splited = data.Replace("<65>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 20)) { return; }
             if ((Convert.ToInt32(splited[0]) < 1)) { return; }
 
             int slot = Convert.ToInt32(splited[0]);
            
-            int guildnum = PStruct.character[index, PStruct.player[index].SelectedChar].Guild;
+            int guildnum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild;
 
             if (guildnum <= 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.dont_have_guild_to_kick_a_member, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.dont_have_guild_to_kick_a_member, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            string member_name = GStruct.guild[guildnum].memberlist[slot];
+            string member_name = GuildStruct.guild[guildnum].memberlist[slot];
 
-            if (member_name != PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName)
+            if (member_name != PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName)
             {
-                if (GStruct.guild[guildnum].memberlist[GStruct.guild[guildnum].leader] != PStruct.character[index, PStruct.player[index].SelectedChar].CharacterName)
+                if (GuildStruct.guild[guildnum].memberlist[GuildStruct.guild[guildnum].leader] != PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].CharacterName)
                 {
-                    SendData.Send_MsgToPlayer(index, lang.only_guild_leader_can_kick, Globals.ColorRed, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(s, lang.only_guild_leader_can_kick, Globals.ColorRed, Globals.Msg_Type_Server);
                     return;
                 }
             }
  
 
-            int count = GStruct.GetMember_Count(guildnum);
+            int count = GuildStruct.getMember_Count(guildnum);
 
             for (int i = 1; i < Globals.MaxMaps; i++)
             {
-                if (MStruct.map[i].guildmember == member_name)
+                if (MapStruct.map[i].guildmember == member_name)
                 {
-                    MStruct.map[i].guildmember = "";
+                    MapStruct.map[i].guildmember = "";
                 }
             }
 
-            if (GStruct.guild[guildnum].memberlist[GStruct.guild[guildnum].leader] == member_name)
+            if (GuildStruct.guild[guildnum].memberlist[GuildStruct.guild[guildnum].leader] == member_name)
             {
                 if (count <= 1)
                 {
-                    GStruct.guild[guildnum].memberlist[slot] = "";
-                    GStruct.guild[guildnum].leader = 0;
-                    GStruct.guild[guildnum].exp = 0;
-                    GStruct.guild[guildnum].level = 0;
-                    GStruct.guild[guildnum].name = "";
-                    GStruct.guild[guildnum].hue = 0;
-                    GStruct.guild[guildnum].membersprite[slot] = "";
-                    GStruct.guild[guildnum].memberhue[slot] = 0;
-                    GStruct.guild[guildnum].membersprite_index[slot] = 0;
-                    PStruct.character[index, PStruct.player[index].SelectedChar].Guild = 0;
-                    SendData.Send_MsgToPlayer(index, lang.guild_desbanded, Globals.ColorRed, Globals.Msg_Type_Server);
+                    GuildStruct.guild[guildnum].memberlist[slot] = "";
+                    GuildStruct.guild[guildnum].leader = 0;
+                    GuildStruct.guild[guildnum].exp = 0;
+                    GuildStruct.guild[guildnum].level = 0;
+                    GuildStruct.guild[guildnum].name = "";
+                    GuildStruct.guild[guildnum].hue = 0;
+                    GuildStruct.guild[guildnum].membersprite[slot] = "";
+                    GuildStruct.guild[guildnum].memberhue[slot] = 0;
+                    GuildStruct.guild[guildnum].membersprite_s[slot] = 0;
+                    PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Guild = 0;
+                    SendData.sendMsgToPlayer(s, lang.guild_desbanded, Globals.ColorRed, Globals.Msg_Type_Server);
                 }
             }
 
-            for (int i = 1; i <= Globals.Player_Highindex; i++)
+            for (int i = 1; i <= Globals.Player_Highs; i++)
             {
-                if (PStruct.character[i, PStruct.player[i].SelectedChar].CharacterName == member_name)
+                if (PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].CharacterName == member_name)
                 {
-                    PStruct.character[i, PStruct.player[i].SelectedChar].Guild = 0;
-                    SendData.Send_CompleteClearGuild(i);
+                    PlayerStruct.character[i, PlayerStruct.player[i].SelectedChar].Guild = 0;
+                    SendData.sendCompleteClearGuild(i);
                     break;
                 }
             }
 
             for (int i = slot + 1; i < Globals.Max_Guild_Members; i++)
             {
-                GStruct.guild[guildnum].memberlist[i - 1] = GStruct.guild[guildnum].memberlist[i];
-                GStruct.guild[guildnum].membersprite[i - 1] = GStruct.guild[guildnum].membersprite[i];
-                GStruct.guild[guildnum].membersprite_index[i - 1] = GStruct.guild[guildnum].membersprite_index[i];
+                GuildStruct.guild[guildnum].memberlist[i - 1] = GuildStruct.guild[guildnum].memberlist[i];
+                GuildStruct.guild[guildnum].membersprite[i - 1] = GuildStruct.guild[guildnum].membersprite[i];
+                GuildStruct.guild[guildnum].membersprite_s[i - 1] = GuildStruct.guild[guildnum].membersprite_s[i];
             }
 
 
-            SendData.Send_CompleteGuildToGuild(index);
-            SendData.Send_MsgToGuild(guildnum, lang.the_player + " " + member_name + " " + lang.has_been_kicked, Globals.ColorRed, Globals.Msg_Type_Server);
-            Database.SaveGuild(guildnum.ToString());
+            SendData.sendCompleteGuildToGuild(s);
+            SendData.sendMsgToGuild(guildnum, lang.the_player + " " + member_name + " " + lang.has_been_kicked, Globals.ColorRed, Globals.Msg_Type_Server);
+            Database.Guilds.saveGuild(guildnum.ToString());
         }
         //*********************************************************************************************
-        // ReceivedTradeResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedTradeResponse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedTradeResponse(int index, string data)
+        static void receivedTradeResponse(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3600,292 +3600,292 @@ namespace FORJERUM
             string[] splited = data.Replace("<39>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 2)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int response = Convert.ToInt32(splited[0]);
 
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].Invited) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].Invited) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].Invited) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].Invited) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].Invited))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].Invited))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             if (response == 0)
             {
                 //Criação da troca
-                if (PStruct.tempplayer[PStruct.tempplayer[index].Invited].InTrade == 0)
+                if (PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InTrade == 0)
                 {
                     //Definindo posições
-                    PStruct.tempplayer[index].InTrade = PStruct.tempplayer[index].Invited;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].InTrade = index;
+                    PlayerStruct.tempplayer[s].InTrade = PlayerStruct.tempplayer[s].Invited;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InTrade = s;
 
                     //Envia o grupo atualizado
-                    SendData.Send_TradeOffers(PStruct.tempplayer[index].Invited, PStruct.tempplayer[index].Invited);
-                    SendData.Send_TradeOffers(index, PStruct.tempplayer[index].Invited);
-                    SendData.Send_TradeOffers(index, index);
-                    SendData.Send_TradeOffers(PStruct.tempplayer[index].Invited, index);
+                    SendData.sendTradeOffers(PlayerStruct.tempplayer[s].Invited, PlayerStruct.tempplayer[s].Invited);
+                    SendData.sendTradeOffers(s, PlayerStruct.tempplayer[s].Invited);
+                    SendData.sendTradeOffers(s, s);
+                    SendData.sendTradeOffers(PlayerStruct.tempplayer[s].Invited, s);
 
                     //Limpa os valores gerais
-                    PStruct.tempplayer[index].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].InviteTimer = 0;
-                    PStruct.tempplayer[PStruct.tempplayer[index].Invited].Inviting = 0;
-                    PStruct.tempplayer[index].Invited = 0;
+                    PlayerStruct.tempplayer[s].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].InviteTimer = 0;
+                    PlayerStruct.tempplayer[PlayerStruct.tempplayer[s].Invited].Inviting = 0;
+                    PlayerStruct.tempplayer[s].Invited = 0;
                 }
                 else
                 {
-                    SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.player_cannot_trade_now, Globals.ColorRed, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(PlayerStruct.tempplayer[s].Invited, lang.player_cannot_trade_now, Globals.ColorRed, Globals.Msg_Type_Server);
                 }
             }
             else
             {
-                TradeRelations.ClearTempTrade(index);
-                TradeRelations.ClearTempTrade(PStruct.tempplayer[index].Invited);
-                SendData.Send_MsgToPlayer(PStruct.tempplayer[index].Invited, lang.player_refused_trade_invite, Globals.ColorRed, Globals.Msg_Type_Server);
+                TradeRelations.clearTempTrade(s);
+                TradeRelations.clearTempTrade(PlayerStruct.tempplayer[s].Invited);
+                SendData.sendMsgToPlayer(PlayerStruct.tempplayer[s].Invited, lang.player_refused_trade_invite, Globals.ColorRed, Globals.Msg_Type_Server);
             }
         }
         //*********************************************************************************************
-        // ReceivedTradeAccept / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedTradeAccept / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedTradeAccept(int index)
+        public static void receivedTradeAccept(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].InTrade))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
-                return;
-            }
-
-            int tradetarget = PStruct.tempplayer[index].InTrade;
-
-            PStruct.tempplayer[index].TradeStatus = 1;
-
-            if ((PStruct.tempplayer[index].TradeStatus == 1) && (PStruct.tempplayer[tradetarget].TradeStatus == 1))
-            {
-                TradeRelations.GiveTradeTo(index, tradetarget);
-                TradeRelations.GiveTradeTo(tradetarget, index);
-                SendData.Send_InvSlots(tradetarget, PStruct.player[tradetarget].SelectedChar);
-                SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                SendData.Send_PlayerG(index);
-                SendData.Send_PlayerG(tradetarget);
-                SendData.Send_TradeAccept(index, 3);
-                SendData.Send_TradeAccept(tradetarget, 3);
-                TradeRelations.ClearTempTrade(index);
-                TradeRelations.ClearTempTrade(tradetarget);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if ((PStruct.tempplayer[index].TradeStatus == 1) && (PStruct.tempplayer[tradetarget].TradeStatus == 0))
+            int tradetarget = PlayerStruct.tempplayer[s].InTrade;
+
+            PlayerStruct.tempplayer[s].TradeStatus = 1;
+
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 1) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 1))
             {
-                SendData.Send_TradeAccept(index, 1);
-                SendData.Send_TradeAccept(tradetarget, 2);
+                TradeRelations.giveTradeTo(s, tradetarget);
+                TradeRelations.giveTradeTo(tradetarget, s);
+                SendData.sendInvSlots(tradetarget, PlayerStruct.player[tradetarget].SelectedChar);
+                SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                SendData.sendPlayerG(s);
+                SendData.sendPlayerG(tradetarget);
+                SendData.sendTradeAccept(s, 3);
+                SendData.sendTradeAccept(tradetarget, 3);
+                TradeRelations.clearTempTrade(s);
+                TradeRelations.clearTempTrade(tradetarget);
                 return;
             }
 
-            if ((PStruct.tempplayer[index].TradeStatus == 0) && (PStruct.tempplayer[tradetarget].TradeStatus == 1))
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 1) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 0))
             {
-                SendData.Send_TradeAccept(tradetarget, 1);
-                SendData.Send_TradeAccept(index, 2);
+                SendData.sendTradeAccept(s, 1);
+                SendData.sendTradeAccept(tradetarget, 2);
                 return;
             }
 
-            if ((PStruct.tempplayer[index].TradeStatus == 0) && (PStruct.tempplayer[tradetarget].TradeStatus == 0))
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 0) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 1))
             {
-                SendData.Send_TradeAccept(tradetarget, 0);
-                SendData.Send_TradeAccept(index, 0);
+                SendData.sendTradeAccept(tradetarget, 1);
+                SendData.sendTradeAccept(s, 2);
+                return;
+            }
+
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 0) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 0))
+            {
+                SendData.sendTradeAccept(tradetarget, 0);
+                SendData.sendTradeAccept(s, 0);
                 return;
             }
         }
         //*********************************************************************************************
-        // ReceivedTradeRefuse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedTradeRefuse / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedTradeRefuse(int index)
+        public static void receivedTradeRefuse(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].InTrade))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
-                return;
-            }
-
-            int tradetarget = PStruct.tempplayer[index].InTrade;
-
-            PStruct.tempplayer[index].TradeStatus = 0;
-
-            if ((PStruct.tempplayer[index].TradeStatus == 1) && (PStruct.tempplayer[tradetarget].TradeStatus == 1))
-            {
-                SendData.Send_TradeRefuse(index, 3);
-                SendData.Send_TradeRefuse(tradetarget, 3);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if ((PStruct.tempplayer[index].TradeStatus == 1) && (PStruct.tempplayer[tradetarget].TradeStatus == 0))
+            int tradetarget = PlayerStruct.tempplayer[s].InTrade;
+
+            PlayerStruct.tempplayer[s].TradeStatus = 0;
+
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 1) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 1))
             {
-                SendData.Send_TradeRefuse(index, 1);
-                SendData.Send_TradeRefuse(tradetarget, 2);
+                SendData.sendTradeRefuse(s, 3);
+                SendData.sendTradeRefuse(tradetarget, 3);
                 return;
             }
 
-            if ((PStruct.tempplayer[index].TradeStatus == 0) && (PStruct.tempplayer[tradetarget].TradeStatus == 1))
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 1) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 0))
             {
-                SendData.Send_TradeRefuse(tradetarget, 1);
-                SendData.Send_TradeRefuse(index, 2);
+                SendData.sendTradeRefuse(s, 1);
+                SendData.sendTradeRefuse(tradetarget, 2);
                 return;
             }
 
-            if ((PStruct.tempplayer[index].TradeStatus == 0) && (PStruct.tempplayer[tradetarget].TradeStatus == 0))
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 0) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 1))
             {
-                SendData.Send_TradeRefuse(tradetarget, 0);
-                SendData.Send_TradeRefuse(index, 0);
+                SendData.sendTradeRefuse(tradetarget, 1);
+                SendData.sendTradeRefuse(s, 2);
+                return;
+            }
+
+            if ((PlayerStruct.tempplayer[s].TradeStatus == 0) && (PlayerStruct.tempplayer[tradetarget].TradeStatus == 0))
+            {
+                SendData.sendTradeRefuse(tradetarget, 0);
+                SendData.sendTradeRefuse(s, 0);
                 return;
             }
         }
         //*********************************************************************************************
-        // ReceivedTradeClose / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedTradeClose / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Aviso de que o jogador fechou a troca.
         //*********************************************************************************************
-        public static void ReceivedTradeClose(int index)
+        public static void receivedTradeClose(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_TradeClose(index);
-                TradeRelations.GiveTrade(index);
+                SendData.sendTradeClose(s);
+                TradeRelations.giveTrade(s);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].InTrade))].IsConnected)
             {
-                SendData.Send_TradeClose(index);
-                TradeRelations.GiveTrade(index);
+                SendData.sendTradeClose(s);
+                TradeRelations.giveTrade(s);
                 return;
             }
 
-            int tradetarget = PStruct.tempplayer[index].InTrade;
+            int tradetarget = PlayerStruct.tempplayer[s].InTrade;
 
-            if (PStruct.tempplayer[index].TradeG > 0)
+            if (PlayerStruct.tempplayer[s].TradeG > 0)
             {
-                PlayerRelations.GivePlayerGold(index, PStruct.tempplayer[index].TradeG); 
-                PStruct.tempplayer[index].TradeG = 0;
+                PlayerRelations.givePlayerGold(s, PlayerStruct.tempplayer[s].TradeG); 
+                PlayerStruct.tempplayer[s].TradeG = 0;
             }
 
-            if (PStruct.tempplayer[tradetarget].TradeG > 0)
+            if (PlayerStruct.tempplayer[tradetarget].TradeG > 0)
             {
-                PlayerRelations.GivePlayerGold(tradetarget, PStruct.tempplayer[tradetarget].TradeG); 
-                PStruct.tempplayer[tradetarget].TradeG = 0;
+                PlayerRelations.givePlayerGold(tradetarget, PlayerStruct.tempplayer[tradetarget].TradeG); 
+                PlayerStruct.tempplayer[tradetarget].TradeG = 0;
             }
 
-            SendData.Send_TradeClose(index);
-            SendData.Send_TradeClose(tradetarget);
-            TradeRelations.GiveTrade(index);
-            TradeRelations.GiveTrade(tradetarget);
-            TradeRelations.ClearTempTrade(index);
-            TradeRelations.ClearTempTrade(tradetarget);
+            SendData.sendTradeClose(s);
+            SendData.sendTradeClose(tradetarget);
+            TradeRelations.giveTrade(s);
+            TradeRelations.giveTrade(tradetarget);
+            TradeRelations.clearTempTrade(s);
+            TradeRelations.clearTempTrade(tradetarget);
         }
         //*********************************************************************************************
         // ReceiveAddTradeG / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para adicionar ouro a troca atual.
         //*********************************************************************************************
-        public static void ReceivedAddTradeG(int index, string data)
+        public static void receivedAddTradeG(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Verificar se o jogador não se desconectou no processo
-            if ((UserConnection.Getindex(PStruct.tempplayer[index].InTrade) < 0) || (UserConnection.Getindex(PStruct.tempplayer[index].InTrade) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) < 0) || (UserConnection.getS(PlayerStruct.tempplayer[s].InTrade) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(PStruct.tempplayer[index].InTrade))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(PlayerStruct.tempplayer[s].InTrade))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.player_who_invited_is_not_connected, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
             string[] splited = data.Replace("<38>", "").Split(';');
             
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > 99999999)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int gold = Convert.ToInt32(splited[0]);
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold < gold)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold < gold)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (PStruct.tempplayer[index].TradeG > 0)
+            if (PlayerStruct.tempplayer[s].TradeG > 0)
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Gold += PStruct.tempplayer[index].TradeG;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold += PlayerStruct.tempplayer[s].TradeG;
             }
 
-            PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= gold;
-            PStruct.tempplayer[index].TradeG = gold;
+            PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold -= gold;
+            PlayerStruct.tempplayer[s].TradeG = gold;
             
-            int tradetarget = PStruct.tempplayer[index].InTrade;
+            int tradetarget = PlayerStruct.tempplayer[s].InTrade;
             
-            SendData.Send_PlayerG(index);
-            SendData.Send_TradeG(index, index);
-            SendData.Send_TradeG(index, tradetarget);
+            SendData.sendPlayerG(s);
+            SendData.sendTradeG(s, s);
+            SendData.sendTradeG(s, tradetarget);
         }
         //*********************************************************************************************
-        // ReceivedQuestAction / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedQuestAction / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para executar ação de missão.
         //*********************************************************************************************
-        static void ReceivedQuestAction(int index, string data)
+        static void receivedQuestAction(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -3896,8 +3896,8 @@ namespace FORJERUM
             if (splited.Length != 1) { return; }
 
             if (splited[0].Split(',').Length != 2) { return; }
-            if (!IsNumeric(splited[0].Split(',')[0])) { return; }
-            if (!IsNumeric(splited[0].Split(',')[1])) { return; }
+            if (!isNumeric(splited[0].Split(',')[0])) { return; }
+            if (!isNumeric(splited[0].Split(',')[1])) { return; }
             if ((Convert.ToInt32(splited[0].Split(',')[0]) > Globals.MaxQuestGivers - 1)) { return; }
             if ((Convert.ToInt32(splited[0].Split(',')[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[0].Split(',')[1]) > Globals.MaxQuestActions - 1)) { return; }
@@ -3912,7 +3912,7 @@ namespace FORJERUM
                 return;
             }
 
-            if (MStruct.questgiver[questgiver].map != PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+            if (MapStruct.questgiver[questgiver].map != PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
             {
                 return;
             }
@@ -3920,39 +3920,39 @@ namespace FORJERUM
 
             if ((questgiver == 10) || (questgiver == 25))
             {
-                if (PStruct.GetOpenProf(index) <= 0)
+                if (MapRelations.getOpenProf(s) <= 0)
                 {
-                    SendData.Send_MsgToPlayer(index, lang.quest_already_have_reached_max_profs, Globals.ColorRed, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(s, lang.quest_already_have_reached_max_profs, Globals.ColorRed, Globals.Msg_Type_Server);
                     return;
                 }
             }
 
-            int quest = QuestRelations.GetActualPlayerQuestPerGiver(index, questgiver);
+            int quest = QuestRelations.getActualPlayerQuestPerGiver(s, questgiver);
 
-            if (String.IsNullOrEmpty(MStruct.quest[questgiver, quest].type)) { PStruct.queststatus[index, questgiver, quest].status = 0; return; }
+            if (String.IsNullOrEmpty(MapStruct.quest[questgiver, quest].type)) { PlayerStruct.queststatus[s, questgiver, quest].status = 0; return; }
 
-            if (action == 0 && (PStruct.queststatus[index, questgiver, quest].status == 0))
+            if (action == 0 && (PlayerStruct.queststatus[s, questgiver, quest].status == 0))
             {
                 //Inicia a missão
-                PStruct.queststatus[index, questgiver, quest].status = 1;
+                PlayerStruct.queststatus[s, questgiver, quest].status = 1;
                 for (int k = 1; k < Globals.MaxQuestKills; k++)
                 {
-                    PStruct.questkills[index, questgiver, quest, k].kills = 0;
+                    PlayerStruct.questkills[s, questgiver, quest, k].kills = 0;
                 }
                 for (int a = 1; a < Globals.MaxQuestActions; a++)
                 {
-                    PStruct.questactions[index, questgiver, quest, a].actiondone = false;
+                    PlayerStruct.questactions[s, questgiver, quest, a].actiondone = false;
                 }
             }
 
-            if (action == 1 && (PStruct.queststatus[index, questgiver, quest].status == 1))
+            if (action == 1 && (PlayerStruct.queststatus[s, questgiver, quest].status == 1))
             {
                 //Checar se a missão está concluída
-                if (Convert.ToInt32(MStruct.quest[questgiver, quest].type.Split('|')[0]) > 0)
+                if (Convert.ToInt32(MapStruct.quest[questgiver, quest].type.Split('|')[0]) > 0)
                 {
-                    for (int k = 1; k <= MStruct.quest[questgiver, quest].killvalue; k++)
+                    for (int k = 1; k <= MapStruct.quest[questgiver, quest].killvalue; k++)
                     {
-                        if (PStruct.questkills[index, questgiver, quest, k].kills < MStruct.questkills[questgiver, quest, k].value)
+                        if (PlayerStruct.questkills[s, questgiver, quest, k].kills < MapStruct.questkills[questgiver, quest, k].value)
                         {
                            // Não terminou
                            return;
@@ -3960,11 +3960,11 @@ namespace FORJERUM
                     }
                 }
 
-                if (Convert.ToInt32(MStruct.quest[questgiver, quest].type.Split('|')[1]) > 0)
+                if (Convert.ToInt32(MapStruct.quest[questgiver, quest].type.Split('|')[1]) > 0)
                 {
-                    for (int a = 1; a <= MStruct.quest[questgiver, quest].actionvalue; a++)
+                    for (int a = 1; a <= MapStruct.quest[questgiver, quest].actionvalue; a++)
                     {
-                        if (PStruct.questactions[index, questgiver, quest, a].actiondone == false)
+                        if (PlayerStruct.questactions[s, questgiver, quest, a].actiondone == false)
                         {
                             // Não terminou
                             return;
@@ -3972,11 +3972,11 @@ namespace FORJERUM
                     }
                 }
 
-                if (Convert.ToInt32(MStruct.quest[questgiver, quest].type.Split('|')[2]) > 0)
+                if (Convert.ToInt32(MapStruct.quest[questgiver, quest].type.Split('|')[2]) > 0)
                 {
-                    for (int i = 1; i <= MStruct.quest[questgiver, quest].itemvalue; i++)
+                    for (int i = 1; i <= MapStruct.quest[questgiver, quest].itemvalue; i++)
                     {
-                        if (!PStruct.HasItem(index, MStruct.questitems[questgiver, quest, i].item))
+                        if (!InventoryRelations.hasItem(s, MapStruct.questitems[questgiver, quest, i].item))
                         {
                             //Não terminou
                             return;
@@ -3991,9 +3991,9 @@ namespace FORJERUM
                     {
                         if ((i != 10) && (i != 25) && (i != 7))
                         {
-                            for (int g = 1; g <= MStruct.questgiver[questgiver].quest_count; g++)
+                            for (int g = 1; g <= MapStruct.questgiver[questgiver].quest_count; g++)
                             {
-                                if (PStruct.queststatus[index, i, g].status != 2)
+                                if (PlayerStruct.queststatus[s, i, g].status != 2)
                                 {
                                     //Não terminou
                                   //  return; 
@@ -4004,19 +4004,19 @@ namespace FORJERUM
                 }
 
 
-                if (MStruct.quest[questgiver, quest].rewardvalue > InventoryRelations.GetNumOfInvFreeSlots(index))
+                if (MapStruct.quest[questgiver, quest].rewardvalue > InventoryRelations.getNumOfInvFreeSlots(s))
                 {
-                    SendData.Send_MsgToPlayer(index, lang.quest_reward_inventory_full, Globals.ColorGreen, Globals.Msg_Type_Server);
+                    SendData.sendMsgToPlayer(s, lang.quest_reward_inventory_full, Globals.ColorGreen, Globals.Msg_Type_Server);
                     return;
                 }
 
                 string[] item;
 
-                if (Convert.ToInt32(MStruct.quest[questgiver, quest].type.Split('|')[2]) > 0)
+                if (Convert.ToInt32(MapStruct.quest[questgiver, quest].type.Split('|')[2]) > 0)
                 {
-                    for (int i = 1; i <= MStruct.quest[questgiver, quest].itemvalue; i++)
+                    for (int i = 1; i <= MapStruct.quest[questgiver, quest].itemvalue; i++)
                     {
-                        InventoryRelations.PickItem(index, Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[0]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[1]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[2]), Convert.ToInt32(MStruct.questitems[questgiver, quest, i].item.Split(',')[3])); 
+                        InventoryRelations.pickItem(s, Convert.ToInt32(MapStruct.questitems[questgiver, quest, i].item.Split(',')[0]), Convert.ToInt32(MapStruct.questitems[questgiver, quest, i].item.Split(',')[1]), Convert.ToInt32(MapStruct.questitems[questgiver, quest, i].item.Split(',')[2]), Convert.ToInt32(MapStruct.questitems[questgiver, quest, i].item.Split(',')[3])); 
                     }
                 }
 
@@ -4025,216 +4025,216 @@ namespace FORJERUM
                 if (QuestRelations.IsQuestGiverRepeatable(questgiver))
                 {
                     //Reinicia a missão
-                    PStruct.queststatus[index, questgiver, quest].status = 0;
+                    PlayerStruct.queststatus[s, questgiver, quest].status = 0;
                     for (int k = 1; k < Globals.MaxQuestKills; k++)
                     {
-                        PStruct.questkills[index, questgiver, quest, k].kills = 0;
+                        PlayerStruct.questkills[s, questgiver, quest, k].kills = 0;
                     }
                     for (int a = 1; a < Globals.MaxQuestActions; a++)
                     {
-                        PStruct.questactions[index, questgiver, quest, a].actiondone = false;
+                        PlayerStruct.questactions[s, questgiver, quest, a].actiondone = false;
                     }
                 }
                 else
                 {
                     //Finaliza a missão
-                    PStruct.queststatus[index, questgiver, quest].status = 2;
+                    PlayerStruct.queststatus[s, questgiver, quest].status = 2;
                     
                     if ((questgiver == 10) && (quest == 1))
                     {
-                        int profnum = PStruct.GetOpenProf(index);
-                        PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Type[profnum] = Globals.Job_Miner;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[profnum] = 1;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum] = 0;
-                        SendData.Send_MsgToPlayer(index, lang.learned_miner_prof, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        SendData.Send_Profs(index);
+                        int profnum = MapRelations.getOpenProf(s);
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Type[profnum] = Globals.Job_Miner;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Level[profnum] = 1;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Exp[profnum] = 0;
+                        SendData.sendMsgToPlayer(s, lang.learned_miner_prof, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        SendData.sendProfs(s);
                     }
                     if ((questgiver == 25) && (quest == 1))
                     {
-                        int profnum = PStruct.GetOpenProf(index);
-                        PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Type[profnum] = Globals.Job_Blacksmith;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Level[profnum] = 1;
-                        PStruct.character[index, PStruct.player[index].SelectedChar].Prof_Exp[profnum] = 0;
-                        SendData.Send_MsgToPlayer(index, lang.learned_blacksmith_prof, Globals.ColorYellow, Globals.Msg_Type_Server);
-                        SendData.Send_Profs(index);
+                        int profnum = MapRelations.getOpenProf(s);
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Type[profnum] = Globals.Job_Blacksmith;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Level[profnum] = 1;
+                        PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Exp[profnum] = 0;
+                        SendData.sendMsgToPlayer(s, lang.learned_blacksmith_prof, Globals.ColorYellow, Globals.Msg_Type_Server);
+                        SendData.sendProfs(s);
                     }
                 }
 
-                for (int i = 1; i <= MStruct.quest[questgiver, quest].rewardvalue; i++)
+                for (int i = 1; i <= MapStruct.quest[questgiver, quest].rewardvalue; i++)
                 {
-                    item = MStruct.questrewards[questgiver, quest, i].item.Split('/');
-                    InventoryRelations.GiveItem(index, Convert.ToInt32(item[0]), Convert.ToInt32(item[1]), Convert.ToInt32(item[2]), Convert.ToInt32(item[3]), Globals.NullExp);
+                    item = MapStruct.questrewards[questgiver, quest, i].item.Split('/');
+                    InventoryRelations.giveItem(s, Convert.ToInt32(item[0]), Convert.ToInt32(item[1]), Convert.ToInt32(item[2]), Convert.ToInt32(item[3]), Globals.NullExp);
                 }
-                PlayerRelations.GivePlayerExp(index, MStruct.quest[questgiver, quest].exp);
-                PlayerRelations.GivePlayerGold(index, MStruct.quest[questgiver, quest].gold);
-                SendData.Send_MsgToPlayer(index, lang.completed_a_mission, Globals.ColorGreen, Globals.Msg_Type_Server);
-                SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+                PlayerRelations.givePlayerExp(s, MapStruct.quest[questgiver, quest].exp);
+                PlayerRelations.givePlayerGold(s, MapStruct.quest[questgiver, quest].gold);
+                SendData.sendMsgToPlayer(s, lang.completed_a_mission, Globals.ColorGreen, Globals.Msg_Type_Server);
+                SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
             }
 
-            SendData.Send_AllQuests(index);
+            SendData.sendAllQuests(s);
 
         }
         //*********************************************************************************************
-        // ReceivedShopBuy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedShopBuy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para comprar item da loja atual.
         //*********************************************************************************************
-        public static void ReceivedShopBuy(int index, string data)
+        public static void receivedShopBuy(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].InShop <= 0) { return; }
+            if (PlayerStruct.tempplayer[s].InShop <= 0) { return; }
 
             string[] splited = data.Replace("<45>", "").Split(';');
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
 
             int shopnum = Convert.ToInt32(splited[0]);
 
-            if ((shopnum <= 0) || (shopnum > ShopStruct.shop[PStruct.tempplayer[index].InShop].item_count)) { return; }
+            if ((shopnum <= 0) || (shopnum > ShopStruct.shop[PlayerStruct.tempplayer[s].InShop].item_count)) { return; }
 
-            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0)
+            if (InventoryRelations.getNumOfInvFreeSlots(s) <= 0)
             {
-                SendData.Send_MsgToPlayer(index, lang.shop_inventory_full, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.shop_inventory_full, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold >= ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].price)
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold >= ShopStruct.shopitem[PlayerStruct.tempplayer[s].InShop, shopnum].price)
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].price;
-                InventoryRelations.GiveItem(index, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].type, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].num, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].value, ShopStruct.shopitem[PStruct.tempplayer[index].InShop, shopnum].refin, Globals.NullExp);
-                SendData.Send_MsgToPlayer(index, lang.you_bought_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
-                SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                SendData.Send_PlayerG(index);
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold -= ShopStruct.shopitem[PlayerStruct.tempplayer[s].InShop, shopnum].price;
+                InventoryRelations.giveItem(s, ShopStruct.shopitem[PlayerStruct.tempplayer[s].InShop, shopnum].type, ShopStruct.shopitem[PlayerStruct.tempplayer[s].InShop, shopnum].num, ShopStruct.shopitem[PlayerStruct.tempplayer[s].InShop, shopnum].value, ShopStruct.shopitem[PlayerStruct.tempplayer[s].InShop, shopnum].refin, Globals.NullExp);
+                SendData.sendMsgToPlayer(s, lang.you_bought_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
+                SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                SendData.sendPlayerG(s);
             }
             else
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_gold_to_this, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_gold_to_this, Globals.ColorRed, Globals.Msg_Type_Server);
             }
         }
         //*********************************************************************************************
-        // ReceivedBuyPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedBuyPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para comprar item da loja de um outro jogador.
         //*********************************************************************************************
-        public static void ReceivedBuyPShop(int index, string data)
+        public static void receivedBuyPShop(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].InPShop <= 0) { return; }
-            if (PStruct.tempplayer[index].Shopping) { return; }
+            if (PlayerStruct.tempplayer[s].InPShop <= 0) { return; }
+            if (PlayerStruct.tempplayer[s].Shopping) { return; }
 
             string[] splited = data.Replace("<83>", "").Split(';');
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
 
             int shopnum = Convert.ToInt32(splited[0]);
-            int shopindex = PStruct.tempplayer[index].InPShop;
+            int shops = PlayerStruct.tempplayer[s].InPShop;
 
             if ((shopnum <= 0) || (shopnum > Globals.Max_PShops - 1)) { return; }
 
             //Verifica se ele não se desconectou no processo
-            if ((UserConnection.Getindex(shopindex) < 0) || (UserConnection.Getindex(shopindex) >= WinsockAsync.Clients.Count()))
+            if ((UserConnection.getS(shops) < 0) || (UserConnection.getS(shops) >= WinsockAsync.Clients.Count()))
             {
-                SendData.Send_MsgToPlayer(index, lang.shop_is_gone, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.shop_is_gone, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(shopindex))].IsConnected)
+            if (!WinsockAsync.Clients[(UserConnection.getS(shops))].IsConnected)
             {
-                SendData.Send_MsgToPlayer(index, lang.shop_is_gone, Globals.ColorRed, Globals.Msg_Type_Server);
-                return;
-            }
-
-            if (!PStruct.tempplayer[shopindex].Shopping)
-            {
-                SendData.Send_MsgToPlayer(index, lang.shop_is_gone, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.shop_is_gone, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0)
+            if (!PlayerStruct.tempplayer[shops].Shopping)
             {
-                SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space_to_buy, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.shop_is_gone, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (PStruct.character[index, PStruct.player[index].SelectedChar].Gold >= PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].price)
+            if (InventoryRelations.getNumOfInvFreeSlots(s) <= 0)
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].Gold -= PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].price;
-                PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].Gold += PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].price;
-                InventoryRelations.GiveItem(index, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].type, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].num, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].value, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].refin, PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[shopnum].exp);
+                SendData.sendMsgToPlayer(s, lang.dont_have_inventory_space_to_buy, Globals.ColorRed, Globals.Msg_Type_Server);
+                return;
+            }
+
+            if (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold >= PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].price)
+            {
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Gold -= PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].price;
+                PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].Gold += PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].price;
+                InventoryRelations.giveItem(s, PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].type, PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].num, PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].value, PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].refin, PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[shopnum].exp);
                 for (int i = (shopnum + 1); i < Globals.Max_PShops; i++)
                 {
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i - 1].num = PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].num;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i - 1].type = PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].type;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i - 1].value = PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].value;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i - 1].refin = PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].refin;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i - 1].price = PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].price;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].num = 0;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].type = 0;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].value = 0;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].refin = 0;
-                    PStruct.character[shopindex, PStruct.player[shopindex].SelectedChar].pshopslot[i].price = 0;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i - 1].num = PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].num;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i - 1].type = PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].type;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i - 1].value = PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].value;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i - 1].refin = PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].refin;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i - 1].price = PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].price;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].num = 0;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].type = 0;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].value = 0;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].refin = 0;
+                    PlayerStruct.character[shops, PlayerStruct.player[shops].SelectedChar].pshopslot[i].price = 0;
                 }
-                SendData.Send_MsgToPlayer(index, lang.you_bought_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
-                SendData.Send_MsgToPlayer(shopindex, lang.you_sold_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
-                SendData.Send_PShopSlots(shopindex, index);
-                SendData.Send_PShopSlots(shopindex, shopindex);
-                SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-                SendData.Send_PlayerG(shopindex);
-                SendData.Send_PlayerG(index);
+                SendData.sendMsgToPlayer(s, lang.you_bought_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(shops, lang.you_sold_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
+                SendData.sendPShopSlots(shops, s);
+                SendData.sendPShopSlots(shops, shops);
+                SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+                SendData.sendPlayerG(shops);
+                SendData.sendPlayerG(s);
             }
             else
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_needed_amount_of_gold, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_needed_amount_of_gold, Globals.ColorRed, Globals.Msg_Type_Server);
             }
         }
         //*********************************************************************************************
-        // ReceivedShopClose / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedShopClose / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Aviso de que fechou a loja.
         //*********************************************************************************************
-        public static void ReceivedShopClose(int index)
+        public static void receivedShopClose(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //Sair da loja, o servidor precisa saber
-            PStruct.tempplayer[index].InShop = 0;
+            PlayerStruct.tempplayer[s].InShop = 0;
         }
         //*********************************************************************************************
-        // ReceivedShopSell / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedShopSell / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para vender um item a loja.
         //*********************************************************************************************
-        public static void ReceivedShopSell(int index, string data)
+        public static void receivedShopSell(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].InShop <= 0) { return; }
+            if (PlayerStruct.tempplayer[s].InShop <= 0) { return; }
 
             string[] splited = data.Replace("<46>", "").Split(';');
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if (!IsNumeric(splited[1])) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[1])) { return; }
 
             int invslot = Convert.ToInt32(splited[0]);
             int value = Convert.ToInt32(splited[1]);
@@ -4242,14 +4242,14 @@ namespace FORJERUM
             if ((invslot <= 0) || (invslot > Globals.MaxInvSlot - 1)) { return; }
             if ((value <= 0) || (value > 999)) { return; }
            
-            string[] splititem = PStruct.invslot[index, invslot].item.Split(',');
+            string[] splititem = PlayerStruct.invslot[s, invslot].item.Split(',');
 
             int itemNum = Convert.ToInt32(splititem[1]);
             int itemType = Convert.ToInt32(splititem[0]);
             int itemValue = Convert.ToInt32(splititem[2]);
             int itemRefin = Convert.ToInt32(splititem[3]);
 
-            if (!InventoryRelations.PickItem(index, itemType, itemNum, value, itemRefin)) { return; }
+            if (!InventoryRelations.pickItem(s, itemType, itemNum, value, itemRefin)) { return; }
 
             int gold_value = 0;
 
@@ -4257,33 +4257,33 @@ namespace FORJERUM
             {
                 case 0:
                 case 1:
-                  gold_value = IStruct.item[itemNum].price * value;
+                  gold_value = ItemStruct.item[itemNum].price * value;
                   break;
                 case 2:
-                  gold_value = WStruct.weapon[itemNum].price * value;
+                  gold_value = WeaponStruct.weapon[itemNum].price * value;
                   break;
                 case 3:
-                  gold_value = AStruct.armor[itemNum].price * value;
+                  gold_value = ArmorStruct.armor[itemNum].price * value;
                   break;
                 default:
-                  Console.WriteLine("Recebeu um valor/tipo inválido em ReceivedShopSell: " + itemType);
+                  Console.WriteLine("Recebeu um valor/tipo inválido em receivedShopSell: " + itemType);
                   return;
             }
 
-            PlayerRelations.GivePlayerGold(index, gold_value);
-            SendData.Send_PlayerG(index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_MsgToPlayer(index, lang.you_sold_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
+            PlayerRelations.givePlayerGold(s, gold_value);
+            SendData.sendPlayerG(s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+            SendData.sendMsgToPlayer(s, lang.you_sold_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
         // ReceiveOpenCraft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para abrir a criação de itens.
         //*********************************************************************************************
-        static void ReceivedOpenCraft(int index)
+        static void receivedOpenCraft(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -4291,43 +4291,43 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_CraftPoints; i++)
             {
-                if (MStruct.craftpoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (MapStruct.craftpoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    int profnum = PStruct.GetPlayerProf(index, MStruct.craftpoint[i].type);
+                    int profnum = PlayerRelations.getPlayerProf(s, MapStruct.craftpoint[i].type);
 
                     if (profnum <= 0)
                     {
-                        SendData.Send_MsgToPlayer(index, lang.you_dont_have_prof_to_interact, Globals.ColorRed, Globals.Msg_Type_Server);
+                        SendData.sendMsgToPlayer(s, lang.you_dont_have_prof_to_interact, Globals.ColorRed, Globals.Msg_Type_Server);
                         return;
                     }
-                    if (MStruct.craftpoint[i].type == Globals.Job_Blacksmith)
+                    if (MapStruct.craftpoint[i].type == Globals.Job_Blacksmith)
                     {
-                        if (EquipmentRelations.GetPlayerWeapon(index) == 31)
+                        if (EquipmentRelations.getPlayerWeapon(s) == 31)
                         {
-                            PStruct.tempplayer[index].InCraft = true;
-                            PStruct.tempplayer[index].CraftType = MStruct.craftpoint[i].type;
+                            PlayerStruct.tempplayer[s].InCraft = true;
+                            PlayerStruct.tempplayer[s].CraftType = MapStruct.craftpoint[i].type;
 
-                            //if ((PStruct.tempplayer[index].CraftType == Globals.Job_ArmorBlacksmith) || (PStruct.tempplayer[index].CraftType == Globals.Job_SwordBlacksmith)) { SendData.Send_Blacksmith(index); }
-                            // if (PStruct.tempplayer[index].CraftType == Globals.Job_Alchemist) { SendData.Send_Alchemist(index); }
+                            //if ((PlayerStruct.tempplayer[s].CraftType == Globals.Job_ArmorBlacksmith) || (PlayerStruct.tempplayer[s].CraftType == Globals.Job_SwordBlacksmith)) { SendData.sendBlacksmith(s); }
+                            // if (PlayerStruct.tempplayer[s].CraftType == Globals.Job_Alchemist) { SendData.sendAlchemist(s); }
                             break;
                         }
                         else
                         {
-                            SendData.Send_MsgToPlayer(index, lang.you_dont_have_tool_to_interact, Globals.ColorRed, Globals.Msg_Type_Server);
+                            SendData.sendMsgToPlayer(s, lang.you_dont_have_tool_to_interact, Globals.ColorRed, Globals.Msg_Type_Server);
                         }
                     }
                 }
             }
         }
         //*********************************************************************************************
-        // ReceivedOpenBank / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedOpenBank / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para abrir o banco.
         //*********************************************************************************************
-        static void ReceivedOpenBank(int index)
+        static void receivedOpenBank(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -4335,183 +4335,183 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_BankPoints; i++)
             {
-                if (MStruct.bankpoint[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (MapStruct.bankpoint[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    PStruct.tempplayer[index].InBank = true;
-                    SendData.Send_BankSlots(index);
+                    PlayerStruct.tempplayer[s].InBank = true;
+                    SendData.sendBankSlots(s);
                     break;
                 }
             }
         }
         //*********************************************************************************************
-        // ReceivedOpenPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedOpenPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para abrir a loja de um outro jogador.
         //*********************************************************************************************
-        static void ReceivedOpenPShop(int index, string data)
+        static void receivedOpenPShop(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].InPShop > 0) { return; }
-            if (PStruct.tempplayer[index].Shopping) { return; }
+            if (PlayerStruct.tempplayer[s].InPShop > 0) { return; }
+            if (PlayerStruct.tempplayer[s].Shopping) { return; }
             string[] splited = data.Replace("<84>", "").Split(';');
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if (Convert.ToInt32(splited[0]) < 0) { return; }
-            if (Convert.ToInt32(splited[0]) > Globals.Player_Highindex) { return; }
+            if (Convert.ToInt32(splited[0]) > Globals.Player_Highs) { return; }
 
             //Contêm o jogador que é dono da loja
-            int shopindex = Convert.ToInt32(splited[0]);
+            int shops = Convert.ToInt32(splited[0]);
 
-            //Se for o index, ele apenas está atualizando os dados da sua própria loja, mas como tudo, devemos sempre pensar em temporizar alguns
+            //Se for o s, ele apenas está atualizando os dados da sua própria loja, mas como tudo, devemos sempre pensar em temporizar alguns
             //dados importantes.
-            if (shopindex == index) { SendData.Send_PShopSlots(index, index); }
+            if (shops == s) { SendData.sendPShopSlots(s, s); }
 
             //Verificar se o jogador não se desconectou no processo
-            if (!PStruct.tempplayer[shopindex].Shopping) { return; }
-            if ((UserConnection.Getindex(shopindex) < 0) || (UserConnection.Getindex(shopindex) >= WinsockAsync.Clients.Count())) { return; }
-            if (!WinsockAsync.Clients[(UserConnection.Getindex(shopindex))].IsConnected) { return; }
+            if (!PlayerStruct.tempplayer[shops].Shopping) { return; }
+            if ((UserConnection.getS(shops) < 0) || (UserConnection.getS(shops) >= WinsockAsync.Clients.Count())) { return; }
+            if (!WinsockAsync.Clients[(UserConnection.getS(shops))].IsConnected) { return; }
 
             //Definir a loja e enviar.
-            PStruct.tempplayer[index].InPShop = shopindex;
-            SendData.Send_PShopSlots(shopindex, index);
+            PlayerStruct.tempplayer[s].InPShop = shops;
+            SendData.sendPShopSlots(shops, s);
         }
         //*********************************************************************************************
-        // ReceivedStartPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedStartPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Pedido para inicia as vendas a própria loja.
         //*********************************************************************************************
-        static void ReceivedStartPShop(int index)
+        static void receivedStartPShop(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].InPShop > 0) { return; }
-            if (PStruct.tempplayer[index].Shopping) { return; }
+            if (PlayerStruct.tempplayer[s].InPShop > 0) { return; }
+            if (PlayerStruct.tempplayer[s].Shopping) { return; }
 
-            PStruct.tempplayer[index].Shopping = true;
-            SendData.Send_PlayerShoppingToMap(index);
-            SendData.Send_MsgToPlayer(index, lang.you_started_your_shop, Globals.ColorGreen, Globals.Msg_Type_Server);
+            PlayerStruct.tempplayer[s].Shopping = true;
+            SendData.sendPlayerShoppingToMap(s);
+            SendData.sendMsgToPlayer(s, lang.you_started_your_shop, Globals.ColorGreen, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
         // ReceiveCloseBank / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Aviso de que o jogador fechou a janela do banco.
         //*********************************************************************************************
-        static void ReceivedCloseBank(int index)
+        static void receivedCloseBank(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //O servidor precisa saber quando o banco é fechado
-            PStruct.tempplayer[index].InBank = false;
+            PlayerStruct.tempplayer[s].InBank = false;
         }
         //*********************************************************************************************
-        // ReceivedClosePShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedClosePShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Aviso de que o jogador fechou a loja de outro jogador.
         //*********************************************************************************************
-        static void ReceivedClosePShop(int index)
+        static void receivedClosePShop(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
             //O jogador não está mais em uma loja
-            PStruct.tempplayer[index].InPShop = 0;
+            PlayerStruct.tempplayer[s].InPShop = 0;
             
             //Se era uma loja, enviar ao mapa
-            if (PStruct.tempplayer[index].Shopping)
+            if (PlayerStruct.tempplayer[s].Shopping)
             {
-                PStruct.tempplayer[index].Shopping = false;
-                SendData.Send_PlayerShoppingToMap(index);
-                SendData.Send_MsgToPlayer(index, lang.you_stopped_your_shop, Globals.ColorGreen, Globals.Msg_Type_Server);
+                PlayerStruct.tempplayer[s].Shopping = false;
+                SendData.sendPlayerShoppingToMap(s);
+                SendData.sendMsgToPlayer(s, lang.you_stopped_your_shop, Globals.ColorGreen, Globals.Msg_Type_Server);
             }
         }
         //*********************************************************************************************
         // ReceiveCloseCraft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Aviso de que o jogador fechou a criação de itens.
         //*********************************************************************************************
-        static void ReceivedCloseCraft(int index)
+        static void receivedCloseCraft(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InCraft) { return; }
+            if (!PlayerStruct.tempplayer[s].InCraft) { return; }
             //Devolve os itens
 
             bool need_invslot = false;
 
             for (int i = 1; i < Globals.Max_Craft; i++)
             {
-                if (PStruct.craft[index, i].num > 0)
+                if (PlayerStruct.craft[s, i].num > 0)
                 {
-                    InventoryRelations.GiveItem(index, PStruct.craft[index, i].type, PStruct.craft[index, i].num, PStruct.craft[index, i].value, PStruct.craft[index, i].refin, PStruct.craft[index, i].exp);
+                    InventoryRelations.giveItem(s, PlayerStruct.craft[s, i].type, PlayerStruct.craft[s, i].num, PlayerStruct.craft[s, i].value, PlayerStruct.craft[s, i].refin, PlayerStruct.craft[s, i].exp);
                     need_invslot = true;
-                    PStruct.craft[index, i].num = 0;
-                    PStruct.craft[index, i].type = 0;
-                    PStruct.craft[index, i].value = 0;
-                    PStruct.craft[index, i].refin = 0;
+                    PlayerStruct.craft[s, i].num = 0;
+                    PlayerStruct.craft[s, i].type = 0;
+                    PlayerStruct.craft[s, i].value = 0;
+                    PlayerStruct.craft[s, i].refin = 0;
                 }
             }
 
             //O servidor precisa saber quando o jogador fechou o craft
-            PStruct.tempplayer[index].InCraft = false;
+            PlayerStruct.tempplayer[s].InCraft = false;
 
-            if (need_invslot) { SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar); SendData.Send_Craft(index); }
+            if (need_invslot) { SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar); SendData.sendCraft(s); }
         }
         //*********************************************************************************************
-        // ReceivedCraftCreate / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedCraftCreate / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         // Tentativa de criar determinado item.
         //*********************************************************************************************
-        static void ReceivedCraftCreate(int index)
+        static void receivedCraftCreate(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InCraft) { return; }
-            if (PStruct.tempplayer[index].CraftType <= 0) { return; }
-            if (PStruct.tempplayer[index].CraftItem <= 0) { return; }
-            if (MStruct.craftrecipe[PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, 1].num <= 0) { return; }
-            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0) { SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!PlayerStruct.tempplayer[s].InCraft) { return; }
+            if (PlayerStruct.tempplayer[s].CraftType <= 0) { return; }
+            if (PlayerStruct.tempplayer[s].CraftItem <= 0) { return; }
+            if (MapStruct.craftrecipe[PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem, 1].num <= 0) { return; }
+            if (InventoryRelations.getNumOfInvFreeSlots(s) <= 0) { SendData.sendMsgToPlayer(s, lang.dont_have_inventory_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
             int[] craftslot = new int[Globals.Max_Craft];
 
             for (int i = 1; i < Globals.Max_Craft; i++)
             {
-                if (MStruct.craftrecipe[PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, i].num > 0)
+                if (MapStruct.craftrecipe[PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem, i].num > 0)
                 {
-                    craftslot[i] = PStruct.CraftHasItem(index, MStruct.craftrecipe[PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, i].type, MStruct.craftrecipe[PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, i].num);
+                    craftslot[i] = CraftRelations.craftHasItem(s, MapStruct.craftrecipe[PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem, i].type, MapStruct.craftrecipe[PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem, i].num);
                     
                     if (craftslot[i] == -1)
                     {
-                        SendData.Send_MsgToPlayer(index, lang.incorrect_recipe, Globals.ColorRed, Globals.Msg_Type_Server);
+                        SendData.sendMsgToPlayer(s, lang.incorrect_recipe, Globals.ColorRed, Globals.Msg_Type_Server);
                         return;
                     }
                 }
@@ -4520,94 +4520,94 @@ namespace FORJERUM
                        
             for (int i = 1; i < Globals.Max_Craft; i++)
             {
-                PStruct.craft[index, craftslot[i]].value -= MStruct.craftrecipe[PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, i].value;
-                if (PStruct.craft[index, craftslot[i]].value <= 0)
+                PlayerStruct.craft[s, craftslot[i]].value -= MapStruct.craftrecipe[PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem, i].value;
+                if (PlayerStruct.craft[s, craftslot[i]].value <= 0)
                 {
-                    PStruct.craft[index, craftslot[i]].value = 0;
-                    PStruct.craft[index, craftslot[i]].num = 0;
-                    PStruct.craft[index, craftslot[i]].type = 0;
-                    PStruct.craft[index, craftslot[i]].refin = 0;
-                    PStruct.craft[index, craftslot[i]].exp = 0;
+                    PlayerStruct.craft[s, craftslot[i]].value = 0;
+                    PlayerStruct.craft[s, craftslot[i]].num = 0;
+                    PlayerStruct.craft[s, craftslot[i]].type = 0;
+                    PlayerStruct.craft[s, craftslot[i]].refin = 0;
+                    PlayerStruct.craft[s, craftslot[i]].exp = 0;
                 }
             }
 
 
-            InventoryRelations.GiveItem(index, PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem, 1, PStruct.GetRefinCraft(index, PStruct.tempplayer[index].CraftType), Globals.NullExp);
-            SendData.Send_MsgToPlayer(index, lang.you_created_a_new_item, Globals.ColorGreen, Globals.Msg_Type_Server);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            InventoryRelations.giveItem(s, PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem, 1, CraftRelations.getRefinCraft(s, PlayerStruct.tempplayer[s].CraftType), Globals.NullExp);
+            SendData.sendMsgToPlayer(s, lang.you_created_a_new_item, Globals.ColorGreen, Globals.Msg_Type_Server);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
 
-           // if ((PStruct.tempplayer[index].CraftType == Globals.Job_ArmorBlacksmith) || (PStruct.tempplayer[index].CraftType == Globals.Job_SwordBlacksmith)) { PStruct.character[index, PStruct.player[index].SelectedChar].Blacksmith += 1; SendData.Send_Blacksmith(index); }
-          //  if (PStruct.tempplayer[index].CraftType == Globals.Job_Alchemist) { PStruct.character[index, PStruct.player[index].SelectedChar].Alchemist += 1; SendData.Send_Alchemist(index); }
+           // if ((PlayerStruct.tempplayer[s].CraftType == Globals.Job_ArmorBlacksmith) || (PlayerStruct.tempplayer[s].CraftType == Globals.Job_SwordBlacksmith)) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Blacksmith += 1; SendData.sendBlacksmith(s); }
+          //  if (PlayerStruct.tempplayer[s].CraftType == Globals.Job_Alchemist) { PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Alchemist += 1; SendData.sendAlchemist(s); }
 
-            SendData.Send_Craft(index);
+            SendData.sendCraft(s);
         }
         //*********************************************************************************************
-        // ReceivedItemCraft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedItemCraft / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedItemCraft(int index, string data)
+        static void receivedItemCraft(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InCraft) { return; }
+            if (!PlayerStruct.tempplayer[s].InCraft) { return; }
             string[] splited = data.Replace("<53>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
-            if ((Convert.ToInt32(splited[0]) > WStruct.weapon.Length - 1)) { return; }
+            if (!isNumeric(splited[0])) { return; }
+            if ((Convert.ToInt32(splited[0]) > WeaponStruct.weapon.Length - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
-            PStruct.tempplayer[index].CraftItem = Convert.ToInt32(splited[0]);
-            SendData.Send_Recipe(index, PStruct.tempplayer[index].CraftType, PStruct.tempplayer[index].CraftItem);
+            PlayerStruct.tempplayer[s].CraftItem = Convert.ToInt32(splited[0]);
+            SendData.sendRecipe(s, PlayerStruct.tempplayer[s].CraftType, PlayerStruct.tempplayer[s].CraftItem);
         }
         //*********************************************************************************************
-        // ReceivedCraftWith / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedCraftWith / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedCraftWith(int index, string data)
+        static void receivedCraftWith(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InCraft) { return; }
+            if (!PlayerStruct.tempplayer[s].InCraft) { return; }
             string[] splited = data.Replace("<49>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.Max_Craft - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int craftslot = Convert.ToInt32(splited[0]);
 
-            if (PStruct.craft[index, craftslot].num <= 0) { return; }
+            if (PlayerStruct.craft[s, craftslot].num <= 0) { return; }
 
-            if (!InventoryRelations.GiveItem(index, PStruct.craft[index, craftslot].type, PStruct.craft[index, craftslot].num, PStruct.craft[index, craftslot].value, PStruct.craft[index, craftslot].refin, PStruct.craft[index, craftslot].exp)) { return; }
-            PStruct.craft[index, craftslot].type = 0;
-            PStruct.craft[index, craftslot].num = 0;
-            PStruct.craft[index, craftslot].value = 0;
-            PStruct.craft[index, craftslot].refin = 0;
-            PStruct.craft[index, craftslot].exp = 0;
+            if (!InventoryRelations.giveItem(s, PlayerStruct.craft[s, craftslot].type, PlayerStruct.craft[s, craftslot].num, PlayerStruct.craft[s, craftslot].value, PlayerStruct.craft[s, craftslot].refin, PlayerStruct.craft[s, craftslot].exp)) { return; }
+            PlayerStruct.craft[s, craftslot].type = 0;
+            PlayerStruct.craft[s, craftslot].num = 0;
+            PlayerStruct.craft[s, craftslot].value = 0;
+            PlayerStruct.craft[s, craftslot].refin = 0;
+            PlayerStruct.craft[s, craftslot].exp = 0;
 
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_Craft(index);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+            SendData.sendCraft(s);
         }
         //*********************************************************************************************
-        // ReceivedImprovement / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedImprovement / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedImprovement(int index, string data)
+        static void receivedImprovement(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -4616,17 +4616,17 @@ namespace FORJERUM
             string[] splited = data.Replace("<72>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) <= 0)) { return; }
 
-            int oriunslot = PlayerRelations.GetPlayerOriunklatex(index);
+            int oriunslot = PlayerRelations.getPlayerOriunklatex(s);
 
             if (oriunslot == 0) { return; }
 
             int itemslot = Convert.ToInt32(splited[0]);
             
-            string item = PStruct.invslot[index, itemslot].item;
+            string item = PlayerStruct.invslot[s, itemslot].item;
             string[] splititem = item.Split(',');
 
             int itemNum = Convert.ToInt32(splititem[1]);
@@ -4638,26 +4638,26 @@ namespace FORJERUM
             if (itemNum <= 0) { return; }
             if ((itemType == 0) || (itemType == 1)) { return; }
 
-            if (InventoryRelations.GetNumOfInvFreeSlots(index) <= 0) { SendData.Send_MsgToPlayer(index, lang.dont_have_inventory_space, Globals.ColorGreen, Globals.Msg_Type_Server); return; }
+            if (InventoryRelations.getNumOfInvFreeSlots(s) <= 0) { SendData.sendMsgToPlayer(s, lang.dont_have_inventory_space, Globals.ColorGreen, Globals.Msg_Type_Server); return; }
 
             //Pegar oriun
-            InventoryRelations.PickItem(index, 1, 68, 1, 0);
+            InventoryRelations.pickItem(s, 1, 68, 1, 0);
             //Pegar um equipamento selecionado
-            InventoryRelations.PickItem(index, itemType, itemNum, 1, itemRefin);
+            InventoryRelations.pickItem(s, itemType, itemNum, 1, itemRefin);
             //Entregar novo equipamento
-            InventoryRelations.GiveItem(index, itemType, itemNum, 1, itemRefin + 1, itemExp);
+            InventoryRelations.giveItem(s, itemType, itemNum, 1, itemRefin + 1, itemExp);
 
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_MsgToPlayer(index, lang.you_evolved_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+            SendData.sendMsgToPlayer(s, lang.you_evolved_a_item, Globals.ColorGreen, Globals.Msg_Type_Server);
         }
         //*********************************************************************************************
-        // ReceivedWBuy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedWBuy / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedWBuy(int index, string data)
+        static void receivedWBuy(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -4666,68 +4666,68 @@ namespace FORJERUM
             string[] splited = data.Replace("<73>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxItems - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) <= 0)) { return; }
 
             int slot = Convert.ToInt32(splited[0]);
 
-            if (ShopStruct.shopitem[Globals.Shop_W, slot].price > PStruct.player[index].WPoints) { return; }
-            if (!BankRelations.GiveBankItem(index, ShopStruct.shopitem[Globals.Shop_W, slot].type, ShopStruct.shopitem[Globals.Shop_W, slot].num, ShopStruct.shopitem[Globals.Shop_W, slot].value, ShopStruct.shopitem[Globals.Shop_W, slot].refin, Globals.NullExp)) { SendData.Send_NStatus(index, "Falha ao entrar o item, verifique o banco."); return; }
-            PStruct.player[index].WPoints -= ShopStruct.shopitem[Globals.Shop_W, slot].price;
+            if (ShopStruct.shopitem[Globals.Shop_W, slot].price > PlayerStruct.player[s].WPoints) { return; }
+            if (!BankRelations.giveBankItem(s, ShopStruct.shopitem[Globals.Shop_W, slot].type, ShopStruct.shopitem[Globals.Shop_W, slot].num, ShopStruct.shopitem[Globals.Shop_W, slot].value, ShopStruct.shopitem[Globals.Shop_W, slot].refin, Globals.NullExp)) { SendData.sendNStatus(s, "Falha ao entrar o item, verifique o banco."); return; }
+            PlayerStruct.player[s].WPoints -= ShopStruct.shopitem[Globals.Shop_W, slot].price;
 
-            SendData.Send_WPoints(index);
-            SendData.Send_NStatus(index, "Compra realizada com sucesso.");
+            SendData.sendWPoints(s);
+            SendData.sendNStatus(s, "Compra realizada com sucesso.");
         }
         //*********************************************************************************************
-        // ReceivedBankGiveItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedBankGiveItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedBankGiveItem(int index, string data)
+        static void receivedBankGiveItem(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InBank) { return; }
+            if (!PlayerStruct.tempplayer[s].InBank) { return; }
             string[] splited = data.Replace("<57>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.Max_BankSlots - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int bankslot = Convert.ToInt32(splited[0]);
 
-            int itemNum = PStruct.player[index].bankslot[bankslot].num;
-            int itemType = PStruct.player[index].bankslot[bankslot].type;
-            int itemValue = PStruct.player[index].bankslot[bankslot].value;
-            int itemRefin = PStruct.player[index].bankslot[bankslot].refin;
-            int itemExp = PStruct.player[index].bankslot[bankslot].exp;
+            int itemNum = PlayerStruct.player[s].bankslot[bankslot].num;
+            int itemType = PlayerStruct.player[s].bankslot[bankslot].type;
+            int itemValue = PlayerStruct.player[s].bankslot[bankslot].value;
+            int itemRefin = PlayerStruct.player[s].bankslot[bankslot].refin;
+            int itemExp = PlayerStruct.player[s].bankslot[bankslot].exp;
 
             if (itemNum <= 0) { return; }
-            if (!InventoryRelations.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
+            if (!InventoryRelations.giveItem(s, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
 
-            PStruct.player[index].bankslot[bankslot].type = 0;
-            PStruct.player[index].bankslot[bankslot].num = 0;
-            PStruct.player[index].bankslot[bankslot].value = 0;
-            PStruct.player[index].bankslot[bankslot].refin = 0;
-            PStruct.player[index].bankslot[bankslot].exp = 0;
+            PlayerStruct.player[s].bankslot[bankslot].type = 0;
+            PlayerStruct.player[s].bankslot[bankslot].num = 0;
+            PlayerStruct.player[s].bankslot[bankslot].value = 0;
+            PlayerStruct.player[s].bankslot[bankslot].refin = 0;
+            PlayerStruct.player[s].bankslot[bankslot].exp = 0;
 
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_BankSlots(index);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+            SendData.sendBankSlots(s);
         }
         //*********************************************************************************************
-        // ReceivedWithPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedWithPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedWithPShop(int index, string data)
+        static void receivedWithPShop(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -4736,56 +4736,56 @@ namespace FORJERUM
             string[] splited = data.Replace("<81>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.Max_PShops - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
 
             int pshopslot = Convert.ToInt32(splited[0]);
 
-            int itemNum = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[pshopslot].num;
-            int itemType = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[pshopslot].type;
-            int itemValue = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[pshopslot].value;
-            int itemRefin = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[pshopslot].refin;
-            int itemExp = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[pshopslot].exp;
+            int itemNum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[pshopslot].num;
+            int itemType = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[pshopslot].type;
+            int itemValue = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[pshopslot].value;
+            int itemRefin = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[pshopslot].refin;
+            int itemExp = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[pshopslot].exp;
 
             if (itemNum <= 0) { return; }
-            if (!InventoryRelations.GiveItem(index, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
+            if (!InventoryRelations.giveItem(s, itemType, itemNum, itemValue, itemRefin, itemExp)) { return; }
 
             for (int i = (pshopslot + 1); i < Globals.Max_PShops; i++)
             {
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i - 1].num = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].num;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i - 1].type = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].type;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i - 1].value = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].value;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i - 1].refin = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].refin;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i - 1].price = PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].price;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].num = 0;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].type = 0;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].value = 0;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].refin = 0;
-                PStruct.character[index, PStruct.player[index].SelectedChar].pshopslot[i].price = 0;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i - 1].num = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].num;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i - 1].type = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].type;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i - 1].value = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].value;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i - 1].refin = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].refin;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i - 1].price = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].price;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].num = 0;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].type = 0;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].value = 0;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].refin = 0;
+                PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].pshopslot[i].price = 0;
             }
 
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
-            SendData.Send_PShopSlots(index, index);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
+            SendData.sendPShopSlots(s, s);
         }
         //*********************************************************************************************
-        // ReceivedCraftAdd / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedCraftAdd / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedCraftAdd(int index, string data)
+        static void receivedCraftAdd(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InCraft) { return; }
+            if (!PlayerStruct.tempplayer[s].InCraft) { return; }
             string[] splited = data.Replace("<48>", "").Split(';');
 
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[1]) > 999)) { return; }
@@ -4793,9 +4793,9 @@ namespace FORJERUM
 
             int slot = Convert.ToInt32(splited[0]);
 
-            if (PStruct.invslot[index, slot].item == Globals.NullItem) { SendData.Send_MsgToPlayer(index, lang.item_nonexistent, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (PlayerStruct.invslot[s, slot].item == Globals.NullItem) { SendData.sendMsgToPlayer(s, lang.item_nonexistent, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
-            string[] splititem = PStruct.invslot[index, slot].item.Split(',');
+            string[] splititem = PlayerStruct.invslot[s, slot].item.Split(',');
 
             int value = Convert.ToInt32(splited[1]);
 
@@ -4807,54 +4807,54 @@ namespace FORJERUM
 
             if (itemValue < value)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            int craftslot = PStruct.GetFreeCraft(index);
+            int craftslot = PlayerRelations.getFreeCraft(s);
 
             if (craftslot == -1) { return; }
 
             if (value != itemValue)
             {
-                PStruct.invslot[index, slot].item = itemType + "," + itemNum + "," + (itemValue - value) + "," + itemRefin + "," + itemExp;
-                PStruct.craft[index, craftslot].type = itemType;
-                PStruct.craft[index, craftslot].num = itemNum;
-                PStruct.craft[index, craftslot].value = value;
-                PStruct.craft[index, craftslot].refin = itemRefin;
-                PStruct.craft[index, craftslot].exp = itemExp;
+                PlayerStruct.invslot[s, slot].item = itemType + "," + itemNum + "," + (itemValue - value) + "," + itemRefin + "," + itemExp;
+                PlayerStruct.craft[s, craftslot].type = itemType;
+                PlayerStruct.craft[s, craftslot].num = itemNum;
+                PlayerStruct.craft[s, craftslot].value = value;
+                PlayerStruct.craft[s, craftslot].refin = itemRefin;
+                PlayerStruct.craft[s, craftslot].exp = itemExp;
             }
             else
             {
-                PStruct.invslot[index, slot].item = Globals.NullItem;
-                PStruct.craft[index, craftslot].type = itemType;
-                PStruct.craft[index, craftslot].num = itemNum;
-                PStruct.craft[index, craftslot].value = value;
-                PStruct.craft[index, craftslot].refin = itemRefin;
-                PStruct.craft[index, craftslot].exp = itemExp;
+                PlayerStruct.invslot[s, slot].item = Globals.NullItem;
+                PlayerStruct.craft[s, craftslot].type = itemType;
+                PlayerStruct.craft[s, craftslot].num = itemNum;
+                PlayerStruct.craft[s, craftslot].value = value;
+                PlayerStruct.craft[s, craftslot].refin = itemRefin;
+                PlayerStruct.craft[s, craftslot].exp = itemExp;
             }
 
-            SendData.Send_Craft(index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            SendData.sendCraft(s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
         }
         //*********************************************************************************************
-        // ReceivedBankPickItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedBankPickItem / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedBankPickItem(int index, string data)
+        static void receivedBankPickItem(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (!PStruct.tempplayer[index].InBank) { return; }
+            if (!PlayerStruct.tempplayer[s].InBank) { return; }
             string[] splited = data.Replace("<56>", "").Split(';');
 
             if (splited.Length != 2) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[1]) > 999)) { return; }
@@ -4862,9 +4862,9 @@ namespace FORJERUM
 
             int slot = Convert.ToInt32(splited[0]);
 
-            if (PStruct.invslot[index, slot].item == Globals.NullItem) { SendData.Send_MsgToPlayer(index, lang.item_nonexistent, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (PlayerStruct.invslot[s, slot].item == Globals.NullItem) { SendData.sendMsgToPlayer(s, lang.item_nonexistent, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
-            string[] splititem = PStruct.invslot[index, slot].item.Split(',');
+            string[] splititem = PlayerStruct.invslot[s, slot].item.Split(',');
 
             int value = Convert.ToInt32(splited[1]);
 
@@ -4876,24 +4876,24 @@ namespace FORJERUM
 
             if (itemValue < value)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (!BankRelations.GiveBankItem(index, itemType, itemNum, value, itemRefin, itemExp)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-            if (!InventoryRelations.PickItem(index, itemType, itemNum, value, itemRefin)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!BankRelations.giveBankItem(s, itemType, itemNum, value, itemRefin, itemExp)) { SendData.sendMsgToPlayer(s, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!InventoryRelations.pickItem(s, itemType, itemNum, value, itemRefin)) { SendData.sendMsgToPlayer(s, lang.deliver_item_fail, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
-            SendData.Send_BankSlots(index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            SendData.sendBankSlots(s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
         }
         //*********************************************************************************************
-        // ReceivedAddPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedAddPShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        static void ReceivedAddPShop(int index, string data)
+        static void receivedAddPShop(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -4902,7 +4902,7 @@ namespace FORJERUM
             string[] splited = data.Replace("<80>", "").Split(';');
 
             if (splited.Length != 3) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxInvSlot - 1)) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[1]) > 999)) { return; }
@@ -4913,9 +4913,9 @@ namespace FORJERUM
             int price = Convert.ToInt32(splited[2]);
             int slot = Convert.ToInt32(splited[0]);
 
-            if (PStruct.invslot[index, slot].item == Globals.NullItem) { SendData.Send_MsgToPlayer(index, lang.item_nonexistent, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (PlayerStruct.invslot[s, slot].item == Globals.NullItem) { SendData.sendMsgToPlayer(s, lang.item_nonexistent, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
-            string[] splititem = PStruct.invslot[index, slot].item.Split(',');
+            string[] splititem = PlayerStruct.invslot[s, slot].item.Split(',');
 
             int value = Convert.ToInt32(splited[1]);
 
@@ -4927,24 +4927,24 @@ namespace FORJERUM
 
             if (itemValue < value)
             {
-                SendData.Send_MsgToPlayer(index, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
+                SendData.sendMsgToPlayer(s, lang.you_dont_have_the_amount, Globals.ColorRed, Globals.Msg_Type_Server);
                 return;
             }
 
-            if (!PStruct.GivePShopItem(index, itemType, itemNum, value, itemRefin, price, itemExp)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
-            if (!InventoryRelations.PickItem(index, itemType, itemNum, value, itemRefin)) { SendData.Send_MsgToPlayer(index, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!ShopRelations.givePShopItem(s, itemType, itemNum, value, itemRefin, price, itemExp)) { SendData.sendMsgToPlayer(s, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
+            if (!InventoryRelations.pickItem(s, itemType, itemNum, value, itemRefin)) { SendData.sendMsgToPlayer(s, lang.deliver_item_fail_maybe_space, Globals.ColorRed, Globals.Msg_Type_Server); return; }
 
-            SendData.Send_PShopSlots(index, index);
-            SendData.Send_InvSlots(index, PStruct.player[index].SelectedChar);
+            SendData.sendPShopSlots(s, s);
+            SendData.sendInvSlots(s, PlayerStruct.player[s].SelectedChar);
         }
         //*********************************************************************************************
-        // ReceivedCompleteAction / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedCompleteAction / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedCompleteAction(int index, string data)
+        public static void receivedCompleteAction(int s, string data)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, data) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, data) != null)
             {
                 return;
             }
@@ -4953,87 +4953,87 @@ namespace FORJERUM
             string[] splited = data.Replace("<59>", "").Split(';');
 
             if (splited.Length != 1) { return; }
-            if (!IsNumeric(splited[0])) { return; }
+            if (!isNumeric(splited[0])) { return; }
             if ((Convert.ToInt32(splited[0]) < 0)) { return; }
             if ((Convert.ToInt32(splited[0]) > Globals.MaxQuestGivers - 1)) { return; }
 
             int questgiver = Convert.ToInt32(splited[0]);
-            int map = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-            int x = PStruct.character[index, PStruct.player[index].SelectedChar].X;
-            int y = PStruct.character[index, PStruct.player[index].SelectedChar].Y;
+            int map = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+            int x = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X;
+            int y = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y;
 
-            int quest = QuestRelations.GetActualPlayerQuestPerGiver(index, questgiver);
+            int quest = QuestRelations.getActualPlayerQuestPerGiver(s, questgiver);
 
             int actionmap;
             int actionx;
             int actiony;
 
-            if (MStruct.quest[questgiver, quest].actionvalue > 0)
+            if (MapStruct.quest[questgiver, quest].actionvalue > 0)
             {
-                for (int a = 1; a <= MStruct.quest[questgiver, quest].actionvalue; a++)
+                for (int a = 1; a <= MapStruct.quest[questgiver, quest].actionvalue; a++)
                 {
-                    if (MStruct.questactions[questgiver, quest, a].type == 1)
+                    if (MapStruct.questactions[questgiver, quest, a].type == 1)
                     {
-                        if (!PStruct.questactions[index, questgiver, quest, a].actiondone)
+                        if (!PlayerStruct.questactions[s, questgiver, quest, a].actiondone)
                         {
-                            actionmap = Convert.ToInt32(MStruct.questactions[questgiver, quest, a].data.Split(',')[0]);
+                            actionmap = Convert.ToInt32(MapStruct.questactions[questgiver, quest, a].data.Split(',')[0]);
 
                             if (actionmap == map)
                             {
-                                actionx = Convert.ToInt32(MStruct.questactions[questgiver, quest, a].data.Split(',')[1]);
-                                actiony = Convert.ToInt32(MStruct.questactions[questgiver, quest, a].data.Split(',')[2]);
+                                actionx = Convert.ToInt32(MapStruct.questactions[questgiver, quest, a].data.Split(',')[1]);
+                                actiony = Convert.ToInt32(MapStruct.questactions[questgiver, quest, a].data.Split(',')[2]);
 
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == actiony) && (PStruct.character[index, PStruct.player[index].SelectedChar].X == actionx))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == actiony) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == actionx))
                                 {
-                                    if (PStruct.queststatus[index, questgiver, quest].status == 1)
+                                    if (PlayerStruct.queststatus[s, questgiver, quest].status == 1)
                                     {
-                                        SendData.Send_ActionMsg(index, lang.action_completed, Globals.ColorGreen, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0);
-                                        PStruct.questactions[index, questgiver, quest, a].actiondone = true;
-                                        SendData.Send_QuestAction(index, questgiver, quest, a);
+                                        SendData.sendActionMsg(s, lang.action_completed, Globals.ColorGreen, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0);
+                                        PlayerStruct.questactions[s, questgiver, quest, a].actiondone = true;
+                                        SendData.sendQuestAction(s, questgiver, quest, a);
                                         return;
                                     }
                                 }
 
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == actiony) && (PStruct.character[index, PStruct.player[index].SelectedChar].X + 1 == actionx))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == actiony) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X + 1 == actionx))
                                 {
-                                    if (PStruct.queststatus[index, questgiver, quest].status == 1)
+                                    if (PlayerStruct.queststatus[s, questgiver, quest].status == 1)
                                     {
-                                        SendData.Send_ActionMsg(index, lang.action_completed, Globals.ColorGreen, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0);
-                                        PStruct.questactions[index, questgiver, quest, a].actiondone = true;
-                                        SendData.Send_QuestAction(index, questgiver, quest, a);
+                                        SendData.sendActionMsg(s, lang.action_completed, Globals.ColorGreen, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0);
+                                        PlayerStruct.questactions[s, questgiver, quest, a].actiondone = true;
+                                        SendData.sendQuestAction(s, questgiver, quest, a);
                                         return;
                                     }
                                 }
 
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y == actiony) && (PStruct.character[index, PStruct.player[index].SelectedChar].X - 1 == actionx))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y == actiony) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X - 1 == actionx))
                                 {
-                                    if (PStruct.queststatus[index, questgiver, quest].status == 1)
+                                    if (PlayerStruct.queststatus[s, questgiver, quest].status == 1)
                                     {
-                                        SendData.Send_ActionMsg(index, lang.action_completed, Globals.ColorGreen, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0);
-                                        PStruct.questactions[index, questgiver, quest, a].actiondone = true;
-                                        SendData.Send_QuestAction(index, questgiver, quest, a);
+                                        SendData.sendActionMsg(s, lang.action_completed, Globals.ColorGreen, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0);
+                                        PlayerStruct.questactions[s, questgiver, quest, a].actiondone = true;
+                                        SendData.sendQuestAction(s, questgiver, quest, a);
                                         return;
                                     }
                                 }
 
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y + 1 == actiony) && (PStruct.character[index, PStruct.player[index].SelectedChar].X == actionx))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y + 1 == actiony) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == actionx))
                                 {
-                                    if (PStruct.queststatus[index, questgiver, quest].status == 1)
+                                    if (PlayerStruct.queststatus[s, questgiver, quest].status == 1)
                                     {
-                                        SendData.Send_ActionMsg(index, lang.action_completed, Globals.ColorGreen, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0);
-                                        PStruct.questactions[index, questgiver, quest, a].actiondone = true;
-                                        SendData.Send_QuestAction(index, questgiver, quest, a);
+                                        SendData.sendActionMsg(s, lang.action_completed, Globals.ColorGreen, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0);
+                                        PlayerStruct.questactions[s, questgiver, quest, a].actiondone = true;
+                                        SendData.sendQuestAction(s, questgiver, quest, a);
                                         return;
                                     }
                                 }
 
-                                if ((PStruct.character[index, PStruct.player[index].SelectedChar].Y - 1 == actiony) && (PStruct.character[index, PStruct.player[index].SelectedChar].X == actionx))
+                                if ((PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y - 1 == actiony) && (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X == actionx))
                                 {
-                                    if (PStruct.queststatus[index, questgiver, quest].status == 1)
+                                    if (PlayerStruct.queststatus[s, questgiver, quest].status == 1)
                                     {
-                                        SendData.Send_ActionMsg(index, lang.action_completed, Globals.ColorGreen, PStruct.character[index, PStruct.player[index].SelectedChar].X, PStruct.character[index, PStruct.player[index].SelectedChar].Y, 1, 0);
-                                        PStruct.questactions[index, questgiver, quest, a].actiondone = true;
-                                        SendData.Send_QuestAction(index, questgiver, quest, a);
+                                        SendData.sendActionMsg(s, lang.action_completed, Globals.ColorGreen, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X, PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y, 1, 0);
+                                        PlayerStruct.questactions[s, questgiver, quest, a].actiondone = true;
+                                        SendData.sendQuestAction(s, questgiver, quest, a);
                                         return;
                                     }
                                 }
@@ -5044,45 +5044,45 @@ namespace FORJERUM
             }
         }
         //*********************************************************************************************
-        // ReceivedRespawn / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedRespawn / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedRespawn(int index)
+        public static void receivedRespawn(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
 
             //CÓDIGO
-            if (PStruct.tempplayer[index].isDead)
+            if (PlayerStruct.tempplayer[s].isDead)
             {
-                PStruct.tempplayer[index].isDead = false;
-                int mapnum = PStruct.character[index, PStruct.player[index].SelectedChar].Map;
-                int bootmap = PStruct.character[index, PStruct.player[index].SelectedChar].BootMap;
-                byte bootx = PStruct.character[index, PStruct.player[index].SelectedChar].BootX;
-                byte booty = PStruct.character[index, PStruct.player[index].SelectedChar].BootY;
+                PlayerStruct.tempplayer[s].isDead = false;
+                int mapnum = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map;
+                int bootmap = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].BootMap;
+                byte bootx = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].BootX;
+                byte booty = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].BootY;
 
-                MovementRelations.PlayerWarp(index, bootmap, bootx, booty);
+                MovementRelations.playerWarp(s, bootmap, bootx, booty);
 
-                PStruct.tempplayer[index].Vitality = 1;
-                if (PStruct.tempplayer[index].Party > 0)
+                PlayerStruct.tempplayer[s].Vitality = 1;
+                if (PlayerStruct.tempplayer[s].Party > 0)
                 {
-                    SendData.Send_PlayerVitalityToParty(PStruct.tempplayer[index].Party, index, PStruct.tempplayer[index].Vitality);
+                    SendData.sendPlayerVitalityToParty(PlayerStruct.tempplayer[s].Party, s, PlayerStruct.tempplayer[s].Vitality);
                 }
-                SendData.Send_PlayerVitalityToMap(PStruct.character[index, PStruct.player[index].SelectedChar].Map, index, PStruct.tempplayer[index].Vitality);
-                SendData.Send_PlayerDeathTo(index, index);
+                SendData.sendPlayerVitalityToMap(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map, s, PlayerStruct.tempplayer[s].Vitality);
+                SendData.sendPlayerDeathTo(s, s);
             }
         }
         //*********************************************************************************************
-        // ReceivedShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
+        // receivedShop / Revisto pela última vez em 01/08/2016, criado por Allyson S. Bacon
         //*********************************************************************************************
-        public static void ReceivedShop(int index)
+        public static void receivedShop(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
                 return;
             }
@@ -5090,39 +5090,39 @@ namespace FORJERUM
             //CÓDIGO
             for (int i = 1; i < Globals.Max_Shops; i++)
             {
-                if (ShopStruct.shop[i].map == PStruct.character[index, PStruct.player[index].SelectedChar].Map)
+                if (ShopStruct.shop[i].map == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Map)
                 {
-                    switch (PStruct.character[index, PStruct.player[index].SelectedChar].Dir)
+                    switch (PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Dir)
                     {
                         case 8:
-                            if ((ShopStruct.shop[i].y == PStruct.character[index, PStruct.player[index].SelectedChar].Y - 1) && (ShopStruct.shop[i].x == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X)))
+                            if ((ShopStruct.shop[i].y == PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y - 1) && (ShopStruct.shop[i].x == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X)))
                             {
-                                SendData.Send_Shop(index, i);
-                                PStruct.tempplayer[index].InShop = i;
+                                SendData.sendShop(s, i);
+                                PlayerStruct.tempplayer[s].InShop = i;
                                 return;
                             }
                             break;
                         case 2:
-                            if ((ShopStruct.shop[i].y == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y) + 1) && (ShopStruct.shop[i].x == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X)))
+                            if ((ShopStruct.shop[i].y == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y) + 1) && (ShopStruct.shop[i].x == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X)))
                             {
-                                SendData.Send_Shop(index, i);
-                                PStruct.tempplayer[index].InShop = i;
+                                SendData.sendShop(s, i);
+                                PlayerStruct.tempplayer[s].InShop = i;
                                 return;
                             }
                             break;
                         case 4:
-                            if ((ShopStruct.shop[i].y == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y)) && (ShopStruct.shop[i].x == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X - 1)))
+                            if ((ShopStruct.shop[i].y == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y)) && (ShopStruct.shop[i].x == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X - 1)))
                             {
-                                SendData.Send_Shop(index, i);
-                                PStruct.tempplayer[index].InShop = i;
+                                SendData.sendShop(s, i);
+                                PlayerStruct.tempplayer[s].InShop = i;
                                 return;
                             }
                             break;
                         case 6:
-                            if ((ShopStruct.shop[i].y == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].Y)) && (ShopStruct.shop[i].x == Convert.ToInt32(PStruct.character[index, PStruct.player[index].SelectedChar].X + 1)))
+                            if ((ShopStruct.shop[i].y == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Y)) && (ShopStruct.shop[i].x == Convert.ToInt32(PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].X + 1)))
                             {
-                                SendData.Send_Shop(index, i);
-                                PStruct.tempplayer[index].InShop = i;
+                                SendData.sendShop(s, i);
+                                PlayerStruct.tempplayer[s].InShop = i;
                                 return;
                             }
                             break;

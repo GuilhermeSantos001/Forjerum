@@ -8,7 +8,7 @@
     <ProjectGuid>{18AD6439-78A6-43B6-96AC-9C5224A44E11}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FORJERUM</RootNamespace>
+    <RootNamespace>__Forjerum</RootNamespace>
     <AssemblyName>Forjerum Server</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -61,18 +61,38 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Server\Core\Database\Accounts.cs" />
+    <Compile Include="Server\Core\Database\Armors.cs" />
+    <Compile Include="Server\Core\Database\Banks.cs" />
+    <Compile Include="Server\Core\Database\Characters.cs" />
+    <Compile Include="Server\Core\Database\Enemies.cs" />
+    <Compile Include="Server\Core\Database\FriendLists.cs" />
+    <Compile Include="Server\Core\Database\Guilds.cs" />
+    <Compile Include="Server\Core\Database\Items.cs" />
+    <Compile Include="Server\Core\Database\Manual.cs" />
+    <Compile Include="Server\Core\Database\Maps.cs" />
+    <Compile Include="Server\Core\Database\Nicknames.cs" />
+    <Compile Include="Server\Core\Database\Shops.cs" />
+    <Compile Include="Server\Core\Database\Skills.cs" />
+    <Compile Include="Server\Core\Database\Weapons.cs" />
     <Compile Include="Server\Core\Globals.cs" />
     <Compile Include="Server\Core\Relations\BankRelations.cs" />
     <Compile Include="Server\Core\Relations\CombatRelations.cs" />
+    <Compile Include="Server\Core\Relations\CraftRelations.cs" />
+    <Compile Include="Server\Core\Relations\DropRelations.cs" />
     <Compile Include="Server\Core\Relations\EquipmentRelations.cs" />
     <Compile Include="Server\Core\Relations\FriendRelations.cs" />
     <Compile Include="Server\Core\Relations\InventoryRelations.cs" />
     <Compile Include="Server\Core\Relations\InviteRelations.cs" />
     <Compile Include="Server\Core\Relations\LevelRelations.cs" />
+    <Compile Include="Server\Core\Relations\MapRelations.cs" />
     <Compile Include="Server\Core\Relations\MovementRelations.cs" />
     <Compile Include="Server\Core\Relations\PartyRelations.cs" />
+    <Compile Include="Server\Core\Relations\PetRelations.cs" />
     <Compile Include="Server\Core\Relations\PlayerRelations.cs" />
     <Compile Include="Server\Core\Relations\QuestRelations.cs" />
+    <Compile Include="Server\Core\Relations\ShopRelations.cs" />
+    <Compile Include="Server\Core\Relations\SkillRelations.cs" />
     <Compile Include="Server\Core\Relations\TradeRelations.cs" />
     <Compile Include="Server\Core\start.cs" />
     <Compile Include="Server\Extensions\ExtensionApp.cs" />
@@ -81,23 +101,23 @@
     <Compile Include="Server\Extensions\terabin\Mail\Mail.cs" />
     <Compile Include="Server\Core\Network\SendData.cs" />
     <Compile Include="Server\Core\Network\UserConnection.cs" />
-    <Compile Include="Server\Core\Database\Database.cs" />
+    <Compile Include="Server\Core\Database\Handler.cs" />
     <Compile Include="Server\Core\Loop\Loop.cs" />
     <Compile Include="Server\Core\Network\WinsockAsync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\Core\Network\ReceiveData.cs" />
-    <Compile Include="Server\Core\Server Process &amp; Logic\NpcIA.cs" />
-    <Compile Include="Server\Core\Server Process &amp; Logic\PlayerLogic.cs" />
-    <Compile Include="Server\Core\Structures\Armor.cs" />
-    <Compile Include="Server\Core\Structures\Enemy.cs" />
-    <Compile Include="Server\Core\Structures\Guild.cs" />
-    <Compile Include="Server\Core\Structures\Item.cs" />
-    <Compile Include="Server\Core\Structures\Map.cs" />
-    <Compile Include="Server\Core\Structures\Npc.cs" />
-    <Compile Include="Server\Core\Structures\Player.cs" />
-    <Compile Include="Server\Core\Structures\Shop.cs" />
-    <Compile Include="Server\Core\Structures\Skill.cs" />
-    <Compile Include="Server\Core\Structures\Weapon.cs" />
+    <Compile Include="Server\Core\Basic\NpcIA.cs" />
+    <Compile Include="Server\Core\Basic\PlayerLogic.cs" />
+    <Compile Include="Server\Core\Structures\ArmorStruct.cs" />
+    <Compile Include="Server\Core\Structures\EnemyStruct.cs" />
+    <Compile Include="Server\Core\Structures\GuildStruct.cs" />
+    <Compile Include="Server\Core\Structures\ItemStruct.cs" />
+    <Compile Include="Server\Core\Structures\MapStruct.cs" />
+    <Compile Include="Server\Core\Structures\NpcStruct.cs" />
+    <Compile Include="Server\Core\Structures\PlayerStruct.cs" />
+    <Compile Include="Server\Core\Structures\ShopStruct.cs" />
+    <Compile Include="Server\Core\Structures\SkillStruct.cs" />
+    <Compile Include="Server\Core\Structures\WeaponStruct.cs" />
     <Compile Include="Server\Languages\Language.cs" />
     <Compile Include="Server\Languages\terabin\PT-BR\pt_br.cs" />
   </ItemGroup>

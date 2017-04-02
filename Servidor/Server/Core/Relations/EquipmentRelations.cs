@@ -1,160 +1,160 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     class EquipmentRelations
     {
         //*********************************************************************************************
-        // GetPlayerHelmet
+        // getPlayerHelmet
         // Retorna o equipamento superior do jogador
         //*********************************************************************************************
-        public static int GetPlayerHelmet(int index)
+        public static int getPlayerHelmet(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
 
             int Helmet = Convert.ToInt32(splited[0].Split(';')[0]);
             return Helmet;
         }
         //*********************************************************************************************
-        // GetPlayerArmor
+        // getPlayerArmor
         // Retorna a armadura do jogador
         //*********************************************************************************************
-        public static int GetPlayerArmor(int index)
+        public static int getPlayerArmor(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
             int Armor = Convert.ToInt32(splited[1].Split(';')[0]);
             return Armor;
         }
         //*********************************************************************************************
-        // GetPlayerWeapon
+        // getPlayerWeapon
         // Retorna a arma do jogador
         //*********************************************************************************************
-        public static int GetPlayerWeapon(int index)
+        public static int getPlayerWeapon(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
 
             int Weapon = Convert.ToInt32(splited[2].Split(';')[0]);
             return Weapon;
         }
         //*********************************************************************************************
-        // GetPlayerShield
+        // getPlayerShield
         // Retorna o escudo do jogador
         //*********************************************************************************************
-        public static int GetPlayerShield(int index)
+        public static int getPlayerShield(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
 
             int Shield = Convert.ToInt32(splited[3].Split(';')[0]);
             return Shield;
         }
         //*********************************************************************************************
-        // GetPlayerHelmetRefin
+        // getPlayerHelmetRefin
         //*********************************************************************************************
-        public static int GetPlayerHelmetRefin(int index)
+        public static int getPlayerHelmetRefin(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
 
             int Helmet = Convert.ToInt32(splited[0].Split(';')[1]);
             return Helmet;
         }
         //*********************************************************************************************
-        // GetPlayerArmorRefin
+        // getPlayerArmorRefin
         //*********************************************************************************************
-        public static int GetPlayerArmorRefin(int index)
+        public static int getPlayerArmorRefin(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
             int Armor = Convert.ToInt32(splited[1].Split(';')[1]);
             return Armor;
         }
         //*********************************************************************************************
-        // GetPlayerWeaponRefin
+        // getPlayerWeaponRefin
         //*********************************************************************************************
-        public static int GetPlayerWeaponRefin(int index)
+        public static int getPlayerWeaponRefin(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
 
             int Weapon = Convert.ToInt32(splited[2].Split(';')[1]);
             return Weapon;
         }
         //*********************************************************************************************
-        // GetPlayerShieldRefin
+        // getPlayerShieldRefin
         //*********************************************************************************************
-        public static int GetPlayerShieldRefin(int index)
+        public static int getPlayerShieldRefin(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            string[] splited = PStruct.character[index, PStruct.player[index].SelectedChar].Equipment.Split(',');
+            string[] splited = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Equipment.Split(',');
 
             int Shield = Convert.ToInt32(splited[3].Split(';')[1]);
             return Shield;

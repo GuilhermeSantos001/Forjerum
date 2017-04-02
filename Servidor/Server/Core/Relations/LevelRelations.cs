@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     class LevelRelations
     {
         //*********************************************************************************************
-        // GetPetExpToNextLevel
+        // getPetExpToNextLevel
         // Cálculo da exp necessária para subir de nível para o mascote
         //*********************************************************************************************
-        public static int GetPetExpToNextLevel(int index, int level)
+        public static int getPetExpToNextLevel(int s, int level)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, level) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, level) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index, level));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, level));
             }
 
             //CÓDIGO
@@ -74,21 +74,21 @@ namespace FORJERUM
             return exp;
         }
         //*********************************************************************************************
-        // GetExpToNextLevel
+        // getExpToNextLevel
         // Cálculo da exp necessária para o jogador subir de nível
         //*********************************************************************************************
-        public static int GetExpToNextLevel(int index)
+        public static int getExpToNextLevel(int s)
         {
             //EXTEND
-            if (Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index) != null)
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s) != null)
             {
-                return Convert.ToInt32(Extensions.ExtensionApp.ExtendMyApp
-                (MethodBase.GetCurrentMethod().Name, index));
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s));
             }
 
             //CÓDIGO
-            int level = PStruct.character[index, PStruct.player[index].SelectedChar].Level;
+            int level = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Level;
             int exp = 0;
             if (level < 10)
             {
@@ -140,6 +140,26 @@ namespace FORJERUM
                 double exptonextlevel = (level * 29000) * 1.9;
                 exp = Convert.ToInt32(exptonextlevel);
             }
+            return exp;
+        }
+        //*********************************************************************************************
+        // getProfExpToNextLevel
+        // Cálculo da exp necessária para a profissão do jogador subir de nível
+        //*********************************************************************************************
+        public static int getpProfExpToNextLevel(int s, int type)
+        {
+            //EXTEND
+            if (Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, type) != null)
+            {
+                return Convert.ToInt32(Extensions.ExtensionApp.extendMyApp
+                (MethodBase.GetCurrentMethod().Name, s, type));
+            }
+
+            //CÓDIGO
+            int level = PlayerStruct.character[s, PlayerStruct.player[s].SelectedChar].Prof_Level[type];
+            double exptonextlevel = (level * 10) * 1.2;
+            int exp = Convert.ToInt32(exptonextlevel);
             return exp;
         }
     }

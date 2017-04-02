@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FORJERUM
+namespace __Forjerum
 {
     //*********************************************************************************************
     // Valores globais utilizados pelos métodos do Core.
@@ -9,8 +9,8 @@ namespace FORJERUM
     class Globals
     {
         //player high
-        public static int Player_Highindex = 0;
-        public const int Item_Highindex = 0;
+        public static int Player_Highs = 0;
+        public const int Item_Highs = 0;
         //class Basic
         public const int Max_Classes = 6;
 
@@ -93,7 +93,7 @@ namespace FORJERUM
         public const int Max_Guilds = 1001;
         public const int Max_Guild_Members = 21;
         public const int Max_TpPoints = 51;
-        public const int Max_SavePoints = 51;
+        public const int Max_savePoints = 51;
         public const int Max_PShops = 21;
         public const int Max_Skins = 1000;
         public const int Max_Friends = 1000;
